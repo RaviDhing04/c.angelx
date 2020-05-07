@@ -1,0 +1,21 @@
+
+@font-face {
+  font-family: 'Proxima Nova';
+  src: url(../src/fonts/FontsFree-Net-proxima_nova_reg-webfont.ttf);
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  margin: 0;
+  font-family: 'Proxima Nova' !important;
+  font-style: normal;
+  font-weight: 100;;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+} */
