@@ -18,9 +18,9 @@ const AsyncHome = Loadable({
   modules: ["HomePage"]
 });
 
-const AsyncTemp = Loadable({
+const AsyncHomeProductList = Loadable({
     loader: () =>
-      import(/* webpackChunkName: "PageSwitcher" */ "../components/Banner/Banner"),
+      import(/* webpackChunkName: "PageSwitcher" */ "../containers/HomeProductList/HomeProductList"),
     loading: error => <LoadingFallback {...error} />,
     modules: ["HomePage"]
   });
@@ -36,12 +36,12 @@ export const parent_routes = [
 export const child_routes = [
     {
         path: "/",
-        component: AsyncTemp,
+        component: AsyncHomeProductList,
         exact: true
       },
     {
       path: "/home/abc",
-      component: AsyncTemp,
+      component: AsyncHomeProductList,
       exact: true
     }
   ];

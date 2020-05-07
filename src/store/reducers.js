@@ -1,14 +1,19 @@
-// import {
+const initialState = {
+  homePage: {
+    latestProducts: {}
+  }
+};
 
-//   } from "../constants/actionTypes";
-  
-  const initialState = {
-  };
-  
-  export const appReducer = (state = initialState, action) => {
-    switch (action.type) {
+export const appReducer = (state = initialState, { type, value }) => {
+  switch (type) {
+    case "LATEST_PRODUCTS":
+      return {
+        ...state,
+        homePage: {
+        latestProducts: value.payload
+        }
+      };
     default:
       return state;
-    }
-  };
-  
+  }
+};
