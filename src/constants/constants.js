@@ -8,13 +8,49 @@ export const leftNavLinks = [
   { name: "My Contacts", path: "/", icon: "profile" }
 ];
 
-
 export const merchantList = [
-    { name: "Pending in Total", path: "/" },
-    { name: "Arears in Total", path: "/" },
-    { name: "Lay Buys in Total", path: "/" },
-    { name: "Pre-orders in Total", path: "/" },
+  { name: "ProdTest@DeleteLater", path: "/" },
+  { name: "Accousticsplace@oxfordstreet", path: "/" },
+  { name: "ProdTest@DeleteLater", path: "/" },
+  { name: "Lorem Ipsum", path: "/" },
+  { name: "ProdTest@DeleteLater", path: "/" },
+  { name: "Accousticsplace@oxfordstreet", path: "/" },
+  { name: "Lorem Ipsum", path: "/" }
+];
+
+export const footerLinks = [
+  [
+    { name: "About Us", path: "/" },
+    { name: "Support", path: "/" },
+    { name: "Corporate Info", path: "/" },
+    { name: "User Guide", path: "/" },
+    { name: "Technical Support", path: "/" },
+    { name: "Term & Conditions", path: "/" },
+    { name: "Privacy Policy", path: "/" }
+  ],
+  [
+    { name: "Sponsored", path: "/" },
+    { name: "Previews", path: "/" },
+    { name: "Categories", path: "/" },
+    { name: "Advertisements", path: "/" }
+  ],
+  [
+    { name: "My Profile", path: "/" },
+    { name: "My Cart", path: "/" },
+    { name: "My Whishlist", path: "/" },
+    { name: "My Orders", path: "/" },
+    { name: "My Contacts", path: "/" },
     { name: "Donations", path: "/" },
-    { name: "Wishlist", path: "/" },
-    { name: "My Contacts", path: "/" }
+    { name: "Show Statistics", path: "/" }
+  ]
+];
+
+
+export const socialSharing = [
+    { imgName: "facebook", path: "/" },
+    { imgName: "twitter", path: "/" },
+    { imgName: "google", path: "/" },
+    { imgName: "linkedin", path: "/" },
+    { imgName: "instagram", path: "/" },
+    { imgName: "youtube", path: "/" }
   ];

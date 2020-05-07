@@ -55,7 +55,7 @@ const SearchBar = () => {
         <InputGroup className="search-input">
           <FormControl
             placeholder="Search"
-            aria-label="Recipient's username"
+            aria-label="Search"
             aria-describedby="basic-addon2"
           />
 
@@ -73,19 +73,6 @@ const SearchBar = () => {
               <Dropdown.Item eventKey="1">Red-Orange</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-
-          {/* <DropdownButton
-            as={InputGroup.Append}
-            variant="outline-secondary"
-            title="All Categories"
-            id="catagory-dropdown"
-          >
-            <Dropdown.Item href="#">Action</Dropdown.Item>
-            <Dropdown.Item href="#">Another action</Dropdown.Item>
-            <Dropdown.Item href="#">Something else here</Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item href="#">Separated link</Dropdown.Item>
-          </DropdownButton> */}
         </InputGroup>
       </Form>
     </React.Fragment>

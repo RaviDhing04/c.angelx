@@ -4,33 +4,35 @@
     letter-spacing: 1.12px;
     color: #C6CCC8;
     opacity: 1;
-}
 
-.search-input {
-    width: 100%;
-    input{
-        height: 44px;
-        border-radius: 4px;
+    .search-input {
+        width: 100%;
+
+        input {
+            height: 44px;
+            border-radius: 4px;
+        }
+
+        .dropdown {
+            padding: 8px 10px 8px 20px;
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            border-top: 1px solid #C6CCC8;
+            opacity: 1;
+            border-bottom: 1px solid #C6CCC8;
+            border-right: 1px solid #C6CCC8;
+            border-left: 0px;
+        }
     }
-    .dropdown{
-        padding: 8px 10px 8px 20px;
-    background: #FFFFFF 0% 0% no-repeat padding-box;
-    border-top: 1px solid #C6CCC8;
-    opacity: 1;
-    border-bottom: 1px solid #C6CCC8;
-    border-right: 1px solid #C6CCC8;
-    border-left: 0px;
+
+    .dropdown-menu {
+        width: 100%;
     }
-}
 
-.dropdown-menu{
-    width: 100%;
-}
-
-.catagory-dropdown{
-    text-align: left;
-    letter-spacing: 1.12px;
-    color: #6D6D6D;
-    opacity: 1;
-    text-decoration: none;
+    .catagory-dropdown {
+        text-align: left;
+        letter-spacing: 1.12px;
+        color: #6D6D6D;
+        opacity: 1;
+        text-decoration: none;
+    }
 }
