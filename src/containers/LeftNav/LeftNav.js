@@ -42,9 +42,9 @@ const LeftNav = props => {
               </InputGroup>
             </Form>
             <Card.Body>
-              {props.merchants.map(merchant => {
+              {props.merchants.map((merchant, i) => {
                 return (
-                  <div key={merchant.name} className="list-item">
+                  <div key={i} className="list-item">
                     <Nav className="flex-column">
                       <Nav.Link as={Link} to={merchant.path}>
                         {merchant.name}

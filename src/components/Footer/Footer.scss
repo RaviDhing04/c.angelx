@@ -1,5 +1,9 @@
 .footer {
     width: 100%;
+    margin-top:auto; 
+    // position: static;
+    // bottom: 0px;
+    // z-index: 99;
 
     .links-row-1 {
         background: #F6F7F9 0% 0% no-repeat padding-box;
@@ -29,7 +33,7 @@
         color: #6D6D6D;
         text-transform: uppercase;
         opacity: 1;
-        font-size: 16px;
+        font-size: 1rem;
     }
 
     .social-links {
@@ -55,7 +59,7 @@
         color: #6D6D6D;
         text-transform: uppercase;
         opacity: 1;
-        font-size: 16px;
+        font-size: 1rem;
     }
 
     .partner-info-grid, .partner-logo {

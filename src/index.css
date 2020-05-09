@@ -5,8 +5,13 @@
   font-weight: 400;
   font-style: normal;
 }
-
+:root{
+  font-size: 16px;
+}
 body {
+  height: 100%;
+  display:flex; 
+  flex-direction:column; 
   margin: 0;
   font-family: 'Proxima Nova' !important;
   font-style: normal;
@@ -15,7 +20,38 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-} */
+/* Smaller than standard 960 (devices and browsers) */
+@media only screen and (max-width: 1700px) {
+  :root{
+    font-size: 13px;
+  }
+}
+
+/* Smaller than standard 960 (devices and browsers) */
+@media only screen and (max-width: 1500px) {
+  :root{
+    font-size: 14px;
+  }
+}
+
+/* Smaller than standard 960 (devices and browsers) */
+@media only screen and (max-width: 959px) {
+
+}
+
+/* Tablet Portrait size to standard 960 (devices and browsers) */
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 767px) {
+}
+
+/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+}
+
+/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+@media only screen and (max-width: 479px) {
+}
+

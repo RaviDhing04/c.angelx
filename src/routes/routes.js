@@ -19,49 +19,57 @@ const AsyncHome = Loadable({
 });
 
 const AsyncHomeProductList = Loadable({
-    loader: () =>
-      import(/* webpackChunkName: "PageSwitcher" */ "../containers/HomeProductList/HomeProductList"),
-    loading: error => <LoadingFallback {...error} />,
-    modules: ["HomePage"]
-  });
+  loader: () =>
+    import(
+      /* webpackChunkName: "PageSwitcher" */ "../containers/HomeProductList/HomeProductList"
+    ),
+  loading: error => <LoadingFallback {...error} />,
+  modules: ["ProductList"]
+});
+
+const AsyncHomeProductDetails = Loadable({
+  loader: () =>
+    import(
+      /* webpackChunkName: "PageSwitcher" */ "../containers/ProductDetails/ProductDetails"
+    ),
+  loading: error => <LoadingFallback {...error} />,
+  modules: ["ProductDetails"]
+});
 
 export const parent_routes = [
   {
-    path: "/",
+    path: "/home",
     component: AsyncHome,
-    exact: true
+    exact: false
   }
 ];
 
 export const child_routes = [
-    {
-        path: "/",
-        component: AsyncHomeProductList,
-        exact: true
-      },
-    {
-      path: "/home/abc",
-      component: AsyncHomeProductList,
-      exact: true
-    }
-  ];
+  {
+    path: "/home",
+    component: AsyncHomeProductList,
+    exact: true
+  },
+  {
+    path: "/home/productDetail/:productId/:productTimeStamp",
+    component: AsyncHomeProductDetails,
+    exact: true
+  }
+];
 
 class Router extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-
-    }
+    this.state = {};
   }
   render() {
-      const {routes} = this.props;
+    const { routes } = this.props;
     return (
       <>
-        
-          {/* <Route path="/" component={AsyncHome} key="/home" exact /> */}
-          {routes.map((r, i) => (
-            <Route path={r.path} component={r.component} key={i} />
-          ))}
+        {/* <Route path="/" component={AsyncHome} key="/home" exact /> */}
+        {routes.map((r, i) => (
+          <Route path={r.path} component={r.component} key={i} exact={r.exact}/>
+        ))}
         {/* </Switch> */}
       </>
     );

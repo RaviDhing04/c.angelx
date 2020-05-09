@@ -1,6 +1,10 @@
 const initialState = {
   homePage: {
-    latestProducts: {}
+    latestProducts: {},
+  },
+  productDetailsPage: {
+    selectedProductDetails: {},
+    selectedProductId : ''
   }
 };
 
@@ -13,6 +17,14 @@ export const appReducer = (state = initialState, { type, value }) => {
         latestProducts: value.payload
         }
       };
+      case "PRODUCT_DETAILS":
+        return {
+          ...state,
+          productDetailsPage: {
+            selectedProductDetails: value.payload,
+            selectedProductId: value.id
+          }
+        };
     default:
       return state;
   }
