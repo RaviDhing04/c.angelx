@@ -16,7 +16,7 @@ const Header = () => {
   return (
     <React.Fragment>
     <Container fluid className="header">
-      <Navbar collapseOnSelect expand="md">
+      <Navbar collapseOnSelect >
         <Navbar.Brand href="#home">
           <img className="brand-logo" alt="c.Anglex-logo" src={brandlogo}></img>
         </Navbar.Brand>

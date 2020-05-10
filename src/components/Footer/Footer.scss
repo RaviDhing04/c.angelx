@@ -1,9 +1,6 @@
 .footer {
     width: 100%;
     margin-top:auto; 
-    // position: static;
-    // bottom: 0px;
-    // z-index: 99;
 
     .links-row-1 {
         background: #F6F7F9 0% 0% no-repeat padding-box;
@@ -62,8 +59,23 @@
         font-size: 1rem;
     }
 
-    .partner-info-grid, .partner-logo {
+    .partner-info-grid {
+        width: 21.875rem;
+        height: 4.4375rem;
         border: 1px solid #D0D2D6;
         opacity: 1;
+    }
+    
+    
+    .partner-logo {
+        width: 10.81rem;
+        height: 4.4375rem;
+        border: 1px solid #D0D2D6;
+        opacity: 1;
+    }
+
+    .footer-brand-logo{
+        width: 4.625rem;
+        height: 1.75;
     }
 }

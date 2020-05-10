@@ -18,9 +18,9 @@ const ProductListCarousel = props => {
             {Items &&
               Items.map((item, index) => {
                 return index < 5 ? (
-                  <Col key={item.ProductId.S}>
+                  <div key={item.ProductId.S}>
                     <Product data={item} />
-                  </Col>
+                  </div>
                 ) : null;
               })}
           </Row>

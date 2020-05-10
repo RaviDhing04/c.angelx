@@ -52,7 +52,7 @@ const Footer = () => {
                 src={collivery}
               ></img>
               <img
-                className=""
+                className="partner-logo"
                 alt="PayPal"
                 src={PayPal}
               ></img>
@@ -86,7 +86,7 @@ const Footer = () => {
           </div>
           <div className="footer-copyright">
             <img
-              className="brand-logo"
+              className="footer-brand-logo"
               alt="c.Anglex-logo"
               src={brandlogo}
             ></img>

@@ -20,7 +20,7 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   >
     {children}
     {/* &#x25bc; */}
-    <img alt="search-icon" src={downArrow}></img>
+    <img alt="search-icon" className="search-icon" src={downArrow}></img>
   </a>
 ));
 

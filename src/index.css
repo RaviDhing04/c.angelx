@@ -5,9 +5,9 @@
   font-weight: 400;
   font-style: normal;
 }
-:root{
+/* :root{
   font-size: 16px;
-}
+} */
 body {
   height: 100%;
   display:flex; 
@@ -21,22 +21,72 @@ body {
 }
 
 /* Smaller than standard 960 (devices and browsers) */
-@media only screen and (max-width: 1700px) {
+@media only screen and (max-width: 1800px) {
   :root{
-    font-size: 13px;
+    font-size: 16px;
   }
 }
 
 /* Smaller than standard 960 (devices and browsers) */
-@media only screen and (max-width: 1500px) {
+@media only screen and (max-width: 1700px) {
+  :root{
+    font-size: 15px;
+  }
+}
+
+/* Smaller than standard 960 (devices and browsers) */
+@media only screen and (max-width: 1600px) {
   :root{
     font-size: 14px;
   }
 }
 
 /* Smaller than standard 960 (devices and browsers) */
-@media only screen and (max-width: 959px) {
+@media only screen and (max-width: 1500px) {
+  :root{
+    font-size: 13px;
+  }
+}
 
+/* Smaller than standard 960 (devices and browsers) */
+@media only screen and (max-width: 1400px) {
+  :root{
+    font-size: 12px;
+  }
+}
+
+/* Smaller than standard 960 (devices and browsers) */
+@media only screen and (max-width: 1300px) {
+  :root{
+    font-size: 11px;
+  }
+}
+/* Smaller than standard 960 (devices and browsers) */
+@media only screen and (max-width: 1200px) {
+  :root{
+    font-size: 10px;
+  }
+}
+
+/* Smaller than standard 960 (devices and browsers) */
+@media only screen and (max-width: 1120px) {
+  :root{
+    font-size: 9px;
+  }
+}
+
+/* Smaller than standard 960 (devices and browsers) */
+@media only screen and (max-width: 1010px) {
+  :root{
+    font-size: 8px;
+  }
+}
+
+/* Smaller than standard 960 (devices and browsers) */
+@media only screen and (max-width: 880px) {
+  :root{
+    font-size: 7px;
+  }
 }
 
 /* Tablet Portrait size to standard 960 (devices and browsers) */

@@ -1,7 +1,7 @@
 .product-wrapper {
     display: flex;
     padding: 2rem 2rem 2rem 0rem;
-    min-height: 515px;
+    min-height: 38.43rem;
 
     a {
         text-decoration: none;
@@ -12,7 +12,7 @@
         list-style: none;
     margin: 0;
     padding: 3rem 1rem 2rem 3rem;
-    min-height: 400px;
+    min-height: 25rem;
     }
 
     ul li {
@@ -20,13 +20,13 @@
     }
 
     .sm-btn {
-        min-width: 100px;
+        min-width: 7.25rem;
         text-decoration: none;
         padding: 2px;
         display: inline-block;
-        border-radius: 4px;
+        border-radius: 0.5rem;
         text-align: center;
-        min-height: 20px;
+        min-height: 2.25rem;
         font-size: 0.875rem;
         font-weight: 500;
         line-height: 20px;
@@ -104,7 +104,7 @@
 
     .delivery-zip-code {
 
-        margin: 20px 0 10px;
+        margin: 1.25rem 0 0.8rem;
     }
 
     .delivery-zip-code label {
@@ -126,24 +126,24 @@
 
     .sub-head {
         font-size: 1.125rem;
-        margin-bottom: 8px;
+        margin-bottom: 0.5rem;
         letter-spacing: 0px;
         color: #202021;
         opacity: 1;
     }
 
     .color-palette a {
-        border-radius: 4px;
+        border-radius: 0.25rem;
         opacity: 1;
-        margin-right: 10px;
-        width: 20px;
-        height: 20px;
+        margin-right: .8rem;
+        width: 1.25rem;
+        height: 1.25rem;
         border: 1px solid #d4d4d47d;
         display: inline-block;
     }
 
     .color-palette {
-        margin-bottom: 20px;
+        margin-bottom: 1.25rem;
     }
 
     .seller-reating {

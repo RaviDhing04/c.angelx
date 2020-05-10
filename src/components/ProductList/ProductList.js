@@ -18,9 +18,9 @@ const ProductList = props => {
             {Items &&
               Items.slice(0, 5).map((item, index) => {
                 return index < 5 ? (
-                  <Col key={item.ProductId.S}>
+                  <div key={item.ProductId.S}>
                     <Product data={item} />
-                  </Col>
+                  </div>
                 ) : null;
               })}
           </Row>
@@ -34,9 +34,9 @@ const ProductList = props => {
             {Items &&
               Items.slice(5).map((item, index) => {
                 return index < 5 ? (
-                  <Col key={item.ProductId.S}>
+                  <div key={item.ProductId.S}>
                     <Product data={item} />
-                  </Col>
+                  </div>
                 ) : null;
               })}
           </Row>
