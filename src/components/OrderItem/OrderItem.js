@@ -19,7 +19,7 @@ const OrderItem = props => {
   return (
     <React.Fragment>
       {/* <Jumbotron fluid> */}
-      <div className="item-wrapper">
+      <div className="order-wrapper">
         <img className="item-image" alt="item" src={ThumbnailImageURL.S}></img>
         <div className="item-detail">
           <span className="item-name">{Name.S}</span>
