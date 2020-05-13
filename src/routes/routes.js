@@ -18,6 +18,13 @@ const AsyncHome = Loadable({
   modules: ["HomePage"]
 });
 
+const AsyncCart = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "PageSwitcher" */ "../pages/Cart/Cart"),
+  loading: error => <LoadingFallback {...error} />,
+  modules: ["CartPage"]
+});
+
 const AsyncHomeProductList = Loadable({
   loader: () =>
     import(
@@ -40,6 +47,11 @@ export const parent_routes = [
   {
     path: "/home",
     component: AsyncHome,
+    exact: false
+  },
+  {
+    path: "/cart/:userId",
+    component: AsyncCart,
     exact: false
   }
 ];

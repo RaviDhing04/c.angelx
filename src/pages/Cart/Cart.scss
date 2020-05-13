@@ -1,0 +1,121 @@
+.cart-page-container {
+
+    .cart-page {
+        width: 96rem;
+        margin: 4rem auto;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .left-section {
+        width: 63.5rem;
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.6rem;
+            padding-right: 2.25rem;
+
+            .heading {
+                font-size: 2.375rem;
+                letter-spacing: 2.66px;
+                color: #3B3B3B;
+                opacity: 1;
+            }
+
+            .remove-all {
+                align-self: flex-end;
+                font-size: 1.25rem;
+                letter-spacing: 0px;
+                color: #ABABAB;
+                opacity: 1;
+            }
+        }
+    }
+
+    .right-section {
+        margin-top: 4rem;
+        display: flex;
+        flex-direction: column;
+
+        .cart-calc {
+            width: 27.5rem;
+            height: 27rem;
+            display: flex;
+            flex-direction: column;
+            background: #F6F6F6 0% 0% no-repeat padding-box;
+            border-radius: 5px;
+            opacity: 1;
+            padding: 1.6875rem;
+            justify-content: space-between;
+
+            .promo-code {
+                label {
+                    font-weight: bold;
+                    font-size: 0.8125rem;
+                    letter-spacing: 0px;
+                    color: #333333DE;
+                    opacity: 1;
+                }
+
+                input {
+                    width: 24.75rem;
+                    height: 2.375rem;
+                    background: #FFFFFF 0% 0% no-repeat padding-box;
+                    border: 1px solid #DEDEDF;
+                    border-radius: 4px;
+                    opacity: 1;
+                }
+            }
+
+            .sub-total,
+            .coupon,
+            .saving {
+                font-size: 1.25rem;
+                letter-spacing: 0px;
+                color: #000000DE;
+                opacity: 1;
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .line{
+                height: 1px;
+                background-color: #D0D2D6;
+                margin: 0rem -1.6rem;
+            }
+
+            .total {
+                font-size: 1.375rem;
+                letter-spacing: 0px;
+                color: #000000DE;
+                opacity: 1;
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .checkout {
+                width: 25rem;
+                height: 3.125rem;
+                background: #558ED4 0% 0% no-repeat padding-box;
+                border-radius: 4px;
+                opacity: 1;
+                text-align: center;
+                font-size: 1.25rem;
+                font-weight: 500;
+                letter-spacing: 0px;
+                color: #FFFFFF;
+                opacity: 1;
+            }
+        }
+
+        .continue-shopping {
+            font-size: 1.25rem;
+            letter-spacing: 0px;
+            color: #2185D0;
+            opacity: 1;
+            align-self: center;
+        }
+    }
+
+}

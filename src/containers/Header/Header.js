@@ -12,7 +12,7 @@ import downArrow from "../../assets/down-arrow.svg";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import "./Header.scss";
 
-const Header = () => {
+const Header = (props) => {
   return (
     <React.Fragment>
     <Container fluid className="header">
@@ -42,7 +42,7 @@ const Header = () => {
             <Nav.Link href="#memes">
               <img className="nav-icon" alt="heart-icon" src={heart}></img>
             </Nav.Link>
-            <Nav.Link href="#memes">
+            <Nav.Link as={Link} to={`/cart/${props.userId}`}>
               <img
                 className="nav-icon"
                 alt="shoppingcart-icon"

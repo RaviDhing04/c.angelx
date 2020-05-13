@@ -50,10 +50,10 @@ export const getCartItems = (body = {}) => async (dispatch) =>{
             method: "POST",
             body: body
         });
-        if(response && response.result && response.result.data && response.result.data.success ) {
+        if(response && response.result && response.result.data && response.result.message === "Success" ) {
           dispatch({
             type: 'CART_DETAILS',
-            value: { payload : response.result.data.Item, id: response.result.data.Item.ProductId.S }
+            value: { payload : response.result.data }
           });
           return true;
         } else {
