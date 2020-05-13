@@ -1,5 +1,5 @@
 export const leftNavLinks = [
-  { name: "Pending in Total", path: "/", icon: "hourglass" },
+  { name: "Pending in Total", path: "/home/ordersList/", icon: "hourglass" },
   { name: "Arears in Total", path: "/", icon: "Group 1030" },
   { name: "Lay Buys in Total", path: "/", icon: "shipping" },
   { name: "Pre-orders in Total", path: "/", icon: "clock" },

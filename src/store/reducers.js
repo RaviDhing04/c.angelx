@@ -9,6 +9,10 @@ const initialState = {
   cartDetailsPage: {
     cartItems: {},
     cartProductDetails: {}
+  },
+  ordersListPage: {
+    orderItems: {},
+    orderProductDetails: {}
   }
 };
 
@@ -37,6 +41,14 @@ export const appReducer = (state = initialState, { type, value }) => {
           cartProductDetails: value.payload.productDetails
         }
       };
+      case "ORDER_DETAILS":
+        return {
+          ...state,
+           ordersListPage: {
+            orderItems: value.payload.cartDetails,
+            orderProductDetails: value.payload.productDetails
+          }
+        };
     default:
       return state;
   }

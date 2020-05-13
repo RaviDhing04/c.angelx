@@ -43,6 +43,15 @@ const AsyncHomeProductDetails = Loadable({
   modules: ["ProductDetails"]
 });
 
+const AsyncHomeOrdersList = Loadable({
+  loader: () =>
+    import(
+      /* webpackChunkName: "PageSwitcher" */ "../containers/OrdersList/OrdersList"
+    ),
+  loading: error => <LoadingFallback {...error} />,
+  modules: ["OrdersList"]
+});
+
 export const parent_routes = [
   {
     path: "/home",
@@ -65,6 +74,11 @@ export const child_routes = [
   {
     path: "/home/productDetail/:productId/:productTimeStamp",
     component: AsyncHomeProductDetails,
+    exact: true
+  },
+  {
+    path: "/home/ordersList/:userId",
+    component: AsyncHomeOrdersList,
     exact: true
   }
 ];

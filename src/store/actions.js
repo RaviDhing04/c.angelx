@@ -64,3 +64,24 @@ export const getCartItems = (body = {}) => async (dispatch) =>{
         return false;
       }
 }
+
+export const getOrderItems = (body = {}) => async (dispatch) =>{
+  try {
+      const response = await httpFetch(baseUrl + 'cart/getcartdetails', {
+          method: "POST",
+          body: body
+      });
+      if(response && response.result && response.result.data && response.result.message === "Success" ) {
+        dispatch({
+          type: 'ORDER_DETAILS',
+          value: { payload : response.result.data }
+        });
+        return true;
+      } else {
+        return false;
+      }
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
+}

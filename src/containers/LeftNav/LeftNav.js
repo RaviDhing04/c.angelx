@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 import checkmark from "../../assets/checkmark.svg";
 
 const LeftNav = props => {
+
+  const userId = "1588433471165"; // to be update from login info later
+
   return (
     <div className="leftNav">
       <div className="leftNav-heading">MANAGE</div>
@@ -19,7 +22,7 @@ const LeftNav = props => {
                   src={require(`../../assets/${link.icon}.svg`)}
                 ></img>
                 <Nav className="flex-column">
-                  <Nav.Link as={Link} to={link.path}>
+                  <Nav.Link as={Link} to={link.path + userId}>
                     {link.name}
                   </Nav.Link>
                 </Nav>
