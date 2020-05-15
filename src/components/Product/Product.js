@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Card, Button } from "react-bootstrap";
 import "./Product.scss";
+import { formatter } from "../../utils/commonUtils/currencyUtils";
 
 const Product = props => {
   const { data } = props;
@@ -19,9 +20,9 @@ const Product = props => {
             <div >
             <Card.Title>{data.Name.S}</Card.Title>
             <Card.Text>
-              {data.IsDonationCampaign.S
+              {data.IsDonationCampaign.S === 'true'
                 ? "By " + data.MerchantHandle.S
-                : "R " + data.ProductSpecifications.M.UnitPrice.S}
+                : formatter.format(data.ProductSpecifications.M.UnitPrice.S) }
             </Card.Text>
             </div>
           </Link>

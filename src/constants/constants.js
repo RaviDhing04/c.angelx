@@ -1,10 +1,10 @@
 export const leftNavLinks = [
   { name: "Pending in Total", path: "/home/ordersList/", icon: "hourglass" },
-  { name: "Arears in Total", path: "/", icon: "Group 1030" },
-  { name: "Lay Buys in Total", path: "/", icon: "shipping" },
-  { name: "Pre-orders in Total", path: "/", icon: "clock" },
-  { name: "Donations", path: "/", icon: "donate" },
-  { name: "Wishlist", path: "/", icon: "heart" },
+  { name: "Arears in Total", path: "/home/ordersList/", icon: "Group 1030" },
+  { name: "Lay Buys in Total", path: "/home/ordersList/", icon: "shipping" },
+  { name: "Pre-orders in Total", path: "/home/ordersList/", icon: "clock" },
+  { name: "Donations", path: "/home/ordersList/", icon: "donate" },
+  { name: "Wishlist", path: "/home/ordersList/", icon: "heart" },
   { name: "My Contacts", path: "/", icon: "profile" }
 ];
 
@@ -53,4 +53,10 @@ export const socialSharing = [
     { imgName: "linkedin", path: "/" },
     { imgName: "instagram", path: "/" },
     { imgName: "youtube", path: "/" }
+  ];
+
+
+  export const currencies = [
+    { name: "US Dollar", shortName: "USD" , icon: "dollar" },
+    { name: "Rupee", shortName: "INR" , icon: "rupee-indian" }
   ];

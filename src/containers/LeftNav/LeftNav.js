@@ -22,7 +22,7 @@ const LeftNav = props => {
                   src={require(`../../assets/${link.icon}.svg`)}
                 ></img>
                 <Nav className="flex-column">
-                  <Nav.Link as={Link} to={link.path + userId}>
+                  <Nav.Link as={Link} to={link.path + userId + '/' + link.name}>
                     {link.name}
                   </Nav.Link>
                 </Nav>

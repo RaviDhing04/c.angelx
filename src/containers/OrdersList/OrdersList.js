@@ -10,17 +10,19 @@ import CustomLoader from "../../components/CustomLoader/CustomLoader";
 const OrdersList = props => {
   const [loading, setLoading] = useState(true);
   const [orderProducts, setorderProducts] = useState([]);
+  const [pageName, setName] = useState("");
   // let orderProducts = [];
-  const { orderItems, productDetails } = props;
+  const { orderItems, productDetails, getOrderItems } = props;
+  const {userId, name} = props.match.params;
 
   useEffect(() => {
     async function fetchOrderItems() {
-      const userId = props.match.params.userId;
-      const res = await props.getOrderItems({ UserId: userId });
+        name ? setName(name) : setName("");
+      const res = await getOrderItems({ UserId: userId });
       res ? setLoading(false) : console.log("err");
     }
     fetchOrderItems();
-  }, []);
+  }, [userId, getOrderItems, name]);
 
   useEffect(() => {
     const makeOrderProduct = () => {
@@ -45,7 +47,7 @@ const OrdersList = props => {
 
   return !loading ? (
     <React.Fragment>
-      <div className="product-row-heading">Product Info</div>
+      <div className="product-row-heading">{pageName}</div>
       <Container className="order-page-container" fluid>
         <div className="order-page">
           {orderProducts.map(orderItem => {

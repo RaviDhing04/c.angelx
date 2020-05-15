@@ -5,6 +5,7 @@ import plusIcon from "../../assets/plus.svg";
 import minusIcon from "../../assets/minus.svg";
 import deleteIcon from "../../assets/delete_outline.svg";
 import heartIcon from "../../assets/heart.svg";
+import { formatter } from "../../utils/commonUtils/currencyUtils";
 
 const OrderItem = props => {
   const {
@@ -30,10 +31,10 @@ const OrderItem = props => {
         </div>
         <div className="item-pricing">
           <span className="item-price">
-            {ProductSpecifications.M.UnitPrice.S}
+            {formatter.format(ProductSpecifications.M.UnitPrice.S)}
           </span>
           <span className="item-cutPrice">
-            {ProductSpecifications.M.UnitPrice.S}
+            {formatter.format(ProductSpecifications.M.UnitPrice.S)}
           </span>
         </div>
         <div className="item-transit">

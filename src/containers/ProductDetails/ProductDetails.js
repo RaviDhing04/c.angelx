@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { getselectedProductDetails } from "../../store/actions";
+import { getSelectedProductDetails } from "../../store/actions";
 import { Container, Accordion, Card } from "react-bootstrap";
 import { bindActionCreators } from "redux";
 import "./ProductDetails.scss";
 import ProductSlider from "../../components/ProductSlider/ProductSlider";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
+import { formatter } from "../../utils/commonUtils/currencyUtils";
 
 const ProductDetails = props => {
   const { ProductDetails, productId } = props;
@@ -28,7 +29,7 @@ const ProductDetails = props => {
           ProductId: props.match.params.productId,
           Timestamp: props.match.params.productTimeStamp
         };
-        const res = await props.getselectedProductDetails(payload);
+        const res = await props.getSelectedProductDetails(payload);
         res ? setLoading(false) : console.log('err');
       }
     }
@@ -60,7 +61,7 @@ const ProductDetails = props => {
                 <li className="product-name">{Name.S}</li>
                 <li className="product-price">
                   <span>{ProductSpecifications.M.Currency.S}</span>{" "}
-                  {ProductSpecifications.M.UnitPrice.S}
+                  {formatter.format(ProductSpecifications.M.UnitPrice.S)}
                 </li>
                 <li>
                   <span className="price-discount">8000</span>
@@ -121,7 +122,7 @@ const ProductDetails = props => {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getselectedProductDetails
+      getSelectedProductDetails
     },
     dispatch
   );

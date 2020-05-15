@@ -1,93 +1,132 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { Container } from "react-bootstrap";
+import { Container, Nav } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { bindActionCreators } from "redux";
-import { getCartItems } from "../../store/actions";
+import {
+  getCartItems,
+  increaseProductQuantity,
+  decreaseProductQuantity,
+  deleteProductFromCart,
+  deleteAllProductFromCart
+} from "../../store/actions";
 import "./Cart.scss";
 import CartItem from "../../components/CartItem/CartItem";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import deleteIcon from "../../assets/delete_outline.svg";
+import { formatter } from "../../utils/commonUtils/currencyUtils.js";
 
 const Cart = props => {
   const [loading, setLoading] = useState(true);
-  const [cartProducts, setcartProducts] = useState([]);
-  // let cartProducts = [];
-  const { cartItems, productDetails } = props;
+  const [isCartEmpty, setEmptyCart] = useState(false);
+  const [subTotal, setSubTotal] = useState(0);
+  const [saving, setSaving] = useState(0);
+  const [couponSaving, setCouponSaving] = useState(0);
+  const { cartItems } = props;
 
   useEffect(() => {
     async function fetchCartItems() {
       const userId = props.match.params.userId;
       const res = await props.getCartItems({ UserId: userId });
       res ? setLoading(false) : console.log("err");
-      // makeCartProduct();  // 1 - does not gets update props
     }
     fetchCartItems();
   }, []);
 
   useEffect(() => {
-    const makeCartProduct = () => {
-      let out = [];
-      cartItems &&
-        cartItems.forEach(cartItem => {
-          productDetails &&
-            productDetails.forEach(product => {
-              if (cartItem.ProductId.S === product.ProductId.S) {
-                out.push({
-                  UserId: cartItem.UserId,
-                  Quantity: cartItem.Quantity,
-                  ...product
-                });
-              }
-            });
-        });
+    const calculate = () => {
+      const out = [0,0];
+      cartItems.forEach(item => {
+        out[0] += (+item.ProductSpecifications.M.UnitPrice.S);
+        out[1] += (+item.ProductSpecifications.M.UnitPrice.S);
+      });
       return out;
     };
-    setcartProducts(makeCartProduct());
-  }, [cartItems, productDetails]);
+    cartItems && cartItems.length ? setEmptyCart(false) : setEmptyCart(true);
+    const calculated = calculate();
+    setSubTotal(calculated[0]);
+    setSaving(calculated[1]);
+  }, [cartItems]);
+
+  const increaseProductQuantity = productId => {
+    props.increaseProductQuantity(productId);
+  };
+
+  const decreaseProductQuantity = productId => {
+    props.decreaseProductQuantity(productId);
+  };
+
+  const deleteProductFromCart = productId => {
+    productId === "all"
+      ? props.deleteAllProductFromCart()
+      : props.deleteProductFromCart(productId);
+  };
 
   return !loading ? (
     <Container className="cart-page-container" fluid>
-      <div className="cart-page">
-        <div className="left-section">
-          <div className="cart-header">
-            <span className="heading">Your Cart</span>
-            <span className="remove-all">
-              <img alt="delete-icon" src={deleteIcon}></img>
-              Remove all items
-            </span>
-          </div>
-          {cartProducts.map(cartItem => {
-            return <CartItem key={+cartItem.ProductId.S} cartItem={cartItem} />;
-          })}
+      {isCartEmpty ? (
+        <div className="cart-empty">
+          <span className="heading">Your Cart Is Empty</span>
+          <Nav.Link as={Link} to={"/"}>
+            <span className="continue-shopping">Continue Shopping</span>
+          </Nav.Link>
         </div>
-        <div className="right-section">
-          <div className="cart-calc">
-            <div className="promo-code">
-              <label>Promo Code</label>
-              <input type="text" placeholder="Enter Code"></input>
+      ) : (
+        <div className="cart-page">
+          <div className="left-section">
+            <div className="cart-header">
+              <span className="heading">Your Cart</span>
+              <span
+                onClick={() => deleteProductFromCart("all")}
+                className="remove-all"
+              >
+                <img alt="delete-icon" src={deleteIcon}></img>
+                Remove all items
+              </span>
             </div>
-            <div className="sub-total">
-              <span>Items Subtotal</span>
-              <span> 24000</span>
-            </div>
-            <div className="coupon">
-              <span>Coupon</span>
-              <span> 0 </span>
-            </div>
-            <div className="saving">
-              <span>Your saving</span>
-              <span> 1500</span>
-            </div>
-            <div className="line"></div>
-            <div className="total">
-              <span>Total</span>
-              <span> 22500</span>
-            </div>
-            <button className="checkout">Proceed to checkout</button>
+            {cartItems.map(cartItem => {
+              return (
+                cartItem && (
+                  <CartItem
+                    key={+cartItem.ProductId.S}
+                    cartItem={cartItem}
+                    decreaseProductQuantity={decreaseProductQuantity}
+                    increaseProductQuantity={increaseProductQuantity}
+                    deleteProductFromCart={deleteProductFromCart}
+                  />
+                )
+              );
+            })}
           </div>
-          <div className="continue-shopping">Continue shopping</div>
+          <div className="right-section">
+            <div className="cart-calc">
+              <div className="promo-code">
+                <label>Promo Code</label>
+                <input type="text" placeholder="Enter Code"></input>
+              </div>
+              <div className="sub-total">
+                <span>Items Subtotal</span>
+                <span> {formatter.format(subTotal)} </span>
+              </div>
+              <div className="coupon">
+                <span>Coupon</span>
+                <span> { formatter.format(couponSaving) } </span>
+              </div>
+              <div className="saving">
+                <span>Your saving</span>
+                <span> {formatter.format(saving)} </span>
+              </div>
+              <div className="line"></div>
+              <div className="total">
+                <span>Total</span>
+                <span> {formatter.format(subTotal - saving - couponSaving)} </span>
+              </div>
+              <button className="checkout">Proceed to checkout</button>
+            </div>
+            <div className="continue-shopping">Continue shopping</div>
+          </div>
         </div>
-      </div>
+      )}
     </Container>
   ) : (
     <CustomLoader />
@@ -97,7 +136,11 @@ const Cart = props => {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getCartItems
+      getCartItems,
+      increaseProductQuantity,
+      decreaseProductQuantity,
+      deleteProductFromCart,
+      deleteAllProductFromCart
     },
     dispatch
   );
@@ -105,8 +148,7 @@ const mapDispatchToProps = dispatch =>
 const mapStatetoProps = ({ app: { cartDetailsPage } }) => {
   console.log(cartDetailsPage);
   return {
-    cartItems: cartDetailsPage.cartItems.Items,
-    productDetails: cartDetailsPage.cartProductDetails.Items
+    cartItems: cartDetailsPage.cartItems
   };
 };
 

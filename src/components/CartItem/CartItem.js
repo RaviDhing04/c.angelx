@@ -5,6 +5,7 @@ import plusIcon from "../../assets/plus.svg";
 import minusIcon from "../../assets/minus.svg";
 import deleteIcon from "../../assets/delete_outline.svg";
 import heartIcon from "../../assets/heart.svg";
+import { formatter } from "../../utils/commonUtils/currencyUtils";
 
 const CartItem = props => {
   const {
@@ -14,7 +15,8 @@ const CartItem = props => {
     IsInStock,
     ProductSpecifications,
     Quantity,
-    IsDonationCampaign
+    IsDonationCampaign,
+    ProductId
   } = props.cartItem;
   return (
     <React.Fragment>
@@ -30,20 +32,20 @@ const CartItem = props => {
         </div>
         <div className="item-pricing">
           <span className="item-price">
-            {ProductSpecifications.M.UnitPrice.S}
+            {formatter.format(ProductSpecifications.M.UnitPrice.S)}
           </span>
           <span className="item-cutPrice">
-            {ProductSpecifications.M.UnitPrice.S}
+            {formatter.format(ProductSpecifications.M.UnitPrice.S)}
           </span>
         </div>
         <div className="item-quantity">
-          <img className="minus-icon" alt="minus-icon" src={minusIcon}></img>
+          <img  onClick={() => props.decreaseProductQuantity(ProductId.S)} className="minus-icon" alt="minus-icon" src={minusIcon}></img>
           <span className="item-count">{Quantity.S}</span>
-          <img className="plus-icon"alt="plus-icon" src={plusIcon}></img>
+          <img onClick={() => props.increaseProductQuantity(ProductId.S)} className="plus-icon"alt="plus-icon" src={plusIcon}></img>
         </div>
         <div className="item-actions">
           <img className="heart-icon" alt="heart-icon" src={heartIcon}></img>
-          <img className="delete-icon" alt="delete-icon" src={deleteIcon}></img>
+          <img  onClick={() => props.deleteProductFromCart(ProductId.S)} className="delete-icon" alt="delete-icon" src={deleteIcon}></img>
         </div>
         {console.log(props.cartItem)}
       </Container>

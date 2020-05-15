@@ -7,8 +7,7 @@ const initialState = {
     selectedProductId : ''
   },
   cartDetailsPage: {
-    cartItems: {},
-    cartProductDetails: {}
+    cartItems: []
   },
   ordersListPage: {
     orderItems: {},
@@ -37,8 +36,7 @@ export const appReducer = (state = initialState, { type, value }) => {
       return {
         ...state,
         cartDetailsPage: {
-          cartItems: value.payload.cartDetails,
-          cartProductDetails: value.payload.productDetails
+          cartItems: value.payload
         }
       };
       case "ORDER_DETAILS":

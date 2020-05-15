@@ -77,7 +77,7 @@ export const child_routes = [
     exact: true
   },
   {
-    path: "/home/ordersList/:userId",
+    path: "/home/ordersList/:userId/:name",
     component: AsyncHomeOrdersList,
     exact: true
   }
