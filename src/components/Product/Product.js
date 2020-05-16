@@ -2,10 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Card, Button } from "react-bootstrap";
 import "./Product.scss";
-import { formatter } from "../../utils/commonUtils/currencyUtils";
+import formatter from "../../utils/commonUtils/currencyUtils";
 
 const Product = props => {
-  const { data } = props;
+  const { data, activeCurrency } = props;
   return (
     <React.Fragment>
       {data && Object.keys(data).length ? (
@@ -22,7 +22,7 @@ const Product = props => {
             <Card.Text>
               {data.IsDonationCampaign.S === 'true'
                 ? "By " + data.MerchantHandle.S
-                : formatter.format(data.ProductSpecifications.M.UnitPrice.S) }
+                : formatter(activeCurrency)(data.ProductSpecifications.M.UnitPrice.S) }
             </Card.Text>
             </div>
           </Link>

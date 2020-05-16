@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
 import { Navbar, Nav, Container, Dropdown } from "react-bootstrap";
 import brandlogo from "../../assets/brand-logo.svg";
-import dollar from "../../assets/dollar.svg";
 import globe from "../../assets/globe.svg";
 import heart from "../../assets/heart.svg";
 import shoppingcart from "../../assets/shopping-cart.svg";
@@ -12,23 +13,24 @@ import downArrow from "../../assets/down-arrow.svg";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import { currencies } from "../../constants/constants";
 import "./Header.scss";
+import { setGlobalCurrency } from "../../store/actions";
 
 const Header = props => {
-  const [activeCurrency, setActiveCurrency] = useState({
-    name: "US Dollar",
-    shortName: "USD",
-    icon: "dollar"
-  });
+  const [activeCurrency, setActiveCurrency] = useState(currencies[0]);
 
   const changeCurrency = e => {
     if (e && e.target) {
-      setActiveCurrency(
-        currencies.find(currency => {
+       const selected = currencies.find(currency => {
           return currency.name === e.target.attributes.value.nodeValue;
         })
-      );
+        setActiveCurrency(selected);
+      props.setGlobalCurrency(selected);
     }
   };
+
+useEffect(() => {
+  props.setGlobalCurrency(activeCurrency);
+},[]);
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <a
@@ -158,4 +160,19 @@ const Header = props => {
   );
 };
 
-export default Header;
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      setGlobalCurrency
+    },
+    dispatch
+  );
+
+const mapStatetoProps = ({ app: { common } }) => {
+  console.log(common);
+  return {
+  };
+};
+
+export default connect(mapStatetoProps, mapDispatchToProps)(Header);

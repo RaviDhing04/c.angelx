@@ -14,7 +14,7 @@ import "./Cart.scss";
 import CartItem from "../../components/CartItem/CartItem";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import deleteIcon from "../../assets/delete_outline.svg";
-import { formatter } from "../../utils/commonUtils/currencyUtils.js";
+import formatter from "../../utils/commonUtils/currencyUtils.js";
 
 const Cart = props => {
   const [loading, setLoading] = useState(true);
@@ -22,7 +22,7 @@ const Cart = props => {
   const [subTotal, setSubTotal] = useState(0);
   const [saving, setSaving] = useState(0);
   const [couponSaving, setCouponSaving] = useState(0);
-  const { cartItems } = props;
+  const { cartItems, activeCurrency } = props;
 
   useEffect(() => {
     async function fetchCartItems() {
@@ -37,8 +37,8 @@ const Cart = props => {
     const calculate = () => {
       const out = [0,0];
       cartItems.forEach(item => {
-        out[0] += (+item.ProductSpecifications.M.UnitPrice.S);
-        out[1] += (+item.ProductSpecifications.M.UnitPrice.S);
+        out[0] += (+item.ProductSpecifications.M.UnitPrice.S * +item.Quantity.S);
+        out[1] += (+item.ProductSpecifications.M.UnitPrice.S * +item.Quantity.S);
       });
       return out;
     };
@@ -93,6 +93,7 @@ const Cart = props => {
                     decreaseProductQuantity={decreaseProductQuantity}
                     increaseProductQuantity={increaseProductQuantity}
                     deleteProductFromCart={deleteProductFromCart}
+                    activeCurrency={activeCurrency}
                   />
                 )
               );
@@ -106,20 +107,20 @@ const Cart = props => {
               </div>
               <div className="sub-total">
                 <span>Items Subtotal</span>
-                <span> {formatter.format(subTotal)} </span>
+                <span> {formatter(activeCurrency)(subTotal)} </span>
               </div>
               <div className="coupon">
                 <span>Coupon</span>
-                <span> { formatter.format(couponSaving) } </span>
+                <span> { formatter(activeCurrency)(couponSaving) } </span>
               </div>
               <div className="saving">
                 <span>Your saving</span>
-                <span> {formatter.format(saving)} </span>
+                <span> {formatter(activeCurrency)(saving)} </span>
               </div>
               <div className="line"></div>
               <div className="total">
                 <span>Total</span>
-                <span> {formatter.format(subTotal - saving - couponSaving)} </span>
+                <span> {formatter(activeCurrency)(subTotal - saving - couponSaving)} </span>
               </div>
               <button className="checkout">Proceed to checkout</button>
             </div>
@@ -145,10 +146,11 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-const mapStatetoProps = ({ app: { cartDetailsPage } }) => {
+const mapStatetoProps = ({ app: { cartDetailsPage, common } }) => {
   console.log(cartDetailsPage);
   return {
-    cartItems: cartDetailsPage.cartItems
+    cartItems: cartDetailsPage.cartItems,
+    activeCurrency: common.activeCurrency
   };
 };
 

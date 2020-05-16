@@ -7,7 +7,8 @@ import ProductRowShimmer from "../ProductRowShimmer/ProductRowShimmer";
 const ProductListCarousel = props => {
   const {
     data: { Items },
-    name
+    name,
+    activeCurrency
   } = props;
   return (
     <React.Fragment>
@@ -19,7 +20,7 @@ const ProductListCarousel = props => {
               Items.map((item, index) => {
                 return index < 5 ? (
                   <div key={item.ProductId.S}>
-                    <Product data={item} />
+                    <Product data={item} activeCurrency={activeCurrency} />
                   </div>
                 ) : null;
               })}

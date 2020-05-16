@@ -57,6 +57,6 @@ export const socialSharing = [
 
 
   export const currencies = [
-    { name: "US Dollar", shortName: "USD" , icon: "dollar" },
-    { name: "Rupee", shortName: "INR" , icon: "rupee-indian" }
+    { name: "US Dollar", shortName: "USD" , icon: "dollar", conversion: 70 },
+    { name: "Rupee", shortName: "INR" , icon: "rupee-indian", conversion: 1 }
   ];

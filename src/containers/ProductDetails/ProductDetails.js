@@ -7,10 +7,10 @@ import { bindActionCreators } from "redux";
 import "./ProductDetails.scss";
 import ProductSlider from "../../components/ProductSlider/ProductSlider";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
-import { formatter } from "../../utils/commonUtils/currencyUtils";
+import formatter from "../../utils/commonUtils/currencyUtils";
 
 const ProductDetails = props => {
-  const { ProductDetails, productId } = props;
+  const { ProductDetails, productId, activeCurrency } = props;
   const {
     Description,
     IsDonationCampaign,
@@ -61,7 +61,7 @@ const ProductDetails = props => {
                 <li className="product-name">{Name.S}</li>
                 <li className="product-price">
                   <span>{ProductSpecifications.M.Currency.S}</span>{" "}
-                  {formatter.format(ProductSpecifications.M.UnitPrice.S)}
+                  {formatter(activeCurrency)(ProductSpecifications.M.UnitPrice.S)}
                 </li>
                 <li>
                   <span className="price-discount">8000</span>
@@ -127,11 +127,12 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-const mapStatetoProps = ({ app: { productDetailsPage } }) => {
+const mapStatetoProps = ({ app: { productDetailsPage, common} }) => {
   console.log(productDetailsPage);
   return {
     ProductDetails: productDetailsPage.selectedProductDetails,
-    productId: productDetailsPage.selectedProductId
+    productId: productDetailsPage.selectedProductId,
+    activeCurrency: common.activeCurrency
   };
 };
 

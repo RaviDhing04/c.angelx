@@ -12,12 +12,12 @@ const OrdersList = props => {
   const [orderProducts, setorderProducts] = useState([]);
   const [pageName, setName] = useState("");
   // let orderProducts = [];
-  const { orderItems, productDetails, getOrderItems } = props;
-  const {userId, name} = props.match.params;
+  const { orderItems, productDetails, getOrderItems, activeCurrency } = props;
+  const { userId, name } = props.match.params;
 
   useEffect(() => {
     async function fetchOrderItems() {
-        name ? setName(name) : setName("");
+      name ? setName(name) : setName("");
       const res = await getOrderItems({ UserId: userId });
       res ? setLoading(false) : console.log("err");
     }
@@ -52,7 +52,11 @@ const OrdersList = props => {
         <div className="order-page">
           {orderProducts.map(orderItem => {
             return (
-              <OrderItem key={+orderItem.ProductId.S} orderItem={orderItem} />
+              <OrderItem
+                key={+orderItem.ProductId.S}
+                orderItem={orderItem}
+                activeCurrency={activeCurrency}
+              />
             );
           })}
         </div>
@@ -71,11 +75,12 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-const mapStatetoProps = ({ app: { ordersListPage } }) => {
+const mapStatetoProps = ({ app: { ordersListPage, common } }) => {
   console.log(ordersListPage);
   return {
     orderItems: ordersListPage.orderItems.Items,
-    productDetails: ordersListPage.orderProductDetails.Items
+    productDetails: ordersListPage.orderProductDetails.Items,
+    activeCurrency: common.activeCurrency
   };
 };
 

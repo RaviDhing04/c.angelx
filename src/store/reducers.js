@@ -1,10 +1,10 @@
 const initialState = {
   homePage: {
-    latestProducts: {},
+    latestProducts: {}
   },
   productDetailsPage: {
     selectedProductDetails: {},
-    selectedProductId : ''
+    selectedProductId: ""
   },
   cartDetailsPage: {
     cartItems: []
@@ -12,6 +12,12 @@ const initialState = {
   ordersListPage: {
     orderItems: {},
     orderProductDetails: {}
+  },
+  viewAllProductPage: {
+    products: {}
+  },
+  common:{
+    activeCurrency: null,
   }
 };
 
@@ -21,32 +27,46 @@ export const appReducer = (state = initialState, { type, value }) => {
       return {
         ...state,
         homePage: {
-        latestProducts: value.payload
+          latestProducts: value.payload
         }
       };
-      case "PRODUCT_DETAILS":
-        return {
-          ...state,
-          productDetailsPage: {
-            selectedProductDetails: value.payload,
-            selectedProductId: value.id
-          }
-        };
-        case "CART_DETAILS":
+    case "VIEWALL_PRODUCTS":
+      return {
+        ...state,
+        viewAllProductPage: {
+          products: value.payload
+        }
+      };
+    case "PRODUCT_DETAILS":
+      return {
+        ...state,
+        productDetailsPage: {
+          selectedProductDetails: value.payload,
+          selectedProductId: value.id
+        }
+      };
+    case "CART_DETAILS":
       return {
         ...state,
         cartDetailsPage: {
           cartItems: value.payload
         }
       };
-      case "ORDER_DETAILS":
-        return {
-          ...state,
-           ordersListPage: {
-            orderItems: value.payload.cartDetails,
-            orderProductDetails: value.payload.productDetails
-          }
-        };
+    case "ORDER_DETAILS":
+      return {
+        ...state,
+        ordersListPage: {
+          orderItems: value.payload.cartDetails,
+          orderProductDetails: value.payload.productDetails
+        }
+      };
+      case "SET_ACTIVE_CURRENCY":
+ return {
+   ...state,
+   common:{
+    activeCurrency: value.payload
+   }
+ }
     default:
       return state;
   }

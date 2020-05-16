@@ -1,13 +1,15 @@
 import React from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Row, Button } from "react-bootstrap";
 import Product from "../Product/Product";
+import { Link } from "react-router-dom";
 import "./ProductList.scss";
 import ProductRowShimmer from "../ProductRowShimmer/ProductRowShimmer";
 
 const ProductList = props => {
   const {
     data: { Items },
-    name
+    name,
+    activeCurrency
   } = props;
   return (
     <React.Fragment>
@@ -19,7 +21,7 @@ const ProductList = props => {
               Items.slice(0, 5).map((item, index) => {
                 return index < 5 ? (
                   <div key={item.ProductId.S}>
-                    <Product data={item} />
+                    <Product data={item} activeCurrency={activeCurrency} />
                   </div>
                 ) : null;
               })}
@@ -35,12 +37,14 @@ const ProductList = props => {
               Items.slice(5).map((item, index) => {
                 return index < 5 ? (
                   <div key={item.ProductId.S}>
-                    <Product data={item} />
+                    <Product data={item} activeCurrency={activeCurrency} />
                   </div>
                 ) : null;
               })}
           </Row>
+          <Link to={`/home/viewAllProducts/${name}`}>
           <Button className="view-all">View All</Button>
+          </Link>
         </React.Fragment>
       ) : (
         <ProductRowShimmer/>
