@@ -10,6 +10,12 @@ const getApiEndPoints = val => {
       return baseUrl + "cart/getcartdetails";
     case "OrderItems":
       return baseUrl + "cart/getcartdetails";
+    case "FollowedMerchants":
+      return baseUrl + "users/getfollowedmerchants";
+    case "MerchantAllProducts":
+      return baseUrl + "products/getallproducts";
+    case "AllBusiness":
+      return baseUrl + "business/getbusinessdetails";
     default:
       return "/";
   }

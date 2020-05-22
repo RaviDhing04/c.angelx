@@ -11,26 +11,28 @@ import bell from "../../assets/bell.svg";
 import profile from "../../assets/profile.svg";
 import downArrow from "../../assets/down-arrow.svg";
 import SearchBar from "../../components/SearchBar/SearchBar";
-import { currencies } from "../../constants/constants";
+import Notification from "../../components/Notification/Notification";
+import { currencies, profileOptions } from "../../constants/constants";
 import "./Header.scss";
 import { setGlobalCurrency } from "../../store/actions";
 
 const Header = props => {
   const [activeCurrency, setActiveCurrency] = useState(currencies[0]);
+  const [showNotification, toggleNotification] = useState(false);
 
   const changeCurrency = e => {
     if (e && e.target) {
-       const selected = currencies.find(currency => {
-          return currency.name === e.target.attributes.value.nodeValue;
-        })
-        setActiveCurrency(selected);
+      const selected = currencies.find(currency => {
+        return currency.name === e.target.attributes.value.nodeValue;
+      });
+      setActiveCurrency(selected);
       props.setGlobalCurrency(selected);
     }
   };
 
-useEffect(() => {
-  props.setGlobalCurrency(activeCurrency);
-},[]);
+  useEffect(() => {
+    props.setGlobalCurrency(activeCurrency);
+  }, []);
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <a
@@ -81,10 +83,10 @@ useEffect(() => {
               <Nav.Link className="left-links" as={Link} to={`/home`}>
                 Home
               </Nav.Link>
-              <Nav.Link href="#pricing" className="left-links">
+              <Nav.Link as={Link} to={`/support`} className="left-links">
                 Support
               </Nav.Link>
-              <Nav.Link href="#pricing" className="left-links">
+              <Nav.Link as={Link} to={`/aboutUs`} className="left-links">
                 About Us
               </Nav.Link>
             </Nav>
@@ -126,7 +128,10 @@ useEffect(() => {
               </Dropdown>
               <img className="nav-icon" alt="globe-icon" src={globe}></img>{" "}
               English{" "}
-              <Nav.Link href="#memes">
+              <Nav.Link
+                as={Link}
+                to={`/home/ordersList/${props.userId}/Wishlist`}
+              >
                 <img className="nav-icon" alt="heart-icon" src={heart}></img>
               </Nav.Link>
               <Nav.Link as={Link} to={`/cart/${props.userId}`}>
@@ -136,10 +141,15 @@ useEffect(() => {
                   src={shoppingcart}
                 ></img>
               </Nav.Link>
-              <Nav.Link href="#memes">
+              <Nav.Link onClick={() => toggleNotification(!showNotification)}>
                 <img className="nav-icon" alt="bell-icon" src={bell}></img>
               </Nav.Link>
-              <Nav.Link href="#memes">
+              {showNotification ? (
+                <div className="notification-div">
+                  <Notification />
+                </div>
+              ) : null}
+              {/* <Nav.Link href="#memes">
                 <img
                   className="nav-icon"
                   alt="profile-icon"
@@ -150,7 +160,37 @@ useEffect(() => {
                   alt="downArrow-icon"
                   src={downArrow}
                 ></img>
-              </Nav.Link>
+              </Nav.Link> */}
+              <Dropdown>
+                <Dropdown.Toggle
+                  as={CustomToggle}
+                  id="dropdown-custom-components"
+                >
+                  <img
+                    className="nav-icon"
+                    alt="profile-icon"
+                    src={profile}
+                  ></img>
+                  <img
+                    className="nav-icon"
+                    alt="downArrow-icon"
+                    src={downArrow}
+                  ></img>
+                </Dropdown.Toggle>
+                <Dropdown.Menu alignRight as={CustomMenu}>
+                  {profileOptions.map((option, index) => {
+                    return (
+                      <Dropdown.Item
+                        eventKey={index}
+                        as={Link}
+                        to={option.path + props.userId}
+                      >
+                        {option.name}
+                      </Dropdown.Item>
+                    );
+                  })}
+                </Dropdown.Menu>
+              </Dropdown>
             </Nav>
           </Navbar.Collapse>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -159,7 +199,6 @@ useEffect(() => {
     </React.Fragment>
   );
 };
-
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
@@ -171,8 +210,7 @@ const mapDispatchToProps = dispatch =>
 
 const mapStatetoProps = ({ app: { common } }) => {
   console.log(common);
-  return {
-  };
+  return {};
 };
 
 export default connect(mapStatetoProps, mapDispatchToProps)(Header);

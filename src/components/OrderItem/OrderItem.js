@@ -2,8 +2,6 @@ import React from "react";
 import { Container, Jumbotron } from "react-bootstrap";
 import "./OrderItem.scss";
 import plusIcon from "../../assets/plus.svg";
-import minusIcon from "../../assets/minus.svg";
-import deleteIcon from "../../assets/delete_outline.svg";
 import heartIcon from "../../assets/heart.svg";
 import formatter  from "../../utils/commonUtils/currencyUtils";
 

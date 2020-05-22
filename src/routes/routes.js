@@ -13,22 +13,50 @@ const LoadingFallback = props => {
 
 const AsyncHome = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "PageSwitcher" */ "../pages/Home/Home"),
+    import(/* webpackChunkName: "HomePage" */ "../pages/Home/Home"),
   loading: error => <LoadingFallback {...error} />,
   modules: ["HomePage"]
 });
 
 const AsyncCart = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "PageSwitcher" */ "../pages/Cart/Cart"),
+    import(/* webpackChunkName: "CartPage" */ "../pages/Cart/Cart"),
   loading: error => <LoadingFallback {...error} />,
   modules: ["CartPage"]
+});
+
+const AsyncManageBusiness = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "CartPage" */ "../pages/AllBusiness/AllBusiness"),
+  loading: error => <LoadingFallback {...error} />,
+  modules: ["ManageBusiness"]
+});
+
+const AsyncMerchantHome = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "MerchantPage" */ "../pages/MerchantHome/MerchantHome"),
+  loading: error => <LoadingFallback {...error} />,
+  modules: ["MerchantPage"]
+});
+
+const AsyncAboutUs = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "AboutUs" */ "../pages/AboutUs/AboutUs"),
+  loading: error => <LoadingFallback {...error} />,
+  modules: ["AboutUs"]
+});
+
+const AsyncSupport = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "Support" */ "../pages/Support/Support"),
+  loading: error => <LoadingFallback {...error} />,
+  modules: ["Support"]
 });
 
 const AsyncHomeProductList = Loadable({
   loader: () =>
     import(
-      /* webpackChunkName: "PageSwitcher" */ "../containers/HomeProductList/HomeProductList"
+      /* webpackChunkName: "ProductList" */ "../containers/HomeProductList/HomeProductList"
     ),
   loading: error => <LoadingFallback {...error} />,
   modules: ["ProductList"]
@@ -37,7 +65,7 @@ const AsyncHomeProductList = Loadable({
 const AsyncHomeProductDetails = Loadable({
   loader: () =>
     import(
-      /* webpackChunkName: "PageSwitcher" */ "../containers/ProductDetails/ProductDetails"
+      /* webpackChunkName: "ProductDetails" */ "../containers/ProductDetails/ProductDetails"
     ),
   loading: error => <LoadingFallback {...error} />,
   modules: ["ProductDetails"]
@@ -46,7 +74,7 @@ const AsyncHomeProductDetails = Loadable({
 const AsyncHomeOrdersList = Loadable({
   loader: () =>
     import(
-      /* webpackChunkName: "PageSwitcher" */ "../containers/OrdersList/OrdersList"
+      /* webpackChunkName: "OrdersList" */ "../containers/OrdersList/OrdersList"
     ),
   loading: error => <LoadingFallback {...error} />,
   modules: ["OrdersList"]
@@ -55,7 +83,7 @@ const AsyncHomeOrdersList = Loadable({
 const AsyncHomeViewAllProducts = Loadable({
   loader: () =>
     import(
-      /* webpackChunkName: "PageSwitcher" */ "../containers/ViewAllProducts/ViewAllProducts"
+      /* webpackChunkName: "ViewAllProducts" */ "../containers/ViewAllProducts/ViewAllProducts"
     ),
   loading: error => <LoadingFallback {...error} />,
   modules: ["ViewAllProducts"]
@@ -70,6 +98,26 @@ export const parent_routes = [
   {
     path: "/cart/:userId",
     component: AsyncCart,
+    exact: false
+  },
+  {
+    path: "/manageBusiness/:userId",
+    component: AsyncManageBusiness,
+    exact: false
+  },
+  {
+    path: "/merchantHome",
+    component: AsyncMerchantHome,
+    exact: false
+  },
+  {
+    path: "/aboutUs",
+    component: AsyncAboutUs,
+    exact: false
+  },
+  {
+    path: "/support",
+    component: AsyncSupport,
     exact: false
   }
 ];
@@ -92,6 +140,14 @@ export const child_routes = [
   },
   {
     path: "/home/viewAllProducts/:name",
+    component: AsyncHomeViewAllProducts,
+    exact: true
+  }
+];
+
+export const merchant_child_routes = [
+  {
+    path: "/merchantHome/viewAllProducts/:name/:merchantId",
     component: AsyncHomeViewAllProducts,
     exact: true
   }

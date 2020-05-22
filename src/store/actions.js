@@ -51,6 +51,32 @@ export const getLatestProducts = (body = {}) => async dispatch => {
   }
 };
 
+export const getMerchantAllProducts = (
+  body = {}
+) => async dispatch => {
+  try {
+    const response = await httpFetch(
+      getApiEndPoints("MerchantAllProducts"),
+      {
+        method: "POST",
+        body: body
+      }
+    );
+    if (response && response.result && response.result.data) {
+      dispatch({
+        type: "VIEWALL_PRODUCTS",
+        value: { payload: response.result.data }
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
 export const getSelectedProductDetails = (body = {}) => async dispatch => {
   try {
     const response = await httpFetch(
@@ -72,6 +98,64 @@ export const getSelectedProductDetails = (body = {}) => async dispatch => {
           payload: response.result.data.Item,
           id: response.result.data.Item.ProductId.S
         }
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const getFollowedMerchants = (body = {}) => async dispatch => {
+  try {
+    const response = await httpFetch(
+      getApiEndPoints("FollowedMerchants"),
+      {
+        method: "POST",
+        body: body
+      }
+    );
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      dispatch({
+        type: "FOLLOWED_MERCHANTS",
+        value: {
+          payload: response.result.data.Item.MerchantsFollowed.L
+        }
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const fetchAllBusiness = (body = {}) => async dispatch => {
+  try {
+    const response = await httpFetch(getApiEndPoints("AllBusiness"), {
+      method: "POST",
+      body: body
+    });
+    // const response = {"result":{"data":{"Items":[{"OrgName":{"S":"ProdTest34"},"MerchantId":{"S":"1589982971166"},"PatronId":{"S":"69116697064443"},"BusinessHandle":{"S":"ProdTest1@DeleteLater"},"BusinessType":{"S":"NPO"}},{"OrgName":{"S":"ProdTest36"},"MerchantId":{"S":"1589856527259"},"PatronId":{"S":"69116697064443"},"BusinessHandle":{"S":"ProdTest1@DeleteLater"},"BusinessType":{"S":"Retail"}},{"OrgName":{"S":"ProdTest35"},"MerchantId":{"S":"1589856430567"},"PatronId":{"S":"69116697064443"},"BusinessHandle":{"S":"ProdTest1@DeleteLater"},"BusinessType":{"S":"Retail"}},{"OrgName":{"S":"ProdTest36"},"MerchantId":{"S":"1589855354787"},"PatronId":{"S":"69116697064443"},"BusinessHandle":{"S":"ProdTest1@DeleteLater"},"BusinessType":{"S":"Retail"}}],"Count":4,"ScannedCount":7},"message":"Success"}}
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      dispatch({
+        type: "All_BUSINESS",
+        value: { payload: response.result.data.Items }
       });
       return true;
     } else {

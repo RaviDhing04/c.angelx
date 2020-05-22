@@ -1,6 +1,11 @@
 const initialState = {
   homePage: {
-    latestProducts: {}
+    latestProducts: {},
+    followedMerchants: []
+  },
+  MerchantHomePage: {
+    merchantAllProducts: {},
+    followedMerchants: []
   },
   productDetailsPage: {
     selectedProductDetails: {},
@@ -16,8 +21,12 @@ const initialState = {
   viewAllProductPage: {
     products: {}
   },
-  common:{
-    activeCurrency: null,
+  manageBusiness: {
+    allBusiness: [],
+    selectedBusiness: {}
+  },
+  common: {
+    activeCurrency: null
   }
 };
 
@@ -27,7 +36,28 @@ export const appReducer = (state = initialState, { type, value }) => {
       return {
         ...state,
         homePage: {
+          ...state.homePage,
           latestProducts: value.payload
+        }
+      };
+    case "FOLLOWED_MERCHANTS":
+      return {
+        ...state,
+        homePage: {
+          ...state.homePage,
+          followedMerchants: value.payload
+        },
+        MerchantHomePage: {
+          ...state.MerchantHomePage,
+          followedMerchants: value.payload
+        }
+      };
+    case "All_BUSINESS":
+      return {
+        ...state,
+        manageBusiness: {
+          ...state.manageBusiness,
+          allBusiness: value.payload
         }
       };
     case "VIEWALL_PRODUCTS":
@@ -60,13 +90,13 @@ export const appReducer = (state = initialState, { type, value }) => {
           orderProductDetails: value.payload.productDetails
         }
       };
-      case "SET_ACTIVE_CURRENCY":
- return {
-   ...state,
-   common:{
-    activeCurrency: value.payload
-   }
- }
+    case "SET_ACTIVE_CURRENCY":
+      return {
+        ...state,
+        common: {
+          activeCurrency: value.payload
+        }
+      };
     default:
       return state;
   }

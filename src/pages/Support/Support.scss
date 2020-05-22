@@ -1,0 +1,84 @@
+.support-container {
+    width: calc(100% - 16rem);
+    margin: 6rem auto;
+
+    .heading {
+        font-size: 2.375rem;
+        letter-spacing: 2.66px;
+        color: #3B3B3B;
+        opacity: 1;
+        text-align: center;
+        margin: 6rem 0rem 1rem 0rem;
+    }
+
+    .support-text {
+        letter-spacing: 0px;
+        color: #000000DE;
+        opacity: 1;
+        font-size: 1.125rem;
+        padding: 0rem 3rem;
+        text-align: center;
+        margin-bottom: 5rem;
+    }
+
+    .support-grid {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 6rem;
+
+        .grid-flex {
+            display: flex;
+            height: 18rem;
+            width: calc(100%/3);
+
+            .rightLine {
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+                border: 0;
+                border-right: 1px solid rgba(0, 0, 0, 0.1);
+                height: 90%;
+            }
+
+            .bottomLine {
+                border-bottom: 1px solid rgba(0, 0, 0, .1);
+            }
+
+            .grid-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-evenly;
+                padding: 2rem 3rem 3rem 3rem;
+                margin-right: 1rem;
+                margin-left: 1rem;
+                width: 100%;
+            }
+
+            .grid-image {
+                width: 6.25rem;
+                height: 5rem;
+            }
+
+            .grid-title {
+                letter-spacing: 1.4px;
+                color: #3B3B3B;
+                opacity: 1;
+                font-size: 1.25rem;
+            }
+
+            .grid-text {
+                letter-spacing: 1.26px;
+                color: #878787;
+                opacity: 1;
+                font-size: 1.125rem;
+            }
+        }
+    }
+    .contact-form{
+        width: 50%;
+        margin: 0 auto;
+        padding: 2rem;
+        background: #F6F7F9 0% 0% no-repeat padding-box;
+        opacity: 1;
+    }
+}

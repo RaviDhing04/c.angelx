@@ -1,0 +1,100 @@
+.AllBusiness-page-container {
+
+    .AllBusiness-page {
+        width: 96rem;
+        margin: 4rem auto;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+    }
+
+    .AllBusiness-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.6rem;
+        padding-right: 2.25rem;
+
+        .heading {
+            font-size: 2.375rem;
+            letter-spacing: 2.66px;
+            color: #3B3B3B;
+            opacity: 1;
+        }
+
+        .remove-all {
+            align-self: flex-end;
+            font-size: 1.25rem;
+            letter-spacing: 0px;
+            color: #ABABAB;
+            opacity: 1;
+        }
+    }
+
+    .business-card-holder {
+        display: flex;
+        flex-wrap: wrap;
+
+        .business-card {
+            width: 30rem;
+            height: 9rem;
+            background: #F6F7F9 0% 0% no-repeat padding-box;
+            border: 1px solid #DADADB;
+            border-radius: 0px 0px 0.25rem 0.25rem;
+            opacity: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            margin-right: 2rem;
+            cursor: pointer;
+
+            p {
+                letter-spacing: 0px;
+                color: #000000DE;
+                opacity: 1;
+                font-size: 1.125rem;
+                margin: 0px;
+            }
+
+            span {
+                letter-spacing: 0px;
+                color: #707070DE;
+                opacity: 1;
+                font-size: 1.125rem;
+            }
+
+            .edit-business {
+                width: 7.6rem;
+                height: 2.25rem;
+                background: #558ED4 0% 0% no-repeat padding-box;
+                border-radius: 0.25rem;
+                letter-spacing: 0px;
+                color: #FFFFFF;
+                opacity: 1;
+                font-size: 0.875rem;
+            }
+
+            .add-business {
+                width: 7.6rem;
+                height: 2.25rem;
+                background: #E8EDF3 0% 0% no-repeat padding-box;
+                border-radius: 0.25rem;
+                letter-spacing: 0px;
+                color: #6D6D6D;
+                opacity: 1;
+                font-size: 0.875rem;
+                align-self: center;
+
+                .plus-icon {
+                    width: 0.8125rem;
+                    height: 0.8125rem;
+                    margin-right: 0.3rem;
+                    margin-bottom: 0.2rem;
+                }
+            }
+
+        }
+    }
+
+}
