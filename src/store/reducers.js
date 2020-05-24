@@ -1,7 +1,8 @@
 const initialState = {
   homePage: {
     latestProducts: {},
-    followedMerchants: []
+    followedMerchants: [],
+    searchCategories: []
   },
   MerchantHomePage: {
     merchantAllProducts: {},
@@ -13,6 +14,10 @@ const initialState = {
   },
   cartDetailsPage: {
     cartItems: []
+  },
+  contactPage: {
+    contacts: [],
+    searchedContact: null
   },
   ordersListPage: {
     orderItems: {},
@@ -38,6 +43,14 @@ export const appReducer = (state = initialState, { type, value }) => {
         homePage: {
           ...state.homePage,
           latestProducts: value.payload
+        }
+      };
+    case "SEARCH_CATEGORIES":
+      return {
+        ...state,
+        homePage: {
+          ...state.homePage,
+          searchCategories: value.payload
         }
       };
     case "FOLLOWED_MERCHANTS":
@@ -80,6 +93,22 @@ export const appReducer = (state = initialState, { type, value }) => {
         ...state,
         cartDetailsPage: {
           cartItems: value.payload
+        }
+      };
+    case "ALL_CONTACTS":
+      return {
+        ...state,
+        contactPage: {
+          ...state.contactPage,
+          contacts: value.payload
+        }
+      };
+    case "SEARCHED_CONTACT":
+      return {
+        ...state,
+        contactPage: {
+          ...state.contactPage,
+          searchedContact: value.payload
         }
       };
     case "ORDER_DETAILS":

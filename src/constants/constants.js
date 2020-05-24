@@ -5,7 +5,7 @@ export const userLeftNavLinks = [
   { name: "Pre-orders in Total", path: "/home/ordersList/", icon: "clock" },
   { name: "Donations", path: "/home/ordersList/", icon: "donate" },
   { name: "Wishlist", path: "/home/ordersList/", icon: "heart" },
-  { name: "My Contacts", path: "/", icon: "profile" }
+  { name: "Add Contacts", path: "/home/myContacts/", icon: "profile" }
 ];
 
 export const merchantLeftNavLinks = [
@@ -65,6 +65,7 @@ export const socialSharing = [
 ];
 
 export const currencies = [
+  { name: "South African Rand", shortName: "ZAR", icon: "rand", conversion: 4.31 },
   { name: "US Dollar", shortName: "USD", icon: "dollar", conversion: 70 },
   { name: "Rupee", shortName: "INR", icon: "rupee-indian", conversion: 1 }
 ];

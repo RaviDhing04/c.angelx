@@ -16,6 +16,18 @@ const getApiEndPoints = val => {
       return baseUrl + "products/getallproducts";
     case "AllBusiness":
       return baseUrl + "business/getbusinessdetails";
+    case "SavedContacts":
+      return baseUrl + "users/getcontacts";
+    case "ContactWithEmail":
+      return baseUrl + "users/getcontactdetails";
+    case "addNewContact":
+      return baseUrl + "users/addcontact";
+    case "deleteContact":
+      return baseUrl + "users/deletecontact";
+    case "addProductToCart":
+      return baseUrl + "cart/addtocart";
+    case "SearchCategories":
+      return baseUrl + "products/getproductcategories";
     default:
       return "/";
   }

@@ -1,5 +1,5 @@
 import React from "react";
-import { Form } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import { supportText, supportGrid } from "../../constants/constants";
 import "./Support.scss";
 
@@ -44,6 +44,9 @@ const Support = () => {
               <Form.Label>Message</Form.Label>
               <Form.Control as="textarea" rows="3" placeholder="Email"Type your message/>
             </Form.Group>
+            <Button className="sendButton" type="submit">
+              Send
+            </Button>
           </Form>
         </div>
       </div>

@@ -14,7 +14,7 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 import Notification from "../../components/Notification/Notification";
 import { currencies, profileOptions } from "../../constants/constants";
 import "./Header.scss";
-import { setGlobalCurrency } from "../../store/actions";
+import { setGlobalCurrency, getSearchCategories } from "../../store/actions";
 
 const Header = props => {
   const [activeCurrency, setActiveCurrency] = useState(currencies[0]);
@@ -32,6 +32,7 @@ const Header = props => {
 
   useEffect(() => {
     props.setGlobalCurrency(activeCurrency);
+    props.getSearchCategories();
   }, []);
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
@@ -91,7 +92,7 @@ const Header = props => {
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>
-          <SearchBar />
+          <SearchBar searchCategories={props.searchCategories}/>
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="ml-auto right-links-wrapper">
               <Dropdown>
@@ -203,14 +204,17 @@ const Header = props => {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setGlobalCurrency
+      setGlobalCurrency,
+      getSearchCategories
     },
     dispatch
   );
 
-const mapStatetoProps = ({ app: { common } }) => {
+const mapStatetoProps = ({ app: { homePage, common } }) => {
   console.log(common);
-  return {};
+  return {
+    searchCategories: homePage.searchCategories
+  };
 };
 
 export default connect(mapStatetoProps, mapDispatchToProps)(Header);

@@ -9,7 +9,8 @@ const ProductList = props => {
   const {
     data: { Items },
     name,
-    activeCurrency
+    activeCurrency,
+    addProductToCart
   } = props;
   return (
     <React.Fragment>
@@ -21,14 +22,18 @@ const ProductList = props => {
               Items.slice(0, 5).map((item, index) => {
                 return index < 5 ? (
                   <div key={item.ProductId.S}>
-                    <Product data={item} activeCurrency={activeCurrency} />
+                    <Product
+                      data={item}
+                      activeCurrency={activeCurrency}
+                      addProductToCart={addProductToCart}
+                    />
                   </div>
                 ) : null;
               })}
           </Row>
         </React.Fragment>
       ) : (
-        <ProductRowShimmer/>
+        <ProductRowShimmer />
       )}
       {Items && Items.length ? (
         <React.Fragment>
@@ -43,11 +48,11 @@ const ProductList = props => {
               })}
           </Row>
           <Link to={`/home/viewAllProducts/${name}`}>
-          <Button className="view-all">View All</Button>
+            <Button className="view-all">View All</Button>
           </Link>
         </React.Fragment>
       ) : (
-        <ProductRowShimmer/>
+        <ProductRowShimmer />
       )}
     </React.Fragment>
   );

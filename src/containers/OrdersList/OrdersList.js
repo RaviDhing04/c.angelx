@@ -47,7 +47,7 @@ const OrdersList = props => {
 
   return !loading ? (
     <React.Fragment>
-      <div className="product-row-heading">{pageName}</div>
+      <div className="orderlist-heading">{pageName}</div>
       <Container className="order-page-container" fluid>
         <div className="order-page">
           {orderProducts.map(orderItem => {

@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { getSelectedProductDetails } from "../../store/actions";
+import {
+  getSelectedProductDetails,
+  addProductToCart
+} from "../../store/actions";
 import { Container, Accordion, Card } from "react-bootstrap";
 import { bindActionCreators } from "redux";
 import "./ProductDetails.scss";
@@ -30,11 +33,20 @@ const ProductDetails = props => {
           Timestamp: props.match.params.productTimeStamp
         };
         const res = await props.getSelectedProductDetails(payload);
-        res ? setLoading(false) : console.log('err');
+        res ? setLoading(false) : console.log("err");
       }
     }
     fetchData();
   }, []);
+
+  const addToCart = async () => {
+    const payload = {
+      ProductId: productId,
+      UserId: "1588433471165",
+      Quantity: "1"
+    };
+    const res = await props.addProductToCart(payload);
+  };
 
   const transformImageDataStructure = images => {
     const imgArr =
@@ -49,7 +61,7 @@ const ProductDetails = props => {
     <Container fluid>
       {!loading ? (
         <React.Fragment>
-          <div className="product-row-heading">Product Info</div>
+          <div className="product-detail-heading">Product Info</div>
           <div className="product-wrapper">
             {/* <div className="product-image"> */}
             <ProductSlider
@@ -61,21 +73,19 @@ const ProductDetails = props => {
                 <li className="product-name">{Name.S}</li>
                 <li className="product-price">
                   <span>{ProductSpecifications.M.Currency.S}</span>{" "}
-                  {formatter(activeCurrency)(ProductSpecifications.M.UnitPrice.S)}
+                  {formatter(activeCurrency)(
+                    ProductSpecifications.M.UnitPrice.S
+                  )}
                 </li>
                 <li>
                   <span className="price-discount">8000</span>
                 </li>
                 <li>
-                  <a href="" className="sm-btn bg-blue">
+                  <span onClick={addToCart} className="sm-btn bg-blue">
                     Add to cart
-                  </a>
-                  <a href="" className="sm-btn bg-black">
-                    Group Purchase
-                  </a>
-                  <a href="" className="sm-btn bg-grey">
-                    Lay buy Order
-                  </a>
+                  </span>
+                  <span className="sm-btn bg-black">Group Purchase</span>
+                  <span className="sm-btn bg-grey">Lay buy Order</span>
                 </li>
                 <li>
                   <div className="delivery-zip-code">
@@ -122,12 +132,13 @@ const ProductDetails = props => {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getSelectedProductDetails
+      getSelectedProductDetails,
+      addProductToCart
     },
     dispatch
   );
 
-const mapStatetoProps = ({ app: { productDetailsPage, common} }) => {
+const mapStatetoProps = ({ app: { productDetailsPage, common } }) => {
   console.log(productDetailsPage);
   return {
     ProductDetails: productDetailsPage.selectedProductDetails,

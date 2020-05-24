@@ -5,7 +5,7 @@ import "./Product.scss";
 import formatter from "../../utils/commonUtils/currencyUtils";
 
 const Product = props => {
-  const { data, activeCurrency } = props;
+  const { data, activeCurrency, addProductToCart } = props;
   return (
     <React.Fragment>
       {data && Object.keys(data).length ? (
@@ -29,7 +29,7 @@ const Product = props => {
             {data.IsDonationCampaign.S === "true" ? (
               <Button className="product-button">Donate</Button>
             ) : (
-              <Button className="product-button">Add to Cart</Button>
+              <Button onClick={() => addProductToCart(data.ProductId.S)} className="product-button">Add to Cart</Button>
             )}
           </Card.Body>
         </Card>

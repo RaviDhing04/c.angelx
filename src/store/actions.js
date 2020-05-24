@@ -51,17 +51,12 @@ export const getLatestProducts = (body = {}) => async dispatch => {
   }
 };
 
-export const getMerchantAllProducts = (
-  body = {}
-) => async dispatch => {
+export const getMerchantAllProducts = (body = {}) => async dispatch => {
   try {
-    const response = await httpFetch(
-      getApiEndPoints("MerchantAllProducts"),
-      {
-        method: "POST",
-        body: body
-      }
-    );
+    const response = await httpFetch(getApiEndPoints("MerchantAllProducts"), {
+      method: "POST",
+      body: body
+    });
     if (response && response.result && response.result.data) {
       dispatch({
         type: "VIEWALL_PRODUCTS",
@@ -111,13 +106,10 @@ export const getSelectedProductDetails = (body = {}) => async dispatch => {
 
 export const getFollowedMerchants = (body = {}) => async dispatch => {
   try {
-    const response = await httpFetch(
-      getApiEndPoints("FollowedMerchants"),
-      {
-        method: "POST",
-        body: body
-      }
-    );
+    const response = await httpFetch(getApiEndPoints("FollowedMerchants"), {
+      method: "POST",
+      body: body
+    });
     if (
       response &&
       response.result &&
@@ -157,6 +149,137 @@ export const fetchAllBusiness = (body = {}) => async dispatch => {
         type: "All_BUSINESS",
         value: { payload: response.result.data.Items }
       });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const searchContactWithEmail = (body = {}) => async dispatch => {
+  try {
+    const response = await httpFetch(getApiEndPoints("ContactWithEmail"), {
+      method: "POST",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      dispatch({
+        type: "SEARCHED_CONTACT",
+        value: { payload: response.result.data.Items[0] }
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const addNewContact = (body = {}) => async dispatch => {
+  try {
+    const response = await httpFetch(getApiEndPoints("addNewContact"), {
+      method: "POST",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const deleteContact = (body = {}) => async dispatch => {
+  try {
+    const response = await httpFetch(getApiEndPoints("deleteContact"), {
+      method: "POST",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const resetSearchedContact = () => async dispatch => {
+  try {
+    dispatch({
+      type: "SEARCHED_CONTACT",
+      value: { payload: null }
+    });
+    return true;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const getSavedContacts = (body = {}) => async dispatch => {
+  try {
+    const response = await httpFetch(getApiEndPoints("SavedContacts"), {
+      method: "POST",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      dispatch({
+        type: "ALL_CONTACTS",
+        value: { payload: response.result.data.Items }
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const addProductToCart = (body = {}) => async dispatch => {
+  try {
+    const response = await httpFetch(getApiEndPoints("addProductToCart"), {
+      method: "POST",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      (response.result.message === "Success" || response.result.message === "Product already added to cart")
+    ) {
       return true;
     } else {
       return false;
@@ -298,9 +421,32 @@ export const getOrderItems = (body = {}) => async dispatch => {
   }
 };
 
-export const setGlobalCurrency = (activeCurrency) => (dispatch) => {
+export const setGlobalCurrency = activeCurrency => dispatch => {
   dispatch({
     type: "SET_ACTIVE_CURRENCY",
     value: { payload: activeCurrency }
   });
- }
+};
+
+export const getSearchCategories = (body = {}) => async dispatch => {
+  try {
+    const response = await httpFetch(getApiEndPoints("SearchCategories"), {
+      method: "POST",
+      body: body
+    });
+    if (
+      response
+    ) {
+      dispatch({
+        type: "SEARCH_CATEGORIES",
+        value: { payload: response.Items }
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};

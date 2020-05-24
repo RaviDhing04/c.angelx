@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
   InputGroup,
   DropdownButton,
@@ -10,7 +10,8 @@ import downArrow from "../../assets/down-arrow.svg";
 import "./SearchBar.scss";
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-  <a className="catagory-dropdown"
+  <a
+    className="catagory-dropdown"
     href=""
     ref={ref}
     onClick={e => {
@@ -28,8 +29,7 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
 // Dropdown needs access to the DOM of the Menu to measure it
 const CustomMenu = React.forwardRef(
   ({ children, style, className, "aria-labelledby": labeledBy }, ref) => {
-    const [value, setValue] = useState("");
-
+  
     return (
       <div
         ref={ref}
@@ -48,7 +48,20 @@ const CustomMenu = React.forwardRef(
   }
 );
 
-const SearchBar = () => {
+const SearchBar = props => {
+  const [selectedCategory, setselectedCategory] = useState("");
+
+
+  const changeCategory = (e) => {
+    if (e && e.target) {
+      debugger;
+       const selected = props.searchCategories.find(category => {
+        return category.CategoryId.S === e.target.attributes.value.nodeValue;
+      });
+       setselectedCategory(selected);
+  }
+}
+
   return (
     <React.Fragment>
       <Form className="search-bar">
@@ -61,16 +74,14 @@ const SearchBar = () => {
 
           <Dropdown>
             <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
-              All Categories
+              {selectedCategory ? selectedCategory.Title.S : 'All Categories'}
             </Dropdown.Toggle>
 
             <Dropdown.Menu as={CustomMenu}>
-              <Dropdown.Item eventKey="1">Red</Dropdown.Item>
-              <Dropdown.Item eventKey="2">Blue</Dropdown.Item>
-              <Dropdown.Item eventKey="3" active>
-                Orange
-              </Dropdown.Item>
-              <Dropdown.Item eventKey="1">Red-Orange</Dropdown.Item>
+              {props.searchCategories.length > 0 &&
+                props.searchCategories.map((category, index) => {
+                return <Dropdown.Item active={(selectedCategory && (selectedCategory.CategoryId.S === category.CategoryId.S)) ? true : false} onClick={e => changeCategory(e)} value={category.CategoryId.S} eventKey={index}>{category.Title.S}</Dropdown.Item>
+                })}
             </Dropdown.Menu>
           </Dropdown>
         </InputGroup>

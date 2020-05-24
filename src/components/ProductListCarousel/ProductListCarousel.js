@@ -8,7 +8,8 @@ const ProductListCarousel = props => {
   const {
     data: { Items },
     name,
-    activeCurrency
+    activeCurrency,
+    addProductToCart
   } = props;
   return (
     <React.Fragment>
@@ -20,7 +21,11 @@ const ProductListCarousel = props => {
               Items.map((item, index) => {
                 return index < 5 ? (
                   <div key={item.ProductId.S}>
-                    <Product data={item} activeCurrency={activeCurrency} />
+                    <Product
+                      data={item}
+                      activeCurrency={activeCurrency}
+                      addProductToCart={addProductToCart}
+                    />
                   </div>
                 ) : null;
               })}
@@ -28,7 +33,7 @@ const ProductListCarousel = props => {
           <Button className="view-all">View All</Button>
         </React.Fragment>
       ) : (
-        <ProductRowShimmer/>
+        <ProductRowShimmer />
       )}
     </React.Fragment>
   );

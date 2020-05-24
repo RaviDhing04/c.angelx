@@ -80,6 +80,15 @@ const AsyncHomeOrdersList = Loadable({
   modules: ["OrdersList"]
 });
 
+const AsyncHomeMyContacts = Loadable({
+  loader: () =>
+    import(
+      /* webpackChunkName: "MyContacts" */ "../containers/AddContacts/AddContacts"
+    ),
+  loading: error => <LoadingFallback {...error} />,
+  modules: ["MyContacts"]
+});
+
 const AsyncHomeViewAllProducts = Loadable({
   loader: () =>
     import(
@@ -136,6 +145,11 @@ export const child_routes = [
   {
     path: "/home/ordersList/:userId/:name",
     component: AsyncHomeOrdersList,
+    exact: true
+  },
+  {
+    path: "/home/myContacts/:userId/:name",
+    component: AsyncHomeMyContacts,
     exact: true
   },
   {
