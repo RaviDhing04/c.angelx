@@ -71,7 +71,7 @@ const Header = props => {
     <React.Fragment>
       <Container fluid className="header">
         <Navbar collapseOnSelect>
-          <Navbar.Brand href="#home">
+          <Navbar.Brand as={Link} to={`/home`}>
             <img
               className="brand-logo"
               alt="c.Anglex-logo"
@@ -101,7 +101,7 @@ const Header = props => {
                   id="dropdown-custom-components"
                 >
                   <img
-                    className="nav-icon"
+                    className="currency-icon"
                     alt={activeCurrency.icon + "name"}
                     src={require(`../../assets/${activeCurrency.icon}.svg`)}
                   ></img>
@@ -117,7 +117,7 @@ const Header = props => {
                         active={activeCurrency.name === currency.name}
                       >
                         <img
-                          className="nav-icon"
+                          className="currency-icon"
                           alt={currency.icon + "name"}
                           src={require(`../../assets/${currency.icon}.svg`)}
                         ></img>{" "}

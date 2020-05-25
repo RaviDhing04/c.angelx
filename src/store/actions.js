@@ -450,3 +450,10 @@ export const getSearchCategories = (body = {}) => async dispatch => {
     return false;
   }
 };
+
+export const clearViewAllProducts = () => dispatch => {
+  dispatch({
+    type: "VIEWALL_PRODUCTS",
+    value: { payload: {} }
+  });
+};

@@ -38,6 +38,16 @@
         justify-content: safe;
         width: 100%;
         justify-content: space-around;
+        .nav-icon{
+            width: 2rem;
+            height: 2rem;
+            opacity: 1;
+            text-align: left;
+            font-size: 1rem;
+            letter-spacing: 1.12px;
+            color: #6D6D6D;
+            opacity: 1;
+        }
     }
 
     .footer-copyright {
@@ -68,7 +78,7 @@
     
     
     .partner-logo {
-        width: 10.81rem;
+        width: 50%;
         height: 4.4375rem;
         border: 1px solid #D0D2D6;
         opacity: 1;

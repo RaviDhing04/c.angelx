@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Container, Row } from "react-bootstrap";
-import { getLatestProducts, getMerchantAllProducts } from "../../store/actions";
+import { getLatestProducts, getMerchantAllProducts, clearViewAllProducts } from "../../store/actions";
 import Product from "../../components/Product/Product";
 import ProductRowShimmer from "../../components/ProductRowShimmer/ProductRowShimmer";
 import "./ViewAllProducts.scss";
@@ -34,6 +34,9 @@ const ViewAllProducts = props => {
       default:
         break;
     }
+    return () => { 
+      props.clearViewAllProducts();
+    }
   }, []);
 
   const makeItems = () => {
@@ -63,6 +66,11 @@ const ViewAllProducts = props => {
             <div className="product-row-heading">{name}</div>
             {makeItems()}
           </React.Fragment>
+        ) : Items && Items.length === 0 ? (
+          <React.Fragment>
+            <div className="product-row-heading">{name}</div>
+            <span className="not-found"> No Products added, Go to Inventory to add inventory</span>
+          </React.Fragment>
         ) : (
           <ProductRowShimmer />
         )}
@@ -75,7 +83,8 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getLatestProducts,
-      getMerchantAllProducts
+      getMerchantAllProducts,
+      clearViewAllProducts
     },
     dispatch
   );
