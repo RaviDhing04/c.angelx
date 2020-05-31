@@ -25,7 +25,7 @@ const AllBusiness = props => {
   const navigate = (event) => {
     const ele = event.target.tagName;
     const merchantId = event.currentTarget.dataset.value;
-    ele !== "BUTTON" ? history.push(`/merchantHome/viewAllProducts/${"Latest Uploads"}/${merchantId}`) : history.push('/');
+    ele !== "BUTTON" ? history.push(`/merchantHome/viewAllProducts/${"Latest Uploads"}/${merchantId}`) : history.push('/registerBusiness/edit');
   }
 
   return !loading ? (
@@ -45,7 +45,7 @@ const AllBusiness = props => {
             );
           })}
           <div className="business-card">
-            <button className="add-business">
+            <button onClick={() => history.push('/registerBusiness/addNew')} className="add-business">
               <img className="plus-icon" alt="plus-icon" src={plusIcon}></img>
               Add New
             </button>

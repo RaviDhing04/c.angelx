@@ -4,7 +4,7 @@ const initialState = {
     followedMerchants: [],
     searchCategories: []
   },
-  MerchantHomePage: {
+  merchantHomePage: {
     merchantAllProducts: {},
     followedMerchants: []
   },
@@ -28,7 +28,8 @@ const initialState = {
   },
   manageBusiness: {
     allBusiness: [],
-    selectedBusiness: {}
+    selectedBusiness: null,
+    selectedBusinessDetails: null
   },
   common: {
     activeCurrency: null
@@ -60,8 +61,8 @@ export const appReducer = (state = initialState, { type, value }) => {
           ...state.homePage,
           followedMerchants: value.payload
         },
-        MerchantHomePage: {
-          ...state.MerchantHomePage,
+        merchantHomePage: {
+          ...state.merchantHomePage,
           followedMerchants: value.payload
         }
       };
@@ -71,6 +72,22 @@ export const appReducer = (state = initialState, { type, value }) => {
         manageBusiness: {
           ...state.manageBusiness,
           allBusiness: value.payload
+        }
+      };
+    case "SELECTED_BUSINESS_DETAILS":
+      return {
+        ...state,
+        manageBusiness: {
+          ...state.manageBusiness,
+          selectedBusinessDetails: value.payload
+        }
+      };
+    case "SELECTED_BUSINESS":
+      return {
+        ...state,
+        manageBusiness: {
+          ...state.manageBusiness,
+          selectedBusiness: value.payload
         }
       };
     case "VIEWALL_PRODUCTS":

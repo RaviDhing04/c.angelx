@@ -28,6 +28,10 @@ const getApiEndPoints = val => {
       return baseUrl + "cart/addtocart";
     case "SearchCategories":
       return baseUrl + "products/getproductcategories";
+    case "BusinessDetails":
+      return baseUrl + "business/getregisteredbusinessdetails";
+    case "registerNewBusiness":
+      return baseUrl + "business/registerbusiness";
     default:
       return "/";
   }

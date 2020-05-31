@@ -138,3 +138,5 @@ export const supportGrid = [
 export const getNotifications = () => {
   return [1,2,3,4,5,6,7,8];
 }
+
+export const registerFormFields = ["BusinessType", "BusinessContact", "Country", "BusinessEmail", "BusinessHandle", "OrgName", "OrgWebsite", "PaypalId", "PayFastId", "AddressType", "City", "Pincode", "Province", "StreetName", "StreetNumber", "Suburb"];

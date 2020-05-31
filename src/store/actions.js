@@ -132,6 +132,82 @@ export const getFollowedMerchants = (body = {}) => async dispatch => {
   }
 };
 
+export const registerNewBusiness = async (body = {}) => {
+  try {
+    const response = await httpFetch(getApiEndPoints("registerNewBusiness"), {
+      method: "POST",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const fetchRegisterBusiness = (body = {}) => async dispatch => {
+  try {
+    const response = await httpFetch(getApiEndPoints("BusinessDetails"), {
+      method: "POST",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      dispatch({
+        type: "SELECTED_BUSINESS_DETAILS",
+        value: {
+          payload: response.result.data.Item
+        }
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const updateSelectedBusiness = merchantId => async (
+  dispatch,
+  getState
+) => {
+  try {
+    const AllBusiness = getState().app.manageBusiness.allBusiness;
+    const selectedBusiness = AllBusiness.find(business => {
+      return business.MerchantId.S === merchantId;
+    });
+    if (selectedBusiness) {
+      dispatch({
+        type: "SELECTED_BUSINESS",
+        value: {
+          payload: selectedBusiness
+        }
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
 export const fetchAllBusiness = (body = {}) => async dispatch => {
   try {
     const response = await httpFetch(getApiEndPoints("AllBusiness"), {
@@ -278,7 +354,8 @@ export const addProductToCart = (body = {}) => async dispatch => {
       response &&
       response.result &&
       response.result.data &&
-      (response.result.message === "Success" || response.result.message === "Product already added to cart")
+      (response.result.message === "Success" ||
+        response.result.message === "Product already added to cart")
     ) {
       return true;
     } else {
@@ -434,9 +511,7 @@ export const getSearchCategories = (body = {}) => async dispatch => {
       method: "POST",
       body: body
     });
-    if (
-      response
-    ) {
+    if (response) {
       dispatch({
         type: "SEARCH_CATEGORIES",
         value: { payload: response.Items }

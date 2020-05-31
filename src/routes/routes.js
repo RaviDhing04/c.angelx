@@ -53,6 +53,13 @@ const AsyncSupport = Loadable({
   modules: ["Support"]
 });
 
+const AsyncRegisterBusiness = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "RegisterBusiness" */ "../pages/RegisterBusiness/RegisterBusiness"),
+  loading: error => <LoadingFallback {...error} />,
+  modules: ["RegisterBusiness"]
+});
+
 const AsyncHomeProductList = Loadable({
   loader: () =>
     import(
@@ -127,6 +134,11 @@ export const parent_routes = [
   {
     path: "/support",
     component: AsyncSupport,
+    exact: false
+  },
+  {
+    path: "/registerBusiness/:action",
+    component: AsyncRegisterBusiness,
     exact: false
   }
 ];
