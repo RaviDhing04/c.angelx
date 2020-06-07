@@ -72,14 +72,23 @@ export const getMerchantAllProducts = (body = {}) => async dispatch => {
   }
 };
 
-export const getMerchantAllProductsAndSegregate = (body = {}) => async dispatch => {
+export const getMerchantAllProductsAndSegregate = (
+  body = {}
+) => async dispatch => {
   try {
     const response = await httpFetch(getApiEndPoints("MerchantAllProducts"), {
       method: "POST",
       body: body
     });
-    if (response && response.result && response.result.data && response.result.data.Items.length) {
-      const [products, campaigns] = segregateProductsAndCampaigns(response.result.data.Items);
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.data.Items.length
+    ) {
+      const [products, campaigns] = segregateProductsAndCampaigns(
+        response.result.data.Items
+      );
       dispatch({
         type: "MERCHANT_ALL_PRODUCTS",
         value: { payload: products }
@@ -104,7 +113,12 @@ export const getMerchantAllCoupons = (body = {}) => async dispatch => {
       method: "POST",
       body: body
     });
-    if (response && response.result && response.result.data && response.result.data.Items.length) {
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.data.Items.length
+    ) {
       dispatch({
         type: "MERCHANT_ALL_COUPONS",
         value: { payload: response.result.data.Items }
@@ -119,13 +133,15 @@ export const getMerchantAllCoupons = (body = {}) => async dispatch => {
   }
 };
 
-const segregateProductsAndCampaigns = (Items) => {
-   const out = [[], []];
-  Items.forEach((item) => {
-   item.IsDonationCampaign.S === 'false' ? out[0].push(item) : out[1].push(item);
-  })
+const segregateProductsAndCampaigns = Items => {
+  const out = [[], []];
+  Items.forEach(item => {
+    item.IsDonationCampaign.S === "false"
+      ? out[0].push(item)
+      : out[1].push(item);
+  });
   return out;
-}
+};
 
 export const getSelectedProductDetails = (body = {}) => async dispatch => {
   try {
@@ -160,8 +176,48 @@ export const getSelectedProductDetails = (body = {}) => async dispatch => {
 };
 
 export const addNewProduct = (body = {}) => async dispatch => {
-  
-}
+  try {
+    const response = await httpFetch(getApiEndPoints("addNewProduct"), {
+      method: "POST",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const addNewCoupon = (body = {}) => async dispatch => {
+  try {
+    const response = await httpFetch(getApiEndPoints("addNewCoupon"), {
+      method: "POST",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
 
 export const getFollowedMerchants = (body = {}) => async dispatch => {
   try {

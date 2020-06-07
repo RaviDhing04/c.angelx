@@ -123,6 +123,24 @@ const AsyncAddInventory = Loadable({
   modules: ["AddInventory"]
 });
 
+const AsyncAddCampaign = Loadable({
+  loader: () =>
+    import(
+      /* webpackChunkName: "AddCampaign" */ "../containers/AddCampaigns/AddCampaigns"
+    ),
+  loading: error => <LoadingFallback {...error} />,
+  modules: ["AddCampaign"]
+});
+
+const AsyncAddCoupon = Loadable({
+  loader: () =>
+    import(
+      /* webpackChunkName: "AddCoupon" */ "../containers/AddCoupons/AddCoupons"
+    ),
+  loading: error => <LoadingFallback {...error} />,
+  modules: ["AddCoupon"]
+});
+
 export const parent_routes = [
   {
     path: "/home",
@@ -203,6 +221,16 @@ export const merchant_child_routes = [
   {
     path: "/merchantHome/addInventory",
     component: AsyncAddInventory,
+    exact: true
+  },
+  {
+    path: "/merchantHome/addCampaigns",
+    component: AsyncAddCampaign,
+    exact: true
+  },
+  {
+    path: "/merchantHome/addCoupons",
+    component: AsyncAddCoupon,
     exact: true
   },
   {

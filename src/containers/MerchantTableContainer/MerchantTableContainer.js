@@ -14,8 +14,16 @@ import { useHistory } from "react-router-dom";
 const MerchantTableContainer = props => {
   const [loading, setLoading] = useState(true);
   const { name, merchantId } = props.match.params;
-  const tableHeader = { Inventory: ["Product Name", "Price", "Product Id"] };
-  const tableKeys = { Inventory: ["Name", "Price", "ProductId"] };
+  const tableHeader = {
+    Inventory: ["Product Name", "Price", "Product Id"],
+    Campaigns: ["Campaign Name", "Min Price", "Campaign Id"],
+    Coupons: ["Coupon Code", "Discount (%)", "Currency", "Max. Discount Amount", "Active From", "Active Till"]
+  };
+  const tableKeys = {
+    Inventory: ["Name", "Price", "ProductId"],
+    Campaigns: ["Name", "Price", "ProductId"],
+    Coupons: ["CouponCode", "Discount", "Currency", "MaxDiscountAmount", "CouponActiveFrom", "CouponExpiryDate"]
+  };
   const [Items, setItems] = useState([]);
   const history = useHistory();
 
@@ -29,11 +37,15 @@ const MerchantTableContainer = props => {
           setLoading(false);
           break;
         case "Campaigns":
-          await props.getMerchantAllProductsAndSegregate();
+          await props.getMerchantAllProductsAndSegregate({
+            MerchantId: merchantId
+          });
           setLoading(false);
           break;
         case "Coupons":
-          await props.getMerchantAllCoupons();
+          await props.getMerchantAllCoupons({
+            MerchantId: merchantId
+          });
           setLoading(false);
           break;
         default:
@@ -73,19 +85,33 @@ const MerchantTableContainer = props => {
           ProductId: item.ProductId
         };
       });
-    }
+    } else if (name === "Campaigns") {
+      Items = props.allCampaigns.map(item => {
+        return {
+          Name: item.Name,
+          Price: item.ProductSpecifications.M.UnitPrice,
+          ProductId: item.ProductId
+        };
+      });
+    } else if (name === "Coupons") {
+        Items = props.allCoupons.map(item => {
+          return item;
+        });
+      }
     setItems(Items);
   };
 
-  const navigateToAdd = (name) => {
+  const navigateToAdd = name => {
     history.push(`/merchantHome/add${name}`);
-  }
+  };
 
   return !loading ? (
     <React.Fragment>
       <div className="merchantTable-heading">{name}</div>
       <Container className="merchantTable-container" fluid>
-        <button onClick={() => navigateToAdd(name)} className="unfollow">Add {name}</button>
+        <button onClick={() => navigateToAdd(name)} className="unfollow">
+          Add {name}
+        </button>
         <div className="merchantTable-table">
           {
             <TableComp

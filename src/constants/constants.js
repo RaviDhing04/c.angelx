@@ -9,13 +9,9 @@ export const userLeftNavLinks = [
 ];
 
 export const merchantLeftNavLinks = [
-  { name: "Inventory", path: "/merchantHome/inventory/", icon: "hourglass" },
-  { name: "Arears in Total", path: "/home/ordersList/", icon: "Group 1030" },
-  { name: "Lay Buys in Total", path: "/home/ordersList/", icon: "shipping" },
-  { name: "Pre-orders in Total", path: "/home/ordersList/", icon: "clock" },
-  { name: "Donations", path: "/home/ordersList/", icon: "donate" },
-  { name: "Wishlist", path: "/home/ordersList/", icon: "heart" },
-  { name: "My Contacts", path: "/", icon: "profile" }
+  { name: "Inventory", path: "/merchantHome/inventory/", icon: "inventory" },
+  { name: "Campaigns", path: "/merchantHome/campaigns/", icon: "donate" },
+  { name: "Coupons", path: "/merchantHome/coupons/", icon: "coupon" }
 ];
 
 export const merchantList = [
@@ -140,3 +136,9 @@ export const getNotifications = () => {
 }
 
 export const registerFormFields = ["BusinessType", "BusinessContact", "Country", "BusinessEmail", "BusinessHandle", "OrgName", "OrgWebsite", "PaypalId", "PayFastId", "AddressType", "City", "Pincode", "Province", "StreetName", "StreetNumber", "Suburb"];
+
+export const addProductFormFields = ["ProductName", "ProductCategory", "UnitPrice", "AvailableQuantity", "Currency", "ProductDescription"];
+
+export const addCampaignFormFields = ["ProductName", "ProductCategory", "Currency", "ProductDescription", "MinDonation", "TargetDonationAmount"];
+
+export const addCouponFormFields = ["CouponCode", "Discount(%)", "Currency", "MaxDiscountAmount", "CouponActiveFrom", "CouponExpiryDate", "CouponDescription"];
