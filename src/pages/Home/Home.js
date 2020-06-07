@@ -16,8 +16,7 @@ const Home = props => {
 
   useEffect(() => {
     !followedMerchants.length && props.getFollowedMerchants({
-      "UserId": "1588433471165",
-      "Timestamp": "Sat, 02 May 2020 15:31:11 GMT"
+      "PatronId": "1588433471165"
     });
   }, []);
 
@@ -30,6 +29,7 @@ const Home = props => {
             <LeftNav
               links={userLeftNavLinks}
               merchants={followedMerchants}
+              merchantId = { "" }
             />
           </div>
           <div className="right-section">

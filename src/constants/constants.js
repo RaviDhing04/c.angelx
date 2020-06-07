@@ -9,7 +9,7 @@ export const userLeftNavLinks = [
 ];
 
 export const merchantLeftNavLinks = [
-  { name: "Inventory", path: "/home/ordersList/", icon: "hourglass" },
+  { name: "Inventory", path: "/merchantHome/inventory/", icon: "hourglass" },
   { name: "Arears in Total", path: "/home/ordersList/", icon: "Group 1030" },
   { name: "Lay Buys in Total", path: "/home/ordersList/", icon: "shipping" },
   { name: "Pre-orders in Total", path: "/home/ordersList/", icon: "clock" },

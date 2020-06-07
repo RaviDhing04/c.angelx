@@ -29,7 +29,10 @@ const initialState = {
   manageBusiness: {
     allBusiness: [],
     selectedBusiness: null,
-    selectedBusinessDetails: null
+    selectedBusinessDetails: null,
+    allProducts: [],
+    allCampaigns: [],
+    allCoupons: []
   },
   common: {
     activeCurrency: null
@@ -88,6 +91,30 @@ export const appReducer = (state = initialState, { type, value }) => {
         manageBusiness: {
           ...state.manageBusiness,
           selectedBusiness: value.payload
+        }
+      };
+    case "MERCHANT_ALL_PRODUCTS":
+      return {
+        ...state,
+        manageBusiness: {
+          ...state.manageBusiness,
+          allProducts: value.payload
+        }
+      };
+    case "MERCHANT_ALL_CAMPAIGNS":
+      return {
+        ...state,
+        manageBusiness: {
+          ...state.manageBusiness,
+          allCampaigns: value.payload
+        }
+      };
+    case "MERCHANT_ALL_COUPONS":
+      return {
+        ...state,
+        manageBusiness: {
+          ...state.manageBusiness,
+          allCoupons: value.payload
         }
       };
     case "VIEWALL_PRODUCTS":

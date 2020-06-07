@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Container } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { bindActionCreators } from "redux";
-import { fetchAllBusiness } from "../../store/actions";
+import { fetchAllBusiness, updateSelectedBusiness } from "../../store/actions";
 import "./AllBusiness.scss";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import plusIcon from "../../assets/plus.svg";
@@ -25,6 +25,7 @@ const AllBusiness = props => {
   const navigate = (event) => {
     const ele = event.target.tagName;
     const merchantId = event.currentTarget.dataset.value;
+    props.updateSelectedBusiness(merchantId);
     ele !== "BUTTON" ? history.push(`/merchantHome/viewAllProducts/${"Latest Uploads"}/${merchantId}`) : history.push('/registerBusiness/edit');
   }
 
@@ -61,7 +62,8 @@ const AllBusiness = props => {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      fetchAllBusiness
+      fetchAllBusiness,
+      updateSelectedBusiness
     },
     dispatch
   );

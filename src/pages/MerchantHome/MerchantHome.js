@@ -13,7 +13,8 @@ import {
 } from "../../constants/constants";
 import {
   getFollowedMerchants,
-  updateSelectedBusiness
+  updateSelectedBusiness,
+  getBusinessDetails
 } from "../../store/actions";
 import coverError from "../../assets/cover-error.svg";
 
@@ -22,33 +23,40 @@ const MerchantHome = props => {
   const { state } = props.location;
 
   useEffect(() => {
-    state &&
-      state.fromUser &&
+    if (state && state.fromUser) {
+      const { merchantId } = props.match.params;
       !followedMerchants.length &&
-      props.getFollowedMerchants({
-        UserId: "1588433471165", // to be updated with userId
-        Timestamp: "Sat, 02 May 2020 15:31:11 GMT"
-      });
-    props.updateSelectedBusiness("1587031042915");
+        props.getFollowedMerchants({
+          PatronId: "1588433471165"
+        });
+    }
+    props.getBusinessDetails({
+      MerchantId: "1587031042915",
+      PatronId: "69116697064443"
+    });
   }, []);
 
   return (
     <React.Fragment>
       <div className="merchantHome-container">
-        <div className="cover-img">
-          <img
-            className="d-block w-100"
-            src={selectedBusiness && selectedBusiness.BannerImageURL.S}
-            alt="cover"
-          />
-        </div>
-        <div className="img-err">
-          <img src={coverError} alt="cover" />
-          <span>
-            Please upload high quality images more then width - 800px to ensure
-            your cover image looks great.{" "}
-          </span>
-        </div>
+        {selectedBusiness && selectedBusiness.BannerImageURL.S ? (
+          <React.Fragment>
+            <div className="cover-img">
+              <img
+                className="d-block w-100"
+                src={selectedBusiness && selectedBusiness.BannerImageURL.S}
+                alt="cover"
+              />
+            </div>
+            <div className="img-err">
+              <img src={coverError} alt="cover" />
+              <span>
+                Please upload high quality images more then width - 800px to
+                ensure your cover image looks great.{" "}
+              </span>
+            </div>
+          </React.Fragment>
+        ) : null}
         <div className="merchant-info">
           <div className="merchant-detail">
             <span className="merchant-name">
@@ -60,16 +68,14 @@ const MerchantHome = props => {
               {selectedBusiness && selectedBusiness.BusinessEmail.S}
             </span>
           </div>
-          <div className="user-action">
-            <a className="user-terms" href="/">
-              Terms and Conditions
-            </a>
-            {state && state.fromUser ? (
+          {state && state.fromUser ? (
+            <div className="user-action">
+              <a className="user-terms" href="/">
+                Terms and Conditions
+              </a>
               <button className="unfollow">Unfollow</button>
-            ) : (
-              <button className="unfollow">Add Inventory</button>
-            )}
-          </div>
+            </div>
+          ) : null }
         </div>
         <div>
           <Container className="merchantHome-body" fluid>
@@ -81,6 +87,7 @@ const MerchantHome = props => {
                     : merchantLeftNavLinks
                 }
                 merchants={state && state.fromUser ? followedMerchants : []}
+                merchantId={"1587031042915"}
               />
             </div>
             <div className="right-section">
@@ -99,7 +106,8 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getFollowedMerchants,
-      updateSelectedBusiness
+      updateSelectedBusiness,
+      getBusinessDetails
     },
     dispatch
   );

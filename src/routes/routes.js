@@ -105,6 +105,24 @@ const AsyncHomeViewAllProducts = Loadable({
   modules: ["ViewAllProducts"]
 });
 
+const AsyncHomeInventory = Loadable({
+  loader: () =>
+    import(
+      /* webpackChunkName: "HomeInventory" */ "../containers/MerchantTableContainer/MerchantTableContainer"
+    ),
+  loading: error => <LoadingFallback {...error} />,
+  modules: ["HomeInventory"]
+});
+
+const AsyncAddInventory = Loadable({
+  loader: () =>
+    import(
+      /* webpackChunkName: "AddInventory" */ "../containers/AddInventory/AddInventory"
+    ),
+  loading: error => <LoadingFallback {...error} />,
+  modules: ["AddInventory"]
+});
+
 export const parent_routes = [
   {
     path: "/home",
@@ -175,6 +193,26 @@ export const merchant_child_routes = [
   {
     path: "/merchantHome/viewAllProducts/:name/:merchantId",
     component: AsyncHomeViewAllProducts,
+    exact: true
+  },
+  {
+    path: "/merchantHome/inventory/:name/:merchantId",
+    component: AsyncHomeInventory,
+    exact: true
+  },
+  {
+    path: "/merchantHome/addInventory",
+    component: AsyncAddInventory,
+    exact: true
+  },
+  {
+    path: "/merchantHome/campaigns/:name/:merchantId",
+    component: AsyncHomeInventory,
+    exact: true
+  },
+  {
+    path: "/merchantHome/coupons/:name/:merchantId",
+    component: AsyncHomeInventory,
     exact: true
   }
 ];

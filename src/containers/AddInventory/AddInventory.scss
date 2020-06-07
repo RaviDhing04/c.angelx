@@ -1,4 +1,4 @@
-.add-contact-heading {
+.add-inventory-heading {
     text-align: left;
     font-size: 1.75rem;
     font-weight: 500;
@@ -6,76 +6,100 @@
     color: #3B3B3B;
     opacity: 1;
 }
-.form-control:disabled{
-    background-color: #FFFFFF;
-}
-.add-contact-container{
-    .search {
-        Form {
-            width: 35%;
-            display: flex;
 
-            .form-group {
-                width: 100%;
+.add-inventory-container {
+    .AddProduct {
+
+        .width-25 {
+            width: 25%;
+        }
+
+        .width-33 {
+            width: 33%;
+        }
+
+        .width-50 {
+            width: 50%;
+        }
+
+        .width-75 {
+            width: 75%;
+        }
+
+
+        label {
+            display: inline-block;
+            margin-bottom: .5rem;
+            letter-spacing: 0px;
+            color: #333333DE;
+            opacity: 1;
+            font-size: 0.8125rem;
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            width: 95%;
+        }
+
+        .hint {
+            letter-spacing: 0.91px;
+            color: #E1AD74;
+            font-size: 0.8125rem;
+        }
+
+        .buttons {
+            text-align: right;
+
+            .cancelButton {
+                background: #E0E1E2 0% 0% no-repeat padding-box;
+                border-radius: 0.25rem;
+                opacity: 1;
+                width: 5.625rem;
+                height: 2.25rem;
+                letter-spacing: 0px;
+                color: #00000099;
+                opacity: 1;
+                font-weight: bold;
+                font-size: 0.875rem;
+                border: none;
+                margin: 0 0.5rem;
             }
 
-            .getInfoButton {
-                width: 7rem;
-                height: 2.25rem;
-                /* vertical-align: middle; */
-                /* line-height: 60px; */
-                margin: 2rem 0rem 0rem 2rem;
-                font-size: 0.875rem;
-                background: #E8EDF3 0% 0% no-repeat padding-box;
-                border-radius: 4px;
+            .saveAnotherButton {
+                background: #1B1C1D 0% 0% no-repeat padding-box;
+                border-radius: 0.25rem;
                 opacity: 1;
                 letter-spacing: 0px;
-                color: #6D6D6D;
+                color: #FFFFFF;
                 opacity: 1;
+                font-weight: bold;
+                font-size: 0.875rem;
+                width: 15rem;
+                height: 2.25rem;
                 border: none;
+                margin: 0 0.5rem;
             }
-        }
-    }
 
-    .searchedUser{
-        margin: 1rem 0rem 4rem 0rem;
-        width: 70%;
-
-        .cancelButton{
-            background: #E0E1E2 0% 0% no-repeat padding-box;
-            border-radius: 4px;
-            opacity: 1;
-            border: none;
-            letter-spacing: 0px;
-            color: #00000099;
-            opacity: 1;
-            font-size: 0.875rem;
-            width: 5rem;
-            height: 2.25rem;
-            font-weight: bold;
-        }
-
-        .saveButton{
-            background: #558ED4 0% 0% no-repeat padding-box;
-            border-radius: 4px;
-            opacity: 1;
-            border-radius: 4px;
-            opacity: 1;
-            border: none;
-            letter-spacing: 0px;
-            color: #00000099;
-            opacity: 1;
-            font-size: 0.875rem;
-            width: 5rem;
-            height: 2.25rem;
-            font-weight: bold;
-            color: #FFFFFF;
-            margin-left: 1rem;
+            .saveButton {
+                background: #558ED4 0% 0% no-repeat padding-box;
+                border-radius: 0.25rem;
+                opacity: 1;
+                letter-spacing: 0px;
+                color: #FFFFFF;
+                opacity: 1;
+                font-weight: 500;
+                font-size: 0.875rem;
+                width: 8.75rem;
+                height: 2.25rem;
+                border: none;
+                margin: 0 0.5rem;
+            }
         }
     }
 }
 
-.add-contact-container {
+.add-inventory-container {
     display: flex;
     flex-direction: column;
     padding: 2rem 4rem 2rem 0rem;

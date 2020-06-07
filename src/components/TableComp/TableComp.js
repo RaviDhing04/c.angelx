@@ -9,7 +9,8 @@ const TableComp = props => {
     tableKeys,
     onDelete,
     showDelete,
-    showEdit
+    showEdit,
+    onEdit
   } = props;
 
   const renderRow = (rowData, index) => {
@@ -19,7 +20,7 @@ const TableComp = props => {
           return <td key={index}>{rowData[key].S}</td>;
         })}
         <td className="tableEditDelete">
-          {showEdit ? <span>Edit</span> : null}
+          {showEdit ? <span onClick={()=>onEdit(rowData)}>Edit</span> : null}
           {showEdit && showDelete ? <span>|</span> : null}
           {showDelete ? <span onClick={()=>onDelete(rowData)}>Delete</span> : null}
         </td>

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import checkmark from "../../assets/checkmark.svg";
 
 const LeftNav = props => {
-  const { links, merchants } = props;
+  const { links, merchants, merchantId } = props;
   const userId = "1588433471165"; // to be update from login info later
 
   return (
@@ -25,7 +25,7 @@ const LeftNav = props => {
                   <Nav className="flex-column">
                     <Nav.Link
                       as={Link}
-                      to={link.path + userId + "/" + link.name}
+                      to={merchantId ? link.path + link.name + "/" + merchantId : link.path + userId + "/" + link.name}
                     >
                       {link.name}
                     </Nav.Link>
@@ -57,13 +57,13 @@ const LeftNav = props => {
                         <Nav.Link
                           as={Link}
                           to={{
-                            pathname: `/merchantHome/viewAllProducts/${"Latest Uploads"}/${"1587031042915"}`,
+                            pathname: `/merchantHome/viewAllProducts/${"Latest Uploads"}/${merchant.MerchantId.S}`,
                             state: {
                               fromUser: true
                             }
                           }}
                         >
-                          {merchant.S}
+                          {merchant.BusinessHandle.S}
                         </Nav.Link>
                       </Nav>
                       <img

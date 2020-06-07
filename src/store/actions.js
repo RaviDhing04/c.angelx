@@ -72,6 +72,61 @@ export const getMerchantAllProducts = (body = {}) => async dispatch => {
   }
 };
 
+export const getMerchantAllProductsAndSegregate = (body = {}) => async dispatch => {
+  try {
+    const response = await httpFetch(getApiEndPoints("MerchantAllProducts"), {
+      method: "POST",
+      body: body
+    });
+    if (response && response.result && response.result.data && response.result.data.Items.length) {
+      const [products, campaigns] = segregateProductsAndCampaigns(response.result.data.Items);
+      dispatch({
+        type: "MERCHANT_ALL_PRODUCTS",
+        value: { payload: products }
+      });
+      dispatch({
+        type: "MERCHANT_ALL_CAMPAIGNS",
+        value: { payload: campaigns }
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const getMerchantAllCoupons = (body = {}) => async dispatch => {
+  try {
+    const response = await httpFetch(getApiEndPoints("MerchantAllCoupons"), {
+      method: "POST",
+      body: body
+    });
+    if (response && response.result && response.result.data && response.result.data.Items.length) {
+      dispatch({
+        type: "MERCHANT_ALL_COUPONS",
+        value: { payload: response.result.data.Items }
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+const segregateProductsAndCampaigns = (Items) => {
+   const out = [[], []];
+  Items.forEach((item) => {
+   item.IsDonationCampaign.S === 'false' ? out[0].push(item) : out[1].push(item);
+  })
+  return out;
+}
+
 export const getSelectedProductDetails = (body = {}) => async dispatch => {
   try {
     const response = await httpFetch(
@@ -104,6 +159,10 @@ export const getSelectedProductDetails = (body = {}) => async dispatch => {
   }
 };
 
+export const addNewProduct = (body = {}) => async dispatch => {
+  
+}
+
 export const getFollowedMerchants = (body = {}) => async dispatch => {
   try {
     const response = await httpFetch(getApiEndPoints("FollowedMerchants"), {
@@ -119,7 +178,7 @@ export const getFollowedMerchants = (body = {}) => async dispatch => {
       dispatch({
         type: "FOLLOWED_MERCHANTS",
         value: {
-          payload: response.result.data.Item.MerchantsFollowed.L
+          payload: response.result.data.Items
         }
       });
       return true;
@@ -132,9 +191,31 @@ export const getFollowedMerchants = (body = {}) => async dispatch => {
   }
 };
 
-export const registerNewBusiness = async (body = {}) => {
+export const registerNewBusiness = (body = {}) => async dispatch => {
   try {
     const response = await httpFetch(getApiEndPoints("registerNewBusiness"), {
+      method: "POST",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const updateBusiness = (body = {}) => async dispatch => {
+  try {
+    const response = await httpFetch(getApiEndPoints("updateBusiness"), {
       method: "POST",
       body: body
     });
@@ -168,6 +249,34 @@ export const fetchRegisterBusiness = (body = {}) => async dispatch => {
     ) {
       dispatch({
         type: "SELECTED_BUSINESS_DETAILS",
+        value: {
+          payload: response.result.data.Item
+        }
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const getBusinessDetails = (body = {}) => async dispatch => {
+  try {
+    const response = await httpFetch(getApiEndPoints("BusinessDetails"), {
+      method: "POST",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      dispatch({
+        type: "SELECTED_BUSINESS",
         value: {
           payload: response.result.data.Item
         }

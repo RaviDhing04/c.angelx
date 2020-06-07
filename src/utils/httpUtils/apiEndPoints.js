@@ -32,6 +32,10 @@ const getApiEndPoints = val => {
       return baseUrl + "business/getregisteredbusinessdetails";
     case "registerNewBusiness":
       return baseUrl + "business/registerbusiness";
+    case "updateBusiness":
+      return baseUrl + "business/updatebusinessdetails";
+    case "MerchantAllCoupons":
+      return baseUrl + "/coupons/getmerchantcoupons";
     default:
       return "/";
   }

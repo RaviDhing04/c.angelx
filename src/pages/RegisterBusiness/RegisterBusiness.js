@@ -5,7 +5,8 @@ import { useHistory } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import {
   fetchRegisterBusiness,
-  registerNewBusiness
+  registerNewBusiness,
+  updateBusiness
 } from "../../store/actions";
 import "./RegisterBusiness.scss";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
@@ -17,23 +18,28 @@ const RegisterBusiness = props => {
   let history = useHistory();
   const action = props.match.params.action;
   const [loading, setLoading] = useState(false);
+  const [buttonClicked, setbuttonClicked] = useState(false);
 
   useEffect(() => {
     // const action = props.match.params.action;
     async function fetchBusinessDetails() {
       setLoading(true);
-      const res = await props.fetchRegisterBusiness({
-        PatronId: selectedBusiness.PatronId.S,
-        MerchantId: selectedBusiness.MerchantId.S
-      });
-      res ? setLoading(false) : console.log("err");
+      if (!selectedBusiness) {
+        history.goBack();
+      } else {
+        const res = await props.fetchRegisterBusiness({
+          PatronId: selectedBusiness.PatronId.S,
+          MerchantId: selectedBusiness.MerchantId.S
+        });
+        res ? setLoading(false) : console.log("err");
+      }
     }
     if (action === "edit") {
       fetchBusinessDetails();
     }
   }, []);
 
-  const addContactToList = async event => {
+  const registerNew = async event => {
     let payload = {};
     const formElements = event.target.elements;
     registerFormFields.forEach(field => {
@@ -42,11 +48,20 @@ const RegisterBusiness = props => {
     payload["PatronId"] = "69116697064443";
     const tags = formElements.Tags.value;
     tags.split(",").forEach((tag, index) => {
-      payload["tag" + index+1] = tag;
+      payload["tag" + index + 1] = tag;
     });
     setLoading(true);
-    const res = await registerNewBusiness(payload);
+    const res =
+      action === "edit"
+        ? await props.updateBusiness(payload)
+        : await props.registerNewBusiness(payload);
     res ? setLoading(false) : console.log("err");
+    if (!buttonClicked) {
+      history.goBack();
+    } else {
+      document.getElementById("RegisterBusinessForm").reset();
+      setbuttonClicked(false);
+    }
   };
 
   const cancel = async event => {
@@ -63,7 +78,7 @@ const RegisterBusiness = props => {
           </span>
         </div>
         <div className="RegisterBusiness">
-          <Form id="RegisterBusinessForm" onSubmit={e => addContactToList(e)}>
+          <Form id="RegisterBusinessForm" onSubmit={e => registerNew(e)}>
             <div className="sub-heading">Organization Details</div>
             <Form.Row className="width-50">
               <Col>
@@ -71,7 +86,8 @@ const RegisterBusiness = props => {
                   <Form.Label>Your C-Angelx User Handle</Form.Label>
                   <Form.Control
                     defaultValue={
-                      selectedBusinessDetails && selectedBusinessDetails.Name.S
+                      selectedBusinessDetails &&
+                      selectedBusinessDetails.BusinessHandle.S
                     }
                     type="text"
                     placeholder="Trading Name"
@@ -98,14 +114,18 @@ const RegisterBusiness = props => {
                     <Form.Control
                       defaultValue={
                         selectedBusinessDetails &&
-                        selectedBusinessDetails.ContactNumber.S
+                        selectedBusinessDetails.PaymentIDs.M.PaypalId.S
                       }
                       type="text"
                       placeholder="Paypal ID"
                       required
                     />
                     <InputGroup.Append className="inputGroupPayfastID">
-                      <a className="signUp" href="/">
+                      <a
+                        className="signUp"
+                        href="https://www.paypal.com/in/webapps/mpp/account-selection"
+                        target="blank"
+                      >
                         Click to Sign up!
                       </a>
                     </InputGroup.Append>
@@ -119,7 +139,8 @@ const RegisterBusiness = props => {
                   <Form.Label>Organization Name</Form.Label>
                   <Form.Control
                     defaultValue={
-                      selectedBusinessDetails && selectedBusinessDetails.Name.S
+                      selectedBusinessDetails &&
+                      selectedBusinessDetails.OrgName.S
                     }
                     type="text"
                     placeholder="Trading Name"
@@ -130,7 +151,14 @@ const RegisterBusiness = props => {
               <Col>
                 <Form.Group controlId="BusinessType">
                   <Form.Label>Type of Business</Form.Label>
-                  <Form.Control as="select"   required>
+                  <Form.Control
+                    as="select"
+                    defaultValue={
+                      selectedBusinessDetails &&
+                      selectedBusinessDetails.BusinessType.S
+                    }
+                    required
+                  >
                     <option value="testValue"> Select Type</option>
                     <option value="testValue"> India</option>
                   </Form.Control>
@@ -139,7 +167,14 @@ const RegisterBusiness = props => {
               <Col>
                 <Form.Group controlId="Country">
                   <Form.Label>Country</Form.Label>
-                  <Form.Control as="select"   required>
+                  <Form.Control
+                    as="select"
+                    defaultValue={
+                      selectedBusinessDetails &&
+                      selectedBusinessDetails.Country.S
+                    }
+                    required
+                  >
                     <option value="testValue"> Select Country</option>
                     <option value="testValue"> India</option>
                   </Form.Control>
@@ -152,7 +187,8 @@ const RegisterBusiness = props => {
                   <Form.Label>Contact Details</Form.Label>
                   <Form.Control
                     defaultValue={
-                      selectedBusinessDetails && selectedBusinessDetails.Name.S
+                      selectedBusinessDetails &&
+                      selectedBusinessDetails.BusinessContact.S
                     }
                     type="tel"
                     placeholder="Contact Number"
@@ -165,9 +201,8 @@ const RegisterBusiness = props => {
                   <Form.Label>Email ID</Form.Label>
                   <Form.Control
                     defaultValue={
-                      selectedBusinessDetails && selectedBusinessDetails.Email.S
-                        ? selectedBusinessDetails.Email.S
-                        : ""
+                      selectedBusinessDetails &&
+                      selectedBusinessDetails.BusinessEmail.S
                     }
                     type="email"
                     placeholder="Contact Email"
@@ -180,7 +215,8 @@ const RegisterBusiness = props => {
                   <Form.Label>Organization Website</Form.Label>
                   <Form.Control
                     defaultValue={
-                      selectedBusinessDetails && selectedBusinessDetails.Name.S
+                      selectedBusinessDetails &&
+                      selectedBusinessDetails.OrgWebsite.S
                     }
                     type="url"
                     placeholder="www.Domain.com"
@@ -195,14 +231,18 @@ const RegisterBusiness = props => {
                     <Form.Control
                       defaultValue={
                         selectedBusinessDetails &&
-                        selectedBusinessDetails.ContactNumber.S
+                        selectedBusinessDetails.PaymentIDs.M.PayFastId.S
                       }
                       type="text"
                       placeholder="Payfast ID"
                       required
                     />
                     <InputGroup.Append className="inputGroupPayfastID">
-                      <a className="signUp" href="/">
+                      <a
+                        className="signUp"
+                        href="https://www.payfast.co.za/registration"
+                        target="blank"
+                      >
                         Click to Sign up!
                       </a>
                     </InputGroup.Append>
@@ -215,7 +255,14 @@ const RegisterBusiness = props => {
               <Col>
                 <Form.Group controlId="AddressType">
                   <Form.Label>Address Type</Form.Label>
-                  <Form.Control as="select"   required>
+                  <Form.Control
+                    as="select"
+                    defaultValue={
+                      selectedBusinessDetails &&
+                      selectedBusinessDetails.BusinessAddress.M.AddressType.S
+                    }
+                    required
+                  >
                     <option value="testValue"> Address Type</option>
                     <option value="testValue"> India</option>
                   </Form.Control>
@@ -226,7 +273,14 @@ const RegisterBusiness = props => {
               <Col>
                 <Form.Group controlId="Country">
                   <Form.Label>Country</Form.Label>
-                  <Form.Control as="select"   required>
+                  <Form.Control
+                    as="select"
+                    defaultValue={
+                      selectedBusinessDetails &&
+                      selectedBusinessDetails.Country.S
+                    }
+                    required
+                  >
                     <option value="testValue"> Select Country</option>
                     <option value="testValue"> India</option>
                   </Form.Control>
@@ -237,7 +291,8 @@ const RegisterBusiness = props => {
                   <Form.Label>Pincode</Form.Label>
                   <Form.Control
                     defaultValue={
-                      selectedBusinessDetails && selectedBusinessDetails.Name.S
+                      selectedBusinessDetails &&
+                      selectedBusinessDetails.BusinessAddress.M.PostalCode.S
                     }
                     type="text"
                     placeholder="Type Pincode"
@@ -250,7 +305,8 @@ const RegisterBusiness = props => {
                   <Form.Label>Province</Form.Label>
                   <Form.Control
                     defaultValue={
-                      selectedBusinessDetails && selectedBusinessDetails.Name.S
+                      selectedBusinessDetails &&
+                      selectedBusinessDetails.BusinessAddress.M.Province.S
                     }
                     type="text"
                     placeholder="Type Province"
@@ -263,7 +319,8 @@ const RegisterBusiness = props => {
                   <Form.Label>City</Form.Label>
                   <Form.Control
                     defaultValue={
-                      selectedBusinessDetails && selectedBusinessDetails.Name.S
+                      selectedBusinessDetails &&
+                      selectedBusinessDetails.BusinessAddress.M.City.S
                     }
                     type="text"
                     placeholder="City"
@@ -278,7 +335,8 @@ const RegisterBusiness = props => {
                   <Form.Label>Street Name</Form.Label>
                   <Form.Control
                     defaultValue={
-                      selectedBusinessDetails && selectedBusinessDetails.Name.S
+                      selectedBusinessDetails &&
+                      selectedBusinessDetails.BusinessAddress.M.StreetName.S
                     }
                     type="text"
                     placeholder="Type Street Name"
@@ -291,7 +349,8 @@ const RegisterBusiness = props => {
                   <Form.Label>Street Number</Form.Label>
                   <Form.Control
                     defaultValue={
-                      selectedBusinessDetails && selectedBusinessDetails.Name.S
+                      selectedBusinessDetails &&
+                      selectedBusinessDetails.BusinessAddress.M.StreetNumber.S
                     }
                     type="text"
                     placeholder="Type Street Number"
@@ -304,7 +363,8 @@ const RegisterBusiness = props => {
                   <Form.Label>Suburb</Form.Label>
                   <Form.Control
                     defaultValue={
-                      selectedBusinessDetails && selectedBusinessDetails.Name.S
+                      selectedBusinessDetails &&
+                      selectedBusinessDetails.BusinessAddress.M.Suburb.S
                     }
                     type="text"
                     placeholder="Type Suburb"
@@ -324,7 +384,11 @@ const RegisterBusiness = props => {
                   <Form.Label>Business Tags</Form.Label>
                   <Form.Control
                     defaultValue={
-                      selectedBusinessDetails && selectedBusinessDetails.Name.S
+                      selectedBusinessDetails &&
+                      selectedBusinessDetails.Tags.L.length &&
+                      selectedBusinessDetails.Tags.L.reduce((acc, tag) => {
+                        return acc + tag.S + ",";
+                      }, "")
                     }
                     type="text"
                     placeholder="Tags"
@@ -336,7 +400,11 @@ const RegisterBusiness = props => {
               <Button onClick={e => cancel(e)} className="cancelButton">
                 Cancel
               </Button>
-              <Button className="saveAnotherButton">
+              <Button
+                onClick={() => setbuttonClicked(true)}
+                type="submit"
+                className="saveAnotherButton"
+              >
                 Save & Add Another Business
               </Button>
               <Button className="saveButton" type="submit">
@@ -355,7 +423,9 @@ const RegisterBusiness = props => {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      fetchRegisterBusiness
+      fetchRegisterBusiness,
+      updateBusiness,
+      registerNewBusiness
     },
     dispatch
   );
