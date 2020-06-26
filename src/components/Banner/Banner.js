@@ -10,7 +10,7 @@ const Banner = () => {
 
   return (
     <Carousel activeIndex={index} onSelect={handleSelect}>
-      {[1, 2, 3].map(banner => {
+      {[1].map(banner => {
         return (
           <Carousel.Item key={banner}>
             <img

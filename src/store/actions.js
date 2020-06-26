@@ -133,6 +133,56 @@ export const getMerchantAllCoupons = (body = {}) => async dispatch => {
   }
 };
 
+export const deleteProduct = (body = {}) => async dispatch => {
+  try {
+    const response = await httpFetch(getApiEndPoints("deleteProduct"), {
+      method: "POST",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.message === "Success"
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+export const deleteCoupon = (body = {}) => async dispatch => {
+  try {
+    const response = await httpFetch(getApiEndPoints("deleteCoupon"), {
+      method: "POST",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.message === "Success"
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const setSelectedRow = (row) => async dispatch => {
+  if(row) {
+    dispatch({
+      type: "SET_SELECTED_ROW",
+      value: { payload: row }
+    });
+  }
+}
+
 const segregateProductsAndCampaigns = Items => {
   const out = [[], []];
   Items.forEach(item => {
@@ -165,7 +215,7 @@ export const getSelectedProductDetails = (body = {}) => async dispatch => {
           id: response.result.data.Item.ProductId.S
         }
       });
-      return true;
+      return response.result.data.Item;
     } else {
       return false;
     }
@@ -178,6 +228,50 @@ export const getSelectedProductDetails = (body = {}) => async dispatch => {
 export const addNewProduct = (body = {}) => async dispatch => {
   try {
     const response = await httpFetch(getApiEndPoints("addNewProduct"), {
+      method: "POST",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const updateProduct = (body = {}) => async dispatch => {
+  try {
+    const response = await httpFetch(getApiEndPoints("updateProduct"), {
+      method: "POST",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+}; 
+
+export const updateCoupon = (body = {}) => async dispatch => {
+  try {
+    const response = await httpFetch(getApiEndPoints("updateCoupon"), {
       method: "POST",
       body: body
     });
@@ -695,5 +789,12 @@ export const clearViewAllProducts = () => dispatch => {
   dispatch({
     type: "VIEWALL_PRODUCTS",
     value: { payload: {} }
+  });
+};
+
+export const clearSelectedRow = () => dispatch => {
+  dispatch({
+    type: "SET_SELECTED_ROW",
+    value: { payload: null }
   });
 };

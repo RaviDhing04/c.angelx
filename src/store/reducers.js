@@ -32,7 +32,8 @@ const initialState = {
     selectedBusinessDetails: null,
     allProducts: [],
     allCampaigns: [],
-    allCoupons: []
+    allCoupons: [],
+    selectedRow: null
   },
   common: {
     activeCurrency: null
@@ -168,6 +169,14 @@ export const appReducer = (state = initialState, { type, value }) => {
         ...state,
         common: {
           activeCurrency: value.payload
+        }
+      };
+    case "SET_SELECTED_ROW":
+      return {
+        ...state,
+        manageBusiness: {
+          ...state.manageBusiness,
+          selectedRow: value.payload
         }
       };
     default:

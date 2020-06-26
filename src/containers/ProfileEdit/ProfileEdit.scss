@@ -1,0 +1,82 @@
+.add-contact-heading {
+    text-align: left;
+    font-size: 1.75rem;
+    font-weight: 500;
+    letter-spacing: 1.96px;
+    color: #3B3B3B;
+    opacity: 1;
+}
+.form-control:disabled{
+    background-color: #FFFFFF;
+}
+.add-contact-container{
+    .search {
+        Form {
+            width: 35%;
+            display: flex;
+
+            .form-group {
+                width: 100%;
+            }
+
+            .getInfoButton {
+                width: 7rem;
+                height: 2.25rem;
+                /* vertical-align: middle; */
+                /* line-height: 60px; */
+                margin: 2rem 0rem 0rem 2rem;
+                font-size: 0.875rem;
+                background: #E8EDF3 0% 0% no-repeat padding-box;
+                border-radius: 4px;
+                opacity: 1;
+                letter-spacing: 0px;
+                color: #6D6D6D;
+                opacity: 1;
+                border: none;
+            }
+        }
+    }
+
+    .searchedUser{
+        margin: 1rem 0rem 4rem 0rem;
+        width: 100%;
+
+        .cancelButton{
+            background: #E0E1E2 0% 0% no-repeat padding-box;
+            border-radius: 4px;
+            opacity: 1;
+            border: none;
+            letter-spacing: 0px;
+            color: #00000099;
+            opacity: 1;
+            font-size: 0.875rem;
+            width: 5rem;
+            height: 2.25rem;
+            font-weight: bold;
+        }
+
+        .saveButton{
+            background: #558ED4 0% 0% no-repeat padding-box;
+            border-radius: 4px;
+            opacity: 1;
+            border-radius: 4px;
+            opacity: 1;
+            border: none;
+            letter-spacing: 0px;
+            color: #00000099;
+            opacity: 1;
+            font-size: 0.875rem;
+            width: 5rem;
+            height: 2.25rem;
+            font-weight: bold;
+            color: #FFFFFF;
+            margin-left: 1rem;
+        }
+    }
+}
+
+.add-contact-container {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 4rem 2rem 0rem;
+}

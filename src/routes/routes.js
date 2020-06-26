@@ -12,29 +12,31 @@ const LoadingFallback = props => {
 };
 
 const AsyncHome = Loadable({
-  loader: () =>
-    import(/* webpackChunkName: "HomePage" */ "../pages/Home/Home"),
+  loader: () => import(/* webpackChunkName: "HomePage" */ "../pages/Home/Home"),
   loading: error => <LoadingFallback {...error} />,
   modules: ["HomePage"]
 });
 
 const AsyncCart = Loadable({
-  loader: () =>
-    import(/* webpackChunkName: "CartPage" */ "../pages/Cart/Cart"),
+  loader: () => import(/* webpackChunkName: "CartPage" */ "../pages/Cart/Cart"),
   loading: error => <LoadingFallback {...error} />,
   modules: ["CartPage"]
 });
 
 const AsyncManageBusiness = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "CartPage" */ "../pages/AllBusiness/AllBusiness"),
+    import(
+      /* webpackChunkName: "CartPage" */ "../pages/AllBusiness/AllBusiness"
+    ),
   loading: error => <LoadingFallback {...error} />,
   modules: ["ManageBusiness"]
 });
 
 const AsyncMerchantHome = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "MerchantPage" */ "../pages/MerchantHome/MerchantHome"),
+    import(
+      /* webpackChunkName: "MerchantPage" */ "../pages/MerchantHome/MerchantHome"
+    ),
   loading: error => <LoadingFallback {...error} />,
   modules: ["MerchantPage"]
 });
@@ -55,7 +57,9 @@ const AsyncSupport = Loadable({
 
 const AsyncRegisterBusiness = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "RegisterBusiness" */ "../pages/RegisterBusiness/RegisterBusiness"),
+    import(
+      /* webpackChunkName: "RegisterBusiness" */ "../pages/RegisterBusiness/RegisterBusiness"
+    ),
   loading: error => <LoadingFallback {...error} />,
   modules: ["RegisterBusiness"]
 });
@@ -141,6 +145,42 @@ const AsyncAddCoupon = Loadable({
   modules: ["AddCoupon"]
 });
 
+const AsyncProfileEdit = Loadable({
+  loader: () =>
+    import(
+      /* webpackChunkName: "ProfileEdit" */ "../containers/ProfileEdit/ProfileEdit"
+    ),
+  loading: error => <LoadingFallback {...error} />,
+  modules: ["ProfileEdit"]
+});
+
+const AsyncProfile = Loadable({
+  loader: () =>
+    import(
+      /* webpackChunkName: "Profile" */ "../pages/Profile/Profile"
+    ),
+  loading: error => <LoadingFallback {...error} />,
+  modules: ["Profile"]
+});
+
+const AsyncProfileAddresses = Loadable({
+  loader: () =>
+    import(
+      /* webpackChunkName: "ProfileAddresses" */ "../containers/ProfileAddresses/ProfileAddresses"
+    ),
+  loading: error => <LoadingFallback {...error} />,
+  modules: ["ProfileAddresses"]
+});
+
+// const AsyncProfilePayments = Loadable({
+//   loader: () =>
+//     import(
+//       /* webpackChunkName: "ProfilePayments" */ "../containers/ProfilePayments/ProfilePayments"
+//     ),
+//   loading: error => <LoadingFallback {...error} />,
+//   modules: ["ProfilePayments"]
+// });
+
 export const parent_routes = [
   {
     path: "/home",
@@ -175,6 +215,11 @@ export const parent_routes = [
   {
     path: "/registerBusiness/:action",
     component: AsyncRegisterBusiness,
+    exact: false
+  },
+  {
+    path: "/profile",
+    component: AsyncProfile,
     exact: false
   }
 ];
@@ -219,17 +264,17 @@ export const merchant_child_routes = [
     exact: true
   },
   {
-    path: "/merchantHome/addInventory",
+    path: "/merchantHome/Inventory/:action",
     component: AsyncAddInventory,
     exact: true
   },
   {
-    path: "/merchantHome/addCampaigns",
+    path: "/merchantHome/Campaigns/:action",
     component: AsyncAddCampaign,
     exact: true
   },
   {
-    path: "/merchantHome/addCoupons",
+    path: "/merchantHome/Coupons/:action",
     component: AsyncAddCoupon,
     exact: true
   },
@@ -245,6 +290,29 @@ export const merchant_child_routes = [
   }
 ];
 
+export const profile_child_routes = [
+  {
+    path: "/profile/edit/:userId",
+    component: AsyncProfileEdit,
+    exact: true
+  },
+  {
+    path: "/profile/edit/:userId/:name",
+    component: AsyncProfileEdit,
+    exact: true
+  },
+  {
+    path: "/profile/addresses/:userId/:name",
+    component: AsyncProfileAddresses,
+    exact: true
+  },
+  // {
+  //   path: "/profile/payment/",
+  //   component: AsyncProfilePayments,
+  //   exact: true
+  // }
+];
+
 class Router extends Component {
   constructor(props) {
     super(props);
@@ -256,7 +324,12 @@ class Router extends Component {
       <>
         {/* <Route path="/" component={AsyncHome} key="/home" exact /> */}
         {routes.map((r, i) => (
-          <Route path={r.path} component={r.component} key={i} exact={r.exact}/>
+          <Route
+            path={r.path}
+            component={r.component}
+            key={i}
+            exact={r.exact}
+          />
         ))}
         {/* </Switch> */}
       </>

@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Container, Form, Button, Col, InputGroup } from "react-bootstrap";
 import { bindActionCreators } from "redux";
-import { addNewCoupon } from "../../store/actions";
+import {
+  addNewCoupon,
+  updateCoupon,
+  clearSelectedRow
+} from "../../store/actions";
 import "./AddCoupons.scss";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import { addCouponFormFields } from "../../constants/constants";
@@ -10,30 +14,52 @@ import { useHistory } from "react-router-dom";
 
 const AddCoupons = props => {
   const [loading, setLoading] = useState(false);
-  const { addNewCoupon, selectedBusiness } = props;
+  const { addNewCoupon, selectedBusiness, selectedRow, updateCoupon } = props;
+  const [couponDetails, setCouponDetails] = useState(null);
+  const action = props.match.params.action;
   const history = useHistory();
-  // const add = async event => {
-  //   event.preventDefault();
-  //   setLoading(true);
-  //   const res = await addNewCoupon({
-  //     // UserId: userId,
-  //     // ContactUserId: searchedContact && searchedContact.UserId.S,
-  //     // Name: searchedContact && searchedContact.Name.S,
-  //     // Email: searchedContact && searchedContact.Email.S,
-  //     // ContactNumber: searchedContact && searchedContact.ContactNumber.S
-  //   });
-  // };
+
+  useEffect(() => {
+    async function fetchData() {
+      if (selectedRow) {
+        setCouponDetails(selectedRow);
+        console.log(selectedRow);
+        setLoading(false);
+      } else {
+        history.goBack();
+      }
+    }
+    if (action === "edit") {
+      fetchData();
+    }
+
+    return () => {
+      props.clearSelectedRow();
+    };
+  }, []);
 
   const add = async event => {
     let payload = {};
     const formElements = event.target.elements;
     addCouponFormFields.forEach(field => {
-      payload[field] = formElements[field].value;
+      if(["CouponActiveFrom", "CouponExpiryDate"].includes(field)) {
+        payload[field] = new Date(formElements[field].value).toGMTString();
+      } else {
+        payload[field] = formElements[field].value;
+      }
     });
 
     payload["MerchantId"] = selectedBusiness.MerchantId.S;
+    if (action === "edit") {
+      payload["Timestamp"] = couponDetails.Timestamp.S;
+      payload["CouponId"] = couponDetails.CouponId.S;
+      payload["IsActive"] = couponDetails.IsActive.S;
+    }
     setLoading(true);
-    const res = await addNewCoupon(payload);
+    const res =
+      action === "add"
+        ? await addNewCoupon(payload)
+        : await updateCoupon(payload);
     res ? setLoading(false) : console.log("err");
     history.goBack();
   };
@@ -56,27 +82,25 @@ const AddCoupons = props => {
                 <Form.Group controlId="CouponCode">
                   <Form.Label>Coupon Code</Form.Label>
                   <Form.Control
-                    // defaultValue={
-                    //   selectedBusinessDetails &&
-                    //   selectedBusinessDetails.BusinessHandle.S
-                    // }
+                    defaultValue={couponDetails && couponDetails.CouponCode.S}
                     type="text"
                     placeholder="Type Coupon Code"
                     required
                   />
                 </Form.Group>
               </Col>
-
             </Form.Row>
             <Form.Row className="width-66">
               <Col>
                 <Form.Group controlId="CouponActiveFrom">
                   <Form.Label>Coupon Active From</Form.Label>
                   <Form.Control
-                    // defaultValue={
-                    //   selectedBusinessDetails &&
-                    //   selectedBusinessDetails.BusinessHandle.S
-                    // }
+                    defaultValue={
+                      couponDetails &&
+                      new Date(couponDetails.CouponActiveFrom.S)
+                        .toISOString()
+                        .slice(0, 19)
+                    }
                     type="datetime-local"
                     required
                   />
@@ -86,10 +110,12 @@ const AddCoupons = props => {
                 <Form.Group controlId="CouponExpiryDate">
                   <Form.Label>Coupon Active Till</Form.Label>
                   <Form.Control
-                    // defaultValue={
-                    //   selectedBusinessDetails &&
-                    //   selectedBusinessDetails.BusinessHandle.S
-                    // }
+                    defaultValue={
+                      couponDetails &&
+                      new Date(couponDetails.CouponExpiryDate.S)
+                        .toISOString()
+                        .slice(0, 19)
+                    }
                     type="datetime-local"
                     required
                   />
@@ -98,13 +124,10 @@ const AddCoupons = props => {
             </Form.Row>
             <Form.Row>
               <Col>
-                <Form.Group controlId="Discount(%)">
+                <Form.Group controlId="Discount">
                   <Form.Label>Discount(%)</Form.Label>
                   <Form.Control
-                    // defaultValue={
-                    //   selectedBusinessDetails &&
-                    //   selectedBusinessDetails.BusinessAddress.M.PostalCode.S
-                    // }
+                    defaultValue={couponDetails && couponDetails.Discount.S}
                     type="number"
                     placeholder=" Type Discount(%)"
                     required
@@ -115,10 +138,9 @@ const AddCoupons = props => {
                 <Form.Group controlId="MaxDiscountAmount">
                   <Form.Label>Max. Discount Amount</Form.Label>
                   <Form.Control
-                    // defaultValue={
-                    //   selectedBusinessDetails &&
-                    //   selectedBusinessDetails.BusinessAddress.M.PostalCode.S
-                    // }
+                    defaultValue={
+                      couponDetails && couponDetails.MaxDiscountAmount.S
+                    }
                     type="number"
                     placeholder=" Max. Discount Amount"
                     required
@@ -130,10 +152,7 @@ const AddCoupons = props => {
                   <Form.Label>Currency</Form.Label>
                   <Form.Control
                     as="select"
-                    // defaultValue={
-                    //   selectedBusinessDetails &&
-                    //   selectedBusinessDetails.BusinessAddress.M.AddressType.S
-                    // }
+                    defaultValue={couponDetails && couponDetails.Currency.S}
                     required
                   >
                     <option value="testValue"> ZAR</option>
@@ -148,10 +167,9 @@ const AddCoupons = props => {
                 <Form.Group controlId="CouponDescription">
                   <Form.Label>Coupon Description</Form.Label>
                   <Form.Control
-                    // defaultValue={
-                    //   selectedBusinessDetails &&
-                    //   selectedBusinessDetails.BusinessAddress.M.StreetName.S
-                    // }
+                    defaultValue={
+                      couponDetails && couponDetails.CouponDescription.S
+                    }
                     as="textarea"
                     placeholder="Type Coupon Description"
                     required
@@ -164,7 +182,7 @@ const AddCoupons = props => {
                 Cancel
               </Button>
               <Button className="saveButton" type="submit">
-                Save Inventory
+                Save Coupon
               </Button>
             </div>
           </Form>
@@ -178,14 +196,17 @@ const AddCoupons = props => {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      addNewCoupon
+      addNewCoupon,
+      updateCoupon,
+      clearSelectedRow
     },
     dispatch
   );
 
 const mapStatetoProps = ({ app: { manageBusiness } }) => {
   return {
-    selectedBusiness: manageBusiness.selectedBusiness
+    selectedBusiness: manageBusiness.selectedBusiness,
+    selectedRow: manageBusiness.selectedRow
   };
 };
 

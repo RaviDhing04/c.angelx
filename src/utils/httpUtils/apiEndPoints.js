@@ -24,6 +24,10 @@ const getApiEndPoints = val => {
       return baseUrl + "users/addcontact";
     case "deleteContact":
       return baseUrl + "users/deletecontact";
+    case "deleteProduct":
+      return baseUrl + "products/deleteproduct";
+    case "deleteCoupon":
+      return baseUrl + "coupons/deletecoupon";
     case "addProductToCart":
       return baseUrl + "cart/addtocart";
     case "SearchCategories":
@@ -35,11 +39,15 @@ const getApiEndPoints = val => {
     case "updateBusiness":
       return baseUrl + "business/updatebusinessdetails";
     case "MerchantAllCoupons":
-      return baseUrl + "/coupons/getmerchantcoupons";
+      return baseUrl + "coupons/getmerchantcoupons";
     case "addNewProduct":
-      return baseUrl + "/products/addproduct";
+      return baseUrl + "products/addproduct";
+    case "updateProduct":
+      return baseUrl + "products/updateproductdetails";
     case "addNewCoupon":
-      return baseUrl + "/coupons/addcoupon";
+      return baseUrl + "coupons/addcoupon";
+    case "updateCoupon":
+      return baseUrl + "coupons/updatecoupon";
     default:
       return "/";
   }

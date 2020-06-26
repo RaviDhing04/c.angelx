@@ -3,7 +3,11 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
   getMerchantAllProductsAndSegregate,
-  getMerchantAllCoupons
+  getMerchantAllCoupons,
+  setSelectedRow,
+  deleteProduct,
+  deleteCoupon,
+  clearSelectedRow
 } from "../../store/actions";
 import "./MerchantTableContainer.scss";
 import { Container } from "react-bootstrap";
@@ -17,12 +21,26 @@ const MerchantTableContainer = props => {
   const tableHeader = {
     Inventory: ["Product Name", "Price", "Product Id"],
     Campaigns: ["Campaign Name", "Min Price", "Campaign Id"],
-    Coupons: ["Coupon Code", "Discount (%)", "Currency", "Max. Discount Amount", "Active From", "Active Till"]
+    Coupons: [
+      "Coupon Code",
+      "Discount (%)",
+      "Currency",
+      "Max. Discount Amount",
+      "Active From",
+      "Active Till"
+    ]
   };
   const tableKeys = {
     Inventory: ["Name", "Price", "ProductId"],
     Campaigns: ["Name", "Price", "ProductId"],
-    Coupons: ["CouponCode", "Discount", "Currency", "MaxDiscountAmount", "CouponActiveFrom", "CouponExpiryDate"]
+    Coupons: [
+      "CouponCode",
+      "Discount",
+      "Currency",
+      "MaxDiscountAmount",
+      "CouponActiveFrom",
+      "CouponExpiryDate"
+    ]
   };
   const [Items, setItems] = useState([]);
   const history = useHistory();
@@ -60,19 +78,45 @@ const MerchantTableContainer = props => {
   }, [props.allProducts, props.allCampaigns, props.allCoupons]);
 
   const deleteRow = async row => {
-    // setLoading(true);
-    // const res = await deleteContact({
-    //   UserId: row && row.UserId.S,
-    //   ContactUserId: row && row.ContactUserId.S,
-    // });
-    // if (res) {
-    //   const res = await getSavedContacts({ UserId: userId });
-    //   res ? setLoading(false) : console.log("err");
-    // }
+    if (name === "Inventory" || name === "Campaigns") {
+      setLoading(true);
+      const res = await deleteProduct({
+        ProductId: row.ProductId,
+        Timestamp: row.Timestamp
+      });
+      if (res) {
+        const res1 = await await props.getMerchantAllProductsAndSegregate({
+          MerchantId: merchantId
+        });
+        setLoading(false);
+        res1 ? setLoading(false) : console.log("err");
+      } else {
+        setLoading(false);
+        console.log("err");
+      }
+    } else if (name === "Coupons") {
+      setLoading(true);
+      const res = await deleteCoupon({
+        MerchantId: merchantId,
+        Timestamp: row.Timestamp
+      });
+      if (res) {
+        const res1 =  await props.getMerchantAllCoupons({
+          MerchantId: merchantId
+        });
+        setLoading(false);
+        res1 ? setLoading(false) : console.log("err");
+      } else {
+        setLoading(false);
+        console.log("err");
+      }
+    }
   };
 
   const EditRow = row => {
     console.log(row);
+    props.setSelectedRow(row);
+    history.push(`/merchantHome/${name}/edit`);
   };
 
   const makeData = name => {
@@ -82,7 +126,8 @@ const MerchantTableContainer = props => {
         return {
           Name: item.Name,
           Price: item.ProductSpecifications.M.UnitPrice,
-          ProductId: item.ProductId
+          ProductId: item.ProductId,
+          Timestamp: item.Timestamp
         };
       });
     } else if (name === "Campaigns") {
@@ -90,19 +135,20 @@ const MerchantTableContainer = props => {
         return {
           Name: item.Name,
           Price: item.ProductSpecifications.M.UnitPrice,
-          ProductId: item.ProductId
+          ProductId: item.ProductId,
+          Timestamp: item.Timestamp
         };
       });
     } else if (name === "Coupons") {
-        Items = props.allCoupons.map(item => {
-          return item;
-        });
-      }
+      Items = props.allCoupons.map(item => {
+        return item;
+      });
+    }
     setItems(Items);
   };
 
   const navigateToAdd = name => {
-    history.push(`/merchantHome/add${name}`);
+    history.push(`/merchantHome/${name}/add`);
   };
 
   return !loading ? (
@@ -136,7 +182,11 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getMerchantAllProductsAndSegregate,
-      getMerchantAllCoupons
+      getMerchantAllCoupons,
+      setSelectedRow,
+      deleteProduct,
+      deleteCoupon,
+      clearSelectedRow
     },
     dispatch
   );

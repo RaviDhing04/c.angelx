@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Container, Form, Button, Col, InputGroup } from "react-bootstrap";
 import { bindActionCreators } from "redux";
-import { addNewProduct } from "../../store/actions";
+import { addNewProduct, updateProduct, getSelectedProductDetails, clearSelectedRow } from "../../store/actions";
 import "./AddCampaigns.scss";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import plusIcon from "../../assets/plus.svg";
@@ -11,19 +11,35 @@ import { useHistory } from "react-router-dom";
 
 const AddCampaigns = props => {
   const [loading, setLoading] = useState(false);
-  const { addNewProduct, selectedBusiness } = props;
+  const { addNewProduct, selectedBusiness, selectedRow } = props;
+  const [productDetails, setProductDetails] = useState(null);
+  const action = props.match.params.action;
   const history = useHistory();
-  // const add = async event => {
-  //   event.preventDefault();
-  //   setLoading(true);
-  //   const res = await addNewProduct({
-  //     // UserId: userId,
-  //     // ContactUserId: searchedContact && searchedContact.UserId.S,
-  //     // Name: searchedContact && searchedContact.Name.S,
-  //     // Email: searchedContact && searchedContact.Email.S,
-  //     // ContactNumber: searchedContact && searchedContact.ContactNumber.S
-  //   });
-  // };
+
+  useEffect(() => {
+    async function fetchData() {
+      if (selectedRow) {
+        const payload = {
+          ProductId: selectedRow.ProductId.S,
+          Timestamp: selectedRow.Timestamp.S
+        };
+        const res = await props.getSelectedProductDetails(payload);
+        if (res) {
+          setProductDetails(res);
+          console.log(res);
+          setLoading(false);
+        }
+      } else {
+        history.goBack();
+      }
+    }
+    if (action === "edit") {
+      fetchData();
+    }
+    return () => { 
+      props.clearSelectedRow();
+    }
+  }, []);
 
   const add = async event => {
     let payload = {
@@ -56,8 +72,17 @@ const AddCampaigns = props => {
 
     payload["MerchantId"] = selectedBusiness.MerchantId.S;
     payload["MerchantHandle"] = selectedBusiness.BusinessHandle.S;
+    if (action === 'edit') { 
+      payload['Timestamp'] = selectedRow.Timestamp.S;
+      payload['ProductId'] = productDetails.ProductId.S;
+      payload['IsActive'] = productDetails.IsActive.S;
+      payload['ThumbnailImageURL'] = productDetails.ThumbnailImageURL.S;
+      payload['FullImageURL1'] = productDetails.ProductImages.L.S;
+      payload['FullImageURL2'] = productDetails.ProductImages.L.S;
+      payload['FullImageURL3'] = productDetails.ProductImages.L.S;
+     }
     setLoading(true);
-    const res = await addNewProduct(payload);
+    const res = action === 'add' ? await addNewProduct(payload) : await updateProduct(payload);
     res ? setLoading(false) : console.log("err");
     history.goBack();
   };
@@ -84,10 +109,10 @@ const AddCampaigns = props => {
                 <Form.Group controlId="ProductName">
                   <Form.Label>Campaign Name</Form.Label>
                   <Form.Control
-                    // defaultValue={
-                    //   selectedBusinessDetails &&
-                    //   selectedBusinessDetails.BusinessHandle.S
-                    // }
+                    defaultValue={
+                      productDetails &&
+                      productDetails.Name.S
+                    }
                     type="text"
                     placeholder="Type Name"
                     required
@@ -99,10 +124,10 @@ const AddCampaigns = props => {
                   <Form.Label>Campaign Category</Form.Label>
                   <Form.Control
                     as="select"
-                    // defaultValue={
-                    //   selectedBusinessDetails &&
-                    //   selectedBusinessDetails.BusinessAddress.M.AddressType.S
-                    // }
+                    defaultValue={
+                      productDetails &&
+                      productDetails.ProductCategory.S
+                    }
                     required
                   >
                     <option value="testValue"> Environment</option>
@@ -145,7 +170,7 @@ const AddCampaigns = props => {
                   <Form.Control
                     id="fileUpload"
                     type="file"
-                    accept=".pdf"
+                    accept=".jgp, .png"
                     onChange={addFile}
                     style={{ display: "none" }}
                   />
@@ -157,10 +182,10 @@ const AddCampaigns = props => {
                 <Form.Group controlId="MinDonation">
                   <Form.Label>Minimum Donation</Form.Label>
                   <Form.Control
-                    // defaultValue={
-                    //   selectedBusinessDetails &&
-                    //   selectedBusinessDetails.BusinessAddress.M.PostalCode.S
-                    // }
+                    defaultValue={
+                      productDetails &&
+                      productDetails.DonationCampaignDetails.M.MinDonation.S
+                    }
                     type="number"
                     placeholder=" Type Minimum Donation"
                     required
@@ -171,10 +196,10 @@ const AddCampaigns = props => {
                 <Form.Group controlId="TargetDonationAmount">
                   <Form.Label>Target Donation</Form.Label>
                   <Form.Control
-                    // defaultValue={
-                    //   selectedBusinessDetails &&
-                    //   selectedBusinessDetails.BusinessAddress.M.PostalCode.S
-                    // }
+                    defaultValue={
+                      productDetails &&
+                      productDetails.DonationCampaignDetails.M.Target.S
+                    }
                     type="number"
                     placeholder="Type Target Donation"
                     required
@@ -186,10 +211,10 @@ const AddCampaigns = props => {
                   <Form.Label>Currency</Form.Label>
                   <Form.Control
                     as="select"
-                    // defaultValue={
-                    //   selectedBusinessDetails &&
-                    //   selectedBusinessDetails.BusinessAddress.M.AddressType.S
-                    // }
+                    defaultValue={
+                      productDetails &&
+                      productDetails.DonationCampaignDetails.M.Currency.S
+                    }
                     required
                   >
                     <option value="testValue"> ZAR</option>
@@ -204,10 +229,10 @@ const AddCampaigns = props => {
                 <Form.Group controlId="ProductDescription">
                   <Form.Label>Campaign Description</Form.Label>
                   <Form.Control
-                    // defaultValue={
-                    //   selectedBusinessDetails &&
-                    //   selectedBusinessDetails.BusinessAddress.M.StreetName.S
-                    // }
+                    defaultValue={
+                      productDetails &&
+                      productDetails.Description.S
+                    }
                     as="textarea"
                     placeholder="Type Campaign Description"
                     required
@@ -234,14 +259,18 @@ const AddCampaigns = props => {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      addNewProduct
+      addNewProduct,
+      updateProduct,
+      getSelectedProductDetails,
+      clearSelectedRow
     },
     dispatch
   );
 
 const mapStatetoProps = ({ app: { manageBusiness } }) => {
   return {
-    selectedBusiness: manageBusiness.selectedBusiness
+    selectedBusiness: manageBusiness.selectedBusiness,
+    selectedRow: manageBusiness.selectedRow
   };
 };
 

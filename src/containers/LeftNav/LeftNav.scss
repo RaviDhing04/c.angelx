@@ -11,12 +11,23 @@
         background: #F6F6F6 0% 0% no-repeat padding-box;
         opacity: 1;
         margin-bottom: 2rem;
+
+        .card-body {
+            padding: 1.25rem 0px;
+        }
     }
 
     .list-item {
         display: flex;
         align-items: center;
-        padding: 5px 0;
+        padding: 5px 0px 5px 2rem;
+    }
+
+    .active {
+        background: #DDE1E8 0% 0% no-repeat padding-box;
+        opacity: 1;
+        color: #202020;
+        font-weight: 600;
     }
 
     .merchant-search {
@@ -24,7 +35,8 @@
             padding: 0.5rem 0rem;
         }
     }
-    .nav-icon{
+
+    .nav-icon {
         width: 1.125rem;
         height: 1.125rem;
         opacity: 1;

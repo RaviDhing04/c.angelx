@@ -14,6 +14,12 @@ export const merchantLeftNavLinks = [
   { name: "Coupons", path: "/merchantHome/coupons/", icon: "coupon" }
 ];
 
+export const profileLeftNavLinks = [
+  { name: "Edit Personal Details", path: "/profile/edit/", icon: "profile" },
+  { name: "Manage Addresses", path: "/profile/addresses/", icon: "location" },
+  { name: "Payment Options", path: "/profile/payment/", icon: "credit-card" }
+];
+
 export const merchantList = [
   { name: "ProdTest@DeleteLater", path: "/" },
   { name: "Accousticsplace@oxfordstreet", path: "/" },
@@ -67,7 +73,7 @@ export const currencies = [
 ];
 
 export const profileOptions = [
-  { name: "Edit Profile", path: "/" },
+  { name: "Edit Profile", path: "/profile/edit/" },
   { name: "Manage Business", path: "/manageBusiness/" },
   { name: "Logout", path: "/" }
 ];
@@ -141,4 +147,4 @@ export const addProductFormFields = ["ProductName", "ProductCategory", "UnitPric
 
 export const addCampaignFormFields = ["ProductName", "ProductCategory", "Currency", "ProductDescription", "MinDonation", "TargetDonationAmount"];
 
-export const addCouponFormFields = ["CouponCode", "Discount(%)", "Currency", "MaxDiscountAmount", "CouponActiveFrom", "CouponExpiryDate", "CouponDescription"];
+export const addCouponFormFields = ["CouponCode", "Discount", "Currency", "MaxDiscountAmount", "CouponActiveFrom", "CouponExpiryDate", "CouponDescription"];

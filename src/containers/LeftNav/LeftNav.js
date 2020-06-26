@@ -16,7 +16,7 @@ const LeftNav = props => {
           {links &&
             links.map(link => {
               return (
-                <div key={link.name} className="list-item">
+                <div key={link.name} className={window.location.href.includes(link.path) ? "list-item active": "list-item" }>
                   <img
                     className="nav-icon"
                     alt="bell-icon"
