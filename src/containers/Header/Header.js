@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
-import { Navbar, Nav, Container, Dropdown } from "react-bootstrap";
+import { Navbar, Nav, Container, Dropdown, Button } from "react-bootstrap";
 import brandlogo from "../../assets/brand-logo.svg";
 import globe from "../../assets/globe.svg";
 import heart from "../../assets/heart.svg";
@@ -15,10 +15,14 @@ import Notification from "../../components/Notification/Notification";
 import { currencies, profileOptions } from "../../constants/constants";
 import "./Header.scss";
 import { setGlobalCurrency, getSearchCategories } from "../../store/actions";
+import { useAuth } from "../../context/auth";
+import { useHistory } from "react-router-dom";
 
 const Header = props => {
   const [activeCurrency, setActiveCurrency] = useState(currencies[0]);
   const [showNotification, toggleNotification] = useState(false);
+  const isAuthenticated = useAuth();
+  const history = useHistory();
 
   const changeCurrency = e => {
     if (e && e.target) {
@@ -71,7 +75,7 @@ const Header = props => {
     <React.Fragment>
       <Container fluid className="header">
         <Navbar collapseOnSelect>
-          <Navbar.Brand as={Link} to={`/home`}>
+          <Navbar.Brand as={Link} to={`/landing`}>
             <img
               className="brand-logo"
               alt="c.Anglex-logo"
@@ -129,6 +133,8 @@ const Header = props => {
               </Dropdown>
               <img className="nav-icon" alt="globe-icon" src={globe}></img>{" "}
               English{" "}
+              {isAuthenticated ? 
+              <React.Fragment>
               <Nav.Link
                 as={Link}
                 to={`/home/ordersList/${props.userId}/Wishlist`}
@@ -184,7 +190,7 @@ const Header = props => {
                       <Dropdown.Item
                         eventKey={index}
                         as={Link}
-                        to={option.path + props.userId}
+                        to={option.name !== 'Logout' ? (option.path + props.userId) : history.location.pathname + "?logout=true"}
                       >
                         {option.name}
                       </Dropdown.Item>
@@ -192,6 +198,11 @@ const Header = props => {
                   })}
                 </Dropdown.Menu>
               </Dropdown>
+              </React.Fragment> : 
+              <React.Fragment>
+               <Button onClick={() => history.replace(history.location.pathname + "?login=true")} className="login-btn">Log in</Button>
+               <Button onClick={() => history.replace(history.location.pathname + "?signUp=true")} className="signup-btn" >Sign up</Button>
+              </React.Fragment>}
             </Nav>
           </Navbar.Collapse>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />

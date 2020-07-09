@@ -60,7 +60,7 @@ const AddCoupons = props => {
       action === "add"
         ? await addNewCoupon(payload)
         : await updateCoupon(payload);
-    res ? setLoading(false) : console.log("err");
+    res ? setLoading(false) : (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
     history.goBack();
   };
 

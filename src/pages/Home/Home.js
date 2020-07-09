@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Switch } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -9,28 +9,40 @@ import { Container } from "react-bootstrap";
 import LeftNav from "../../containers/LeftNav/LeftNav";
 import "./Home.scss";
 import { userLeftNavLinks } from "../../constants/constants";
-import { getFollowedMerchants } from "../../store/actions";
+import { getFollowedMerchants, getDashboardBanners } from "../../store/actions";
+import { useAuth } from "../../context/auth";
 
 const Home = props => {
   const { followedMerchants } = props;
+  const [banners, setBanners] = useState(null);
+  const isAuthenticated = useAuth();
 
   useEffect(() => {
-    !followedMerchants.length && props.getFollowedMerchants({
-      "PatronId": "1588433471165"
-    });
+    const fetchData = async () => {
+      !followedMerchants.length &&
+        props.getFollowedMerchants({
+          PatronId: "1588433471165"
+        });
+      setBanners(await props.getDashboardBanners());
+    };
+    fetchData();
   }, []);
 
   return (
     <React.Fragment>
-      {window.location.href.includes("productDetail") ? null : <Banner />}
+      {window.location.href.includes("productDetail") ? null : (
+        <Banner banners={banners} />
+      )}
       <div>
         <Container className="home-body" fluid>
           <div className="left-section">
-            <LeftNav
-              links={userLeftNavLinks}
-              merchants={followedMerchants}
-              merchantId = { "" }
-            />
+            {isAuthenticated ? (
+              <LeftNav
+                links={userLeftNavLinks}
+                merchants={followedMerchants}
+                merchantId={""}
+              />
+            ) : null}
           </div>
           <div className="right-section">
             <Switch>
@@ -43,10 +55,11 @@ const Home = props => {
   );
 };
 
-const mapDispatchToProps = dispatch => 
+const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getFollowedMerchants
+      getFollowedMerchants,
+      getDashboardBanners
     },
     dispatch
   );

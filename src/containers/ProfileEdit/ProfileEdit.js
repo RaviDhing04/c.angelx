@@ -30,7 +30,7 @@ const ProfileEdit = props => {
   //   async function fetchSavedContacts() {
   //     name ? setName(name) : setName("");
   //     const res = await getSavedContacts({ UserId: userId });
-  //     res ? setLoading(false) : console.log("err");
+  //     res ? setLoading(false) : (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
   //   }
   //   fetchSavedContacts();
   // }, [userId, getSavedContacts, name]);
@@ -47,7 +47,7 @@ const ProfileEdit = props => {
     });
     if (res) {
       const res = await getSavedContacts({ UserId: userId });
-      res ? setLoading(false) : console.log("err");
+      res ? setLoading(false) : (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
     }
   };
 
@@ -56,7 +56,7 @@ const ProfileEdit = props => {
     setEditMode(false);
     event.preventDefault();
     // const res = await resetSearchedContact();
-    // res ? setLoading(false) : console.log("err");
+    // res ? setLoading(false) : (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
     // document.getElementById("SearchContactForm").reset();
   };
 

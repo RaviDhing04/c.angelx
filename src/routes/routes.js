@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Route, Switch, withRouter } from "react-router-dom";
+import { Route, withRouter } from "react-router-dom";
+import PrivateRoute from "./PrivateRoute";
 
 import Loadable from "react-loadable";
 import { connect } from "react-redux";
@@ -15,6 +16,12 @@ const AsyncHome = Loadable({
   loader: () => import(/* webpackChunkName: "HomePage" */ "../pages/Home/Home"),
   loading: error => <LoadingFallback {...error} />,
   modules: ["HomePage"]
+});
+
+const AsyncLandingPage = Loadable({
+  loader: () => import(/* webpackChunkName: "LandingPage" */ "../pages/LandingPage/LandingPage"),
+  loading: error => <LoadingFallback {...error} />,
+  modules: ["LandingPage"]
 });
 
 const AsyncCart = Loadable({
@@ -156,9 +163,7 @@ const AsyncProfileEdit = Loadable({
 
 const AsyncProfile = Loadable({
   loader: () =>
-    import(
-      /* webpackChunkName: "Profile" */ "../pages/Profile/Profile"
-    ),
+    import(/* webpackChunkName: "Profile" */ "../pages/Profile/Profile"),
   loading: error => <LoadingFallback {...error} />,
   modules: ["Profile"]
 });
@@ -183,6 +188,11 @@ const AsyncProfileAddresses = Loadable({
 
 export const parent_routes = [
   {
+    path: "/landing",
+    component: AsyncLandingPage,
+    exact: false
+  },
+  {
     path: "/home",
     component: AsyncHome,
     exact: false
@@ -190,17 +200,20 @@ export const parent_routes = [
   {
     path: "/cart/:userId",
     component: AsyncCart,
-    exact: false
+    exact: false,
+    type: "private"
   },
   {
     path: "/manageBusiness/:userId",
     component: AsyncManageBusiness,
-    exact: false
+    exact: false,
+    type: "private"
   },
   {
     path: "/merchantHome",
     component: AsyncMerchantHome,
-    exact: false
+    exact: false,
+    type: "private"
   },
   {
     path: "/aboutUs",
@@ -215,12 +228,14 @@ export const parent_routes = [
   {
     path: "/registerBusiness/:action",
     component: AsyncRegisterBusiness,
-    exact: false
+    exact: false,
+    type: "private"
   },
   {
     path: "/profile",
     component: AsyncProfile,
-    exact: false
+    exact: false,
+    type: "private"
   }
 ];
 
@@ -238,12 +253,14 @@ export const child_routes = [
   {
     path: "/home/ordersList/:userId/:name",
     component: AsyncHomeOrdersList,
-    exact: true
+    exact: true,
+    type: "private"
   },
   {
     path: "/home/myContacts/:userId/:name",
     component: AsyncHomeMyContacts,
-    exact: true
+    exact: true,
+    type: "private"
   },
   {
     path: "/home/viewAllProducts/:name",
@@ -256,37 +273,44 @@ export const merchant_child_routes = [
   {
     path: "/merchantHome/viewAllProducts/:name/:merchantId",
     component: AsyncHomeViewAllProducts,
-    exact: true
+    exact: true,
+    type: "private"
   },
   {
     path: "/merchantHome/inventory/:name/:merchantId",
     component: AsyncHomeInventory,
-    exact: true
+    exact: true,
+    type: "private"
   },
   {
     path: "/merchantHome/Inventory/:action",
     component: AsyncAddInventory,
-    exact: true
+    exact: true,
+    type: "private"
   },
   {
     path: "/merchantHome/Campaigns/:action",
     component: AsyncAddCampaign,
-    exact: true
+    exact: true,
+    type: "private"
   },
   {
     path: "/merchantHome/Coupons/:action",
     component: AsyncAddCoupon,
-    exact: true
+    exact: true,
+    type: "private"
   },
   {
     path: "/merchantHome/campaigns/:name/:merchantId",
     component: AsyncHomeInventory,
-    exact: true
+    exact: true,
+    type: "private"
   },
   {
     path: "/merchantHome/coupons/:name/:merchantId",
     component: AsyncHomeInventory,
-    exact: true
+    exact: true,
+    type: "private"
   }
 ];
 
@@ -294,18 +318,21 @@ export const profile_child_routes = [
   {
     path: "/profile/edit/:userId",
     component: AsyncProfileEdit,
-    exact: true
+    exact: true,
+    type: "private"
   },
   {
     path: "/profile/edit/:userId/:name",
     component: AsyncProfileEdit,
-    exact: true
+    exact: true,
+    type: "private"
   },
   {
     path: "/profile/addresses/:userId/:name",
     component: AsyncProfileAddresses,
-    exact: true
-  },
+    exact: true,
+    type: "private"
+  }
   // {
   //   path: "/profile/payment/",
   //   component: AsyncProfilePayments,
@@ -323,14 +350,27 @@ class Router extends Component {
     return (
       <>
         {/* <Route path="/" component={AsyncHome} key="/home" exact /> */}
-        {routes.map((r, i) => (
-          <Route
-            path={r.path}
-            component={r.component}
-            key={i}
-            exact={r.exact}
-          />
-        ))}
+        {/* <Route component={LoginRedirect}>
+          <Route path="/" component={ModalCheck}> */}
+            {routes.map((r, i) =>
+              r && r.type && r.type === "private" ? (
+                <PrivateRoute
+                  path={r.path}
+                  component={r.component}
+                  key={i}
+                  exact={r.exact}
+                />
+              ) : (
+                <Route
+                  path={r.path}
+                  component={r.component}
+                  key={i}
+                  exact={r.exact}
+                />
+              )
+            )}
+          {/* </Route>
+        </Route> */}
         {/* </Switch> */}
       </>
     );

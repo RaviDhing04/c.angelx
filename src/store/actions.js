@@ -1,10 +1,110 @@
 import httpFetch from "../utils/httpUtils/httpFetch";
 import getApiEndPoints from "../utils/httpUtils/apiEndPoints";
 
+export const login = async (body = {}) => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("login"), {
+      method: "POST",
+      body: body
+    });
+    if (response) {
+      localStorage.setItem("token", response.token);
+      localStorage.setItem("refresh_token", response.refresh_token);
+      localStorage.setItem("userData", JSON.stringify(response));
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const signUp = async (body = {}) => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("signUp"), {
+      method: "POST",
+      body: body
+    });
+    if (response) {
+      return response;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const firstLogin = async (body = {}) => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("firstLogin"), {
+      method: "POST",
+      body: body
+    });
+    if (response) {
+      localStorage.setItem("token", response.token);
+      localStorage.setItem("refresh_token", response.refresh_token);
+      localStorage.setItem("userData", JSON.stringify(response));
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const forgotPassword = async (body = {}) => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("forgotPassword"), {
+      method: "POST",
+      body: body
+    });
+    if (response) {
+      return response;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const confirmForgotPassword = async (body = {}) => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("confirmForgotPassword"), {
+      method: "POST",
+      body: body
+    });
+    if (response) {
+      localStorage.setItem("token", response.token);
+      localStorage.setItem("refresh_token", response.refresh_token);
+      localStorage.setItem("userData", JSON.stringify(response));
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
 export const getLatestProductsWithPagination = (
   body = {}
 ) => async dispatch => {
   try {
+
     const response = await httpFetch(
       getApiEndPoints("LatestProductsWithPagination"),
       {
@@ -29,6 +129,7 @@ export const getLatestProductsWithPagination = (
 
 export const getLatestProducts = (body = {}) => async dispatch => {
   try {
+
     const response = await httpFetch(
       getApiEndPoints("LatestProductsWithPagination"),
       {
@@ -53,6 +154,7 @@ export const getLatestProducts = (body = {}) => async dispatch => {
 
 export const getMerchantAllProducts = (body = {}) => async dispatch => {
   try {
+
     const response = await httpFetch(getApiEndPoints("MerchantAllProducts"), {
       method: "POST",
       body: body
@@ -76,6 +178,7 @@ export const getMerchantAllProductsAndSegregate = (
   body = {}
 ) => async dispatch => {
   try {
+
     const response = await httpFetch(getApiEndPoints("MerchantAllProducts"), {
       method: "POST",
       body: body
@@ -109,6 +212,7 @@ export const getMerchantAllProductsAndSegregate = (
 
 export const getMerchantAllCoupons = (body = {}) => async dispatch => {
   try {
+
     const response = await httpFetch(getApiEndPoints("MerchantAllCoupons"), {
       method: "POST",
       body: body
@@ -135,15 +239,12 @@ export const getMerchantAllCoupons = (body = {}) => async dispatch => {
 
 export const deleteProduct = (body = {}) => async dispatch => {
   try {
+
     const response = await httpFetch(getApiEndPoints("deleteProduct"), {
       method: "POST",
       body: body
     });
-    if (
-      response &&
-      response.result &&
-      response.result.message === "Success"
-    ) {
+    if (response && response.result && response.result.message === "Success") {
       return true;
     } else {
       return false;
@@ -155,15 +256,12 @@ export const deleteProduct = (body = {}) => async dispatch => {
 };
 export const deleteCoupon = (body = {}) => async dispatch => {
   try {
+
     const response = await httpFetch(getApiEndPoints("deleteCoupon"), {
       method: "POST",
       body: body
     });
-    if (
-      response &&
-      response.result &&
-      response.result.message === "Success"
-    ) {
+    if (response && response.result && response.result.message === "Success") {
       return true;
     } else {
       return false;
@@ -174,14 +272,14 @@ export const deleteCoupon = (body = {}) => async dispatch => {
   }
 };
 
-export const setSelectedRow = (row) => async dispatch => {
-  if(row) {
+export const setSelectedRow = row => async dispatch => {
+  if (row) {
     dispatch({
       type: "SET_SELECTED_ROW",
       value: { payload: row }
     });
   }
-}
+};
 
 const segregateProductsAndCampaigns = Items => {
   const out = [[], []];
@@ -195,6 +293,7 @@ const segregateProductsAndCampaigns = Items => {
 
 export const getSelectedProductDetails = (body = {}) => async dispatch => {
   try {
+
     const response = await httpFetch(
       getApiEndPoints("SelectedProductDetails"),
       {
@@ -227,6 +326,7 @@ export const getSelectedProductDetails = (body = {}) => async dispatch => {
 
 export const addNewProduct = (body = {}) => async dispatch => {
   try {
+
     const response = await httpFetch(getApiEndPoints("addNewProduct"), {
       method: "POST",
       body: body
@@ -247,8 +347,53 @@ export const addNewProduct = (body = {}) => async dispatch => {
   }
 };
 
+export const getDashboardBanners = (body = {}) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("dashboardBanner"), {
+      method: "GET"
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      return response.result.data.Items;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const getLandingBanners = (body = {}) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("mainBanner"), {
+      method: "GET"
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      return response.result.data.Item;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
 export const updateProduct = (body = {}) => async dispatch => {
   try {
+
     const response = await httpFetch(getApiEndPoints("updateProduct"), {
       method: "POST",
       body: body
@@ -267,10 +412,11 @@ export const updateProduct = (body = {}) => async dispatch => {
     console.log(err);
     return false;
   }
-}; 
+};
 
 export const updateCoupon = (body = {}) => async dispatch => {
   try {
+
     const response = await httpFetch(getApiEndPoints("updateCoupon"), {
       method: "POST",
       body: body
@@ -293,6 +439,7 @@ export const updateCoupon = (body = {}) => async dispatch => {
 
 export const addNewCoupon = (body = {}) => async dispatch => {
   try {
+
     const response = await httpFetch(getApiEndPoints("addNewCoupon"), {
       method: "POST",
       body: body
@@ -315,6 +462,7 @@ export const addNewCoupon = (body = {}) => async dispatch => {
 
 export const getFollowedMerchants = (body = {}) => async dispatch => {
   try {
+
     const response = await httpFetch(getApiEndPoints("FollowedMerchants"), {
       method: "POST",
       body: body
@@ -343,6 +491,7 @@ export const getFollowedMerchants = (body = {}) => async dispatch => {
 
 export const registerNewBusiness = (body = {}) => async dispatch => {
   try {
+
     const response = await httpFetch(getApiEndPoints("registerNewBusiness"), {
       method: "POST",
       body: body
@@ -365,6 +514,7 @@ export const registerNewBusiness = (body = {}) => async dispatch => {
 
 export const updateBusiness = (body = {}) => async dispatch => {
   try {
+
     const response = await httpFetch(getApiEndPoints("updateBusiness"), {
       method: "POST",
       body: body
@@ -387,6 +537,7 @@ export const updateBusiness = (body = {}) => async dispatch => {
 
 export const fetchRegisterBusiness = (body = {}) => async dispatch => {
   try {
+
     const response = await httpFetch(getApiEndPoints("BusinessDetails"), {
       method: "POST",
       body: body
@@ -415,6 +566,7 @@ export const fetchRegisterBusiness = (body = {}) => async dispatch => {
 
 export const getBusinessDetails = (body = {}) => async dispatch => {
   try {
+
     const response = await httpFetch(getApiEndPoints("BusinessDetails"), {
       method: "POST",
       body: body
@@ -446,6 +598,7 @@ export const updateSelectedBusiness = merchantId => async (
   getState
 ) => {
   try {
+
     const AllBusiness = getState().app.manageBusiness.allBusiness;
     const selectedBusiness = AllBusiness.find(business => {
       return business.MerchantId.S === merchantId;
@@ -469,6 +622,7 @@ export const updateSelectedBusiness = merchantId => async (
 
 export const fetchAllBusiness = (body = {}) => async dispatch => {
   try {
+
     const response = await httpFetch(getApiEndPoints("AllBusiness"), {
       method: "POST",
       body: body
@@ -496,6 +650,7 @@ export const fetchAllBusiness = (body = {}) => async dispatch => {
 
 export const searchContactWithEmail = (body = {}) => async dispatch => {
   try {
+
     const response = await httpFetch(getApiEndPoints("ContactWithEmail"), {
       method: "POST",
       body: body
@@ -522,6 +677,7 @@ export const searchContactWithEmail = (body = {}) => async dispatch => {
 
 export const addNewContact = (body = {}) => async dispatch => {
   try {
+
     const response = await httpFetch(getApiEndPoints("addNewContact"), {
       method: "POST",
       body: body
@@ -544,6 +700,7 @@ export const addNewContact = (body = {}) => async dispatch => {
 
 export const deleteContact = (body = {}) => async dispatch => {
   try {
+
     const response = await httpFetch(getApiEndPoints("deleteContact"), {
       method: "POST",
       body: body
@@ -566,6 +723,7 @@ export const deleteContact = (body = {}) => async dispatch => {
 
 export const resetSearchedContact = () => async dispatch => {
   try {
+
     dispatch({
       type: "SEARCHED_CONTACT",
       value: { payload: null }
@@ -579,6 +737,7 @@ export const resetSearchedContact = () => async dispatch => {
 
 export const getSavedContacts = (body = {}) => async dispatch => {
   try {
+
     const response = await httpFetch(getApiEndPoints("SavedContacts"), {
       method: "POST",
       body: body
@@ -605,6 +764,7 @@ export const getSavedContacts = (body = {}) => async dispatch => {
 
 export const addProductToCart = (body = {}) => async dispatch => {
   try {
+
     const response = await httpFetch(getApiEndPoints("addProductToCart"), {
       method: "POST",
       body: body
@@ -628,6 +788,7 @@ export const addProductToCart = (body = {}) => async dispatch => {
 
 export const getCartItems = (body = {}) => async dispatch => {
   try {
+
     const response = await httpFetch(getApiEndPoints("CartItems"), {
       method: "POST",
       body: body
@@ -733,6 +894,7 @@ export const deleteAllProductFromCart = () => dispatch => {
 
 export const getOrderItems = (body = {}) => async dispatch => {
   try {
+
     const response = await httpFetch(getApiEndPoints("OrderItems"), {
       method: "POST",
       body: body
@@ -766,6 +928,7 @@ export const setGlobalCurrency = activeCurrency => dispatch => {
 
 export const getSearchCategories = (body = {}) => async dispatch => {
   try {
+
     const response = await httpFetch(getApiEndPoints("SearchCategories"), {
       method: "POST",
       body: body

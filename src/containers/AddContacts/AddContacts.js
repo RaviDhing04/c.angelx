@@ -33,7 +33,12 @@ const AddContacts = props => {
     async function fetchSavedContacts() {
       name ? setName(name) : setName("");
       const res = await getSavedContacts({ UserId: userId });
-      res ? setLoading(false) : console.log("err");
+      res
+        ? setLoading(false)
+        : (function() {
+            setLoading(false);
+            alert("something went wrong, Please try again!");
+          })();
     }
     fetchSavedContacts();
   }, [userId, getSavedContacts, name]);
@@ -46,7 +51,12 @@ const AddContacts = props => {
     const res = await searchContactWithEmail({
       Email: email
     });
-    res ? setLoading(false) : console.log("err");
+    res
+      ? setLoading(false)
+      : (function() {
+          setLoading(false);
+          alert("something went wrong, Please try again!");
+        })();
   };
 
   const addContactToList = async event => {
@@ -61,7 +71,12 @@ const AddContacts = props => {
     });
     if (res) {
       const res = await getSavedContacts({ UserId: userId });
-      res ? setLoading(false) : console.log("err");
+      res
+        ? setLoading(false)
+        : (function() {
+            setLoading(false);
+            alert("something went wrong, Please try again!");
+          })();
     }
   };
 
@@ -69,19 +84,29 @@ const AddContacts = props => {
     setLoading(true);
     const res = await deleteContact({
       UserId: row && row.UserId.S,
-      ContactUserId: row && row.ContactUserId.S,
+      ContactUserId: row && row.ContactUserId.S
     });
     if (res) {
       const res = await getSavedContacts({ UserId: userId });
-      res ? setLoading(false) : console.log("err");
+      res
+        ? setLoading(false)
+        : (function() {
+            setLoading(false);
+            alert("something went wrong, Please try again!");
+          })();
     }
-  }
+  };
 
   const cancel = async event => {
     setLoading(true);
     event.preventDefault();
     const res = await resetSearchedContact();
-    res ? setLoading(false) : console.log("err");
+    res
+      ? setLoading(false)
+      : (function() {
+          setLoading(false);
+          alert("something went wrong, Please try again!");
+        })();
     document.getElementById("SearchContactForm").reset();
   };
 
@@ -110,7 +135,11 @@ const AddContacts = props => {
                 <Form.Group controlId="formGroupEmail">
                   <Form.Label>Email Id</Form.Label>
                   <Form.Control
-                    defaultValue={(searchedContact && searchedContact.Email.S) ? searchedContact.Email.S : ''}
+                    defaultValue={
+                      searchedContact && searchedContact.Email.S
+                        ? searchedContact.Email.S
+                        : ""
+                    }
                     type="email"
                     placeholder="Contact Email"
                     disabled

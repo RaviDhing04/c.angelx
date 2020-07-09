@@ -48,6 +48,22 @@ const getApiEndPoints = val => {
       return baseUrl + "coupons/addcoupon";
     case "updateCoupon":
       return baseUrl + "coupons/updatecoupon";
+    case "refreshToken":
+      return baseUrl + "users/refreshtoken";
+    case "login":
+      return baseUrl + "users/login";
+    case "signUp":
+      return baseUrl + "users/signup";
+    case "firstLogin":
+      return baseUrl + "users/firstlogin";
+    case "forgotPassword":
+      return baseUrl + "users/forgotpassword";
+    case "confirmForgotPassword":
+      return baseUrl + "users/confirmforgotpassword";
+    case "mainBanner":
+      return baseUrl + "banners/getmainbannerdetails";
+    case "dashboardBanner":
+      return baseUrl + "banners/getdashboardbanners";
     default:
       return "/";
   }

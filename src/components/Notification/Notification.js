@@ -17,7 +17,7 @@ const Notification = () => {
         setLoading(false);
         setNotifications(res);
       } else {
-        console.log("err");
+        (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
       }
     }
     fetchData();

@@ -98,7 +98,7 @@ const AddInventory = props => {
     console.log(JSON.stringify(payload));
     const res =
       action === "add" ? await addNewProduct(payload) : await updateProduct(payload);
-    res ? setLoading(false) : console.log("err");
+    res ? setLoading(false) : (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
     history.goBack();
   };
 

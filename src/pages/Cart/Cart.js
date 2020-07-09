@@ -28,7 +28,7 @@ const Cart = props => {
     async function fetchCartItems() {
       const userId = props.match.params.userId;
       const res = await props.getCartItems({ UserId: userId });
-      res ? setLoading(false) : console.log("err");
+      res ? setLoading(false) : (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
     }
     fetchCartItems();
   }, []);

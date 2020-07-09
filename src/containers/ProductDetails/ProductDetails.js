@@ -33,7 +33,7 @@ const ProductDetails = props => {
           Timestamp: props.match.params.productTimeStamp
         };
         const res = await props.getSelectedProductDetails(payload);
-        res ? setLoading(false) : console.log("err");
+        res ? setLoading(false) : (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
       }
     }
     fetchData();

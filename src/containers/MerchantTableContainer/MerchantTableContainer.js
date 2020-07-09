@@ -89,10 +89,10 @@ const MerchantTableContainer = props => {
           MerchantId: merchantId
         });
         setLoading(false);
-        res1 ? setLoading(false) : console.log("err");
+        res1 ? setLoading(false) : (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
       } else {
         setLoading(false);
-        console.log("err");
+        (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
       }
     } else if (name === "Coupons") {
       setLoading(true);
@@ -105,10 +105,10 @@ const MerchantTableContainer = props => {
           MerchantId: merchantId
         });
         setLoading(false);
-        res1 ? setLoading(false) : console.log("err");
+        res1 ? setLoading(false) : (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
       } else {
         setLoading(false);
-        console.log("err");
+        (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
       }
     }
   };

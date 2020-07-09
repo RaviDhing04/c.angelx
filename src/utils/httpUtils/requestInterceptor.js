@@ -3,7 +3,10 @@ const getPostHeaders = (headers) => {
     if (!headers) {
         headers = {};
     }
-    headers['Content-Type'] = 'application/json';
+    if(localStorage.getItem("token")) {
+        headers.Authorization = `Bearer ${localStorage.getItem("token")}`;
+    }
+    headers["Content-Type"]= "application/json";
 
     return { headers: Object.assign(headers) };
 };

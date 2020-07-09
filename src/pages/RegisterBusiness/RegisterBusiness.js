@@ -31,7 +31,7 @@ const RegisterBusiness = props => {
           PatronId: selectedBusiness.PatronId.S,
           MerchantId: selectedBusiness.MerchantId.S
         });
-        res ? setLoading(false) : console.log("err");
+        res ? setLoading(false) : (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
       }
     }
     if (action === "edit") {
@@ -55,7 +55,7 @@ const RegisterBusiness = props => {
       action === "edit"
         ? await props.updateBusiness(payload)
         : await props.registerNewBusiness(payload);
-    res ? setLoading(false) : console.log("err");
+    res ? setLoading(false) : (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
     if (!buttonClicked) {
       history.goBack();
     } else {

@@ -25,7 +25,7 @@ const ProfileAddresses = props => {
       // const res = await props.fetchProfileAddresses({
       //   PatronId: "69116697064443"
       // }); // to be updated by userId
-      // res ? setLoading(false) : console.log("err");
+      // res ? setLoading(false) : (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
     }
     fetchProfileAddresses();
   }, []);

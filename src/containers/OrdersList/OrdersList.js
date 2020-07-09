@@ -19,7 +19,7 @@ const OrdersList = props => {
     async function fetchOrderItems() {
       name ? setName(name) : setName("");
       const res = await getOrderItems({ UserId: userId });
-      res ? setLoading(false) : console.log("err");
+      res ? setLoading(false) : (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
     }
     fetchOrderItems();
   }, [userId, getOrderItems, name]);

@@ -1,29 +1,47 @@
 import React from "react";
 import Router from "../src/routes/routes";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch, Redirect, useLocation } from "react-router-dom";
 import { parent_routes } from "../src/routes/routes";
 import Container from "react-bootstrap/Container";
 import Header from "./containers/Header/Header";
 import Footer from "./components/Footer/Footer";
-
+import { AuthContext } from "./context/auth";
+import Login from "./containers/Login/Login";
 import "./App.scss";
+import SignUp from "./containers/SignUp/SignUp";
+import Logout from "./containers/Logout/Logout";
+import ForgotPassword from "./containers/ForgotPassword/ForgotPassword";
 
 const App = () => {
   const userId = "1588433471165"; // to be update from login info later
 
+  const location = useLocation();
+  var url = window.location.pathname;
+  React.useEffect(() => {
+    localStorage.setItem("prevPath", url);
+  }, [location]);
+
+  
+
   return (
     <Container fluid className="app-container">
+      <AuthContext.Provider value={(localStorage.getItem('token') && JSON.parse(localStorage.getItem('userData'))) ? true : false}>
       <Header userId={userId} />
-      <Switch>
-        <Route
-          exact
-          path={"/"}
-          render={() => {
-            return <Redirect to={"/home"} />;
-          }}
-        />
-        <Router routes={parent_routes} />
-      </Switch>
+        <Switch>
+          <Route
+            exact
+            path={"/"}
+            render={() => {
+              return <Redirect to={"/landing"} />;
+            }}
+          />
+          <Router routes={parent_routes} />
+        </Switch>
+        <Route path="/" component={Login} />
+        <Route path="/" component={SignUp} />
+        <Route path="/" component={ForgotPassword} />
+        <Route path="/" component={Logout} />
+      </AuthContext.Provider>
       <Footer />
     </Container>
   );
