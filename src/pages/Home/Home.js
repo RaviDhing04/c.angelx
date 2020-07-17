@@ -35,16 +35,16 @@ const Home = props => {
       )}
       <div>
         <Container className="home-body" fluid>
-          <div className="left-section">
-            {isAuthenticated ? (
+          {isAuthenticated ? (
+            <div className="left-section">
               <LeftNav
                 links={userLeftNavLinks}
                 merchants={followedMerchants}
                 merchantId={""}
               />
-            ) : null}
-          </div>
-          <div className="right-section">
+            </div>
+          ) : null}
+          <div className={isAuthenticated ? "right-section" : "width-100 right-section"}>
             <Switch>
               <Router routes={child_routes} />
             </Switch>

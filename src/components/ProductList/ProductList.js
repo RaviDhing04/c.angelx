@@ -4,6 +4,7 @@ import Product from "../Product/Product";
 import { Link } from "react-router-dom";
 import "./ProductList.scss";
 import ProductRowShimmer from "../ProductRowShimmer/ProductRowShimmer";
+import { useAuth } from "../../context/auth";
 
 const ProductList = props => {
   const {
@@ -12,11 +13,12 @@ const ProductList = props => {
     activeCurrency,
     addProductToCart
   } = props;
+  const isAuthenticated = useAuth();
   return (
     <React.Fragment>
       {Items && Items.length ? (
         <React.Fragment>
-          <div className="product-row-heading">{name}</div>
+          <div className={isAuthenticated ? "product-row-heading" : "margin-left-4 product-row-heading"}>{name}</div>
           <Row className="product-row-1">
             {Items &&
               Items.slice(0, 5).map((item, index) => {
@@ -33,8 +35,8 @@ const ProductList = props => {
           </Row>
         </React.Fragment>
       ) : (
-        <ProductRowShimmer />
-      )}
+          <ProductRowShimmer />
+        )}
       {Items && Items.length ? (
         <React.Fragment>
           <Row className="product-row-2">
@@ -48,12 +50,12 @@ const ProductList = props => {
               })}
           </Row>
           <Link to={`/home/viewAllProducts/${name}`}>
-            <Button className="view-all">View All</Button>
+            <Button className={isAuthenticated ? "view-all" : "margin-left-4 view-all"}>View All</Button>
           </Link>
         </React.Fragment>
       ) : (
-        <ProductRowShimmer />
-      )}
+          <ProductRowShimmer />
+        )}
     </React.Fragment>
   );
 };

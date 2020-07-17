@@ -3,6 +3,7 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import Product from "../Product/Product";
 import "./ProductListCarousel.scss";
 import ProductRowShimmer from "../ProductRowShimmer/ProductRowShimmer";
+import { useAuth } from "../../context/auth";
 
 const ProductListCarousel = props => {
   const {
@@ -11,11 +12,12 @@ const ProductListCarousel = props => {
     activeCurrency,
     addProductToCart
   } = props;
+  const isAuthenticated = useAuth();
   return (
     <React.Fragment>
       {Items && Items.length ? (
         <React.Fragment>
-          <div className="product-row-heading">{name}</div>
+          <div className={isAuthenticated ? "product-row-heading" : "margin-left-4 product-row-heading"}>{name}</div>
           <Row className="product-row">
             {Items &&
               Items.map((item, index) => {
@@ -30,11 +32,11 @@ const ProductListCarousel = props => {
                 ) : null;
               })}
           </Row>
-          <Button className="view-all">View All</Button>
+          <Button className={isAuthenticated ? "view-all" : "margin-left-4 view-all"}>View All</Button>
         </React.Fragment>
       ) : (
-        <ProductRowShimmer />
-      )}
+          <ProductRowShimmer />
+        )}
     </React.Fragment>
   );
 };

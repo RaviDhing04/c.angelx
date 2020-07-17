@@ -5,27 +5,32 @@
     letter-spacing: 1.96px;
     color: #558ED4;
     opacity: 1;
-    
+
 }
 
-.product-row-1{
+.product-row-1 {
     padding: 2rem 0;
     justify-content: space-evenly;
 }
-.product-row-2{
+
+.product-row-2 {
     padding: 0 0 2rem 0;
     justify-content: space-evenly;
 }
 
-.view-all{
-background: #E8EDF3 0% 0% no-repeat padding-box;
-border-radius: 4px;
-opacity: 1;
-letter-spacing: 0px;
-color: #6D6D6D;
-opacity: 1;
-font-size: 0.875rem;
-font-weight: 500;
-border: none;
-margin-bottom: 2rem;
+.view-all {
+    background: #E8EDF3 0% 0% no-repeat padding-box;
+    border-radius: 4px;
+    opacity: 1;
+    letter-spacing: 0px;
+    color: #6D6D6D;
+    opacity: 1;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border: none;
+    margin-bottom: 2rem;
+}
+
+.margin-left-4 {
+    margin-left: 4rem;
 }
