@@ -8,6 +8,8 @@ import {
 } from "react-bootstrap";
 import downArrow from "../../assets/down-arrow.svg";
 import "./SearchBar.scss";
+import { debounce } from "../../utils/commonUtils/basicUtils";
+import { Link } from "react-router-dom";
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   <a
@@ -29,7 +31,7 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
 // Dropdown needs access to the DOM of the Menu to measure it
 const CustomMenu = React.forwardRef(
   ({ children, style, className, "aria-labelledby": labeledBy }, ref) => {
-  
+
     return (
       <div
         ref={ref}
@@ -50,18 +52,32 @@ const CustomMenu = React.forwardRef(
 
 const SearchBar = props => {
   const [selectedCategory, setselectedCategory] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [showDiv, setShowDiv] = useState(false);
 
 
   const changeCategory = (e) => {
     if (e && e.target) {
       debugger;
-       const selected = props.searchCategories.find(category => {
+      const selected = props.searchCategories.find(category => {
         return category.CategoryId.S === e.target.attributes.value.nodeValue;
       });
-       setselectedCategory(selected);
+      setselectedCategory(selected);
+    }
   }
-}
 
+  const search = async (text) => {
+    const res = await props.fetchSearchResults(text, (selectedCategory && selectedCategory.Title && selectedCategory.Title.S ? selectedCategory.Title.S : ''));
+    setSearchResults(res);
+    setShowDiv(true);
+  }
+
+  const closeDiv = () => {
+    setShowDiv(false);
+  }
+
+  const fetchSearchResults = debounce((text) => { search(text) }, 3000);
+  console.log(fetchSearchResults);
   return (
     <React.Fragment>
       <Form className="search-bar">
@@ -70,7 +86,20 @@ const SearchBar = props => {
             placeholder="Search"
             aria-label="Search"
             aria-describedby="basic-addon2"
+            onChange={(e) => fetchSearchResults(e.target.value)}
+            onBlur={closeDiv}
           />
+          {showDiv && searchResults && searchResults.length ?
+            <div className="search-results">
+              {searchResults.map((item) => {
+                // /${item.Timestamp.S}
+                return (<Link to={`/home/productDetail/${item.ProductId.S}`}>
+                  <div className="result">
+                    <img alt="prod-img" src={item.ThumbnailImageURL.S}></img>
+                    <p>{item.Name.S}</p>
+                  </div> </Link>)
+              })}
+            </div> : null}
 
           <Dropdown>
             <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
@@ -80,7 +109,7 @@ const SearchBar = props => {
             <Dropdown.Menu as={CustomMenu}>
               {props.searchCategories.length > 0 &&
                 props.searchCategories.map((category, index) => {
-                return <Dropdown.Item active={(selectedCategory && (selectedCategory.CategoryId.S === category.CategoryId.S)) ? true : false} onClick={e => changeCategory(e)} value={category.CategoryId.S} eventKey={index}>{category.Title.S}</Dropdown.Item>
+                  return <Dropdown.Item active={(selectedCategory && (selectedCategory.CategoryId.S === category.CategoryId.S)) ? true : false} onClick={e => changeCategory(e)} value={category.CategoryId.S} eventKey={index}>{category.Title.S}</Dropdown.Item>
                 })}
             </Dropdown.Menu>
           </Dropdown>

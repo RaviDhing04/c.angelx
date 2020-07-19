@@ -6,7 +6,8 @@ import {
   addNewProduct,
   getSelectedProductDetails,
   updateProduct,
-  clearSelectedRow
+  clearSelectedRow,
+  uploadImage
 } from "../../store/actions";
 import "./AddInventory.scss";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
@@ -18,6 +19,8 @@ const AddInventory = props => {
   const [loading, setLoading] = useState(false);
   const [colors, addColors] = useState([]);
   const [productDetails, setProductDetails] = useState(null);
+  const [images, addImages] = useState([]);
+  const [thumbnail, addthumbnail] = useState([]);
   const { addNewProduct, selectedBusiness, selectedRow, updateProduct } = props;
   const action = props.match.params.action;
   const history = useHistory();
@@ -51,7 +54,7 @@ const AddInventory = props => {
     console.log(productDetails);
     const colors = (productDetails && productDetails.ProductSpecifications.M.AvailableColors.S.split(' '));
     if (colors && colors.length) addColors([...colors]);
-    
+
   }, [productDetails]);
 
   const add = async event => {
@@ -84,21 +87,21 @@ const AddInventory = props => {
 
     payload["MerchantId"] = selectedBusiness.MerchantId.S;
     payload["MerchantHandle"] = selectedBusiness.BusinessHandle.S;
-   if (action === 'edit') { 
-     payload['Timestamp'] = selectedRow.Timestamp.S;
-     payload['ProductId'] = productDetails.ProductId.S;
-     payload['IsActive'] = productDetails.IsActive.S;
-     payload['ThumbnailImageURL'] = productDetails.ThumbnailImageURL.S;
-     payload['FullImageURL1'] = productDetails.ProductImages.L.S;
-     payload['FullImageURL2'] = productDetails.ProductImages.L.S;
-     payload['FullImageURL3'] = productDetails.ProductImages.L.S;
+    if (action === 'edit') {
+      payload['Timestamp'] = selectedRow.Timestamp.S;
+      payload['ProductId'] = productDetails.ProductId.S;
+      payload['IsActive'] = productDetails.IsActive.S;
+      payload['ThumbnailImageURL'] = thumbnail;
+      payload['FullImageURL1'] = images[0] ? images[0] : null;
+      payload['FullImageURL2'] = images[1] ? images[1] : null;
+      payload['FullImageURL3'] = images[2] ? images[2] : null;
     }
     payload.ProductSpecifications["AvailableColors"] = colors.join(' ');
     setLoading(true);
     console.log(JSON.stringify(payload));
     const res =
       action === "add" ? await addNewProduct(payload) : await updateProduct(payload);
-    res ? setLoading(false) : (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
+    res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
     history.goBack();
   };
 
@@ -109,8 +112,26 @@ const AddInventory = props => {
     setLoading(false);
   };
 
-  const addFile = event => {
-    console.log(event.target.files[0]);
+
+  const toBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+
+  const addFile = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setLoading(true);
+    }
+    const fileType = event.target.files[0].type;
+    const fileString = await toBase64(file);
+    const payload = { "image_type": "product", "added_info": { "merchant_id": selectedBusiness.MerchantId.S }, "img": fileString, "image_extension": fileType }
+    const res = props.uploadImage(payload);
+    res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
+    addImages([...images, res.full_image_url]);
+    addthumbnail([...thumbnail, res.thumb_image_url]);
   };
 
   const setColor = event => {
@@ -170,8 +191,12 @@ const AddInventory = props => {
                 </Form.Group>
               </Col> */}
             </Form.Row>
-            <Form.Row className="width-25">
-              <Col className="fileUpload-box">
+            <Form.Row className={thumbnail.length > 0 ? `width-${25 * thumbnail.length}` : `width-25`}>
+              {thumbnail.map((thumb, index) => {
+                return (<Col key={index}>
+                  <img className="prod-thumb" alt="prod-thumb" src={thumb} ></img></Col>)
+              })}
+              {thumbnail.length < 3 ? <Col className="fileUpload-box">
                 <Form.Group>
                   {/* <img src={gallery} alt="gallery"></img> */}
                   <Form.Label
@@ -196,7 +221,7 @@ const AddInventory = props => {
                     style={{ display: "none" }}
                   />
                 </Form.Group>
-              </Col>
+              </Col> : null}
             </Form.Row>
             <Form.Row className="">
               <Col>
@@ -328,8 +353,8 @@ const AddInventory = props => {
       </Container>
     </React.Fragment>
   ) : (
-    <CustomLoader />
-  );
+      <CustomLoader />
+    );
 };
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
@@ -337,7 +362,8 @@ const mapDispatchToProps = dispatch =>
       addNewProduct,
       getSelectedProductDetails,
       updateProduct,
-      clearSelectedRow
+      clearSelectedRow,
+      uploadImage
     },
     dispatch
   );

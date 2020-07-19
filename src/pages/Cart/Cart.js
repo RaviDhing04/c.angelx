@@ -14,7 +14,7 @@ import "./Cart.scss";
 import CartItem from "../../components/CartItem/CartItem";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import deleteIcon from "../../assets/delete_outline.svg";
-import formatter from "../../utils/commonUtils/currencyUtils.js";
+import formatter from "../../utils/commonUtils/currencyUtils";
 
 const Cart = props => {
   const [loading, setLoading] = useState(true);

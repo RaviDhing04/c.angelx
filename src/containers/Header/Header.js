@@ -14,7 +14,7 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 import Notification from "../../components/Notification/Notification";
 import { currencies, profileOptions } from "../../constants/constants";
 import "./Header.scss";
-import { setGlobalCurrency, getSearchCategories } from "../../store/actions";
+import { setGlobalCurrency, getSearchCategories, headerSearch } from "../../store/actions";
 import { useAuth } from "../../context/auth";
 import { useHistory } from "react-router-dom";
 
@@ -96,7 +96,7 @@ const Header = props => {
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>
-          <SearchBar searchCategories={props.searchCategories}/>
+          <SearchBar searchCategories={props.searchCategories} fetchSearchResults={props.headerSearch}/>
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="ml-auto right-links-wrapper">
               <Dropdown>
@@ -216,7 +216,8 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       setGlobalCurrency,
-      getSearchCategories
+      getSearchCategories,
+      headerSearch
     },
     dispatch
   );

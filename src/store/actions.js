@@ -948,6 +948,45 @@ export const getSearchCategories = (body = {}) => async dispatch => {
   }
 };
 
+export const uploadImage = (body = {}) => async dispatch => {
+  try {
+    const response = await httpFetch(getApiEndPoints("uploadImage"), {
+      method: "POST",
+      body: body
+    });
+    if (response) {
+      return response;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const headerSearch = (text, category) => async dispatch => {
+  try {
+ const url = `${getApiEndPoints("headerSearch")}?text=${text}&category=${category}`
+    const response = await httpFetch(url, {
+      method: "GET"
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      return response.result.data.Items;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
 export const clearViewAllProducts = () => dispatch => {
   dispatch({
     type: "VIEWALL_PRODUCTS",

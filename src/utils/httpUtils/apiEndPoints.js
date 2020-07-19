@@ -64,6 +64,10 @@ const getApiEndPoints = val => {
       return baseUrl + "banners/getmainbannerdetails";
     case "dashboardBanner":
       return baseUrl + "banners/getdashboardbanners";
+    case "headerSearch":
+      return baseUrl + "products/search";
+    case "uploadImage":
+      return baseUrl + "images/upload";
     default:
       return "/";
   }

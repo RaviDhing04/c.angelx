@@ -23,7 +23,29 @@
             border-right: 1px solid #C6CCC8;
             border-left: 0px;
         }
-}
+
+        .search-results {
+            position: absolute;
+            top: 100%;
+            background: #F6F7F9 0% 0% no-repeat padding-box;
+            width: 100%;
+
+            .result {
+                display: flex;
+                align-items: center;
+
+                img {
+                    width: 70px;
+                    height: 70px;
+                }
+
+                p {
+                    color: black;
+                    margin: 0px 0px 0px 1rem;
+                }
+            }
+        }
+    }
 
     .dropdown-menu {
         width: 100%;
@@ -36,7 +58,7 @@
         opacity: 1;
         text-decoration: none;
 
-        .search-icon{
+        .search-icon {
             width: 1.5rem;
             height: 1.5rem;
         }
