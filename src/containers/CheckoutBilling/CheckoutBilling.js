@@ -91,8 +91,8 @@ const CheckoutBilling = props => {
                                         }
                                         required
                                     >
-                                        <option value="testValue"> Address Type</option>
-                                        <option value="testValue"> India</option>
+                                        <option value="none"> Address Type</option>
+                                        <option value="Billing"> Billing Address</option>
                                     </Form.Control>
                                 </Form.Group>
                             </Col>
@@ -108,8 +108,10 @@ const CheckoutBilling = props => {
                                         }
                                         required
                                     >
-                                        <option value="testValue"> Select Country</option>
-                                        <option value="testValue"> India</option>
+                                        <option value="none"> Select Country</option>
+                                        <option value="India"> India</option>
+                                        <option value="USA"> USA</option>
+                                        <option value="south-africa"> South Africa</option>
                                     </Form.Control>
                                 </Form.Group>
                             </Col>

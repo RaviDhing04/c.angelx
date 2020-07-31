@@ -203,9 +203,10 @@ const AddInventory = props => {
                     }
                     required
                   >
-                    <option value="testValue"> Product Category</option>
-                    <option value="testValue"> Electronics</option>
-                    <option value="testValue"> Mobiles </option>
+                    <option value="none"> Product Category</option>
+                    <option value="Electronics"> Electronics</option>
+                    <option value="Furnitures"> Furnitures </option>
+                    <option value="Causes"> Causes </option>
                   </Form.Control>
                 </Form.Group>
               </Col>

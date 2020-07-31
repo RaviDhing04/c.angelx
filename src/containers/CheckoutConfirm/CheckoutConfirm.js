@@ -128,7 +128,7 @@ const CheckoutConfirm = (props) => {
                                                             required
                                                             onChange={(e) => selectPaymentType(e)}
                                                         >
-                                                            <option value="testValue"> Select Payment Option</option>
+                                                            <option value="none"> Select Payment Option</option>
                                                             <option value="payfast"> Payfast</option>
                                                             <option value="paypal"> PayPal</option>
                                                         </Form.Control>

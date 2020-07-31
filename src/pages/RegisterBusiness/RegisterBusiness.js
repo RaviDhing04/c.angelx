@@ -31,7 +31,7 @@ const RegisterBusiness = props => {
           PatronId: selectedBusiness.PatronId.S,
           MerchantId: selectedBusiness.MerchantId.S
         });
-        res ? setLoading(false) : (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
+        res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
       }
     }
     if (action === "edit") {
@@ -55,7 +55,7 @@ const RegisterBusiness = props => {
       action === "edit"
         ? await props.updateBusiness(payload)
         : await props.registerNewBusiness(payload);
-    res ? setLoading(false) : (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
+    res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
     if (!buttonClicked) {
       history.goBack();
     } else {
@@ -133,7 +133,7 @@ const RegisterBusiness = props => {
                 </Form.Group>
               </Col>
             </Form.Row>
-            <Form.Row className="width-75">
+            <Form.Row className="width-50">
               <Col>
                 <Form.Group controlId="OrgName">
                   <Form.Label>Organization Name</Form.Label>
@@ -159,12 +159,14 @@ const RegisterBusiness = props => {
                     }
                     required
                   >
-                    <option value="testValue"> Select Type</option>
-                    <option value="testValue"> India</option>
+                    <option value="none"> Select Type</option>
+                    <option value="Electronics"> Electronics</option>
+                    <option value="Furnitures"> Furnitures </option>
+                    <option value="Causes"> Causes </option>
                   </Form.Control>
                 </Form.Group>
               </Col>
-              <Col>
+              {/* <Col>
                 <Form.Group controlId="Country">
                   <Form.Label>Country</Form.Label>
                   <Form.Control
@@ -175,11 +177,13 @@ const RegisterBusiness = props => {
                     }
                     required
                   >
-                    <option value="testValue"> Select Country</option>
-                    <option value="testValue"> India</option>
+                    <option value="none"> Select Country</option>
+                    <option value="India"> India</option>
+                    <option value="USA"> USA</option>
+                    <option value="south-africa"> South Africa</option>
                   </Form.Control>
                 </Form.Group>
-              </Col>
+              </Col> */}
             </Form.Row>
             <Form.Row>
               <Col>
@@ -263,8 +267,8 @@ const RegisterBusiness = props => {
                     }
                     required
                   >
-                    <option value="testValue"> Address Type</option>
-                    <option value="testValue"> India</option>
+                    <option value="none"> Address Type</option>
+                    <option value="Merchant"> Merchant Address</option>
                   </Form.Control>
                 </Form.Group>
               </Col>
@@ -281,8 +285,10 @@ const RegisterBusiness = props => {
                     }
                     required
                   >
-                    <option value="testValue"> Select Country</option>
-                    <option value="testValue"> India</option>
+                    <option value="none"> Select Country</option>
+                    <option value="India"> India</option>
+                    <option value="USA"> USA</option>
+                    <option value="south-africa"> South Africa</option>
                   </Form.Control>
                 </Form.Group>
               </Col>
@@ -416,8 +422,8 @@ const RegisterBusiness = props => {
       </div>
     </Container>
   ) : (
-    <CustomLoader />
-  );
+      <CustomLoader />
+    );
 };
 
 const mapDispatchToProps = dispatch =>
