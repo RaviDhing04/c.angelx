@@ -33,20 +33,22 @@ const App = () => {
     <Container fluid className="app-container">
       <AuthContext.Provider value={(localStorage.getItem('token') && JSON.parse(localStorage.getItem('userData'))) ? true : false}>
         <Header userId={userId} />
-        <Switch>
-          <Route
-            exact
-            path={"/"}
-            render={() => {
-              return <Redirect to={"/landing"} />;
-            }}
-          />
-          <Router routes={parent_routes} />
-        </Switch>
-        <Route path="/" component={Login} />
-        <Route path="/" component={SignUp} />
-        <Route path="/" component={ForgotPassword} />
-        <Route path="/" component={Logout} />
+        <div style={{minHeight: '400px'}}>
+          <Switch>
+            <Route
+              exact
+              path={"/"}
+              render={() => {
+                return <Redirect to={"/landing"} />;
+              }}
+            />
+            <Router routes={parent_routes} />
+          </Switch>
+          <Route path="/" component={Login} />
+          <Route path="/" component={SignUp} />
+          <Route path="/" component={ForgotPassword} />
+          <Route path="/" component={Logout} />
+        </div>
       </AuthContext.Provider>
       <Footer />
     </Container>
