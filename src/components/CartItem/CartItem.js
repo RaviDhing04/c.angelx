@@ -61,7 +61,7 @@ const CartItem = props => {
           })} className="plus-icon" alt="plus-icon" src={plusIcon}></img>
         </div>
         <div className="item-actions">
-          <img onClick={() => { props.addToWishlist({ "ProductId": productId, "UserId": JSON.parse(localStorage.getItem('userData')).UserId }) }} className="heart-icon" alt="heart-icon" src={heartIcon}></img>
+          <img onClick={() => { props.addToWishlist({ "ProductId": productId, "UserId": JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId }) }} className="heart-icon" alt="heart-icon" src={heartIcon}></img>
           <img onClick={() => props.deleteProductFromCart({
             "ProductId": productId,
           })} className="delete-icon" alt="delete-icon" src={deleteIcon}></img>

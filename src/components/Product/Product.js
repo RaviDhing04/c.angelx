@@ -12,7 +12,7 @@ const Product = props => {
       {data && Object.keys(data).length ? (
         <Card className="product-card">
           <div className="prod-img">
-            <img className="heart-icon" onClick={() => { props.addToWishlist({ "ProductId": data.ProductId.S, "UserId": JSON.parse(localStorage.getItem('userData')).UserId }) }} alt="heart-icon" src={heartIcon}></img>
+            <img className="heart-icon" onClick={() => { props.addToWishlist({ "ProductId": data.ProductId.S, "UserId": JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId }) }} alt="heart-icon" src={heartIcon}></img>
             <Link to={`/home/productDetail/${data.ProductId.S}/${data.Timestamp.S}`}>
               <div className="product-image">
                 <Card.Img src={data.ThumbnailImageURL.S} />

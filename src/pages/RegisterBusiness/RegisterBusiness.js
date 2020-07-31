@@ -45,7 +45,7 @@ const RegisterBusiness = props => {
     registerFormFields.forEach(field => {
       payload[field] = formElements[field].value;
     });
-    payload["PatronId"] = JSON.parse(localStorage.getItem('userData')).UserId;
+    payload["PatronId"] = JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId;;
     const tags = formElements.Tags.value;
     tags.split(",").forEach((tag, index) => {
       payload["tag" + index + 1] = tag;

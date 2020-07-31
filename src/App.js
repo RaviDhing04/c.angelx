@@ -13,7 +13,7 @@ import Logout from "./containers/Logout/Logout";
 import ForgotPassword from "./containers/ForgotPassword/ForgotPassword";
 
 const App = () => {
-  const userId = JSON.parse(localStorage.getItem('userData')).UserId; // to be update from login info later
+  const userId = JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId;; // to be update from login info later
 
   const location = useLocation();
   var url = window.location.pathname;

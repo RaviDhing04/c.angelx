@@ -34,12 +34,12 @@ const MerchantHome = props => {
     if (state && state.fromUser) {
       !followedMerchants.length &&
         props.getFollowedMerchants({
-          PatronId: JSON.parse(localStorage.getItem('userData')).UserId
+          PatronId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId
         });
     }
     props.getBusinessDetails({
       MerchantId: merchantId,
-      PatronId: JSON.parse(localStorage.getItem('userData')).UserId
+      PatronId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId
     });
   }, []);
 

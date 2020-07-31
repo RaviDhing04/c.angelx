@@ -111,7 +111,7 @@ const ProductDetails = props => {
       "payment_type": null
     }
     localStorage.setItem('orderType', JSON.stringify(orderType));
-    history.push(`/checkout/shipping/${JSON.parse(localStorage.getItem('userData')).UserId}/${'Shipping'}`);
+    history.push(`/checkout/shipping/${JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId}/${'Shipping'}`);
   }
 
   const groupByOrder = async (event) => {
@@ -134,7 +134,7 @@ const ProductDetails = props => {
       "payment_type": null
     }
     localStorage.setItem('orderType', JSON.stringify(orderType));
-    history.push(`/checkout/shipping/${JSON.parse(localStorage.getItem('userData')).UserId}/${'Shipping'}`);
+    history.push(`/checkout/shipping/${JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId}/${'Shipping'}`);
   }
 
 

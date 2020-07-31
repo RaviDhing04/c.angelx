@@ -6,7 +6,7 @@ import checkmark from "../../assets/checkmark.svg";
 
 const LeftNav = props => {
   const { links, merchants, merchantId } = props;
-  const userId = JSON.parse(localStorage.getItem('userData')).UserId;
+  const userId = JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId;;
 
   return (
     <div className="leftNav">
