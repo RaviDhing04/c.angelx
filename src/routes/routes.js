@@ -107,6 +107,15 @@ const AsyncHomeMyContacts = Loadable({
   modules: ["MyContacts"]
 });
 
+const AsyncAddEmployees = Loadable({
+  loader: () =>
+    import(
+      /* webpackChunkName: "AddEmployees" */ "../containers/AddEmployees/AddEmployees"
+    ),
+  loading: error => <LoadingFallback {...error} />,
+  modules: ["AddEmployees"]
+});
+
 const AsyncHomeViewAllProducts = Loadable({
   loader: () =>
     import(
@@ -161,11 +170,45 @@ const AsyncProfileEdit = Loadable({
   modules: ["ProfileEdit"]
 });
 
+const AsyncCheckoutShipping = Loadable({
+  loader: () =>
+    import(
+      /* webpackChunkName: "CheckoutShipping" */ "../containers/CheckoutShipping/CheckoutShipping"
+    ),
+  loading: error => <LoadingFallback {...error} />,
+  modules: ["CheckoutShipping"]
+});
+
+const AsyncCheckoutBilling = Loadable({
+  loader: () =>
+    import(
+      /* webpackChunkName: "CheckoutBilling" */ "../containers/CheckoutBilling/CheckoutBilling"
+    ),
+  loading: error => <LoadingFallback {...error} />,
+  modules: ["CheckoutBilling"]
+});
+
+const AsyncCheckoutConfirm = Loadable({
+  loader: () =>
+    import(
+      /* webpackChunkName: "CheckoutConfirm" */ "../containers/CheckoutConfirm/CheckoutConfirm"
+    ),
+  loading: error => <LoadingFallback {...error} />,
+  modules: ["CheckoutConfirm"]
+});
+
 const AsyncProfile = Loadable({
   loader: () =>
     import(/* webpackChunkName: "Profile" */ "../pages/Profile/Profile"),
   loading: error => <LoadingFallback {...error} />,
   modules: ["Profile"]
+});
+
+const AsyncCheckout = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "Checkout" */ "../pages/Checkout/Checkout"),
+  loading: error => <LoadingFallback {...error} />,
+  modules: ["Checkout"]
 });
 
 const AsyncProfileAddresses = Loadable({
@@ -234,6 +277,12 @@ export const parent_routes = [
   {
     path: "/profile",
     component: AsyncProfile,
+    exact: false,
+    type: "private"
+  },
+  {
+    path: "/checkout",
+    component: AsyncCheckout,
     exact: false,
     type: "private"
   }
@@ -311,6 +360,12 @@ export const merchant_child_routes = [
     component: AsyncHomeInventory,
     exact: true,
     type: "private"
+  },
+  {
+    path: "/merchantHome/myEmployees/:name/:merchantId",
+    component: AsyncAddEmployees,
+    exact: true,
+    type: "private"
   }
 ];
 
@@ -338,6 +393,27 @@ export const profile_child_routes = [
   //   component: AsyncProfilePayments,
   //   exact: true
   // }
+];
+
+export const checkout_child_routes = [
+  {
+    path: "/checkout/shipping/:userId/:name",
+    component: AsyncCheckoutShipping,
+    exact: true,
+    type: "private"
+  },
+  {
+    path: "/checkout/billing/:userId/:name",
+    component: AsyncCheckoutBilling,
+    exact: true,
+    type: "private"
+  },
+  {
+    path: "/checkout/confirm/:userId/:name",
+    component: AsyncCheckoutConfirm,
+    exact: true,
+    type: "private"
+  }
 ];
 
 class Router extends Component {

@@ -10,7 +10,8 @@ const ProductListCarousel = props => {
     data: { Items },
     name,
     activeCurrency,
-    addProductToCart
+    addProductToCart,
+    addToWishlist
   } = props;
   const isAuthenticated = useAuth();
   return (
@@ -27,6 +28,7 @@ const ProductListCarousel = props => {
                       data={item}
                       activeCurrency={activeCurrency}
                       addProductToCart={addProductToCart}
+                      addToWishlist={addToWishlist}
                     />
                   </div>
                 ) : null;

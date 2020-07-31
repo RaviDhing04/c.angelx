@@ -23,12 +23,7 @@ const LandingPage = props => {
     fetchData();
   }, []);
 
-  const addToCart = async productId => {
-    const payload = {
-      ProductId: productId,
-      UserId: "1588433471165",
-      Quantity: "1"
-    };
+  const addToCart = async payload => {
     const res = await props.addProductToCart(payload);
   };
 

@@ -16,7 +16,7 @@ const AllBusiness = props => {
   useEffect(() => {
     async function fetchAllBusiness() {
       const userId = props.match.params.userId;
-      const res = await props.fetchAllBusiness({ PatronId: "69116697064443" }); // to be updated by userId
+      const res = await props.fetchAllBusiness({ PatronId: userId });
       res ? setLoading(false) : (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
     }
     fetchAllBusiness();

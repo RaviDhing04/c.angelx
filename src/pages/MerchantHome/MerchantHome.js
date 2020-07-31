@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Switch } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -14,49 +14,90 @@ import {
 import {
   getFollowedMerchants,
   updateSelectedBusiness,
-  getBusinessDetails
+  getBusinessDetails,
+  uploadImage,
+  updateSelectedBusinessBanner
 } from "../../store/actions";
 import coverError from "../../assets/cover-error.svg";
+import CustomLoader from "../../components/CustomLoader/CustomLoader";
 
 const MerchantHome = props => {
+  const [loading, setLoading] = useState(false);
+  const [merchantId, setMerchantId] = useState('');
   const { followedMerchants, selectedBusiness } = props;
   const { state } = props.location;
 
   useEffect(() => {
+    var temp = window.location.pathname.split('/');
+    const merchantId = temp[temp.length - 1];
+    setMerchantId(merchantId);
     if (state && state.fromUser) {
-      const { merchantId } = props.match.params;
       !followedMerchants.length &&
         props.getFollowedMerchants({
-          PatronId: "1588433471165"
+          PatronId: JSON.parse(localStorage.getItem('userData')).UserId
         });
     }
     props.getBusinessDetails({
-      MerchantId: "1587031042915",
-      PatronId: "69116697064443"
+      MerchantId: merchantId,
+      PatronId: JSON.parse(localStorage.getItem('userData')).UserId
     });
   }, []);
 
-  return (
+
+  const toBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+
+  const addFile = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setLoading(true);
+    }
+    const fileType = event.target.files[0].type;
+    const fileString = await toBase64(file);
+    const payload = { "image_type": "merchant", "added_info": { "id": selectedBusiness.MerchantId.S }, "img": fileString.split(',')[1], "image_extension": fileType }
+    const res = await props.uploadImage(payload);
+    res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
+    if (res) {
+      props.updateSelectedBusinessBanner(res.full_image_url);
+    }
+  };
+
+  return !loading ? (
     <React.Fragment>
       <div className="merchantHome-container">
-        {selectedBusiness && selectedBusiness.BannerImageURL.S ? (
-          <React.Fragment>
-            <div className="cover-img">
-              <img
-                className="d-block w-100"
-                src={selectedBusiness && selectedBusiness.BannerImageURL.S}
-                alt="cover"
-              />
-            </div>
-            <div className="img-err">
-              <img src={coverError} alt="cover" />
-              <span>
-                Please upload high quality images more then width - 800px to
+        <React.Fragment>
+          {selectedBusiness && selectedBusiness.BannerImageURL.S ? (<div className="cover-img">
+            <img
+              className="d-block w-100"
+              src={selectedBusiness && selectedBusiness.BannerImageURL.S}
+              alt="cover"
+            />
+            {selectedBusiness && selectedBusiness.BannerImageURL.S ? (
+              <div onChange={addFile}>
+                <label htmlFor="fileUpload_merchantBanner" class="btn">Change Cover</label>
+                <input id="fileUpload_merchantBanner"
+                  type="file"
+                  accept=".jgp, .png"
+                  style={{ display: "none" }}
+                /> </div>) : (<div onChange={addFile}>
+                  <input id="fileUpload_merchantBanner"
+                    type="file"
+                    accept=".jgp, .png"
+                    style={{ display: "none" }}
+                  /> <button htmlFor="fileUpload_merchantBanner" class="btn-center">Add Cover Image</button> </div>)}
+          </div>) : null}
+          <div className="img-err">
+            <img src={coverError} alt="cover" />
+            <span>
+              Please upload high quality images more then width - 800px to
                 ensure your cover image looks great.{" "}
-              </span>
-            </div>
-          </React.Fragment>
-        ) : null}
+            </span>
+          </div>
+        </React.Fragment>
         <div className="merchant-info">
           <div className="merchant-detail">
             <span className="merchant-name">
@@ -75,7 +116,7 @@ const MerchantHome = props => {
               </a>
               <button className="unfollow">Unfollow</button>
             </div>
-          ) : null }
+          ) : null}
         </div>
         <div>
           <Container className="merchantHome-body" fluid>
@@ -87,7 +128,7 @@ const MerchantHome = props => {
                     : merchantLeftNavLinks
                 }
                 merchants={state && state.fromUser ? followedMerchants : []}
-                merchantId={"1587031042915"}
+                merchantId={merchantId}
               />
             </div>
             <div className="right-section">
@@ -99,7 +140,9 @@ const MerchantHome = props => {
         </div>
       </div>
     </React.Fragment>
-  );
+  ) : (
+      <CustomLoader />
+    );
 };
 
 const mapDispatchToProps = dispatch =>
@@ -107,7 +150,9 @@ const mapDispatchToProps = dispatch =>
     {
       getFollowedMerchants,
       updateSelectedBusiness,
-      getBusinessDetails
+      getBusinessDetails,
+      uploadImage,
+      updateSelectedBusinessBanner
     },
     dispatch
   );

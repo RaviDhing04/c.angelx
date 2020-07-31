@@ -4,40 +4,37 @@ import { Container, Form, Button, Col } from "react-bootstrap";
 import { bindActionCreators } from "redux";
 import { useHistory } from "react-router-dom";
 import {
-  getAllBillingAddress,
-  addNewBillingAddress,
-  updateBillingAddress
+  getAllShippingAddress,
+  addNewShippingAddress,
+  updateShippingAddress
 } from "../../store/actions";
-import "./ProfileAddresses.scss";
+import "./CheckoutShipping.scss";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
-import { billingAddressFormFields } from "../../constants/constants";
+import { shippingAddressFormFields } from "../../constants/constants";
 import edit from "../../assets/edit.svg";
 
-const ProfileAddresses = props => {
+const CheckoutShipping = props => {
   const [loading, setLoading] = useState(false);
   const [pageName, setName] = useState('');
   const [addresses, setAddresses] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const { userId, name } = props.match.params;
-  const { getAllBillingAddress, addNewBillingAddress, updateBillingAddress } = props;
+  const { getAllShippingAddress, addNewShippingAddress, updateShippingAddress } = props;
   const history = useHistory();
 
   useEffect(() => {
-    async function fetchSavedBillingAddresses() {
+    async function fetchSavedShippingAddresses() {
       name ? setName(name) : setName("");
-      const res = await getAllBillingAddress();
+      const res = await getAllShippingAddress();
       res ? (function () { setAddresses(res); setLoading(false); }()) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
     }
-    fetchSavedBillingAddresses();
+    fetchSavedShippingAddresses();
   }, []);
 
-  const next = async () => {
+  const next = () => {
     setLoading(false);
     setSelectedAddress(null);
-    const res = await getAllBillingAddress();
-    res ? (function () { setAddresses(res); setLoading(false); }()) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
-
   }
 
   const addNew = async event => {
@@ -45,11 +42,11 @@ const ProfileAddresses = props => {
     setLoading(true);
     let payload = {};
     const formElements = event.target.elements;
-    billingAddressFormFields.forEach(field => {
+    shippingAddressFormFields.forEach(field => {
       payload[field] = formElements[field].value;
     });
     setLoading(true);
-    const res = editMode ? await updateBillingAddress(payload, selectedAddress.AddressId.S) : await addNewBillingAddress(payload);
+    const res = editMode ? await updateShippingAddress(payload, selectedAddress.AddressId.S) : await addNewShippingAddress(payload);
     res ? next() : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
   };
 
@@ -57,21 +54,60 @@ const ProfileAddresses = props => {
     event.preventDefault();
     if (editMode) { setEditMode(false); }
     setSelectedAddress(null);
-    document.getElementById("billingAddressFormFields").reset();
+    document.getElementById("shippingAddressFormFields").reset();
   };
+
+  const selectAddress = (address) => {
+    localStorage.setItem('shippingAddress', JSON.stringify(address));
+    history.push(`/checkout/billing/${userId}/Checkout`);
+  }
 
   const editAddress = (address) => {
     setEditMode(true);
     setSelectedAddress(address);
   }
 
+  const selectShipper = (e) => {
+    const shipper = e.target.value;
+    if (shipper === 'Self') {
+      alert("You will recieve a confirmation mail along with merchant address for pick up");
+      history.push(`/checkout/billing/${userId}/Checkout`);
+    } else {
+      localStorage.setItem('shipper', shipper);
+    }
+  }
+
   return !loading ? (
     <React.Fragment>
       <div className="checkout-billing-heading">{pageName}</div>
       <Container className="checkout-billing-container" fluid>
+
+        <div className="shipper">
+          <Form
+            id="selectShipperForm"
+          >
+            <Form.Row className="width-25">
+              <Col>
+                <Form.Group controlId="selectShipper">
+                  <Form.Label>Select Shipping Option</Form.Label>
+                  <Form.Control
+                    as="select"
+                    defaultValue="DHL"
+                    required
+                    onChange={(e) => selectShipper(e)}
+                  >
+                    <option value="testValue"> Select Shipping Option</option>
+                    <option value="DHL"> DHL</option>
+                    <option value="Self"> Self PickUp</option>
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+            </Form.Row>
+          </Form>
+        </div>
         <div className="checkout-billing">
           <Form
-            id="billingAddressFormFields"
+            id="shippingAddressFormFields"
             onSubmit={e => addNew(e)}
           >
             <Form.Row className="width-25">
@@ -200,7 +236,7 @@ const ProfileAddresses = props => {
                 Cancel
             </Button>
               <Button className="saveButton" type="submit">
-                Save Address
+                Continue
             </Button>
             </div>
           </Form>
@@ -219,6 +255,9 @@ const ProfileAddresses = props => {
                     <div>{address.Province && address.Province.S}   {address.Country && address.Country.S}</div>
                     <div>{address.Zipcode && address.Zipcode.S}</div>
                   </div>
+                  <Button onClick={() => selectAddress(address)} className="useThis" type="submit">
+                    Use This
+            </Button>
                 </div>)
               })}
             </div>
@@ -233,9 +272,9 @@ const ProfileAddresses = props => {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getAllBillingAddress,
-      addNewBillingAddress,
-      updateBillingAddress
+      getAllShippingAddress,
+      addNewShippingAddress,
+      updateShippingAddress
     },
     dispatch
   );
@@ -245,4 +284,4 @@ const mapStatetoProps = ({ app: { contactPage } }) => {
   return {};
 };
 
-export default connect(mapStatetoProps, mapDispatchToProps)(ProfileAddresses);
+export default connect(mapStatetoProps, mapDispatchToProps)(CheckoutShipping);

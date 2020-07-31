@@ -2,31 +2,33 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Container } from "react-bootstrap";
-import { getLatestProductsWithPagination, addProductToCart } from "../../store/actions";
+import { getLatestProductsWithPagination, getSponsoredProductsWithPagination, addProductToCart, addToWishlist } from "../../store/actions";
 import ProductListCarousel from "../../components/ProductListCarousel/ProductListCarousel";
 import ProductList from "../../components/ProductList/ProductList";
+import { useAuth } from "../../context/auth";
 
 const HomeProductList = props => {
+  const isAuthenticated = useAuth();
   useEffect(() => {
     props.getLatestProductsWithPagination();
+    props.getSponsoredProductsWithPagination();
   }, []);
 
-const addToCart = async (productId) => {
-  const payload = {
-    ProductId: productId,
-    UserId: "1588433471165",
-    Quantity: "1"
+  const addToCart = async (payload) => {
+    const res = await props.addProductToCart(payload);
   }
-  const res = await props.addProductToCart(payload);
-}
+
+  const addProductToWish = async (payload) => {
+    const res = await props.addToWishlist(payload);
+  }
 
   return (
     <React.Fragment>
       <Container fluid>
-        <ProductListCarousel name="Sponsored" data={props.latestProducts} activeCurrency={props.activeCurrency} addProductToCart={addToCart}/>
-        <ProductList name="Latest Uploads" data={props.latestProducts} activeCurrency={props.activeCurrency}addProductToCart={addToCart}/>
-        <ProductList name="Trending" data={props.latestProducts} activeCurrency={props.activeCurrency} addProductToCart={addToCart}/>
-        <ProductListCarousel name="Wishlist" data={props.latestProducts} activeCurrency={props.activeCurrency} addProductToCart={addToCart}/>
+        <ProductListCarousel name="Sponsored" data={props.sponsoredProducts} activeCurrency={props.activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} />
+        <ProductList name="Latest Uploads" data={props.latestProducts} activeCurrency={props.activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} />
+        <ProductList name="Trending" data={props.latestProducts} activeCurrency={props.activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} />
+        {isAuthenticated ? <ProductListCarousel name="Wishlist" data={props.latestProducts} activeCurrency={props.activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} /> : null}
       </Container>
     </React.Fragment>
   );
@@ -35,8 +37,10 @@ const addToCart = async (productId) => {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getLatestProductsWithPagination, 
-      addProductToCart
+      getLatestProductsWithPagination,
+      getSponsoredProductsWithPagination,
+      addProductToCart,
+      addToWishlist
     },
     dispatch
   );
@@ -45,6 +49,7 @@ const mapStatetoProps = ({ app: { homePage, common } }) => {
   console.log(homePage);
   return {
     latestProducts: homePage.latestProducts,
+    sponsoredProducts: homePage.sponsoredProducts,
     activeCurrency: common.activeCurrency
   };
 };

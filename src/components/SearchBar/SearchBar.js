@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   InputGroup,
   DropdownButton,
@@ -55,10 +55,16 @@ const SearchBar = props => {
   const [searchResults, setSearchResults] = useState([]);
   const [showDiv, setShowDiv] = useState(false);
 
-
+  useEffect(() => {
+    window.onclick = function (event) {
+      if (!event.target.matches('.search-input') && !event.target.matches('.search-results')) {
+        setShowDiv(false);
+      }
+    }
+  }, [])
   const changeCategory = (e) => {
     if (e && e.target) {
-      debugger;
+      ;
       const selected = props.searchCategories.find(category => {
         return category.CategoryId.S === e.target.attributes.value.nodeValue;
       });
@@ -72,11 +78,8 @@ const SearchBar = props => {
     setShowDiv(true);
   }
 
-  const closeDiv = () => {
-    setShowDiv(false);
-  }
 
-  const fetchSearchResults = debounce((text) => { search(text) }, 3000);
+  const fetchSearchResults = debounce((text) => { search(text) }, 1000);
   console.log(fetchSearchResults);
   return (
     <React.Fragment>
@@ -87,13 +90,12 @@ const SearchBar = props => {
             aria-label="Search"
             aria-describedby="basic-addon2"
             onChange={(e) => fetchSearchResults(e.target.value)}
-            onBlur={closeDiv}
+          // onBlur={closeDiv}
           />
           {showDiv && searchResults && searchResults.length ?
             <div className="search-results">
               {searchResults.map((item) => {
-                // /${item.Timestamp.S}
-                return (<Link to={`/home/productDetail/${item.ProductId.S}`}>
+                return (<Link to={`/home/productDetail/${item.ProductId.S}/${item.Timestamp.S}`}>
                   <div className="result">
                     <img alt="prod-img" src={item.ThumbnailImageURL.S}></img>
                     <p>{item.Name.S}</p>

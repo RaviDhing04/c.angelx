@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Container, Row } from "react-bootstrap";
-import { getLatestProducts, getMerchantAllProducts, clearViewAllProducts } from "../../store/actions";
+import { getLatestProducts, getMerchantAllProducts, clearViewAllProducts, addToWishlist } from "../../store/actions";
 import Product from "../../components/Product/Product";
 import ProductRowShimmer from "../../components/ProductRowShimmer/ProductRowShimmer";
 import "./ViewAllProducts.scss";
@@ -21,8 +21,8 @@ const ViewAllProducts = props => {
       case "Latest Uploads":
         merchantId
           ? props.getMerchantAllProducts({
-              MerchantId: merchantId
-            })
+            MerchantId: merchantId
+          })
           : props.getLatestProducts();
         break;
       case "Sponsored":
@@ -34,7 +34,7 @@ const ViewAllProducts = props => {
       default:
         break;
     }
-    return () => { 
+    return () => {
       props.clearViewAllProducts();
     }
   }, []);
@@ -48,7 +48,7 @@ const ViewAllProducts = props => {
             Items.slice(index, index + itemsPerRow).map((item, index) => {
               return (
                 <div key={item.ProductId.S}>
-                  <Product data={item} activeCurrency={activeCurrency} />
+                  <Product data={item} activeCurrency={activeCurrency} addToWishlist={addToWishlist} />
                 </div>
               );
             })}
@@ -72,8 +72,8 @@ const ViewAllProducts = props => {
             <span className="not-found"> No Products added, Go to Inventory to add inventory</span>
           </React.Fragment>
         ) : (
-          <ProductRowShimmer />
-        )}
+              <ProductRowShimmer />
+            )}
       </Container>
     </React.Fragment>
   );
@@ -84,7 +84,8 @@ const mapDispatchToProps = dispatch =>
     {
       getLatestProducts,
       getMerchantAllProducts,
-      clearViewAllProducts
+      clearViewAllProducts,
+      addToWishlist
     },
     dispatch
   );

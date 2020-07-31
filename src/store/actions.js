@@ -22,6 +22,24 @@ export const login = async (body = {}) => {
   }
 };
 
+export const checkout = (body = {}) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("checkout"), {
+      method: "POST",
+      body: body
+    });
+    if (response) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
 export const signUp = async (body = {}) => {
   try {
 
@@ -115,6 +133,87 @@ export const getLatestProductsWithPagination = (
     if (response && response.result && response.result.data) {
       dispatch({
         type: "LATEST_PRODUCTS",
+        value: { payload: response.result.data }
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const getSponsoredProductsWithPagination = (
+  body = {}
+) => async dispatch => {
+  try {
+
+    const response = await httpFetch(
+      getApiEndPoints("SponsoredProductsWithPagination"),
+      {
+        method: "POST",
+        body: body
+      }
+    );
+    if (response && response.result && response.result.data) {
+      dispatch({
+        type: "SPONSORED_PRODUCTS",
+        value: { payload: response.result.data }
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const getTrendingProductsWithPagination = (
+  body = {}
+) => async dispatch => {
+  try {
+
+    const response = await httpFetch(
+      getApiEndPoints("TrendingProductsWithPagination"),
+      {
+        method: "POST",
+        body: body
+      }
+    );
+    if (response && response.result && response.result.data) {
+      dispatch({
+        type: "TRENDING_PRODUCTS",
+        value: { payload: response.result.data }
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const getWishlistProductsWithPagination = (
+  body = {}
+) => async dispatch => {
+  try {
+
+    const response = await httpFetch(
+      getApiEndPoints("WishlistProductsWithPagination"),
+      {
+        method: "POST",
+        body: body
+      }
+    );
+    if (response && response.result && response.result.data) {
+      dispatch({
+        type: "WISHLIST_PRODUCTS",
         value: { payload: response.result.data }
       });
       return true;
@@ -360,6 +459,142 @@ export const getDashboardBanners = (body = {}) => async dispatch => {
       response.result.message === "Success"
     ) {
       return response.result.data.Items;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const getAllShippingAddress = (body = {}) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("getAllShippingAddress"), {
+      method: "GET"
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      return response.result.data.Items;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const addNewShippingAddress = (body = {}) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("addNewShippingAddress"), {
+      method: "POST",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const updateShippingAddress = (body = {}, addressId) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("updateShippingAddress") + addressId, {
+      method: "PUT",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const getAllBillingAddress = (body = {}) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("getAllBillingAddress"), {
+      method: "GET"
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      return response.result.data.Items;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const addNewBillingAddress = (body = {}) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("addNewBillingAddress"), {
+      method: "POST",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const updateBillingAddress = (body = {}, addressId) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("updateBillingAddress") + addressId, {
+      method: "PUT",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      return true;
     } else {
       return false;
     }
@@ -627,7 +862,6 @@ export const fetchAllBusiness = (body = {}) => async dispatch => {
       method: "POST",
       body: body
     });
-    // const response = {"result":{"data":{"Items":[{"OrgName":{"S":"ProdTest34"},"MerchantId":{"S":"1589982971166"},"PatronId":{"S":"69116697064443"},"BusinessHandle":{"S":"ProdTest1@DeleteLater"},"BusinessType":{"S":"NPO"}},{"OrgName":{"S":"ProdTest36"},"MerchantId":{"S":"1589856527259"},"PatronId":{"S":"69116697064443"},"BusinessHandle":{"S":"ProdTest1@DeleteLater"},"BusinessType":{"S":"Retail"}},{"OrgName":{"S":"ProdTest35"},"MerchantId":{"S":"1589856430567"},"PatronId":{"S":"69116697064443"},"BusinessHandle":{"S":"ProdTest1@DeleteLater"},"BusinessType":{"S":"Retail"}},{"OrgName":{"S":"ProdTest36"},"MerchantId":{"S":"1589855354787"},"PatronId":{"S":"69116697064443"},"BusinessHandle":{"S":"ProdTest1@DeleteLater"},"BusinessType":{"S":"Retail"}}],"Count":4,"ScannedCount":7},"message":"Success"}}
     if (
       response &&
       response.result &&
@@ -657,13 +891,12 @@ export const searchContactWithEmail = (body = {}) => async dispatch => {
     });
     if (
       response &&
-      response.result &&
-      response.result.data &&
-      response.result.message === "Success"
+      response.body &&
+      response.statusCode === 200
     ) {
       dispatch({
         type: "SEARCHED_CONTACT",
-        value: { payload: response.result.data.Items[0] }
+        value: { payload: response.body.user_details[0] }
       });
       return true;
     } else {
@@ -698,10 +931,79 @@ export const addNewContact = (body = {}) => async dispatch => {
   }
 };
 
+export const addToWishlist = (body = {}) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("addToWishlist"), {
+      method: "POST",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const addNewEmployee = (body = {}) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("addNewEmployee"), {
+      method: "POST",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
 export const deleteContact = (body = {}) => async dispatch => {
   try {
 
     const response = await httpFetch(getApiEndPoints("deleteContact"), {
+      method: "POST",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const deleteEmployee = (body = {}) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("deleteEmployee"), {
       method: "POST",
       body: body
     });
@@ -750,7 +1052,34 @@ export const getSavedContacts = (body = {}) => async dispatch => {
     ) {
       dispatch({
         type: "ALL_CONTACTS",
-        value: { payload: response.result.data.Items }
+        value: { payload: response.result.data.body.user_details }
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const getSavedEmployees = (body = {}) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("SavedEmployees"), {
+      method: "POST",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      dispatch({
+        type: "ALL_CONTACTS",
+        value: { payload: response.result.data.body.user_details }
       });
       return true;
     } else {
@@ -791,7 +1120,7 @@ export const getCartItems = (body = {}) => async dispatch => {
 
     const response = await httpFetch(getApiEndPoints("CartItems"), {
       method: "POST",
-      body: body
+      body: ''
     });
     if (
       response &&
@@ -799,13 +1128,10 @@ export const getCartItems = (body = {}) => async dispatch => {
       response.result.data &&
       response.result.message === "Success"
     ) {
-      const cartProducts = makeCartProduct(
-        response.result.data.cartDetails.Items,
-        response.result.data.productDetails.Items
-      );
+
       dispatch({
         type: "CART_DETAILS",
-        value: { payload: cartProducts }
+        value: { payload: response.result.data }
       });
       return true;
     } else {
@@ -817,72 +1143,27 @@ export const getCartItems = (body = {}) => async dispatch => {
   }
 };
 
-const makeCartProduct = (cartItems, productDetails) => {
-  let out = [];
-  cartItems &&
-    cartItems.forEach(cartItem => {
-      productDetails &&
-        productDetails.forEach(product => {
-          if (cartItem.ProductId.S === product.ProductId.S) {
-            out.push({
-              UserId: cartItem.UserId,
-              Quantity: cartItem.Quantity,
-              ...product
-            });
-          }
-        });
+
+export const deleteProductFromCart = body => async (dispatch) => {
+  try {
+    const response = await httpFetch(getApiEndPoints("deleteProductFromCart"), {
+      method: "POST",
+      body: body
     });
-  return out;
-};
-
-export const increaseProductQuantity = productId => (dispatch, getState) => {
-  const cartItems = getState().app.cartDetailsPage.cartItems;
-  const updatedCartItem = cartItems.map(item => {
-    if (item.ProductId.S === productId) {
-      return { ...item, Quantity: { S: (+item.Quantity.S + 1).toString() } };
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      return true;
     } else {
-      return item;
+      return false;
     }
-  });
-  dispatch({
-    type: "CART_DETAILS",
-    value: { payload: updatedCartItem }
-  });
-};
-
-export const decreaseProductQuantity = productId => (dispatch, getState) => {
-  const cartItems = getState().app.cartDetailsPage.cartItems;
-  const updatedCartItem = [];
-  cartItems.forEach(item => {
-    if (item.ProductId.S === productId) {
-      if (+item.Quantity.S > 1) {
-        updatedCartItem.push({
-          ...item,
-          Quantity: { S: (+item.Quantity.S - 1).toString() }
-        });
-      }
-    } else {
-      updatedCartItem.push(item);
-    }
-  });
-  dispatch({
-    type: "CART_DETAILS",
-    value: { payload: updatedCartItem }
-  });
-};
-
-export const deleteProductFromCart = productId => (dispatch, getState) => {
-  const cartItems = getState().app.cartDetailsPage.cartItems;
-  const updatedCartItem = [];
-  cartItems.forEach(item => {
-    if (item.ProductId.S !== productId) {
-      updatedCartItem.push(item);
-    }
-  });
-  dispatch({
-    type: "CART_DETAILS",
-    value: { payload: updatedCartItem }
-  });
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
 };
 
 export const deleteAllProductFromCart = () => dispatch => {
@@ -965,9 +1246,33 @@ export const uploadImage = (body = {}) => async dispatch => {
   }
 };
 
+export const deleteImage = (body = {}) => async dispatch => {
+  try {
+    const response = await httpFetch(getApiEndPoints("deleteImage"), {
+      method: "POST",
+      body: body
+    });
+    if (response) {
+      return response;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const updateSelectedBusinessBanner = (imgUrl) => dispatch => {
+  dispatch({
+    type: "SELECTED_BUSINESS_BANNER",
+    value: { payload: { S: imgUrl } }
+  });
+};
+
 export const headerSearch = (text, category) => async dispatch => {
   try {
- const url = `${getApiEndPoints("headerSearch")}?text=${text}&category=${category}`
+    const url = `${getApiEndPoints("headerSearch")}?text=${text}&category=${category}`
     const response = await httpFetch(url, {
       method: "GET"
     });

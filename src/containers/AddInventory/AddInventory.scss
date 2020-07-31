@@ -1,154 +1,174 @@
 .add-inventory-heading {
-    text-align: left;
-    font-size: 1.75rem;
-    font-weight: 500;
-    letter-spacing: 1.96px;
-    color: #3B3B3B;
-    opacity: 1;
+  text-align: left;
+  font-size: 1.75rem;
+  font-weight: 500;
+  letter-spacing: 1.96px;
+  color: #3b3b3b;
+  opacity: 1;
 }
 
 .add-inventory-container {
-    .AddProduct {
-
-        .width-25 {
-            width: 25%;
-        }
-
-        .width-33 {
-            width: 33%;
-        }
-
-        .width-50 {
-            width: 50%;
-        }
-
-        .width-75 {
-            width: 75%;
-        }
-
-        .width-100 {
-            width: 100%;
-        }
-
-        .addColorButton {
-            background: #558ED4 0% 0% no-repeat padding-box;
-            opacity: 1;
-            letter-spacing: 0px;
-            color: #FFFFFF;
-            opacity: 1;
-            font-weight: 500;
-            font-size: 0.875rem;
-            border: none;
-        }
-
-        .fileUpload-box {
-            height: 9rem;
-            background: transparent radial-gradient(closest-side at 50% 50%, #F9FAFB 0%, #F2F3F4 100%) 0% 0% no-repeat padding-box;
-            box-shadow: 0px 0px 2px #00000029;
-            border: 1px solid #E9EAEB;
-            border-radius: 4px;
-            opacity: 1;
-            text-align: center;
-            vertical-align: middle;
-            line-height: 9rem;
-            margin-bottom: 1rem;
-
-            .add-business {
-                width: 7.6rem;
-                height: 2.25rem;
-                background: #E8EDF3 0% 0% no-repeat padding-box;
-                border-radius: 0.25rem;
-                letter-spacing: 0px;
-                color: #6D6D6D;
-                opacity: 1;
-                font-size: 0.875rem;
-                align-self: center;
-                padding: 1rem;
-
-                .plus-icon {
-                    width: 0.8125rem;
-                    height: 0.8125rem;
-                    margin-right: 0.3rem;
-                    margin-bottom: 0.2rem;
-                }
-            }
-        }
-
-        .hint {
-            letter-spacing: 0.91px;
-            color: #E1AD74;
-            font-size: 0.8125rem;
-        }
-
-        label {
-            display: inline-block;
-            margin-bottom: .5rem;
-            letter-spacing: 0px;
-            color: #333333DE;
-            opacity: 1;
-            font-size: 0.8125rem;
-            font-weight: bold;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-            width: 95%;
-        }
-
-        .buttons {
-            text-align: right;
-
-            .cancelButton {
-                background: #E0E1E2 0% 0% no-repeat padding-box;
-                border-radius: 0.25rem;
-                opacity: 1;
-                width: 5.625rem;
-                height: 2.25rem;
-                letter-spacing: 0px;
-                color: #00000099;
-                opacity: 1;
-                font-weight: bold;
-                font-size: 0.875rem;
-                border: none;
-                margin: 0 0.5rem;
-            }
-
-            .saveAnotherButton {
-                background: #1B1C1D 0% 0% no-repeat padding-box;
-                border-radius: 0.25rem;
-                opacity: 1;
-                letter-spacing: 0px;
-                color: #FFFFFF;
-                opacity: 1;
-                font-weight: bold;
-                font-size: 0.875rem;
-                width: 15rem;
-                height: 2.25rem;
-                border: none;
-                margin: 0 0.5rem;
-            }
-
-            .saveButton {
-                background: #558ED4 0% 0% no-repeat padding-box;
-                border-radius: 0.25rem;
-                opacity: 1;
-                letter-spacing: 0px;
-                color: #FFFFFF;
-                opacity: 1;
-                font-weight: 500;
-                font-size: 0.875rem;
-                width: 8.75rem;
-                height: 2.25rem;
-                border: none;
-                margin: 0 0.5rem;
-            }
-
-        }
+  .AddProduct {
+    .width-25 {
+      width: 25%;
     }
+
+    .width-33 {
+      width: 33%;
+    }
+
+    .width-50 {
+      width: 50%;
+    }
+
+    .width-75 {
+      width: 75%;
+    }
+
+    .width-100 {
+      width: 100%;
+    }
+    .prod-img {
+      position: relative;
+      .prod-thumb {
+        width: 15rem;
+        height: 9rem;
+      }
+    }
+
+    .prod-img .delete-icon {
+        position: absolute;
+        top: 0.1rem;
+        left: 0.1rem;
+        background: #e8edf3 0% 0% no-repeat padding-box;
+        color: #6d6d6d;
+        font-size: 0.875rem;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+
+    .addColorButton {
+      background: #558ed4 0% 0% no-repeat padding-box;
+      opacity: 1;
+      letter-spacing: 0px;
+      color: #ffffff;
+      opacity: 1;
+      font-weight: 500;
+      font-size: 0.875rem;
+      border: none;
+    }
+
+    .fileUpload-box {
+      height: 9rem;
+      background: transparent
+        radial-gradient(closest-side at 50% 50%, #f9fafb 0%, #f2f3f4 100%) 0% 0%
+        no-repeat padding-box;
+      box-shadow: 0px 0px 2px #00000029;
+      border: 1px solid #e9eaeb;
+      border-radius: 4px;
+      opacity: 1;
+      text-align: center;
+      vertical-align: middle;
+      line-height: 9rem;
+      margin-bottom: 1rem;
+
+      .add-business {
+        width: 7.6rem;
+        height: 2.25rem;
+        background: #e8edf3 0% 0% no-repeat padding-box;
+        border-radius: 0.25rem;
+        letter-spacing: 0px;
+        color: #6d6d6d;
+        opacity: 1;
+        font-size: 0.875rem;
+        align-self: center;
+        padding: 1rem;
+
+        .plus-icon {
+          width: 0.8125rem;
+          height: 0.8125rem;
+          margin-right: 0.3rem;
+          margin-bottom: 0.2rem;
+        }
+      }
+    }
+
+    .hint {
+      letter-spacing: 0.91px;
+      color: #e1ad74;
+      font-size: 0.8125rem;
+    }
+
+    label {
+      display: inline-block;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0px;
+      color: #333333de;
+      opacity: 1;
+      font-size: 0.8125rem;
+      font-weight: bold;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+      width: 95%;
+    }
+
+    .buttons {
+      text-align: right;
+
+      .cancelButton {
+        background: #e0e1e2 0% 0% no-repeat padding-box;
+        border-radius: 0.25rem;
+        opacity: 1;
+        width: 5.625rem;
+        height: 2.25rem;
+        letter-spacing: 0px;
+        color: #00000099;
+        opacity: 1;
+        font-weight: bold;
+        font-size: 0.875rem;
+        border: none;
+        margin: 0 0.5rem;
+      }
+
+      .saveAnotherButton {
+        background: #1b1c1d 0% 0% no-repeat padding-box;
+        border-radius: 0.25rem;
+        opacity: 1;
+        letter-spacing: 0px;
+        color: #ffffff;
+        opacity: 1;
+        font-weight: bold;
+        font-size: 0.875rem;
+        width: 15rem;
+        height: 2.25rem;
+        border: none;
+        margin: 0 0.5rem;
+      }
+
+      .saveButton {
+        background: #558ed4 0% 0% no-repeat padding-box;
+        border-radius: 0.25rem;
+        opacity: 1;
+        letter-spacing: 0px;
+        color: #ffffff;
+        opacity: 1;
+        font-weight: 500;
+        font-size: 0.875rem;
+        width: 8.75rem;
+        height: 2.25rem;
+        border: none;
+        margin: 0 0.5rem;
+      }
+    }
+  }
 }
 
 .add-inventory-container {
-    display: flex;
-    flex-direction: column;
-    padding: 2rem 4rem 2rem 0rem;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 4rem 2rem 0rem;
 }

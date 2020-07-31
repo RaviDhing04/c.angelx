@@ -13,7 +13,7 @@ import Logout from "./containers/Logout/Logout";
 import ForgotPassword from "./containers/ForgotPassword/ForgotPassword";
 
 const App = () => {
-  const userId = "1588433471165"; // to be update from login info later
+  const userId = JSON.parse(localStorage.getItem('userData')).UserId; // to be update from login info later
 
   const location = useLocation();
   var url = window.location.pathname;
@@ -21,12 +21,18 @@ const App = () => {
     localStorage.setItem("prevPath", url);
   }, [location]);
 
-  
+  React.useEffect(() => {
+    localStorage.setItem('shippingAddress', null);
+    localStorage.setItem('billingAddress', null);
+    localStorage.setItem('orderType', null);
+  }, []);
+
+
 
   return (
     <Container fluid className="app-container">
       <AuthContext.Provider value={(localStorage.getItem('token') && JSON.parse(localStorage.getItem('userData'))) ? true : false}>
-      <Header userId={userId} />
+        <Header userId={userId} />
         <Switch>
           <Route
             exact

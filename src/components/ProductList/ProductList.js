@@ -11,7 +11,8 @@ const ProductList = props => {
     data: { Items },
     name,
     activeCurrency,
-    addProductToCart
+    addProductToCart,
+    addToWishlist
   } = props;
   const isAuthenticated = useAuth();
   return (
@@ -28,6 +29,7 @@ const ProductList = props => {
                       data={item}
                       activeCurrency={activeCurrency}
                       addProductToCart={addProductToCart}
+                      addToWishlist={addToWishlist}
                     />
                   </div>
                 ) : null;
@@ -44,7 +46,7 @@ const ProductList = props => {
               Items.slice(5).map((item, index) => {
                 return index < 5 ? (
                   <div key={item.ProductId.S}>
-                    <Product data={item} activeCurrency={activeCurrency} />
+                    <Product data={item} activeCurrency={activeCurrency} addProductToCart={addProductToCart} addToWishlist={addToWishlist} />
                   </div>
                 ) : null;
               })}

@@ -3,28 +3,28 @@ import { connect } from "react-redux";
 import { Container, Form, Button, Col } from "react-bootstrap";
 import { bindActionCreators } from "redux";
 import {
-  getSavedContacts,
+  getSavedEmployees,
   searchContactWithEmail,
   resetSearchedContact,
-  addNewContact,
-  deleteContact
+  addNewEmployee,
+  deleteEmployee
 } from "../../store/actions";
-import "./AddContacts.scss";
+import "./AddEmployees.scss";
 import TableComp from "../../components/TableComp/TableComp";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 
 const AddContacts = props => {
   const [loading, setLoading] = useState(true);
   const [pageName, setName] = useState("");
-  const { userId, name } = props.match.params;
+  const { name, merchantId } = props.match.params;
   const {
     contacts,
-    getSavedContacts,
+    getSavedEmployees,
     searchContactWithEmail,
     searchedContact,
     resetSearchedContact,
-    addNewContact,
-    deleteContact
+    addNewEmployee,
+    deleteEmployee
   } = props;
   const tableHeader = ["Email", "Name", "Phone Number"];
   const tableKeys = ["email", "name", "phone_number"];
@@ -32,8 +32,8 @@ const AddContacts = props => {
   useEffect(() => {
     async function fetchSavedContacts() {
       name ? setName(name) : setName("");
-      const res = await getSavedContacts({
-        "UserEmailId": JSON.parse(localStorage.getItem('userData')).email
+      const res = await getSavedEmployees({
+        "MerchantId": "1589855354787"
       });
       res
         ? setLoading(false)
@@ -64,15 +64,13 @@ const AddContacts = props => {
   const addContactToList = async event => {
     event.preventDefault();
     setLoading(true);
-    const res = await addNewContact({
-      UserId: userId,
-      UserEmailId: JSON.parse(localStorage.getItem('userData')).email,
-      ContactUserId: searchedContact && searchedContact.UserId,
-      ContactEmailId: searchedContact && searchedContact.email,
+    const res = await addNewEmployee({
+      "MerchantId": merchantId,
+      "Employees": [searchedContact && searchedContact.email]
     });
     if (res) {
-      const res = await getSavedContacts({
-        "UserEmailId": JSON.parse(localStorage.getItem('userData')).email
+      const res = await getSavedEmployees({
+        "MerchantId": "1589855354787"
       });
       res
         ? setLoading(false)
@@ -85,13 +83,14 @@ const AddContacts = props => {
 
   const deleteRow = async row => {
     setLoading(true);
-    const res = await deleteContact({
-      UserEmailId: JSON.parse(localStorage.getItem('userData')).email,
-      ContactEmailId: row && row.email
-    });
+    const res = await deleteEmployee(
+      {
+        "MerchantId": merchantId,
+        "Employees": [row && row.email]
+      });
     if (res) {
-      const res = await getSavedContacts({
-        "UserEmailId": JSON.parse(localStorage.getItem('userData')).email
+      const res = await getSavedEmployees({
+        "MerchantId": "1589855354787"
       });
       res
         ? setLoading(false)
@@ -206,11 +205,11 @@ const AddContacts = props => {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getSavedContacts,
+      getSavedEmployees,
       searchContactWithEmail,
       resetSearchedContact,
-      addNewContact,
-      deleteContact
+      addNewEmployee,
+      deleteEmployee
     },
     dispatch
   );

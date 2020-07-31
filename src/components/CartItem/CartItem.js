@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Jumbotron } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import "./CartItem.scss";
 import plusIcon from "../../assets/plus.svg";
 import minusIcon from "../../assets/minus.svg";
@@ -9,45 +9,63 @@ import formatter from "../../utils/commonUtils/currencyUtils";
 
 const CartItem = props => {
   const {
-    ThumbnailImageURL,
-    Name,
-    MerchantHandle,
-    IsInStock,
-    ProductSpecifications,
-    Quantity,
-    IsDonationCampaign,
-    ProductId
+    productData: { ThumbnailImageURL,
+      Name,
+      MerchantHandle,
+      MerchantId,
+      IsInStock,
+      IsDonationCampaign,
+    },
+    couponData,
+    productId,
+    productTimestamp,
+    qty,
+    price,
+    discountedPrice
   } = props.cartItem;
   return (
     <React.Fragment>
       {/* <Jumbotron fluid> */}
       <Container className="item-wrapper">
-        <img className="item-image" alt="item" src={ThumbnailImageURL.S}></img>
+        <img className="item-image" alt="item" src={ThumbnailImageURL}></img>
         <div className="item-detail">
-          <span className="item-name">{Name.S}</span>
-          <span className="merchant-name">{MerchantHandle.S}</span>
-          <span className={IsInStock.S === "true" ? "in-stock stock-info" : "out-of-stock stock-info"}>
-            {IsInStock.S === "true" ? "In Stock" : "Out Of Stock"}
+          <span className="item-name">{Name}</span>
+          <span className="merchant-name">{MerchantHandle}</span>
+          <span className={IsInStock === "true" ? "in-stock stock-info" : "out-of-stock stock-info"}>
+            {IsInStock === "true" ? "In Stock" : "Out Of Stock"}
           </span>
         </div>
         <div className="item-pricing">
           <span className="item-price">
-            {formatter(props.activeCurrency)(ProductSpecifications.M.UnitPrice.S)}
+            {formatter(props.activeCurrency)(price)}
           </span>
           <span className="item-cutPrice">
-            {formatter(props.activeCurrency)(ProductSpecifications.M.UnitPrice.S)}
+            {formatter(props.activeCurrency)(discountedPrice)}
           </span>
         </div>
         <div className="item-quantity">
-          <img  onClick={() => props.decreaseProductQuantity(ProductId.S)} className="minus-icon" alt="minus-icon" src={minusIcon}></img>
-          <span className="item-count">{Quantity.S}</span>
-          <img onClick={() => props.increaseProductQuantity(ProductId.S)} className="plus-icon"alt="plus-icon" src={plusIcon}></img>
+          <img onClick={() => props.decreaseProductQuantity({
+            "ProductId": productId,
+            "ProductTimestamp": productTimestamp,
+            "Quantity": (+qty - 1).toString(),
+            "CouponCode": couponData && couponData.CouponCode ? couponData.CouponCode : "null",
+            "MerchantId": MerchantId
+          })} className="minus-icon" alt="minus-icon" src={minusIcon}></img>
+          <span className="item-count">{qty}</span>
+          <img onClick={() => props.increaseProductQuantity({
+            "ProductId": productId,
+            "ProductTimestamp": productTimestamp,
+            "Quantity": (+qty + 1).toString(),
+            "CouponCode": couponData && couponData.CouponCode ? couponData.CouponCode : "null",
+            "MerchantId": MerchantId
+          })} className="plus-icon" alt="plus-icon" src={plusIcon}></img>
         </div>
         <div className="item-actions">
-          <img className="heart-icon" alt="heart-icon" src={heartIcon}></img>
-          <img  onClick={() => props.deleteProductFromCart(ProductId.S)} className="delete-icon" alt="delete-icon" src={deleteIcon}></img>
+          <img onClick={() => { props.addToWishlist({ "ProductId": productId, "UserId": JSON.parse(localStorage.getItem('userData')).UserId }) }} className="heart-icon" alt="heart-icon" src={heartIcon}></img>
+          <img onClick={() => props.deleteProductFromCart({
+            "ProductId": productId,
+          })} className="delete-icon" alt="delete-icon" src={deleteIcon}></img>
         </div>
-        {console.log(props.cartItem)}
       </Container>
       {/* </Jumbotron> */}
     </React.Fragment>

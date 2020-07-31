@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { Container, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import {
   getCartItems,
-  increaseProductQuantity,
-  decreaseProductQuantity,
   deleteProductFromCart,
-  deleteAllProductFromCart
+  deleteAllProductFromCart,
+  addProductToCart,
+  addToWishlist
 } from "../../store/actions";
 import "./Cart.scss";
 import CartItem from "../../components/CartItem/CartItem";
@@ -19,48 +20,78 @@ import formatter from "../../utils/commonUtils/currencyUtils";
 const Cart = props => {
   const [loading, setLoading] = useState(true);
   const [isCartEmpty, setEmptyCart] = useState(false);
+  const [userData, setUserData] = useState(null);
   const [subTotal, setSubTotal] = useState(0);
   const [saving, setSaving] = useState(0);
   const [couponSaving, setCouponSaving] = useState(0);
   const { cartItems, activeCurrency } = props;
+  const history = useHistory();
 
   useEffect(() => {
     async function fetchCartItems() {
-      const userId = props.match.params.userId;
-      const res = await props.getCartItems({ UserId: userId });
-      res ? setLoading(false) : (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
+      setUserData(JSON.parse(localStorage.getItem('userData')));
+      const res = await props.getCartItems();
+      res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
     }
     fetchCartItems();
   }, []);
 
   useEffect(() => {
-    const calculate = () => {
-      const out = [0,0];
-      cartItems.forEach(item => {
-        out[0] += (+item.ProductSpecifications.M.UnitPrice.S * +item.Quantity.S);
-        out[1] += (+item.ProductSpecifications.M.UnitPrice.S * +item.Quantity.S);
-      });
-      return out;
-    };
-    cartItems && cartItems.length ? setEmptyCart(false) : setEmptyCart(true);
-    const calculated = calculate();
-    setSubTotal(calculated[0]);
-    setSaving(calculated[1]);
+    cartItems && cartItems.cartDetails && cartItems.cartDetails.length ? setEmptyCart(false) : setEmptyCart(true);
   }, [cartItems]);
 
-  const increaseProductQuantity = productId => {
-    props.increaseProductQuantity(productId);
+  const increaseProductQuantity = async payload => {
+    setLoading(true);
+    const res = await props.addProductToCart(payload);
+    if (res) {
+      const resp = await props.getCartItems();
+      resp ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
+    } else {
+      setLoading(false); (alert('something went wrong, Please try again!'))
+    }
   };
 
-  const decreaseProductQuantity = productId => {
-    props.decreaseProductQuantity(productId);
+  const decreaseProductQuantity = async payload => {
+    setLoading(true);
+    const res = await props.addProductToCart(payload);
+    if (res) {
+      const resp = await props.getCartItems();
+      resp ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
+    } else {
+      setLoading(false); (alert('something went wrong, Please try again!'))
+    }
   };
 
-  const deleteProductFromCart = productId => {
-    productId === "all"
+  const deleteProductFromCart = async payload => {
+    setLoading(true);
+    const res = payload === "all"
       ? props.deleteAllProductFromCart()
-      : props.deleteProductFromCart(productId);
+      : await props.deleteProductFromCart(payload);
+    if (res) {
+      const resp = await props.getCartItems();
+      resp ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
+    } else {
+      setLoading(false); (alert('something went wrong, Please try again!'))
+    }
   };
+
+  const redirectToCheckout = () => {
+    const MerchantId = cartItems.cartDetails[0].productData.MerchantId;
+    let fail = 0;
+    cartItems.cartDetails.forEach((item, index) => {
+      if (MerchantId !== item.productData.MerchantId) {
+        alert("You can select Products from single Merchant. Please remove/Wishlist products.");
+        fail = 1;
+      }
+    });
+    if (!fail) {
+      return history.push(`/checkout/shipping/${userData.UserId}/${'Shipping'}`);
+    }
+  }
+
+  const addProductToWish = async (payload) => {
+    const res = await props.addToWishlist(payload);
+  }
 
   return !loading ? (
     <Container className="cart-page-container" fluid>
@@ -72,76 +103,79 @@ const Cart = props => {
           </Nav.Link>
         </div>
       ) : (
-        <div className="cart-page">
-          <div className="left-section">
-            <div className="cart-header">
-              <span className="heading">Your Cart</span>
-              <span
-                onClick={() => deleteProductFromCart("all")}
-                className="remove-all"
-              >
-                <img alt="delete-icon" src={deleteIcon}></img>
+          <div className="cart-page">
+            <div className="left-section">
+              <div className="cart-header">
+                <span className="heading">Your Cart</span>
+                <span
+                  onClick={() => deleteProductFromCart("all")}
+                  className="remove-all"
+                >
+                  <img alt="delete-icon" src={deleteIcon}></img>
                 Remove all items
               </span>
+              </div>
+              {cartItems.cartDetails.map(cartItem => {
+                return (
+                  cartItem && (
+                    <CartItem
+                      key={+cartItem.ProductId}
+                      cartItem={cartItem}
+                      decreaseProductQuantity={decreaseProductQuantity}
+                      increaseProductQuantity={increaseProductQuantity}
+                      deleteProductFromCart={deleteProductFromCart}
+                      addToWishlist={addProductToWish}
+                      activeCurrency={activeCurrency}
+                    />
+                  )
+                );
+              })}
             </div>
-            {cartItems.map(cartItem => {
-              return (
-                cartItem && (
-                  <CartItem
-                    key={+cartItem.ProductId.S}
-                    cartItem={cartItem}
-                    decreaseProductQuantity={decreaseProductQuantity}
-                    increaseProductQuantity={increaseProductQuantity}
-                    deleteProductFromCart={deleteProductFromCart}
-                    activeCurrency={activeCurrency}
-                  />
-                )
-              );
-            })}
-          </div>
-          <div className="right-section">
-            <div className="cart-calc">
-              <div className="promo-code">
+            <div className="right-section">
+              <div className="cart-calc">
+                {/* <div className="promo-code">
                 <label>Promo Code</label>
                 <input type="text" placeholder="Enter Code"></input>
-              </div>
-              <div className="sub-total">
-                <span>Items Subtotal</span>
-                <span> {formatter(activeCurrency)(subTotal)} </span>
-              </div>
-              <div className="coupon">
+              </div> */}
+                <div className="sub-total">
+                  <span>Items Subtotal</span>
+                  <span> {formatter(activeCurrency)(cartItems.totalUndiscountedAmount)} </span>
+                </div>
+                {/* <div className="coupon">
                 <span>Coupon</span>
                 <span> { formatter(activeCurrency)(couponSaving) } </span>
+              </div> */}
+                <div className="saving">
+                  <span>Your saving</span>
+                  <span> {formatter(activeCurrency)(cartItems.totalUndiscountedAmount - cartItems.totalDiscountedAmount)} </span>
+                </div>
+                <div className="line"></div>
+                <div className="total">
+                  <span>Total</span>
+                  <span> {formatter(activeCurrency)(cartItems.totalDiscountedAmount)} </span>
+                </div>
+                <button onClick={redirectToCheckout} className="checkout">
+                  Proceed to checkout
+                </button>
               </div>
-              <div className="saving">
-                <span>Your saving</span>
-                <span> {formatter(activeCurrency)(saving)} </span>
-              </div>
-              <div className="line"></div>
-              <div className="total">
-                <span>Total</span>
-                <span> {formatter(activeCurrency)(subTotal - saving - couponSaving)} </span>
-              </div>
-              <button className="checkout">Proceed to checkout</button>
+              <Nav.Link as={Link} className="continue-shopping" to={"/"}>Continue shopping</Nav.Link>
             </div>
-            <div className="continue-shopping">Continue shopping</div>
           </div>
-        </div>
-      )}
+        )}
     </Container>
   ) : (
-    <CustomLoader />
-  );
+      <CustomLoader />
+    );
 };
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getCartItems,
-      increaseProductQuantity,
-      decreaseProductQuantity,
+      addProductToCart,
       deleteProductFromCart,
-      deleteAllProductFromCart
+      deleteAllProductFromCart,
+      addToWishlist
     },
     dispatch
   );

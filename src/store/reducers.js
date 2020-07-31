@@ -1,6 +1,9 @@
 const initialState = {
   homePage: {
     latestProducts: {},
+    sponsoredProducts: {},
+    trendingProducts: {},
+    wishlistProducts: {},
     followedMerchants: [],
     searchCategories: []
   },
@@ -13,7 +16,7 @@ const initialState = {
     selectedProductId: ""
   },
   cartDetailsPage: {
-    cartItems: []
+    cartItems: {}
   },
   contactPage: {
     contacts: [],
@@ -48,6 +51,30 @@ export const appReducer = (state = initialState, { type, value }) => {
         homePage: {
           ...state.homePage,
           latestProducts: value.payload
+        }
+      };
+    case "SPONSORED_PRODUCTS":
+      return {
+        ...state,
+        homePage: {
+          ...state.homePage,
+          sponsoredProducts: value.payload
+        }
+      };
+    case "TRENDING_PRODUCTS":
+      return {
+        ...state,
+        homePage: {
+          ...state.homePage,
+          trendingProducts: value.payload
+        }
+      };
+    case "WISHLIST_PRODUCTS":
+      return {
+        ...state,
+        homePage: {
+          ...state.homePage,
+          wishlistProducts: value.payload
         }
       };
     case "SEARCH_CATEGORIES":
@@ -92,6 +119,17 @@ export const appReducer = (state = initialState, { type, value }) => {
         manageBusiness: {
           ...state.manageBusiness,
           selectedBusiness: value.payload
+        }
+      };
+    case "SELECTED_BUSINESS_BANNER":
+      return {
+        ...state,
+        manageBusiness: {
+          ...state.manageBusiness,
+          selectedBusiness: {
+            ...state.manageBusiness.selectedBusiness,
+            BannerImageURL: value.payload
+          }
         }
       };
     case "MERCHANT_ALL_PRODUCTS":

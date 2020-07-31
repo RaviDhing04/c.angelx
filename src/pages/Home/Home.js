@@ -21,7 +21,7 @@ const Home = props => {
     const fetchData = async () => {
       !followedMerchants.length &&
         props.getFollowedMerchants({
-          PatronId: "1588433471165"
+          PatronId: JSON.parse(localStorage.getItem('userData')).UserId
         });
       setBanners(await props.getDashboardBanners());
     };

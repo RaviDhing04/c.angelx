@@ -11,13 +11,20 @@ export const userLeftNavLinks = [
 export const merchantLeftNavLinks = [
   { name: "Inventory", path: "/merchantHome/inventory/", icon: "inventory" },
   { name: "Campaigns", path: "/merchantHome/campaigns/", icon: "donate" },
-  { name: "Coupons", path: "/merchantHome/coupons/", icon: "coupon" }
+  { name: "Coupons", path: "/merchantHome/coupons/", icon: "coupon" },
+  { name: "Add Employees", path: "/merchantHome/myEmployees/", icon: "profile" }
 ];
 
 export const profileLeftNavLinks = [
   { name: "Edit Personal Details", path: "/profile/edit/", icon: "profile" },
   { name: "Manage Addresses", path: "/profile/addresses/", icon: "location" },
   { name: "Payment Options", path: "/profile/payment/", icon: "credit-card" }
+];
+
+export const checkoutLeftNavLinks = [
+  { name: "Shipping Address", path: "/checkout/shipping/", icon: "location" },
+  { name: "Billing Address", path: "/checkout/billing/", icon: "credit-card" },
+  { name: "Confirm Order", path: "/checkout/confirm/", icon: "location" }
 ];
 
 export const merchantList = [
@@ -32,13 +39,13 @@ export const merchantList = [
 
 export const footerLinks = [
   [
-    { name: "About Us", path: "/" },
-    { name: "Support", path: "/" },
-    { name: "Corporate Info", path: "/" },
-    { name: "User Guide", path: "/" },
-    { name: "Technical Support", path: "/" },
-    { name: "Term & Conditions", path: "/" },
-    { name: "Privacy Policy", path: "/" }
+    { name: "About Us", path: "/aboutUs" },
+    { name: "Support", path: "/support" },
+    { name: "Corporate Info", path: "/aboutUs" },
+    { name: "User Guide", path: "/aboutUs" },
+    { name: "Technical Support", path: "/support" },
+    { name: "Term & Conditions", path: "/aboutUs" },
+    { name: "Privacy Policy", path: "/aboutUs" }
   ],
   [
     { name: "Sponsored", path: "/" },
@@ -47,7 +54,7 @@ export const footerLinks = [
     { name: "Advertisements", path: "/" }
   ],
   [
-    { name: "My Profile", path: "/" },
+    { name: "My Profile", path: "/profile/edit/" },
     { name: "My Cart", path: "/" },
     { name: "My Whishlist", path: "/" },
     { name: "My Orders", path: "/" },
@@ -67,9 +74,9 @@ export const socialSharing = [
 ];
 
 export const currencies = [
-  { name: "South African Rand", shortName: "ZAR", icon: "rand", conversion: 4.31 },
-  { name: "US Dollar", shortName: "USD", icon: "dollar", conversion: 70 },
-  { name: "Rupee", shortName: "INR", icon: "rupee-indian", conversion: 1 }
+  { name: "South African Rand", shortName: "ZAR", icon: "rand", conversion: 1 },
+  { name: "US Dollar", shortName: "USD", icon: "dollar", conversion: 0.061 },
+  { name: "Rupee", shortName: "INR", icon: "rupee-indian", conversion: 4.54 }
 ];
 
 export const profileOptions = [
@@ -138,13 +145,17 @@ export const supportGrid = [
 
 
 export const getNotifications = () => {
-  return [1,2,3,4,5,6,7,8];
+  return [1, 2, 3, 4, 5, 6, 7, 8];
 }
 
 export const registerFormFields = ["BusinessType", "BusinessContact", "Country", "BusinessEmail", "BusinessHandle", "OrgName", "OrgWebsite", "PaypalId", "PayFastId", "AddressType", "City", "Pincode", "Province", "StreetName", "StreetNumber", "Suburb"];
 
-export const addProductFormFields = ["ProductName", "ProductCategory", "UnitPrice", "AvailableQuantity", "Currency", "ProductDescription"];
+export const addProductFormFields = ["ProductName", "ProductCategory", "UnitPrice", "AvailableQuantity", "Currency", "Height", "Width", "Length", "Weight", "ProductDescription"];
 
 export const addCampaignFormFields = ["ProductName", "ProductCategory", "Currency", "ProductDescription", "MinDonation", "TargetDonationAmount"];
 
 export const addCouponFormFields = ["CouponCode", "Discount", "Currency", "MaxDiscountAmount", "CouponActiveFrom", "CouponExpiryDate", "CouponDescription"];
+
+export const shippingAddressFormFields = ["Country", "AddressType", "City", "ZipCode", "Province", "StreetName", "StreetNumber", "Suburb"];
+
+export const billingAddressFormFields = ["Country", "AddressType", "City", "ZipCode", "Province", "StreetName", "StreetNumber", "Suburb"];

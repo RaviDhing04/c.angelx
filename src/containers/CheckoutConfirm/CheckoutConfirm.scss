@@ -7,22 +7,24 @@
   opacity: 1;
 }
 
-.saved-address-heading {
-  margin-top: 4rem;
-  border-top: 1px solid #c6ccc8;
-  opacity: 1;
-  padding-top: 2rem;
+.selected-billing-heading {
   text-align: left;
-  font-size: 1.75rem;
+  font-size: 1.3rem;
   font-weight: 500;
   letter-spacing: 1.96px;
   color: #3b3b3b;
   opacity: 1;
+  margin-top: 3rem;
 }
+
+.width-25 {
+  width: 25%;
+}
+
 .form-control:disabled {
   background-color: #ffffff;
 }
-.checkout-billing-container {
+.Confirm-container {
   .checkout-billing {
     .sub-heading {
       letter-spacing: 1.96px;
@@ -82,54 +84,24 @@
       color: #e1ad74;
       font-size: 0.8125rem;
     }
+  }
 
-    .buttons {
-      text-align: right;
+  .buttons {
+    margin-top: 2rem;
 
-      .cancelButton {
-        background: #e0e1e2 0% 0% no-repeat padding-box;
-        border-radius: 0.25rem;
-        opacity: 1;
-        width: 5.625rem;
-        height: 2.25rem;
-        letter-spacing: 0px;
-        color: #00000099;
-        opacity: 1;
-        font-weight: bold;
-        font-size: 0.875rem;
-        border: none;
-        margin: 0 0.5rem;
-      }
-
-      .saveAnotherButton {
-        background: #1b1c1d 0% 0% no-repeat padding-box;
-        border-radius: 0.25rem;
-        opacity: 1;
-        letter-spacing: 0px;
-        color: #ffffff;
-        opacity: 1;
-        font-weight: bold;
-        font-size: 0.875rem;
-        width: 15rem;
-        height: 2.25rem;
-        border: none;
-        margin: 0 0.5rem;
-      }
-
-      .saveButton {
-        background: #558ed4 0% 0% no-repeat padding-box;
-        border-radius: 0.25rem;
-        opacity: 1;
-        letter-spacing: 0px;
-        color: #ffffff;
-        opacity: 1;
-        font-weight: 500;
-        font-size: 0.875rem;
-        width: 8.75rem;
-        height: 2.25rem;
-        border: none;
-        margin: 0 0.5rem;
-      }
+    .saveButton {
+      background: #558ed4 0% 0% no-repeat padding-box;
+      border-radius: 0.25rem;
+      opacity: 1;
+      letter-spacing: 0px;
+      color: #ffffff;
+      opacity: 1;
+      font-weight: 500;
+      font-size: 0.875rem;
+      width: 8.75rem;
+      height: 2.25rem;
+      border: none;
+      margin: 0 0.5rem;
     }
   }
 
@@ -193,4 +165,11 @@
   display: flex;
   flex-direction: column;
   padding: 2rem 4rem 2rem 0rem;
+}
+.shipper {
+  margin-top: 1rem;
+}
+
+.text{
+    font-size: 1.3rem;
 }

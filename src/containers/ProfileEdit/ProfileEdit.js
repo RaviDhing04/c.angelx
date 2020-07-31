@@ -18,7 +18,6 @@ const ProfileEdit = props => {
   const { userId } = props.match.params;
   const {
     contacts,
-    getSavedContacts,
     searchContactWithEmail,
     searchedContact,
     resetSearchedContact,

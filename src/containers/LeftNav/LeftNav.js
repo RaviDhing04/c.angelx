@@ -6,7 +6,7 @@ import checkmark from "../../assets/checkmark.svg";
 
 const LeftNav = props => {
   const { links, merchants, merchantId } = props;
-  const userId = "1588433471165"; // to be update from login info later
+  const userId = JSON.parse(localStorage.getItem('userData')).UserId;
 
   return (
     <div className="leftNav">

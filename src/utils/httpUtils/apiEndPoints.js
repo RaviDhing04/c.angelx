@@ -4,6 +4,12 @@ const getApiEndPoints = val => {
   switch (val) {
     case "LatestProductsWithPagination":
       return baseUrl + "products/getlatestproducts";
+    case "SponsoredProductsWithPagination":
+      return baseUrl + "products/getsponsoredproducts";
+    case "TrendingProductsWithPagination":
+      return baseUrl + "products/getsponsoredproducts";
+    case "WishlistProductsWithPagination":
+      return baseUrl + "products/getsponsoredproducts";
     case "SelectedProductDetails":
       return baseUrl + "products/getproductdetails";
     case "CartItems":
@@ -17,13 +23,19 @@ const getApiEndPoints = val => {
     case "AllBusiness":
       return baseUrl + "business/getbusinessdetails";
     case "SavedContacts":
-      return baseUrl + "users/getcontacts";
+      return baseUrl + "users/getallcontacts";
+    case "SavedEmployees":
+      return baseUrl + "business/getemployeelist";
     case "ContactWithEmail":
       return baseUrl + "users/getcontactdetails";
     case "addNewContact":
       return baseUrl + "users/addcontact";
+    case "addNewEmployee":
+      return baseUrl + "business/addemployee";
     case "deleteContact":
       return baseUrl + "users/deletecontact";
+    case "deleteEmployee":
+      return baseUrl + "business/deleteemployee";
     case "deleteProduct":
       return baseUrl + "products/deleteproduct";
     case "deleteCoupon":
@@ -68,6 +80,26 @@ const getApiEndPoints = val => {
       return baseUrl + "products/search";
     case "uploadImage":
       return baseUrl + "images/upload";
+    case "deleteImage":
+      return baseUrl + "images/delete";
+    case "deleteProductFromCart":
+      return baseUrl + "cart/deleteitem";
+    case "getAllShippingAddress":
+      return baseUrl + "users/addresses/shipping/getalladdresses?limit=10";
+    case "addNewShippingAddress":
+      return baseUrl + "users/addresses/shipping/addaddress";
+    case "updateShippingAddress":
+      return baseUrl + "users/addresses/shipping/updateaddress/";
+    case "getAllBillingAddress":
+      return baseUrl + "users/addresses/billing/getalladdresses?limit=10";
+    case "addNewBillingAddress":
+      return baseUrl + "users/addresses/billing/addaddress";
+    case "updateBillingAddress":
+      return baseUrl + "users/addresses/billing/updateaddress/";
+    case "checkout":
+      return baseUrl + "cart/checkout";
+    case "addToWishlist":
+      return baseUrl + "wishlist/addtowishlist";
     default:
       return "/";
   }

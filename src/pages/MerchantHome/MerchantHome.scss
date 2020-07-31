@@ -1,89 +1,128 @@
 .merchantHome-container {
-    width: calc(100% - 16rem);
-    margin: 0 auto;
+  width: calc(100% - 16rem);
+  margin: 0 auto;
 
-    .cover-img {
-        width: 100%;
+  .cover-img {
+    width: 100%;
+    position: relative;
+    height: 24rem;
+    background: #d0d0d0;
+  }
+  .cover-img img {
+    width: 100%;
+    height: 24rem;
+  }
+  .cover-img .btn-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background: #e8edf3 0% 0% no-repeat padding-box;
+    color: #6d6d6d;
+    font-size: 0.875rem;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 9rem;
+    height: 3rem;
+    font-weight: bold;
+  }
+
+  .cover-img .btn {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: #e8edf3 0% 0% no-repeat padding-box;
+    color: #6d6d6d;
+    font-size: 0.875rem;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 9rem;
+    height: 3rem;
+    font-weight: bold;
+  }
+
+  .img-err {
+    margin-top: 3px;
+
+    img {
+      width: 1.5rem;
+      height: 1.5rem;
     }
 
-    .img-err {
-        margin-top: 3px;
+    span {
+      letter-spacing: 0.98px;
+      color: #6d6d6d;
+      opacity: 1;
+      font-size: 0.875rem;
+    }
+  }
 
-        img {
-            width: 1.5rem;
-            height: 1.5rem;
-        }
+  .merchant-info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    align-items: center;
 
-        span {
-            letter-spacing: 0.98px;
-            color: #6D6D6D;
-            opacity: 1;
-            font-size: 0.875rem;
-        }
+    .merchant-detail {
+      display: flex;
+      flex-direction: column;
+
+      .merchant-name {
+        letter-spacing: 2.66px;
+        color: #3b3b3b;
+        opacity: 1;
+        font-size: 2.375rem;
+      }
+
+      .merchant-contact {
+        letter-spacing: 0.72px;
+        opacity: 1;
+        font-size: 1.125rem;
+      }
+    }
+  }
+
+  .user-action {
+    .user-terms {
+      letter-spacing: 0px;
+      color: #558ed4;
+      opacity: 1;
+      font-size: 1rem;
     }
 
-    .merchant-info {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 1rem;
-        align-items: center;
+    .unfollow {
+      text-align: center;
+      letter-spacing: 0px;
+      color: #ffffff;
+      opacity: 1;
+      font-size: 0.875rem;
+      font-weight: 500;
+      background: #558ed4 0% 0% no-repeat padding-box;
+      border-radius: 4px;
+      opacity: 1;
+      width: 7.6rem;
+      margin-left: 1rem;
+    }
+  }
 
-        .merchant-detail {
-            display: flex;
-            flex-direction: column;
+  .merchantHome-body {
+    display: flex;
+    padding: 4rem 0;
 
-            .merchant-name {
-                letter-spacing: 2.66px;
-                color: #3B3B3B;
-                opacity: 1;
-                font-size: 2.375rem;
-            }
-
-            .merchant-contact {
-                letter-spacing: 0.72px;
-                opacity: 1;
-                font-size: 1.125rem;
-            }
-        }
-
+    .left-section {
+      width: 25rem;
+      padding-right: 2rem;
+      // min-width: 25rem;
     }
 
-    .user-action {
-        .user-terms {
-            letter-spacing: 0px;
-            color: #558ED4;
-            opacity: 1;
-            font-size: 1rem;
-        }
-
-        .unfollow {
-            text-align: center;
-            letter-spacing: 0px;
-            color: #FFFFFF;
-            opacity: 1;
-            font-size: 0.875rem;
-            font-weight: 500;
-            background: #558ED4 0% 0% no-repeat padding-box;
-            border-radius: 4px;
-            opacity: 1;
-            width: 7.6rem;
-            margin-left: 1rem;
-        }
+    .right-section {
+      width: 80%;
+      padding-left: 1.5rem;
     }
-
-    .merchantHome-body {
-        display: flex;
-        padding: 4rem 0;
-
-        .left-section {
-            width: 25rem;
-            padding-right: 2rem;
-            // min-width: 25rem;
-        }
-
-        .right-section {
-            width: 80%;
-            padding-left: 1.5rem;
-        }
-    }
+  }
 }

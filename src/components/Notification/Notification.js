@@ -12,7 +12,7 @@ const Notification = () => {
   useEffect(() => {
     async function fetchData() {
       const res = await getNotifications();
-      debugger;
+      ;
       if (res) {
         setLoading(false);
         setNotifications(res);

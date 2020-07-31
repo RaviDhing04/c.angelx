@@ -1,0 +1,89 @@
+.Checkout-container {
+    width: calc(100% - 16rem);
+    margin: 0 auto;
+
+    .cover-img {
+        width: 100%;
+    }
+
+    .img-err {
+        margin-top: 3px;
+
+        img {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+
+        span {
+            letter-spacing: 0.98px;
+            color: #6D6D6D;
+            opacity: 1;
+            font-size: 0.875rem;
+        }
+    }
+
+    .merchant-info {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1rem;
+        align-items: center;
+
+        .merchant-detail {
+            display: flex;
+            flex-direction: column;
+
+            .merchant-name {
+                letter-spacing: 2.66px;
+                color: #3B3B3B;
+                opacity: 1;
+                font-size: 2.375rem;
+            }
+
+            .merchant-contact {
+                letter-spacing: 0.72px;
+                opacity: 1;
+                font-size: 1.125rem;
+            }
+        }
+
+    }
+
+    .user-action {
+        .user-terms {
+            letter-spacing: 0px;
+            color: #558ED4;
+            opacity: 1;
+            font-size: 1rem;
+        }
+
+        .unfollow {
+            text-align: center;
+            letter-spacing: 0px;
+            color: #FFFFFF;
+            opacity: 1;
+            font-size: 0.875rem;
+            font-weight: 500;
+            background: #558ED4 0% 0% no-repeat padding-box;
+            border-radius: 4px;
+            opacity: 1;
+            width: 7.6rem;
+            margin-left: 1rem;
+        }
+    }
+
+    .Checkout-body {
+        display: flex;
+        padding: 4rem 0;
+
+        .left-section {
+            width: 25rem;
+            padding-right: 2rem;
+            // min-width: 25rem;
+        }
+
+        .right-section {
+            width: 80%;
+            padding-left: 1.5rem;
+        }
+    }
+}
