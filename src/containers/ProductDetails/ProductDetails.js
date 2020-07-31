@@ -17,6 +17,7 @@ import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import plusIcon from "../../assets/plus.svg";
 import deleteIcon from "../../assets/delete_outline.svg";
+import { useAuth } from "../../context/auth";
 
 const ProductDetails = props => {
   const { ProductDetails, productId, activeCurrency } = props;
@@ -41,6 +42,7 @@ const ProductDetails = props => {
   const [normalPurchase, setNormalPurchase] = useState(true);
   const [layBy, setLayBy] = useState(false);
   const history = useHistory();
+  const isAuthenticated = useAuth();
 
   useEffect(() => {
     async function fetchData() {
@@ -70,7 +72,9 @@ const ProductDetails = props => {
           alert("something went wrong, Please try again!");
         })();
     }
-    fetchSavedContacts();
+    if (isAuthenticated) {
+      fetchSavedContacts();
+    }
   }, []);
 
   const addToCart = async () => {
@@ -166,8 +170,8 @@ const ProductDetails = props => {
                   <span onClick={() => { setGroupBy(false); setNormalPurchase(true); setLayBy(false); addToCart() }} className="sm-btn bg-blue">
                     Add to cart
                   </span>
-                  <span onClick={() => { setGroupBy(true); setNormalPurchase(false); setLayBy(false); setQuantity(0); }} className="sm-btn bg-black">Group Purchase</span>
-                  <span onClick={() => { setGroupBy(false); setNormalPurchase(false); setLayBy(true); setQuantity(0); }} className="sm-btn bg-grey">Lay buy Order</span>
+                 { isAuthenticated ? <span onClick={() => { setGroupBy(true); setNormalPurchase(false); setLayBy(false); setQuantity(0); }} className="sm-btn bg-black">Group Purchase</span> : null } 
+                 { isAuthenticated ? <span onClick={() => { setGroupBy(false); setNormalPurchase(false); setLayBy(true); setQuantity(0); }} className="sm-btn bg-grey">Lay buy Order</span> : null }
                 </li>
                 {/* <li>
                   <div className="delivery-zip-code">
