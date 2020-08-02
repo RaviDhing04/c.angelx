@@ -79,7 +79,7 @@ const SearchBar = props => {
   }
 
 
-  const fetchSearchResults = debounce((text) => { search(text) }, 1000);
+  const fetchSearchResults = debounce((text) => { search(text) }, 400);
   console.log(fetchSearchResults);
   return (
     <React.Fragment>

@@ -5,7 +5,7 @@ export const userLeftNavLinks = [
   { name: "Group Buys in Total", path: "/home/ordersList/", icon: "shipping", enable: false },
   { name: "Pre-orders in Total", path: "/home/ordersList/", icon: "clock", enable: false },
   { name: "Donations", path: "/home/ordersList/", icon: "donate", enable: false },
-  { name: "Wishlist", path: "/home/ordersList/", icon: "heart-filled", enable: true },
+  { name: "Wishlist", path: "/home/viewAllProducts/", icon: "heart-filled", enable: false },
   { name: "Add Contacts", path: "/home/myContacts/", icon: "profile", enable: true }
 ];
 

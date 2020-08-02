@@ -145,7 +145,7 @@ const Header = props => {
                 <React.Fragment>
                   <Nav.Link
                     as={Link}
-                    to={`/home/ordersList/${props.userId}/Wishlist`}
+                    to={`/home/viewAllProducts/Wishlist`}
                   >
                     <img className="nav-icon" alt="heart-icon" src={heart}></img>
                   </Nav.Link>

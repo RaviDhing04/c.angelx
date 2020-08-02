@@ -262,9 +262,25 @@ export const getWishlistProducts = (body = {}) => async dispatch => {
       }
     );
     if (response && response.result && response.result.data) {
+      debugger;
+      let out = [];
+      response.result.data.wishListDetails &&
+        response.result.data.wishListDetails.forEach(orderItem => {
+          response.result.data.productDetails &&
+            response.result.data.productDetails.forEach(product => {
+              if (orderItem.ProductId.S === product.ProductId.S) {
+                out.push({
+                  UserId: orderItem.UserId,
+                  Quantity: orderItem.Quantity,
+                  ...product
+                });
+              }
+            });
+        });
+      debugger;
       dispatch({
         type: "VIEWALL_PRODUCTS",
-        value: { payload: response.result.data }
+        value: { payload: { 'Items': out } }
       });
       return true;
     } else {
@@ -1149,7 +1165,7 @@ export const addProductToCart = (body = {}) => async dispatch => {
     if (
       response &&
       response.result &&
-      response.result.data && 
+      response.result.data &&
       response.result.message !== "Error"
     ) {
       response.result.message === 'Success' ? alert('Product added in cart') : alert(response.result.message);
@@ -1319,7 +1335,8 @@ export const updateSelectedBusinessBanner = (imgUrl) => dispatch => {
 
 export const headerSearch = (text, category) => async dispatch => {
   try {
-    const url = `${getApiEndPoints("headerSearch")}?text=${text}&category=${category}`
+    let url = `${getApiEndPoints("headerSearch")}?text=${text}`;
+    url = category ? url + `&category=${category}` : url;
     const response = await httpFetch(url, {
       method: "GET"
     });

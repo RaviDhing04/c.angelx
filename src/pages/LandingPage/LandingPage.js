@@ -8,7 +8,8 @@ import {
   getSearchCategories,
   getLatestProductsWithPagination,
   getLandingBanners,
-  addProductToCart
+  addProductToCart,
+  addToWishlist
 } from "../../store/actions";
 import ProductListCarousel from "../../components/ProductListCarousel/ProductListCarousel";
 import ProductList from "../../components/ProductList/ProductList";
@@ -28,6 +29,11 @@ const LandingPage = props => {
     const res = await props.addProductToCart(payload);
   };
 
+  const addProductToWish = async (payload) => {
+    const res = await props.addToWishlist(payload);
+  }
+
+
   return (
     <React.Fragment>
       <div className="landingpage-banner">
@@ -40,12 +46,14 @@ const LandingPage = props => {
             data={props.latestProducts}
             activeCurrency={props.activeCurrency}
             addProductToCart={addToCart}
+            addToWishlist={addProductToWish}
           />
           <ProductList
             name="Latest Uploads"
             data={props.latestProducts}
             activeCurrency={props.activeCurrency}
             addProductToCart={addToCart}
+            addToWishlist={addProductToWish}
           />
         </div>
         <div className="heading"> Explore by Categories </div>
@@ -99,7 +107,8 @@ const mapDispatchToProps = dispatch =>
       getSearchCategories,
       getLatestProductsWithPagination,
       getLandingBanners,
-      addProductToCart
+      addProductToCart,
+      addToWishlist
     },
     dispatch
   );
