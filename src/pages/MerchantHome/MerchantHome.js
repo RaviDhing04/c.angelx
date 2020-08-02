@@ -16,7 +16,10 @@ import {
   updateSelectedBusiness,
   getBusinessDetails,
   uploadImage,
-  updateSelectedBusinessBanner
+  updateSelectedBusinessBanner,
+  followmerchant,
+  getBusinessDetailsUser,
+  unfollowmerchant
 } from "../../store/actions";
 import coverError from "../../assets/cover-error.svg";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
@@ -36,11 +39,15 @@ const MerchantHome = props => {
         props.getFollowedMerchants({
           PatronId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId
         });
+      props.getBusinessDetailsUser({
+        MerchantId: merchantId
+      });
+    } else {
+      props.getBusinessDetails({
+        MerchantId: merchantId,
+        PatronId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId
+      });
     }
-    props.getBusinessDetails({
-      MerchantId: merchantId,
-      PatronId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId
-    });
   }, []);
 
 
@@ -65,6 +72,24 @@ const MerchantHome = props => {
       props.updateSelectedBusinessBanner(res.full_image_url);
     }
   };
+
+  const unfollow = () => {
+    const res = props.unfollowmerchant({
+      PatronId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId,
+      MerchantId: merchantId,
+      "BusinessHandle": selectedBusiness && selectedBusiness.BusinessHandle.S
+    });
+    res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
+  }
+
+  const follow = () => {
+    const res = props.followmerchant({
+      PatronId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId,
+      MerchantId: merchantId,
+      "BusinessHandle": selectedBusiness && selectedBusiness.BusinessHandle.S
+    });
+    res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
+  }
 
   return !loading ? (
     <React.Fragment>
@@ -114,7 +139,7 @@ const MerchantHome = props => {
               <a className="user-terms" href="/">
                 Terms and Conditions
               </a>
-              <button className="unfollow">Unfollow</button>
+              {selectedBusiness && selectedBusiness.IsMerchantFollowed.S === 'True' ? <button onClick={unfollow} className="unfollow">Unfollow</button> : <button onClick={follow} className="unfollow">Follow</button>}
             </div>
           ) : null}
         </div>
@@ -152,7 +177,10 @@ const mapDispatchToProps = dispatch =>
       updateSelectedBusiness,
       getBusinessDetails,
       uploadImage,
-      updateSelectedBusinessBanner
+      updateSelectedBusinessBanner,
+      followmerchant,
+      unfollowmerchant,
+      getBusinessDetailsUser
     },
     dispatch
   );

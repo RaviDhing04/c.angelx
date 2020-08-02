@@ -46,19 +46,19 @@ const ProductDetails = props => {
 
   useEffect(() => {
     async function fetchData() {
-      // if (+productId !== +props.match.params.productId) {
+      if (+productId !== +props.match.params.productId) {
         const payload = {
           ProductId: props.match.params.productId,
           Timestamp: props.match.params.productTimeStamp
         };
         const res = await props.getSelectedProductDetails(payload);
         res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
-      // } else {
-      //   setLoading(false)
-      // }
+      } else {
+        setLoading(false)
+      }
     }
     fetchData();
-  }, []);
+  }, [props.match.params.productId]);
 
   useEffect(() => {
     async function fetchSavedContacts() {

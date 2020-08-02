@@ -104,6 +104,10 @@ const getApiEndPoints = val => {
       return baseUrl + "wishlist/addtowishlist";
     case "updateUserDetails":
       return baseUrl + "users/updateprofiledetails";
+    case "followmerchant":
+      return baseUrl + "users/followmerchant"; 
+    case "unfollowmerchant":
+      return baseUrl + "users/unfollowmerchant";
     default:
       return "/";
   }

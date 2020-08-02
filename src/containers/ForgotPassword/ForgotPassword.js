@@ -26,7 +26,7 @@ const ForgotPassword = props => {
     const res = await forgotPassword({ email: email });
     res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
     setEmail(email);
-    if (res.user_status === "FORCE_CHANGE_PASSWORD") {
+    if (res.message) {
       setStep2(true);
     }
   };
@@ -40,7 +40,7 @@ const ForgotPassword = props => {
     setLoading(true);
     const res = await confirmForgotPassword({
       email: email,
-      current_password: current_password,
+      confirmation_code: current_password,
       new_password: password
     });
     res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
@@ -58,22 +58,22 @@ const ForgotPassword = props => {
           alt="close"
         ></img>
         <div className="left-section">
-          <h2>Signup</h2>
+          <h2>Forgot Password</h2>
           <p>We do not share your personal details with anyone.</p>
         </div>
         {step2 ? (
           <div className="form-section">
-            <Form onSubmit={e => confirmForgotPasswordUser(e)}>
-              <Form.Group controlId="formGroupEmail">
+            <Form id="forgotForm" onSubmit={e => confirmForgotPasswordUser(e)} autocomplete="off">
+              <Form.Group controlId="formGroupCurrentPass">
                 <Form.Label>Enter Confirmation Code</Form.Label>
-                <Form.Control type="text" placeholder="Enter Code" required />
+                <Form.Control type="text" placeholder="Enter Code" key={1} required  autocomplete="off" />
                 <Form.Text className="text-muted">
                   Enter the confirmation code recieved on your email.
                 </Form.Text>
               </Form.Group>
               <Form.Group controlId="formGroupPassword">
                 <Form.Label>Enter New Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" required />
+                <Form.Control type="password" placeholder="Password" pattern=".*[\W\d\w].{7}" required autocomplete="new-password" />
                 <Form.Text className="text-muted">
                   Password must contain minimum 8 charachters (uppercase charachter, lowercase charachter, number and special charachter)
               </Form.Text>

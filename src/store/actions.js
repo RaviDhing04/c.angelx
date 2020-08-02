@@ -65,12 +65,13 @@ export const firstLogin = async (body = {}) => {
       method: "POST",
       body: body
     });
-    if (response) {
+    if (response && response.token) {
       localStorage.setItem("token", response.token);
       localStorage.setItem("refresh_token", response.refresh_token);
       localStorage.setItem("userData", JSON.stringify(response));
       return true;
     } else {
+      alert(response.message)
       return false;
     }
   } catch (err) {
@@ -104,12 +105,13 @@ export const confirmForgotPassword = async (body = {}) => {
       method: "POST",
       body: body
     });
-    if (response) {
+    if (response && response.token) {
       localStorage.setItem("token", response.token);
       localStorage.setItem("refresh_token", response.refresh_token);
       localStorage.setItem("userData", JSON.stringify(response));
       return true;
     } else {
+      alert(response.message);
       return false;
     }
   } catch (err) {
@@ -394,6 +396,44 @@ export const deleteProduct = (body = {}) => async dispatch => {
     return false;
   }
 };
+
+export const followmerchant = (body = {}) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("followmerchant"), {
+      method: "POST",
+      body: body
+    });
+    if (response && response.result && response.result.message === "Success") {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const unfollowmerchant = (body = {}) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("unfollowmerchant"), {
+      method: "POST",
+      body: body
+    });
+    if (response && response.result && response.result.message === "Success") {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+
 export const deleteCoupon = (body = {}) => async dispatch => {
   try {
 
@@ -867,6 +907,35 @@ export const getBusinessDetails = (body = {}) => async dispatch => {
   try {
 
     const response = await httpFetch(getApiEndPoints("BusinessDetails"), {
+      method: "POST",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      dispatch({
+        type: "SELECTED_BUSINESS",
+        value: {
+          payload: response.result.data.Item
+        }
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const getBusinessDetailsUser = (body = {}) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("BusinessDetailsUser"), {
       method: "POST",
       body: body
     });

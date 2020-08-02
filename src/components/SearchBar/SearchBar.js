@@ -56,11 +56,12 @@ const SearchBar = props => {
   const [showDiv, setShowDiv] = useState(false);
 
   useEffect(() => {
-    window.onclick = function (event) {
+    window.addEventListener('click', function (event) {
+      debugger;
       if (!event.target.matches('.search-input') && !event.target.matches('.search-results')) {
         setShowDiv(false);
       }
-    }
+    });
   }, [])
   const changeCategory = (e) => {
     if (e && e.target) {

@@ -44,7 +44,6 @@ const SignUp = props => {
       new_password: password
     });
     res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
-    debugger;
     props.history.replace(props.location.pathname);
   };
 
@@ -64,7 +63,7 @@ const SignUp = props => {
         </div>
         {step2 ? (
           <div className="form-section">
-            <Form onSubmit={e => firstLoginUser(e)} autocomplete="off">
+            <Form id="signupForm" onSubmit={e => firstLoginUser(e)} autocomplete="off">
               <Form.Group controlId="formGroupCurrentPass">
                 <Form.Label>Enter Confirmation Code</Form.Label>
                 <Form.Control defaultValue="" type="text" placeholder="Enter Code" key={1} required  autocomplete="no"/>
@@ -74,7 +73,7 @@ const SignUp = props => {
               </Form.Group>
               <Form.Group controlId="formGroupPassword">
                 <Form.Label>Enter New Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" pattern=".*[\W\d\w].{8}" required autocomplete="new-password"/>
+                <Form.Control type="password" placeholder="Password" pattern=".*[\W\d\w].{7}" required autocomplete="new-password"/>
                 <Form.Text className="text-muted">
                   Password must contain minimum 8 characters (uppercase character, lowercase character, number and special character)
               </Form.Text>

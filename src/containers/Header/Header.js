@@ -40,11 +40,11 @@ const Header = props => {
   }, []);
 
   useEffect(() => {
-    window.onclick = function (event) {
+    window.addEventListener('click', function (event) {
       if (!event.target.matches('.notification-div') && !event.target.matches('.bell-icon') && !event.target.matches('.oddRow') && !event.target.matches('.evenRow') && !(event.target.parentElement && event.target.parentElement.matches('.oddRow')) && !(event.target.parentElement && event.target.parentElement.matches('.evenRow')) && !(event.target.parentElement && event.target.parentElement.matches('.notifications-container')) && !event.target.matches('span')) {
         toggleNotification(false)
       }
-    }
+    });
   }, [])
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
