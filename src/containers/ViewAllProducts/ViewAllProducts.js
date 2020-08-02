@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Container, Row } from "react-bootstrap";
-import { getLatestProducts, getMerchantAllProducts, clearViewAllProducts, addToWishlist } from "../../store/actions";
+import { getLatestProducts, getMerchantAllProducts, clearViewAllProducts, addToWishlist, addProductToCart, getWishlistProducts } from "../../store/actions";
 import Product from "../../components/Product/Product";
 import ProductRowShimmer from "../../components/ProductRowShimmer/ProductRowShimmer";
 import "./ViewAllProducts.scss";
@@ -31,6 +31,9 @@ const ViewAllProducts = props => {
       case "Trending":
         props.getLatestProducts();
         break;
+      case "Wishlist":
+        props.getWishlistProducts({UserId: JSON.parse(localStorage.getItem('userData')).UserId,});
+        break;
       default:
         break;
     }
@@ -38,6 +41,14 @@ const ViewAllProducts = props => {
       props.clearViewAllProducts();
     }
   }, []);
+
+  const addToCart = async (payload) => {
+    const res = await props.addProductToCart(payload);
+  }
+
+  const addProductToWish = async (payload) => {
+    const res = await props.addToWishlist(payload);
+  }
 
   const makeItems = () => {
     const rows = [];
@@ -48,7 +59,7 @@ const ViewAllProducts = props => {
             Items.slice(index, index + itemsPerRow).map((item, index) => {
               return (
                 <div key={item.ProductId.S}>
-                  <Product data={item} activeCurrency={activeCurrency} addToWishlist={addToWishlist} />
+                  <Product data={item} activeCurrency={activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} />
                 </div>
               );
             })}
@@ -85,7 +96,9 @@ const mapDispatchToProps = dispatch =>
       getLatestProducts,
       getMerchantAllProducts,
       clearViewAllProducts,
-      addToWishlist
+      addToWishlist,
+      getWishlistProducts,
+      addProductToCart
     },
     dispatch
   );

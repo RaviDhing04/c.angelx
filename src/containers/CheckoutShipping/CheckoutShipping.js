@@ -14,7 +14,7 @@ import { shippingAddressFormFields } from "../../constants/constants";
 import edit from "../../assets/edit.svg";
 
 const CheckoutShipping = props => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [pageName, setName] = useState('');
   const [addresses, setAddresses] = useState([]);
   const [editMode, setEditMode] = useState(false);
@@ -59,7 +59,7 @@ const CheckoutShipping = props => {
 
   const selectAddress = (address) => {
     localStorage.setItem('shippingAddress', JSON.stringify(address));
-    history.push(`/checkout/billing/${userId}/Checkout`);
+    history.push(`/checkout/billing/${userId}/Billing Address`);
   }
 
   const editAddress = (address) => {
@@ -71,7 +71,7 @@ const CheckoutShipping = props => {
     const shipper = e.target.value;
     if (shipper === 'Self') {
       alert("You will recieve a confirmation mail along with merchant address for pick up");
-      history.push(`/checkout/billing/${userId}/Checkout`);
+      history.push(`/checkout/billing/${userId}/Billing Address`);
     } else {
       localStorage.setItem('shipper', shipper);
     }

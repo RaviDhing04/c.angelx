@@ -14,7 +14,7 @@ import { billingAddressFormFields } from "../../constants/constants";
 import edit from "../../assets/edit.svg";
 
 const CheckoutBilling = props => {
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [pageName, setName] = useState('');
     const [addresses, setAddresses] = useState([]);
     const [editMode, setEditMode] = useState(false);

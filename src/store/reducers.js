@@ -198,8 +198,7 @@ export const appReducer = (state = initialState, { type, value }) => {
       return {
         ...state,
         ordersListPage: {
-          orderItems: value.payload.cartDetails,
-          orderProductDetails: value.payload.productDetails
+          orderItems: value.payload,
         }
       };
     case "SET_ACTIVE_CURRENCY":

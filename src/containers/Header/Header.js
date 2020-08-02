@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Navbar, Nav, Container, Dropdown, Button } from "react-bootstrap";
 import brandlogo from "../../assets/brand-logo.svg";
 import globe from "../../assets/globe.svg";
-import heart from "../../assets/heart.svg";
+import heart from "../../assets/heart-filled.svg";
 import shoppingcart from "../../assets/shopping-cart.svg";
 import bell from "../../assets/bell.svg";
 import profile from "../../assets/profile.svg";
@@ -38,6 +38,14 @@ const Header = props => {
     props.setGlobalCurrency(activeCurrency);
     props.getSearchCategories();
   }, []);
+
+  useEffect(() => {
+    window.onclick = function (event) {
+      if (!event.target.matches('.notification-div') && !event.target.matches('.bell-icon') && !event.target.matches('.oddRow') && !event.target.matches('.evenRow') && !(event.target.parentElement && event.target.parentElement.matches('.oddRow')) && !(event.target.parentElement && event.target.parentElement.matches('.evenRow')) && !(event.target.parentElement && event.target.parentElement.matches('.notifications-container')) && !event.target.matches('span')) {
+        toggleNotification(false)
+      }
+    }
+  }, [])
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <a
@@ -96,7 +104,7 @@ const Header = props => {
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>
-          <SearchBar searchCategories={props.searchCategories} fetchSearchResults={props.headerSearch}/>
+          <SearchBar searchCategories={props.searchCategories} fetchSearchResults={props.headerSearch} />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="ml-auto right-links-wrapper">
               <Dropdown>
@@ -133,30 +141,30 @@ const Header = props => {
               </Dropdown>
               <img className="nav-icon" alt="globe-icon" src={globe}></img>{" "}
               English{" "}
-              {isAuthenticated ? 
-              <React.Fragment>
-              <Nav.Link
-                as={Link}
-                to={`/home/ordersList/${props.userId}/Wishlist`}
-              >
-                <img className="nav-icon" alt="heart-icon" src={heart}></img>
-              </Nav.Link>
-              <Nav.Link as={Link} to={`/cart/${props.userId}`}>
-                <img
-                  className="nav-icon"
-                  alt="shoppingcart-icon"
-                  src={shoppingcart}
-                ></img>
-              </Nav.Link>
-              <Nav.Link onClick={() => toggleNotification(!showNotification)}>
-                <img className="nav-icon" alt="bell-icon" src={bell}></img>
-              </Nav.Link>
-              {showNotification ? (
-                <div className="notification-div">
-                  <Notification />
-                </div>
-              ) : null}
-              {/* <Nav.Link href="#memes">
+              {isAuthenticated ?
+                <React.Fragment>
+                  <Nav.Link
+                    as={Link}
+                    to={`/home/ordersList/${props.userId}/Wishlist`}
+                  >
+                    <img className="nav-icon" alt="heart-icon" src={heart}></img>
+                  </Nav.Link>
+                  <Nav.Link as={Link} to={`/cart/${props.userId}`}>
+                    <img
+                      className="nav-icon"
+                      alt="shoppingcart-icon"
+                      src={shoppingcart}
+                    ></img>
+                  </Nav.Link>
+                  <Nav.Link onClick={() => toggleNotification(!showNotification)}>
+                    <img className="nav-icon bell-icon" alt="bell-icon" src={bell}></img>
+                  </Nav.Link>
+                  {showNotification ? (
+                    <div className="notification-div">
+                      <Notification />
+                    </div>
+                  ) : null}
+                  {/* <Nav.Link href="#memes">
                 <img
                   className="nav-icon"
                   alt="profile-icon"
@@ -168,41 +176,41 @@ const Header = props => {
                   src={downArrow}
                 ></img>
               </Nav.Link> */}
-              <Dropdown>
-                <Dropdown.Toggle
-                  as={CustomToggle}
-                  id="dropdown-custom-components"
-                >
-                  <img
-                    className="nav-icon"
-                    alt="profile-icon"
-                    src={profile}
-                  ></img>
-                  <img
-                    className="nav-icon"
-                    alt="downArrow-icon"
-                    src={downArrow}
-                  ></img>
-                </Dropdown.Toggle>
-                <Dropdown.Menu alignRight as={CustomMenu}>
-                  {profileOptions.map((option, index) => {
-                    return (
-                      <Dropdown.Item
-                        eventKey={index}
-                        as={Link}
-                        to={option.name !== 'Logout' ? (option.path + props.userId) : history.location.pathname + "?logout=true"}
-                      >
-                        {option.name}
-                      </Dropdown.Item>
-                    );
-                  })}
-                </Dropdown.Menu>
-              </Dropdown>
-              </React.Fragment> : 
-              <React.Fragment>
-               <Button onClick={() => history.replace(history.location.pathname + "?login=true")} className="login-btn">Log in</Button>
-               <Button onClick={() => history.replace(history.location.pathname + "?signUp=true")} className="signup-btn" >Sign up</Button>
-              </React.Fragment>}
+                  <Dropdown>
+                    <Dropdown.Toggle
+                      as={CustomToggle}
+                      id="dropdown-custom-components"
+                    >
+                      <img
+                        className="nav-icon"
+                        alt="profile-icon"
+                        src={profile}
+                      ></img>
+                      <img
+                        className="nav-icon"
+                        alt="downArrow-icon"
+                        src={downArrow}
+                      ></img>
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu alignRight as={CustomMenu}>
+                      {profileOptions.map((option, index) => {
+                        return (
+                          <Dropdown.Item
+                            eventKey={index}
+                            as={Link}
+                            to={option.name !== 'Logout' ? (option.path + props.userId) : history.location.pathname + "?logout=true"}
+                          >
+                            {option.name}
+                          </Dropdown.Item>
+                        );
+                      })}
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </React.Fragment> :
+                <React.Fragment>
+                  <Button onClick={() => history.replace(history.location.pathname + "?login=true")} className="login-btn">Log in</Button>
+                  <Button onClick={() => history.replace(history.location.pathname + "?signUp=true")} className="signup-btn" >Sign up</Button>
+                </React.Fragment>}
             </Nav>
           </Navbar.Collapse>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />

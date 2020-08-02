@@ -10,12 +10,14 @@ const getApiEndPoints = val => {
       return baseUrl + "products/getsponsoredproducts";
     case "WishlistProductsWithPagination":
       return baseUrl + "products/getsponsoredproducts";
+    case "WishlistProducts":
+      return baseUrl + "wishlist/getwishlistdetails";
     case "SelectedProductDetails":
       return baseUrl + "products/getproductdetails";
     case "CartItems":
       return baseUrl + "cart/getcartdetails";
     case "OrderItems":
-      return baseUrl + "cart/getcartdetails";
+      return baseUrl + "users/getorderhistoryforuser";
     case "FollowedMerchants":
       return baseUrl + "users/getfollowedmerchants";
     case "MerchantAllProducts":
@@ -100,6 +102,8 @@ const getApiEndPoints = val => {
       return baseUrl + "cart/checkout";
     case "addToWishlist":
       return baseUrl + "wishlist/addtowishlist";
+    case "updateUserDetails":
+      return baseUrl + "users/updateprofiledetails";
     default:
       return "/";
   }

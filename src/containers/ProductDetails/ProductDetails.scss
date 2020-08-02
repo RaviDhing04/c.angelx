@@ -147,37 +147,37 @@
     }
 
     .buttons {
-        text-align: right;
-        margin-top: 1rem;;
+      text-align: right;
+      margin-top: 1rem;
 
-        .cancelButton {
-            background: #E0E1E2 0% 0% no-repeat padding-box;
-            border-radius: 0.25rem;
-            opacity: 1;
-            width: 5.625rem;
-            height: 2.25rem;
-            letter-spacing: 0px;
-            color: #00000099;
-            opacity: 1;
-            font-weight: bold;
-            font-size: 0.875rem;
-            border: none;
-        }
+      .cancelButton {
+        background: #e0e1e2 0% 0% no-repeat padding-box;
+        border-radius: 0.25rem;
+        opacity: 1;
+        width: 5.625rem;
+        height: 2.25rem;
+        letter-spacing: 0px;
+        color: #00000099;
+        opacity: 1;
+        font-weight: bold;
+        font-size: 0.875rem;
+        border: none;
+      }
 
-        .saveButton {
-            background: #558ED4 0% 0% no-repeat padding-box;
-            border-radius: 0.25rem;
-            opacity: 1;
-            letter-spacing: 0px;
-            color: #FFFFFF;
-            opacity: 1;
-            font-weight: 500;
-            font-size: 0.875rem;
-            width: 8.75rem;
-            height: 2.25rem;
-            border: none;
-            margin: 0 0.5rem;
-        }
+      .saveButton {
+        background: #558ed4 0% 0% no-repeat padding-box;
+        border-radius: 0.25rem;
+        opacity: 1;
+        letter-spacing: 0px;
+        color: #ffffff;
+        opacity: 1;
+        font-weight: 500;
+        font-size: 0.875rem;
+        width: 8.75rem;
+        height: 2.25rem;
+        border: none;
+        margin: 0 0.5rem;
+      }
     }
   }
 
@@ -189,7 +189,7 @@
     opacity: 1;
   }
 
-  .color-palette a {
+  .color-palette span {
     border-radius: 0.25rem;
     opacity: 1;
     margin-right: 0.8rem;
@@ -197,6 +197,7 @@
     height: 1.25rem;
     border: 1px solid #d4d4d47d;
     display: inline-block;
+    cursor: auto;
   }
 
   .color-palette {
@@ -222,6 +223,10 @@
   }
 
   .description-accordian {
+    .prod-details {
+      padding-left: 2.5rem;
+      cursor: pointer;
+    }
     .card {
       border-top: 1px solid #dadadb !important;
       border: 0px;

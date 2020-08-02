@@ -6,6 +6,7 @@ import { getOrderItems } from "../../store/actions";
 import "./OrdersList.scss";
 import OrderItem from "../../components/OrderItem/OrderItem";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
+import { Switch } from "react-router-dom";
 
 const OrdersList = props => {
   const [loading, setLoading] = useState(true);
@@ -18,39 +19,31 @@ const OrdersList = props => {
   useEffect(() => {
     async function fetchOrderItems() {
       name ? setName(name) : setName("");
-      const res = await getOrderItems({ UserId: userId });
-      res ? setLoading(false) : (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
+      let res;
+      switch (name) {
+        case 'Pending in Total':
+          res = await getOrderItems({ UserId: userId, "OrderType": "CART" });
+          break;
+        case 'Lay Buys in Total':
+          res = await getOrderItems({ UserId: userId, "OrderType": "LAYBUY" });
+          break;
+        case 'Group Buys in Total':
+          res = await getOrderItems({ UserId: userId, "OrderType": "GROUP" });
+          break;
+        default:
+          break;
+      }
+      res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
     }
     fetchOrderItems();
-  }, [userId, getOrderItems, name]);
-
-  useEffect(() => {
-    const makeOrderProduct = () => {
-      let out = [];
-      orderItems &&
-        orderItems.forEach(orderItem => {
-          productDetails &&
-            productDetails.forEach(product => {
-              if (orderItem.ProductId.S === product.ProductId.S) {
-                out.push({
-                  UserId: orderItem.UserId,
-                  Quantity: orderItem.Quantity,
-                  ...product
-                });
-              }
-            });
-        });
-      return out;
-    };
-    setorderProducts(makeOrderProduct());
-  }, [orderItems, productDetails]);
+  }, []);
 
   return !loading ? (
     <React.Fragment>
       <div className="orderlist-heading">{pageName}</div>
       <Container className="order-page-container" fluid>
         <div className="order-page">
-          {orderProducts.map(orderItem => {
+          {orderItems.map(orderItem => {
             return (
               <OrderItem
                 key={+orderItem.ProductId.S}
@@ -63,8 +56,8 @@ const OrdersList = props => {
       </Container>
     </React.Fragment>
   ) : (
-    <CustomLoader />
-  );
+      <CustomLoader />
+    );
 };
 
 const mapDispatchToProps = dispatch =>
@@ -78,8 +71,7 @@ const mapDispatchToProps = dispatch =>
 const mapStatetoProps = ({ app: { ordersListPage, common } }) => {
   console.log(ordersListPage);
   return {
-    orderItems: ordersListPage.orderItems.Items,
-    productDetails: ordersListPage.orderProductDetails.Items,
+    orderItems: ordersListPage.orderItems,
     activeCurrency: common.activeCurrency
   };
 };

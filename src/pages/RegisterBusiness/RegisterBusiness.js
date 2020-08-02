@@ -48,8 +48,12 @@ const RegisterBusiness = props => {
     payload["PatronId"] = JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId;;
     const tags = formElements.Tags.value;
     tags.split(",").forEach((tag, index) => {
-      payload["tag" + index + 1] = tag;
+      payload["tag" + (index + 1)] = tag;
     });
+
+    if (action === 'edit') {
+      payload['MerchantId'] = selectedBusiness.MerchantId.S;
+    }
     setLoading(true);
     const res =
       action === "edit"
@@ -67,6 +71,7 @@ const RegisterBusiness = props => {
   const cancel = async event => {
     event.preventDefault();
     document.getElementById("RegisterBusinessForm").reset();
+    history.goBack();
   };
 
   return !loading ? (
@@ -406,13 +411,13 @@ const RegisterBusiness = props => {
               <Button onClick={e => cancel(e)} className="cancelButton">
                 Cancel
               </Button>
-              <Button
+              {action === 'edit' ? null:  <Button
                 onClick={() => setbuttonClicked(true)}
                 type="submit"
                 className="saveAnotherButton"
               >
                 Save & Add Another Business
-              </Button>
+              </Button> }
               <Button className="saveButton" type="submit">
                 Save Business
               </Button>

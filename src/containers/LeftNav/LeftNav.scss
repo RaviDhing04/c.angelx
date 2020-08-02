@@ -1,64 +1,69 @@
 .leftNav {
+  .nav-link {
+    text-align: left;
+    letter-spacing: 0.72px;
+    color: #656565;
+    opacity: 1;
+    font-size: 1.125rem;
+  }
+
+  .disable {
+    background: #dde1e8 0% 0% no-repeat padding-box;
+    opacity: 0.5;
+  }
+
+  .list {
+    background: #f6f6f6 0% 0% no-repeat padding-box;
+    opacity: 1;
+    margin-bottom: 2rem;
+
+    .card-body {
+      padding: 1.25rem 0px;
+    }
+  }
+
+  .list-item {
+    display: flex;
+    align-items: center;
+    padding: 5px 0px 5px 2rem;
+  }
+
+  .active {
+    background: #dde1e8 0% 0% no-repeat padding-box;
+    opacity: 1;
+    color: #202020;
+    font-weight: 600;
+  }
+
+  .merchant-search {
     .nav-link {
-        text-align: left;
-        letter-spacing: 0.72px;
-        color: #656565;
-        opacity: 1;
-        font-size: 1.125rem;
+      padding: 0.5rem 0rem;
     }
+  }
 
-    .list {
-        background: #F6F6F6 0% 0% no-repeat padding-box;
-        opacity: 1;
-        margin-bottom: 2rem;
-
-        .card-body {
-            padding: 1.25rem 0px;
-        }
-    }
-
-    .list-item {
-        display: flex;
-        align-items: center;
-        padding: 5px 0px 5px 2rem;
-    }
-
-    .active {
-        background: #DDE1E8 0% 0% no-repeat padding-box;
-        opacity: 1;
-        color: #202020;
-        font-weight: 600;
-    }
-
-    .merchant-search {
-        .nav-link {
-            padding: 0.5rem 0rem;
-        }
-    }
-
-    .nav-icon {
-        width: 1.125rem;
-        height: 1.125rem;
-        opacity: 1;
-        text-align: left;
-        font-size: 1rem;
-        letter-spacing: 1.12px;
-        color: #6D6D6D;
-        opacity: 1;
-    }
+  .nav-icon {
+    width: 1.125rem;
+    height: 1.125rem;
+    opacity: 1;
+    text-align: left;
+    font-size: 1rem;
+    letter-spacing: 1.12px;
+    color: #6d6d6d;
+    opacity: 1;
+  }
 }
 
 .leftNav-heading {
-    text-align: left;
-    letter-spacing: 0.72px;
-    color: #202020;
-    text-transform: uppercase;
-    opacity: 1;
-    font-size: 1.125rem;
-    font-weight: bold;
-    margin: 0px 0px 1rem 0px;
+  text-align: left;
+  letter-spacing: 0.72px;
+  color: #202020;
+  text-transform: uppercase;
+  opacity: 1;
+  font-size: 1.125rem;
+  font-weight: bold;
+  margin: 0px 0px 1rem 0px;
 }
 
 .merchant-search-bar {
-    padding: 1rem 1.5rem 0rem 1.5rem;
+  padding: 1rem 1.5rem 0rem 1.5rem;
 }

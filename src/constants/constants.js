@@ -1,30 +1,30 @@
 export const userLeftNavLinks = [
-  { name: "Pending in Total", path: "/home/ordersList/", icon: "hourglass" },
-  { name: "Arears in Total", path: "/home/ordersList/", icon: "Group 1030" },
-  { name: "Lay Buys in Total", path: "/home/ordersList/", icon: "shipping" },
-  { name: "Pre-orders in Total", path: "/home/ordersList/", icon: "clock" },
-  { name: "Donations", path: "/home/ordersList/", icon: "donate" },
-  { name: "Wishlist", path: "/home/ordersList/", icon: "heart" },
-  { name: "Add Contacts", path: "/home/myContacts/", icon: "profile" }
+  { name: "Pending in Total", path: "/home/ordersList/", icon: "hourglass", enable: false },
+  { name: "Arears in Total", path: "/home/ordersList/", icon: "Group 1030", enable: false },
+  { name: "Lay Buys in Total", path: "/home/ordersList/", icon: "shipping", enable: false },
+  { name: "Group Buys in Total", path: "/home/ordersList/", icon: "shipping", enable: false },
+  { name: "Pre-orders in Total", path: "/home/ordersList/", icon: "clock", enable: false },
+  { name: "Donations", path: "/home/ordersList/", icon: "donate", enable: false },
+  { name: "Wishlist", path: "/home/ordersList/", icon: "heart-filled", enable: true },
+  { name: "Add Contacts", path: "/home/myContacts/", icon: "profile", enable: true }
 ];
 
 export const merchantLeftNavLinks = [
-  { name: "Inventory", path: "/merchantHome/inventory/", icon: "inventory" },
-  { name: "Campaigns", path: "/merchantHome/campaigns/", icon: "donate" },
-  { name: "Coupons", path: "/merchantHome/coupons/", icon: "coupon" },
-  { name: "Add Employees", path: "/merchantHome/myEmployees/", icon: "profile" }
+  { name: "Inventory", path: "/merchantHome/inventory/", icon: "inventory", enable: true },
+  { name: "Campaigns", path: "/merchantHome/campaigns/", icon: "donate", enable: true },
+  { name: "Coupons", path: "/merchantHome/coupons/", icon: "coupon", enable: true },
+  { name: "Add Employees", path: "/merchantHome/myEmployees/", icon: "profile", enable: true }
 ];
 
 export const profileLeftNavLinks = [
-  { name: "Edit Personal Details", path: "/profile/edit/", icon: "profile" },
-  { name: "Manage Addresses", path: "/profile/addresses/", icon: "location" },
-  { name: "Payment Options", path: "/profile/payment/", icon: "credit-card" }
+  { name: "Edit Personal Details", path: "/profile/edit/", icon: "profile", enable: true },
+  { name: "Manage Addresses", path: "/profile/addresses/", icon: "location", enable: true }
 ];
 
 export const checkoutLeftNavLinks = [
-  { name: "Shipping Address", path: "/checkout/shipping/", icon: "location" },
-  { name: "Billing Address", path: "/checkout/billing/", icon: "credit-card" },
-  { name: "Confirm Order", path: "/checkout/confirm/", icon: "location" }
+  { name: "Shipping Address", path: "/checkout/shipping/", icon: "location", enable: true },
+  { name: "Billing Address", path: "/checkout/billing/", icon: "credit-card", enable: true },
+  { name: "Confirm Order", path: "/checkout/confirm/", icon: "location", enable: true }
 ];
 
 export const merchantList = [

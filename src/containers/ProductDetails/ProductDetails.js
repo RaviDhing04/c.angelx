@@ -46,16 +46,16 @@ const ProductDetails = props => {
 
   useEffect(() => {
     async function fetchData() {
-      if (+productId !== +props.match.params.productId) {
+      // if (+productId !== +props.match.params.productId) {
         const payload = {
           ProductId: props.match.params.productId,
           Timestamp: props.match.params.productTimeStamp
         };
         const res = await props.getSelectedProductDetails(payload);
         res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
-      } else {
-        setLoading(false)
-      }
+      // } else {
+      //   setLoading(false)
+      // }
     }
     fetchData();
   }, []);
@@ -170,8 +170,8 @@ const ProductDetails = props => {
                   <span onClick={() => { setGroupBy(false); setNormalPurchase(true); setLayBy(false); addToCart() }} className="sm-btn bg-blue">
                     Add to cart
                   </span>
-                 { isAuthenticated ? <span onClick={() => { setGroupBy(true); setNormalPurchase(false); setLayBy(false); setQuantity(0); }} className="sm-btn bg-black">Group Purchase</span> : null } 
-                 { isAuthenticated ? <span onClick={() => { setGroupBy(false); setNormalPurchase(false); setLayBy(true); setQuantity(0); }} className="sm-btn bg-grey">Lay buy Order</span> : null }
+                  {isAuthenticated ? <span onClick={() => { setGroupBy(true); setNormalPurchase(false); setLayBy(false); setQuantity(0); }} className="sm-btn bg-black">Group Purchase</span> : null}
+                  {isAuthenticated ? <span onClick={() => { setGroupBy(false); setNormalPurchase(false); setLayBy(true); setQuantity(0); }} className="sm-btn bg-grey">Lay buy Order</span> : null}
                 </li>
                 {/* <li>
                   <div className="delivery-zip-code">
@@ -184,11 +184,11 @@ const ProductDetails = props => {
                     <form onSubmit={(e) => groupByOrder(e)}>
                       <div>
                         <label>Quantity</label>
-                        <input type="number" onChange={(e) => setQuantity(e.target.value)} value={quantity ? quantity : ''} placeholder="Enter Quantity" required />
+                        <input type="number" min="1" onChange={(e) => setQuantity(e.target.value)} value={quantity ? quantity : ''} placeholder="Enter Quantity" required />
                       </div>
                       <div>
                         <label>Your Contribution</label>
-                        <input type="number" onChange={(e) => setYourContribution(e.target.value)} value={yourContribution ? yourContribution : ''} placeholder="Enter Your Contribution" required />
+                        <input type="number" min="1" onChange={(e) => setYourContribution(e.target.value)} value={yourContribution ? yourContribution : ''} placeholder="Enter Your Contribution" required />
                       </div>
                       <div>
                         <label>Enter Coupon Code</label>
@@ -208,7 +208,7 @@ const ProductDetails = props => {
                         })}
                       </div>
                       <div className="buttons">
-                        <button className="cancelButton">Cancel</button>
+                        <button onClick={() => { setGroupBy(false); setNormalPurchase(true); setLayBy(false); }} className="cancelButton">Cancel</button>
                         <button className="saveButton" type="submit">Confirm</button>
                       </div>
                     </form>
@@ -219,14 +219,14 @@ const ProductDetails = props => {
                     <form onSubmit={(e) => layByOrder(e)}>
                       <div>
                         <label>Quantity</label>
-                        <input type="number" onChange={(e) => setQuantity(e.target.value)} value={quantity ? quantity : ''} placeholder="Enter Quantity" required />
+                        <input type="number" min="1" onChange={(e) => setQuantity(e.target.value)} value={quantity ? quantity : ''} placeholder="Enter Quantity" required />
                       </div>
                       <div>
                         <label>Laybuy months</label>
-                        <input type="number" onChange={(e) => setLaybuy_months(e.target.value)} value={laybuy_months ? laybuy_months : ''} placeholder="Enter Laybuy Months" required />
+                        <input type="number" min="1" onChange={(e) => setLaybuy_months(e.target.value)} value={laybuy_months ? laybuy_months : ''} placeholder="Enter Laybuy Months" required />
                       </div>
                       <div className="buttons">
-                        <button className="cancelButton">Cancel</button>
+                        <button onClick={() => { setGroupBy(false); setNormalPurchase(true); setLayBy(false); }} className="cancelButton">Cancel</button>
                         <button className="saveButton" type="submit">Confirm</button>
                       </div>
                     </form>
@@ -242,7 +242,7 @@ const ProductDetails = props => {
                   <div className="sub-head">Color</div>
                   <div className="color-palette">
                     {ProductSpecifications.M.AvailableColors.S.split(' ').map((color, index) => {
-                      return <a key={index} href="" style={{ "backgroundColor": color }} className="palette-box"></a>
+                      return <span key={index} style={{ "backgroundColor": color }} className="palette-box"></span>
                     })
                     }
                   </div>
@@ -269,7 +269,7 @@ const ProductDetails = props => {
               </ul>
               <Accordion className="description-accordian">
                 <Card>
-                  <Accordion.Toggle as={Card.Header} eventKey="0">
+                  <Accordion.Toggle as={Card.Header} className="prod-details" eventKey="0">
                     Product Details
                   </Accordion.Toggle>
                   <Accordion.Collapse eventKey="0">

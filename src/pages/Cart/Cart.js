@@ -80,12 +80,14 @@ const Cart = props => {
     let fail = 0;
     cartItems.cartDetails.forEach((item, index) => {
       if (MerchantId !== item.productData.MerchantId) {
-        alert("You can select Products from single Merchant. Please remove/Wishlist products.");
         fail = 1;
       }
     });
     if (!fail) {
+      localStorage.setItem('orderType', JSON.stringify({'order_type': 'cart'}));
       return history.push(`/checkout/shipping/${userData.UserId}/${'Shipping'}`);
+    } else {
+      alert("You can select Products from single Merchant. Please remove/Wishlist products.");
     }
   }
 
@@ -107,13 +109,13 @@ const Cart = props => {
             <div className="left-section">
               <div className="cart-header">
                 <span className="heading">Your Cart</span>
-                <span
+                {/* <span
                   onClick={() => deleteProductFromCart("all")}
                   className="remove-all"
                 >
                   <img alt="delete-icon" src={deleteIcon}></img>
                 Remove all items
-              </span>
+              </span> */}
               </div>
               {cartItems.cartDetails.map(cartItem => {
                 return (

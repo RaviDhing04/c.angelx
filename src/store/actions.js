@@ -251,6 +251,31 @@ export const getLatestProducts = (body = {}) => async dispatch => {
   }
 };
 
+export const getWishlistProducts = (body = {}) => async dispatch => {
+  try {
+
+    const response = await httpFetch(
+      getApiEndPoints("WishlistProducts"),
+      {
+        method: "POST",
+        body: body
+      }
+    );
+    if (response && response.result && response.result.data) {
+      dispatch({
+        type: "VIEWALL_PRODUCTS",
+        value: { payload: response.result.data }
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
 export const getMerchantAllProducts = (body = {}) => async dispatch => {
   try {
 
@@ -517,6 +542,29 @@ export const updateShippingAddress = (body = {}, addressId) => async dispatch =>
   try {
 
     const response = await httpFetch(getApiEndPoints("updateShippingAddress") + addressId, {
+      method: "PUT",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const updateUserDetails = (body = {}, addressId) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("updateUserDetails"), {
       method: "PUT",
       body: body
     });
@@ -941,9 +989,9 @@ export const addToWishlist = (body = {}) => async dispatch => {
     if (
       response &&
       response.result &&
-      response.result.data &&
-      response.result.message === "Success"
+      response.result.data
     ) {
+      response.result.message === 'Success' ? alert('Product added to Wishlist') : alert(response.result.message);
       return true;
     } else {
       return false;
@@ -1101,10 +1149,10 @@ export const addProductToCart = (body = {}) => async dispatch => {
     if (
       response &&
       response.result &&
-      response.result.data &&
-      (response.result.message === "Success" ||
-        response.result.message === "Product already added to cart")
+      response.result.data && 
+      response.result.message !== "Error"
     ) {
+      response.result.message === 'Success' ? alert('Product added in cart') : alert(response.result.message);
       return true;
     } else {
       return false;
@@ -1125,8 +1173,7 @@ export const getCartItems = (body = {}) => async dispatch => {
     if (
       response &&
       response.result &&
-      response.result.data &&
-      response.result.message === "Success"
+      response.result.data
     ) {
 
       dispatch({
@@ -1188,7 +1235,7 @@ export const getOrderItems = (body = {}) => async dispatch => {
     ) {
       dispatch({
         type: "ORDER_DETAILS",
-        value: { payload: response.result.data }
+        value: { payload: response.result.data.Items }
       });
       return true;
     } else {

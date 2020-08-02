@@ -9,7 +9,7 @@ const formatter = props => {
   return amount => {
     if (props) {
       const convertedAmount = +amount * props.conversion;
-      let format = new Intl.NumberFormat("en-za", {
+      let format = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: props.shortName
       });

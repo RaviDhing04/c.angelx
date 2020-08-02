@@ -56,7 +56,7 @@ const ProductSlider = ({ images }) => {
       <article className="gallery-wrap">
         <div className="img-big-wrap">
           <div style={{ padding: "2rem" }}>
-            <a href="#">
+            <a>
               <img alt="item-gallery"
                 ref={imageRef}
                 onMouseMove={handleImageChange}

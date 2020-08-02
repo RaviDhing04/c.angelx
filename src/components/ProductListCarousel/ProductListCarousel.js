@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import Product from "../Product/Product";
 import "./ProductListCarousel.scss";
 import ProductRowShimmer from "../ProductRowShimmer/ProductRowShimmer";
@@ -34,7 +35,9 @@ const ProductListCarousel = props => {
                 ) : null;
               })}
           </Row>
-          <Button className={isAuthenticated ? "view-all" : "margin-left-4 view-all"}>View All</Button>
+          <Link to={`/home/viewAllProducts/${name}`}>
+            <Button className={isAuthenticated ? "view-all" : "margin-left-4 view-all"}>View All</Button>
+          </Link>
         </React.Fragment>
       ) : (
           <ProductRowShimmer />

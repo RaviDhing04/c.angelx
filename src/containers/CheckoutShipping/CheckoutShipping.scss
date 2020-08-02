@@ -139,6 +139,7 @@
   .saved-address {
     display: flex;
     margin: 2rem 0;
+    flex-wrap: wrap;
     .saved-address-div {
       border-radius: 0px 0px 4px 4px;
       opacity: 1;
@@ -150,6 +151,7 @@
       width: 25rem;
       height: 15rem;
       padding: 1rem;
+      margin-bottom: 3rem;
 
       .edit-icon {
         align-self: flex-end;

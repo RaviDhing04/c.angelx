@@ -7,7 +7,8 @@ import Banner from "../../components/Banner/Banner";
 import {
   getSearchCategories,
   getLatestProductsWithPagination,
-  getLandingBanners
+  getLandingBanners,
+  addProductToCart
 } from "../../store/actions";
 import ProductListCarousel from "../../components/ProductListCarousel/ProductListCarousel";
 import ProductList from "../../components/ProductList/ProductList";
@@ -97,7 +98,8 @@ const mapDispatchToProps = dispatch =>
     {
       getSearchCategories,
       getLatestProductsWithPagination,
-      getLandingBanners
+      getLandingBanners,
+      addProductToCart
     },
     dispatch
   );

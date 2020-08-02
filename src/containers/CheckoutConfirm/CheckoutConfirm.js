@@ -5,7 +5,8 @@ import { Container, Form, Button, Col, Nav } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import {
-    checkout
+    checkout,
+    getCartItems
 } from "../../store/actions";
 import "./CheckoutConfirm.scss";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
@@ -22,6 +23,45 @@ const CheckoutConfirm = (props) => {
     const [shippingCharge, setShippingCharge] = useState('');
     const history = useHistory();
 
+
+    useEffect(() => {
+        const shipping = JSON.parse(localStorage.getItem('shippingAddress'));
+        const billing = JSON.parse(localStorage.getItem('billingAddress'));
+        const o = JSON.parse(localStorage.getItem('orderType'));
+        if (billing) {
+            setAddresses([billing, shipping]);
+            if (o) {
+                if (o.order_type === 'cart') {
+                    fetchCartItems();
+                    setOrderType(o.order_type);
+                } else {
+                    setOrderType(o.order_type);
+                    setOrder(o);
+                }
+            } else {
+                history.push('/home');
+            }
+        } else {
+            alert('Please select shipping and billing addresss');
+            history.goBack();
+        }
+        async function fetchCartItems() {
+            const res = await props.getCartItems();
+            if (res) {
+                setLoading(false);
+            } else {
+                setLoading(false);
+                (alert('something went wrong, Please try again!'));
+            }
+        }
+        fetchCartItems();
+        return () => {
+            localStorage.setItem('shippingAddress', null);
+            localStorage.setItem('billingAddress', null);
+            localStorage.setItem('orderType', null);
+        };
+    }, []);
+
     useEffect(() => {
         const shipping = JSON.parse(localStorage.getItem('shippingAddress'));
         const billing = JSON.parse(localStorage.getItem('billingAddress'));
@@ -29,24 +69,20 @@ const CheckoutConfirm = (props) => {
         if (billing) {
             setAddresses([billing, shipping]);
         } else {
+            alert('Please select shipping and billing addresss');
             history.goBack();
         }
 
         if (o) {
             setOrder(o);
             setOrderType(o.order_type);
-        } else if (props.cartItems && props.cartItems.length){
+        } else if (props.cartItems && props.cartItems.cartDetails && props.cartItems.cartDetails.length) {
             setOrderType('cart');
         } else {
             history.push('/home');
         }
         setLoading(false);
-        return () => {
-            localStorage.setItem('shippingAddress', null);
-            localStorage.setItem('billingAddress', null);
-            localStorage.setItem('orderType', null);
-        };
-    }, []);
+    }, [props.cartItems]);
 
 
     const selectPaymentType = (e) => {
@@ -170,7 +206,8 @@ const CheckoutConfirm = (props) => {
 const mapDispatchToProps = dispatch =>
     bindActionCreators(
         {
-            checkout
+            checkout,
+            getCartItems
         },
         dispatch
     );

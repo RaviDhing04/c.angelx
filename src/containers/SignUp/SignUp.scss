@@ -44,6 +44,10 @@
             font-weight: bold;
         }
 
+        .text-muted{
+          color:  #c32f3d!important
+        }
+
         .signUp-btn {
             background: #558ED4 0% 0% no-repeat padding-box;
             border-radius: 4px;
@@ -57,6 +61,7 @@
             letter-spacing: 0px;
             color: #558ED4;
             opacity: 1;
+            cursor: pointer;
         }
 
         .signup-link {
@@ -67,6 +72,7 @@
             opacity: 1;
             font-weight: 500;
             margin-top: 7rem;
+            cursor: pointer;
         }
     }
 }

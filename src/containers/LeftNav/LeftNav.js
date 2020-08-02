@@ -16,20 +16,22 @@ const LeftNav = props => {
           {links &&
             links.map(link => {
               return (
-                <div key={link.name} className={window.location.href.includes(link.path) ? "list-item active": "list-item" }>
+                <div key={link.name} className={window.location.href.includes(link.name.split(' ')[0]) ? "list-item active" : link.enable ? "list-item" : "list-item disable"}>
                   <img
                     className="nav-icon"
                     alt="bell-icon"
                     src={require(`../../assets/${link.icon}.svg`)}
                   ></img>
-                  <Nav className="flex-column">
+                  {link.enable ? <Nav className="flex-column">
                     <Nav.Link
                       as={Link}
                       to={merchantId ? link.path + link.name + "/" + merchantId : link.path + userId + "/" + link.name}
                     >
                       {link.name}
                     </Nav.Link>
-                  </Nav>
+                  </Nav> : (<Nav className="flex-column">
+                    <div className="nav-link"> {link.name} </div>
+                  </Nav>)}
                 </div>
               );
             })}

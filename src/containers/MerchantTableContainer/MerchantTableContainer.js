@@ -89,10 +89,10 @@ const MerchantTableContainer = props => {
           MerchantId: merchantId
         });
         setLoading(false);
-        res1 ? setLoading(false) : (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
+        res1 ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
       } else {
         setLoading(false);
-        (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
+        (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
       }
     } else if (name === "Coupons") {
       setLoading(true);
@@ -101,14 +101,14 @@ const MerchantTableContainer = props => {
         Timestamp: row.Timestamp
       });
       if (res) {
-        const res1 =  await props.getMerchantAllCoupons({
+        const res1 = await props.getMerchantAllCoupons({
           MerchantId: merchantId
         });
         setLoading(false);
-        res1 ? setLoading(false) : (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
+        res1 ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
       } else {
         setLoading(false);
-        (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
+        (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
       }
     }
   };
@@ -159,23 +159,28 @@ const MerchantTableContainer = props => {
           Add {name}
         </button>
         <div className="merchantTable-table">
-          {
-            <TableComp
-              tableData={Items}
-              tableHeader={tableHeader[name]}
-              tableKeys={tableKeys[name]}
-              onDelete={deleteRow}
-              showDelete={true}
-              showEdit={true}
-              onEdit={EditRow}
-            />
+          {Items && Items.length === 0 ? (
+            <React.Fragment>
+              {/* <div className="product-row-heading">{name}</div> */}
+              <span className="not-found"> No data added, Go to {name} to add {name}</span>
+            </React.Fragment>
+          ) : (
+              < TableComp
+                tableData={Items}
+                tableHeader={tableHeader[name]}
+                tableKeys={tableKeys[name]}
+                onDelete={deleteRow}
+                showDelete={true}
+                showEdit={true}
+                onEdit={EditRow}
+              />)
           }
         </div>
       </Container>
     </React.Fragment>
   ) : (
-    <CustomLoader />
-  );
+      <CustomLoader />
+    );
 };
 
 const mapDispatchToProps = dispatch =>
