@@ -32,8 +32,7 @@ const ViewAllProducts = props => {
         props.getLatestProducts();
         break;
       case "Wishlist":
-        props.getLatestProducts();
-        // props.getWishlistProducts({UserId: JSON.parse(localStorage.getItem('userData')).UserId,});
+        props.getWishlistProducts({UserId: JSON.parse(localStorage.getItem('userData')).UserId,});
         break;
       default:
         break;

@@ -25,7 +25,7 @@ const LeftNav = props => {
                   {link.enable ? <Nav className="flex-column">
                     <Nav.Link
                       as={Link}
-                      to={merchantId ? link.path + link.name + "/" + merchantId : link.path + userId + "/" + link.name}
+                      to={merchantId ? link.path + link.name + "/" + merchantId : link.path.includes('viewAllProducts') ? link.path + link.name : link.path + userId + "/" + link.name}
                     >
                       {link.name}
                     </Nav.Link>
