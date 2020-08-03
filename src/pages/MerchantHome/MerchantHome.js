@@ -39,15 +39,16 @@ const MerchantHome = props => {
         props.getFollowedMerchants({
           PatronId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId
         });
-      props.getBusinessDetailsUser({
-        MerchantId: merchantId
-      });
-    } else {
-      props.getBusinessDetails({
-        MerchantId: merchantId,
-        PatronId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId
-      });
+      // props.getBusinessDetailsUser({
+      //   MerchantId: merchantId
+      // });
     }
+    // else {
+    props.getBusinessDetails({
+      MerchantId: merchantId,
+      PatronId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId
+    });
+    // }
   }, []);
 
 
