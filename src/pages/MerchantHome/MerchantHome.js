@@ -96,12 +96,12 @@ const MerchantHome = props => {
     <React.Fragment>
       <div className="merchantHome-container">
         <React.Fragment>
-          {selectedBusiness && selectedBusiness.BannerImageURL.S ? (<div className="cover-img">
-            <img
+          <div className="cover-img">
+            {selectedBusiness && selectedBusiness.BannerImageURL.S ? (<img
               className="d-block w-100"
               src={selectedBusiness && selectedBusiness.BannerImageURL.S}
               alt="cover"
-            />
+            />) : null}
             {selectedBusiness && selectedBusiness.BannerImageURL.S ? (
               <div onChange={addFile}>
                 <label htmlFor="fileUpload_merchantBanner" class="btn">Change Cover</label>
@@ -115,7 +115,7 @@ const MerchantHome = props => {
                     accept=".jgp, .png"
                     style={{ display: "none" }}
                   /> <button htmlFor="fileUpload_merchantBanner" class="btn-center">Add Cover Image</button> </div>)}
-          </div>) : null}
+          </div>
           <div className="img-err">
             <img src={coverError} alt="cover" />
             <span>

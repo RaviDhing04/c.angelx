@@ -914,7 +914,7 @@ export const getBusinessDetails = (body = {}) => async dispatch => {
       dispatch({
         type: "SELECTED_BUSINESS",
         value: {
-          payload: response.result.data.Item
+          payload: response.result.data.Items[0]
         }
       });
       return true;
