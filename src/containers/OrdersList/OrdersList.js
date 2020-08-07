@@ -10,10 +10,9 @@ import { Switch } from "react-router-dom";
 
 const OrdersList = props => {
   const [loading, setLoading] = useState(true);
-  const [orderProducts, setorderProducts] = useState([]);
   const [pageName, setName] = useState("");
   // let orderProducts = [];
-  const { orderItems, productDetails, getOrderItems, activeCurrency } = props;
+  const { orderItems, getOrderItems, activeCurrency } = props;
   const { userId, name } = props.match.params;
 
   useEffect(() => {
@@ -36,41 +35,25 @@ const OrdersList = props => {
       res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
     }
     fetchOrderItems();
-  }, [userId, getOrderItems, name]);
-
-  useEffect(() => {
-    const makeOrderProduct = () => {
-      let out = [];
-      orderItems &&
-        orderItems.forEach(orderItem => {
-          productDetails &&
-            productDetails.forEach(product => {
-              if (orderItem.ProductId.S === product.ProductId.S) {
-                out.push({
-                  UserId: orderItem.UserId,
-                  Quantity: orderItem.Quantity,
-                  ...product
-                });
-              }
-            });
-        });
-      return out;
-    };
-    setorderProducts(makeOrderProduct());
-  }, [orderItems, productDetails]);
+  }, []);
 
   return !loading ? (
     <React.Fragment>
       <div className="orderlist-heading">{pageName}</div>
       <Container className="order-page-container" fluid>
         <div className="order-page">
-          {orderProducts.map(orderItem => {
-            return (
-              <OrderItem
-                key={+orderItem.ProductId.S}
-                orderItem={orderItem}
-                activeCurrency={activeCurrency}
-              />
+          {orderItems && orderItems.map((Item) => {
+            return (Item.ProductDetails && Item.ProductDetails.L && Item.ProductDetails.L.map((orderItem, index) => {
+              return (
+                <OrderItem
+                  // +orderItem.FinalPaymentId
+                  key={index}
+                  orderItem={orderItem.M}
+                  orderStatus={Item.OrderStatus}
+                  activeCurrency={activeCurrency}
+                />
+              );
+            })
             );
           })}
         </div>
@@ -92,10 +75,10 @@ const mapDispatchToProps = dispatch =>
 const mapStatetoProps = ({ app: { ordersListPage, common } }) => {
   console.log(ordersListPage);
   return {
-    orderItems: ordersListPage.orderItems.Items,
-    productDetails: ordersListPage.orderProductDetails.Items,
+    orderItems: ordersListPage.orderItems,
     activeCurrency: common.activeCurrency
   };
 };
 
 export default connect(mapStatetoProps, mapDispatchToProps)(OrdersList);
+

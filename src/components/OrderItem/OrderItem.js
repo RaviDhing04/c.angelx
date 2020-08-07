@@ -3,36 +3,38 @@ import { Container, Jumbotron } from "react-bootstrap";
 import "./OrderItem.scss";
 import plusIcon from "../../assets/plus.svg";
 import heartIcon from "../../assets/heart.svg";
-import formatter  from "../../utils/commonUtils/currencyUtils";
+import formatter from "../../utils/commonUtils/currencyUtils";
 
 const OrderItem = props => {
   const {
+    productData,
+    discountedPrice,
+    price
+  } = props.orderItem;
+
+  const { 
     ThumbnailImageURL,
     Name,
     MerchantHandle,
-    IsInStock,
-    ProductSpecifications,
-    Quantity,
-    IsDonationCampaign
-  } = props.orderItem;
+    IsInStock} = productData.M;
   return (
     <React.Fragment>
       {/* <Jumbotron fluid> */}
       <div className="order-wrapper">
-        <img className="item-image" alt="item" src={ThumbnailImageURL.S}></img>
+        <img className="item-image" alt="item" src={ThumbnailImageURL && ThumbnailImageURL.S}></img>
         <div className="item-detail">
-          <span className="item-name">{Name.S}</span>
-          <span className="merchant-name">{MerchantHandle.S}</span>
-          <span className={IsInStock.S === "true" ? "in-stock stock-info" : "out-of-stock stock-info"}>
-            {IsInStock.S === "true" ? "In Stock" : "Out Of Stock"}
+          <span className="item-name">{Name && Name.S}</span>
+          <span className="merchant-name">{MerchantHandle && MerchantHandle.S}</span>
+          <span className={IsInStock && IsInStock.S === "true" ? "in-stock stock-info" : "out-of-stock stock-info"}>
+            {IsInStock && IsInStock.S === "true" ? "In Stock" : "Out Of Stock"}
           </span>
         </div>
         <div className="item-pricing">
           <span className="item-price">
-            {formatter(props.activeCurrency)(ProductSpecifications.M.UnitPrice.S)}
+            {formatter(props.activeCurrency)(price && price.S)}
           </span>
           <span className="item-cutPrice">
-            {formatter(props.activeCurrency)(ProductSpecifications.M.UnitPrice.S)}
+            {formatter(props.activeCurrency)(discountedPrice && discountedPrice.S)}
           </span>
         </div>
         <div className="item-transit">
@@ -40,12 +42,12 @@ const OrderItem = props => {
             Transit Status
           </span>
           <span className="item-status">
-            Dispatched
+            {props.orderStatus && props.orderStatus.S}
           </span>
         </div>
         <div className="item-actions">
           <img className="heart-icon" alt="heart-icon" src={heartIcon}></img>
-          <span className="more-details">More Details</span>
+          {/* <span className="more-details">More Details</span> */}
         </div>
         {console.log(props.orderItem)}
       </div>

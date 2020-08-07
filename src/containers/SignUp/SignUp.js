@@ -37,14 +37,21 @@ const SignUp = props => {
     const email = userEmail;
     const current_password = formElements.formGroupCurrentPass.value;
     const password = formElements.formGroupPassword.value;
-    setLoading(true);
-    const res = await firstLogin({
-      email: email,
-      current_password: current_password,
-      new_password: password
-    });
-    res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
-    props.history.replace(props.location.pathname);
+    const confirmPassword = formElements.formGroupConfirmPassword.value;
+    if(password && confirmPassword) {
+       if (password === confirmPassword) {
+        setLoading(true);
+        const res = await firstLogin({
+          email: email,
+          current_password: current_password,
+          new_password: password
+        });
+        res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
+        props.history.replace('/home');
+       } else {
+         alert('Password and Confirm Password must be same');
+       }
+    }
   };
 
   const temp = props => {
@@ -73,9 +80,16 @@ const SignUp = props => {
               </Form.Group>
               <Form.Group controlId="formGroupPassword">
                 <Form.Label>Enter New Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" pattern=".*[\W\d\w].{7}" required autocomplete="new-password"/>
+                <Form.Control type="password" placeholder="Password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$" required autocomplete="new-password"/>
                 <Form.Text className="text-muted">
                   Password must contain minimum 8 characters (uppercase character, lowercase character, number and special character)
+              </Form.Text>
+              </Form.Group>
+              <Form.Group controlId="formGroupConfirmPassword">
+                <Form.Label>Confirm Password</Form.Label>
+                <Form.Control type="text" placeholder="Password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$" required autocomplete="new-password"/>
+                <Form.Text className="text-muted">
+                  Password must match the above password
               </Form.Text>
               </Form.Group>
               <Button className="signUp-btn" type="submit">

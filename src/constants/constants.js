@@ -1,5 +1,5 @@
 export const userLeftNavLinks = [
-  { name: "Pending in Total", path: "/home/ordersList/", icon: "hourglass", enable: false },
+  { name: "Pending in Total", path: "/home/ordersList/", icon: "hourglass", enable: true },
   { name: "Arears in Total", path: "/home/ordersList/", icon: "Group 1030", enable: false },
   { name: "Lay Buys in Total", path: "/home/ordersList/", icon: "shipping", enable: false },
   { name: "Group Buys in Total", path: "/home/ordersList/", icon: "shipping", enable: false },

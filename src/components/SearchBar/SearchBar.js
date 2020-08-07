@@ -57,7 +57,6 @@ const SearchBar = props => {
 
   useEffect(() => {
     window.addEventListener('click', function (event) {
-      debugger;
       if (!event.target.matches('.search-input') && !event.target.matches('.search-results')) {
         setShowDiv(false);
       }

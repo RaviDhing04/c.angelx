@@ -37,14 +37,21 @@ const ForgotPassword = props => {
     const email = userEmail;
     const current_password = formElements.formGroupCurrentPass.value;
     const password = formElements.formGroupPassword.value;
-    setLoading(true);
-    const res = await confirmForgotPassword({
-      email: email,
-      confirmation_code: current_password,
-      new_password: password
-    });
-    res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
-    props.history.replace(props.location.pathname);
+    const confirmPassword = formElements.formGroupConfirmPassword.value;
+    if (password && confirmPassword) {
+      if (password === confirmPassword) {
+        setLoading(true);
+        const res = await confirmForgotPassword({
+          email: email,
+          confirmation_code: current_password,
+          new_password: password
+        });
+        res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
+        props.history.replace(props.location.pathname);
+      } else {
+        alert('Password and Confirm Password must be same');
+      }
+    }
   };
 
   const temp = props => {
@@ -52,7 +59,7 @@ const ForgotPassword = props => {
       <div className="signUp-container">
         {loading ? <CustomLoader /> : null}
         <img
-          onClick={() => props.history.replace(props.location.pathname)}
+          onClick={() => { props.history.replace(props.location.pathname); setStep2(false) }}
           className="close"
           src={close}
           alt="close"
@@ -66,19 +73,25 @@ const ForgotPassword = props => {
             <Form id="forgotForm" onSubmit={e => confirmForgotPasswordUser(e)} autocomplete="off">
               <Form.Group controlId="formGroupCurrentPass">
                 <Form.Label>Enter Confirmation Code</Form.Label>
-                <Form.Control type="text" placeholder="Enter Code" key={1} required  autocomplete="off" />
+                <Form.Control type="text" placeholder="Enter Code" key={1} required autocomplete="off" />
                 <Form.Text className="text-muted">
                   Enter the confirmation code recieved on your email.
                 </Form.Text>
               </Form.Group>
               <Form.Group controlId="formGroupPassword">
                 <Form.Label>Enter New Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" pattern=".*[\W\d\w].{7}" required autocomplete="new-password" />
+                <Form.Control type="password" placeholder="Password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$" required autocomplete="new-password" />
                 <Form.Text className="text-muted">
                   Password must contain minimum 8 charachters (uppercase charachter, lowercase charachter, number and special charachter)
               </Form.Text>
               </Form.Group>
-
+              <Form.Group controlId="formGroupConfirmPassword">
+                <Form.Label>Confirm Password</Form.Label>
+                <Form.Control type="text" placeholder="Password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$" required autocomplete="new-password" />
+                <Form.Text className="text-muted">
+                  Password must match the above password
+              </Form.Text>
+              </Form.Group>
               <Button className="signUp-btn" type="submit">
                 Signup
               </Button>
@@ -106,6 +119,7 @@ const ForgotPassword = props => {
     params.get("resetPass") && (
       <CenterModal
         onHide={() => {
+          setStep2(false);
           props.history.replace(props.location.pathname);
         }}
         component={temp(props)}

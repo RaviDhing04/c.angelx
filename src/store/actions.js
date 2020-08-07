@@ -105,10 +105,7 @@ export const confirmForgotPassword = async (body = {}) => {
       method: "POST",
       body: body
     });
-    if (response && response.token) {
-      localStorage.setItem("token", response.token);
-      localStorage.setItem("refresh_token", response.refresh_token);
-      localStorage.setItem("userData", JSON.stringify(response));
+    if (response) {
       return true;
     } else {
       alert(response.message);
@@ -264,7 +261,6 @@ export const getWishlistProducts = (body = {}) => async dispatch => {
       }
     );
     if (response && response.result && response.result.data) {
-      debugger;
       let out = [];
       response.result.data.wishListDetails &&
         response.result.data.wishListDetails.forEach(orderItem => {
@@ -279,7 +275,6 @@ export const getWishlistProducts = (body = {}) => async dispatch => {
               }
             });
         });
-      debugger;
       dispatch({
         type: "VIEWALL_PRODUCTS",
         value: { payload: { 'Items': out } }
