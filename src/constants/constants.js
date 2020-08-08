@@ -1,8 +1,8 @@
 export const userLeftNavLinks = [
   { name: "Pending in Total", path: "/home/ordersList/", icon: "hourglass", enable: true },
   { name: "Arears in Total", path: "/home/ordersList/", icon: "Group 1030", enable: false },
-  { name: "Lay Buys in Total", path: "/home/ordersList/", icon: "shipping", enable: false },
-  { name: "Group Buys in Total", path: "/home/ordersList/", icon: "shipping", enable: false },
+  { name: "Lay Buys in Total", path: "/home/ordersList/", icon: "shipping", enable: true },
+  { name: "Group Buys in Total", path: "/home/ordersList/", icon: "shipping", enable: true },
   { name: "Pre-orders in Total", path: "/home/ordersList/", icon: "clock", enable: false },
   { name: "Donations", path: "/home/ordersList/", icon: "donate", enable: false },
   { name: "Wishlist", path: "/home/viewAllProducts/", icon: "heart-filled", enable: true },
@@ -12,8 +12,14 @@ export const userLeftNavLinks = [
 export const merchantLeftNavLinks = [
   { name: "Inventory", path: "/merchantHome/inventory/", icon: "inventory", enable: true },
   { name: "Campaigns", path: "/merchantHome/campaigns/", icon: "donate", enable: true },
-  { name: "Coupons", path: "/merchantHome/coupons/", icon: "coupon", enable: true },
-  { name: "Add Employees", path: "/merchantHome/myEmployees/", icon: "profile", enable: true }
+  { name: "Add Discount Coupons", path: "/merchantHome/coupons/", icon: "coupon", enable: true },
+  { name: "Subordinate Account", path: "/merchantHome/myEmployees/", icon: "Shape", enable: true },
+  { name: "Sales/Pending Deliveriest", path: "/merchantHome/myEmployees/", icon: "hourglass", enable: false },
+  { name: "Lay By Orders", path: "/merchantHome/myEmployees/", icon: "clock", enable: false },
+  { name: "Group Purchase Orders", path: "/merchantHome/myEmployees/", icon: "shopping-cart", enable: false },
+  { name: "Declined Orders", path: "/merchantHome/myEmployees/", icon: "blocked-symbol", enable: false },
+  { name: "Patrons", path: "/merchantHome/myEmployees/", icon: "profile", enable: false },
+  { name: "Statistics", path: "/merchantHome/myEmployees/", icon: "bar-graph", enable: false }
 ];
 
 export const profileLeftNavLinks = [
@@ -22,9 +28,9 @@ export const profileLeftNavLinks = [
 ];
 
 export const checkoutLeftNavLinks = [
-  { name: "Shipping Address", path: "/checkout/shipping/", icon: "location", enable: true },
+  { name: "Shipping Address", path: "/checkout/shipping/", icon: "delivery", enable: true },
   { name: "Billing Address", path: "/checkout/billing/", icon: "credit-card", enable: true },
-  { name: "Confirm Order", path: "/checkout/confirm/", icon: "location", enable: true }
+  { name: "Confirm Order", path: "/checkout/confirm/", icon: "info", enable: true }
 ];
 
 export const merchantList = [

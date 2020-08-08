@@ -62,28 +62,6 @@ const CheckoutConfirm = (props) => {
         };
     }, []);
 
-    useEffect(() => {
-        const shipping = JSON.parse(localStorage.getItem('shippingAddress'));
-        const billing = JSON.parse(localStorage.getItem('billingAddress'));
-        const o = JSON.parse(localStorage.getItem('orderType'));
-        if (billing) {
-            setAddresses([billing, shipping]);
-        } else {
-            alert('Please select shipping and billing addresss');
-            history.goBack();
-        }
-
-        if (o) {
-            setOrder(o);
-            setOrderType(o.order_type);
-        } else if (props.cartItems && props.cartItems.cartDetails && props.cartItems.cartDetails.length) {
-            setOrderType('cart');
-        } else {
-            history.push('/home');
-        }
-        setLoading(false);
-    }, [props.cartItems]);
-
 
     const selectPaymentType = (e) => {
         const type = e.target.value;

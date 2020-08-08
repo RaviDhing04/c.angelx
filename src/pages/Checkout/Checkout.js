@@ -33,6 +33,7 @@ const Checkout = props => {
                 links={ checkoutLeftNavLinks }
                 merchantId={""}
                 merchants={[]}
+                showMerchants={false}
               />
             </div>
             <div className="right-section">

@@ -33,6 +33,7 @@ const Profile = props => {
                 links={ profileLeftNavLinks }
                 merchantId={""}
                 merchants={[]}
+                showMerchants={false}
               />
             </div>
             <div className="right-section">

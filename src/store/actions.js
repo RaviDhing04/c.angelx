@@ -8,7 +8,7 @@ export const login = async (body = {}) => {
       method: "POST",
       body: body
     });
-    if (response) {
+    if (response && response.token) {
       localStorage.setItem("token", response.token);
       localStorage.setItem("refresh_token", response.refresh_token);
       localStorage.setItem("userData", JSON.stringify(response));

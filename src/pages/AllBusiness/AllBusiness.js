@@ -48,7 +48,7 @@ const AllBusiness = props => {
           <div className="business-card">
             <button onClick={() => history.push('/registerBusiness/addNew')} className="add-business">
               <img className="plus-icon" alt="plus-icon" src={plusIcon}></img>
-              Add New
+              Add Merchant / Non Profit Organization
             </button>
           </div>
         </div>

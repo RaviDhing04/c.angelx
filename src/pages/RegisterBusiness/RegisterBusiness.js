@@ -85,7 +85,7 @@ const RegisterBusiness = props => {
         <div className="RegisterBusiness">
           <Form id="RegisterBusinessForm" onSubmit={e => registerNew(e)}>
             <div className="sub-heading">Organization Details</div>
-            <Form.Row className="width-50">
+            <Form.Row className="width-25">
               <Col>
                 <Form.Group controlId="BusinessHandle">
                   <Form.Label>Your C-Angelx User Handle</Form.Label>
@@ -112,31 +112,6 @@ const RegisterBusiness = props => {
                 required />
                 </Form.Group>
               </Col> */}
-              <Col>
-                <Form.Group controlId="PaypalId">
-                  <Form.Label>Insert Paypal ID</Form.Label>
-                  <InputGroup>
-                    <Form.Control
-                      defaultValue={
-                        selectedBusinessDetails &&
-                        selectedBusinessDetails.PaymentIDs.M.PaypalId.S
-                      }
-                      type="text"
-                      placeholder="Paypal ID"
-                      required
-                    />
-                    <InputGroup.Append className="inputGroupPayfastID">
-                      <a
-                        className="signUp"
-                        href="https://www.paypal.com/in/webapps/mpp/account-selection"
-                        target="blank"
-                      >
-                        Click to Sign up!
-                      </a>
-                    </InputGroup.Append>
-                  </InputGroup>
-                </Form.Group>
-              </Col>
             </Form.Row>
             <Form.Row className="width-50">
               <Col>
@@ -190,7 +165,7 @@ const RegisterBusiness = props => {
                 </Form.Group>
               </Col> */}
             </Form.Row>
-            <Form.Row>
+            <Form.Row className="width-75">
               <Col>
                 <Form.Group controlId="BusinessContact">
                   <Form.Label>Contact Details</Form.Label>
@@ -233,6 +208,8 @@ const RegisterBusiness = props => {
                   />
                 </Form.Group>
               </Col>
+            </Form.Row>
+            <Form.Row className="width-75">
               <Col>
                 <Form.Group controlId="PayFastId">
                   <Form.Label>Insert Payfast ID</Form.Label>
@@ -250,6 +227,56 @@ const RegisterBusiness = props => {
                       <a
                         className="signUp"
                         href="https://www.payfast.co.za/registration"
+                        target="blank"
+                      >
+                        Click to Sign up!
+                      </a>
+                    </InputGroup.Append>
+                  </InputGroup>
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group controlId="PaypalId">
+                  <Form.Label>Insert Paypal ID</Form.Label>
+                  <InputGroup>
+                    <Form.Control
+                      defaultValue={
+                        selectedBusinessDetails &&
+                        selectedBusinessDetails.PaymentIDs.M.PaypalId.S
+                      }
+                      type="text"
+                      placeholder="Paypal ID"
+                      required
+                    />
+                    <InputGroup.Append className="inputGroupPayfastID">
+                      <a
+                        className="signUp"
+                        href="https://www.paypal.com/in/webapps/mpp/account-selection"
+                        target="blank"
+                      >
+                        Click to Sign up!
+                      </a>
+                    </InputGroup.Append>
+                  </InputGroup>
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group controlId="DHLId">
+                  <Form.Label>Insert DHL ID</Form.Label>
+                  <InputGroup>
+                    <Form.Control
+                      defaultValue={
+                        selectedBusinessDetails &&
+                        selectedBusinessDetails.DHLId && selectedBusinessDetails.DHLId.S
+                      }
+                      type="text"
+                      placeholder="DHL ID"
+                      required
+                    />
+                    <InputGroup.Append className="inputGroupPayfastID">
+                      <a
+                        className="signUp"
+                        href="https://www.dhl.com/en/express/shipping/open_account.html"
                         target="blank"
                       >
                         Click to Sign up!
@@ -411,13 +438,13 @@ const RegisterBusiness = props => {
               <Button onClick={e => cancel(e)} className="cancelButton">
                 Cancel
               </Button>
-              {action === 'edit' ? null:  <Button
+              {action === 'edit' ? null : <Button
                 onClick={() => setbuttonClicked(true)}
                 type="submit"
                 className="saveAnotherButton"
               >
                 Save & Add Another Business
-              </Button> }
+              </Button>}
               <Button className="saveButton" type="submit">
                 Save Business
               </Button>

@@ -59,15 +59,18 @@
         .unfollow {
             text-align: center;
             letter-spacing: 0px;
-            color: #FFFFFF;
+            color: #ffffff;
             opacity: 1;
             font-size: 0.875rem;
             font-weight: 500;
-            background: #558ED4 0% 0% no-repeat padding-box;
+            background: #558ed4 0% 0% no-repeat padding-box;
             border-radius: 4px;
             opacity: 1;
-            width: 7.6rem;
+            width: 9rem;
             margin-left: 1rem;
+            align-self: flex-end;
+            margin-bottom: 2rem;
+            height: 2.25rem;
         }
     }
 

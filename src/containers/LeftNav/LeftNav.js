@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import "./LeftNav.scss";
-import { Nav, Card, Form, InputGroup, FormControl } from "react-bootstrap";
+import { Nav, Card, Form, InputGroup, FormControl, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import checkmark from "../../assets/checkmark.svg";
 
 const LeftNav = props => {
-  const { links, merchants, merchantId } = props;
-  const userId = JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId;;
+  const { links, merchants, merchantId, showMerchants } = props;
+  const userId = JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId;
+  const [searchResults, setSearchResults] = useState([]);
+
+  const filterMerchants = (val) => {
+    let searchArray = val.trim().split(" ");
+    let re = new RegExp(searchArray.join("|"), "i");
+    let resultsObj = merchants && merchants.length && merchants.filter(merchant =>
+      re.test(merchant.BusinessHandle.S)
+    );
+    setSearchResults(resultsObj);
+  }
+
+  const submit = (e) => {
+    e.preventDefault();
+  }
 
   return (
     <div className="leftNav">
@@ -37,22 +51,23 @@ const LeftNav = props => {
             })}
         </Card.Body>
       </Card>
-      {merchants.length ? (
+      {showMerchants? (
         <div className="merchant-search">
           <div className="leftNav-heading">Merchant's & NPO's Followed</div>
           <Card className="list">
-            <Form className="merchant-search-bar">
+            <Form onSubmit={(e) => submit(e)} className="merchant-search-bar">
               <InputGroup className="search-input">
                 <FormControl
                   placeholder="Search"
                   aria-label="Search"
                   aria-describedby="basic-addon2"
+                  onChange={(e) => filterMerchants(e.target.value)}
                 />
               </InputGroup>
             </Form>
-            <Card.Body>
-              {merchants &&
-                merchants.map((merchant, i) => {
+            <Card.Body className="card-npo">
+              {searchResults && searchResults.length ?
+                (searchResults.map((merchant, i) => {
                   return (
                     <div key={i} className="list-item">
                       <Nav className="flex-column">
@@ -75,11 +90,39 @@ const LeftNav = props => {
                       ></img>
                     </div>
                   );
-                })}
+                })) : (merchants &&
+                  merchants.map((merchant, i) => {
+                    return (
+                      <div key={i} className="list-item">
+                        <Nav className="flex-column">
+                          <Nav.Link
+                            as={Link}
+                            to={{
+                              pathname: `/merchantHome/viewAllProducts/${"Latest Uploads"}/${merchant.MerchantId.S}`,
+                              state: {
+                                fromUser: true
+                              }
+                            }}
+                          >
+                            {merchant.BusinessHandle.S}
+                          </Nav.Link>
+                        </Nav>
+                        <img
+                          className="nav-icon"
+                          alt="checkmark"
+                          src={checkmark}
+                        ></img>
+                      </div>
+                    );
+                  })
+                )
+              }
             </Card.Body>
           </Card>
         </div>
       ) : null}
+      {showMerchants ? <Button className="statics-btn" >Show/Hide Statistics</Button> : null}
+      {!showMerchants ? <a href="/support" className="terms" >Edit Terms and Conditionss</a> : null}
     </div>
   );
 };

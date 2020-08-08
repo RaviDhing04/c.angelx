@@ -41,6 +41,7 @@ const Home = props => {
                 links={userLeftNavLinks}
                 merchants={followedMerchants}
                 merchantId={""}
+                showMerchants={true}
               />
             </div>
           ) : null}

@@ -34,28 +34,36 @@ const Footer = () => {
           <div>
             <span className="partner-info-text">Third party partners</span>
             <div className="partner-info-grid">
-              <img
-                className="partner-logo"
-                alt="dhl"
-                src={dhl}
-              ></img>
-              <img
-                className="partner-logo"
-                alt="payfast"
-                src={payfast}
-              ></img>
-            </div>
-            <div className="partner-info-grid">
-              <img
-                className="partner-logo"
-                alt="collivery"
-                src={collivery}
-              ></img>
-              <img
-                className="partner-logo"
-                alt="PayPal"
-                src={PayPal}
-              ></img>
+              <div className="logo-border">
+                <img
+                  className="partner-logo"
+                  alt="dhl"
+                  src={dhl}
+                ></img>
+              </div>
+              <div className="logo-border">
+                <img
+                  className="partner-logo"
+                  alt="payfast"
+                  src={payfast}
+                ></img>
+              </div>
+              <div className="partner-info-grid">
+                <div className="logo-border">
+                  <img
+                    className="partner-logo"
+                    alt="collivery"
+                    src={collivery}
+                  ></img>
+                </div>
+                <div className="logo-border">
+                  <img
+                    className="partner-logo"
+                    alt="PayPal"
+                    src={PayPal}
+                  ></img>
+                </div>
+              </div>
             </div>
           </div>
         </Col>

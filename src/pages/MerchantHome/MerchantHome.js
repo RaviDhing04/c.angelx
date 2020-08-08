@@ -140,7 +140,7 @@ const MerchantHome = props => {
               <a className="user-terms" href="/">
                 Terms and Conditions
               </a>
-              {selectedBusiness && selectedBusiness.IsMerchantFollowed.S === 'True' ? <button onClick={unfollow} className="unfollow">Unfollow</button> : <button onClick={follow} className="unfollow">Follow</button>}
+              {selectedBusiness && selectedBusiness.IsMerchantFollowed.S === 'true' ? <button onClick={unfollow} className="unfollow">Unfollow</button> : <button onClick={follow} className="unfollow">Follow</button>}
             </div>
           ) : null}
         </div>
@@ -154,6 +154,7 @@ const MerchantHome = props => {
                     : merchantLeftNavLinks
                 }
                 merchants={state && state.fromUser ? followedMerchants : []}
+                showMerchants={state && state.fromUser ? true: false}
                 merchantId={merchantId}
               />
             </div>
