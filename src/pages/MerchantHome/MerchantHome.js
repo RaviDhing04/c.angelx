@@ -80,7 +80,12 @@ const MerchantHome = props => {
       MerchantId: merchantId,
       "BusinessHandle": selectedBusiness && selectedBusiness.BusinessHandle.S
     });
-    res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
+    res ? function () {
+      setLoading(false)
+      props.getFollowedMerchants({
+        PatronId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId
+      });
+    }() : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
   }
 
   const follow = () => {
@@ -89,7 +94,12 @@ const MerchantHome = props => {
       MerchantId: merchantId,
       "BusinessHandle": selectedBusiness && selectedBusiness.BusinessHandle.S
     });
-    res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
+    res ? function () {
+      setLoading(false)
+      props.getFollowedMerchants({
+        PatronId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId
+      });
+    }() : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
   }
 
   return !loading ? (
@@ -102,19 +112,20 @@ const MerchantHome = props => {
               src={selectedBusiness && selectedBusiness.BannerImageURL.S}
               alt="cover"
             />) : null}
-            {selectedBusiness && selectedBusiness.BannerImageURL.S ? (
+            {state && state.fromUser ? null : (selectedBusiness && selectedBusiness.BannerImageURL.S ? (
               <div onChange={addFile}>
-                <label htmlFor="fileUpload_merchantBanner" class="btn">Change Cover</label>
+                <label htmlFor="fileUpload_merchantBanner" className="btn">Change Cover</label>
                 <input id="fileUpload_merchantBanner"
                   type="file"
                   accept=".jgp, .png"
                   style={{ display: "none" }}
                 /> </div>) : (<div onChange={addFile}>
-                  <input id="fileUpload_merchantBanner"
+                  <input id="fileUploadcenter_merchantBanner"
                     type="file"
                     accept=".jgp, .png"
                     style={{ display: "none" }}
-                  /> <button htmlFor="fileUpload_merchantBanner" class="btn-center">Add Cover Image</button> </div>)}
+                  /> <label htmlFor="fileUploadcenter_merchantBanner" className="btn-center">Add Cover Image</label> </div>))
+            }
           </div>
           <div className="img-err">
             <img src={coverError} alt="cover" />
@@ -154,7 +165,7 @@ const MerchantHome = props => {
                     : merchantLeftNavLinks
                 }
                 merchants={state && state.fromUser ? followedMerchants : []}
-                showMerchants={state && state.fromUser ? true: false}
+                showMerchants={state && state.fromUser ? true : false}
                 merchantId={merchantId}
               />
             </div>

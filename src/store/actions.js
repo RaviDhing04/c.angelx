@@ -8,11 +8,16 @@ export const login = async (body = {}) => {
       method: "POST",
       body: body
     });
+    debugger;
     if (response && response.token) {
       localStorage.setItem("token", response.token);
       localStorage.setItem("refresh_token", response.refresh_token);
       localStorage.setItem("userData", JSON.stringify(response));
       return true;
+    } else if (response.user_status === 'FORCE_CHANGE_PASSWORD') {
+      window.history.replaceState(null, '', window.location.pathname + `?signUp=true&reset=${body.password}`);
+      window.location.reload();
+      return 'reset';
     } else {
       return false;
     }
@@ -885,7 +890,7 @@ export const fetchRegisterBusiness = (body = {}) => async dispatch => {
       dispatch({
         type: "SELECTED_BUSINESS_DETAILS",
         value: {
-          payload: response.result.data.Item
+          payload: response.result.data.Items[0]
         }
       });
       return true;

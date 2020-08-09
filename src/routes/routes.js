@@ -332,19 +332,19 @@ export const merchant_child_routes = [
     type: "private"
   },
   {
-    path: "/merchantHome/Inventory/:action",
+    path: "/merchantHome/addInventory/:action/:merchantId",
     component: AsyncAddInventory,
     exact: true,
     type: "private"
   },
   {
-    path: "/merchantHome/Campaigns/:action",
+    path: "/merchantHome/addCampaigns/:action/:merchantId",
     component: AsyncAddCampaign,
     exact: true,
     type: "private"
   },
   {
-    path: "/merchantHome/Coupons/:action",
+    path: "/merchantHome/addCoupons/:action/:merchantId",
     component: AsyncAddCoupon,
     exact: true,
     type: "private"

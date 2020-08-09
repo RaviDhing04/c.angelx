@@ -16,7 +16,7 @@ const Login = props => {
     const password = formElements.formGroupPassword.value;
     setLoading(true);
     const res = await login({ email: email, password: password });
-    res ? (function() {setLoading(false);  props.history.replace(props.location.pathname);}()) : (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
+    res ? (res === 'reset' ? setLoading(false) : (function() {setLoading(false);  props.history.replace(props.location.pathname);}()) ) : (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
   };
 
   const temp = props => {

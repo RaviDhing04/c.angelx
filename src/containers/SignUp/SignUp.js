@@ -10,10 +10,17 @@ const SignUp = props => {
   const [step2, setStep2] = useState(false);
   const [userEmail, setEmail] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [defPass, setDefPass] = useState('');
 
   useEffect(() => {
+    let params = new URLSearchParams(props.location.search);
+    if (params.get("reset")) {
+      setStep2(true);
+      setDefPass(params.get("reset"));
+    }
     return () => {
       setStep2(false);
+      setDefPass('');
     };
   }, []);
 
@@ -73,7 +80,7 @@ const SignUp = props => {
             <Form id="signupForm" onSubmit={e => firstLoginUser(e)} autocomplete="off">
               <Form.Group controlId="formGroupCurrentPass">
                 <Form.Label>Enter Confirmation Code</Form.Label>
-                <Form.Control defaultValue="" type="text" placeholder="Enter Code" key={1} required  autocomplete="no"/>
+                <Form.Control defaultValue={defPass} type="text" placeholder="Enter Code" key={1} required  autocomplete="no"/>
                 <Form.Text className="text-muted">
                   Enter the confirmation code recieved on your email.
                 </Form.Text>
@@ -87,7 +94,7 @@ const SignUp = props => {
               </Form.Group>
               <Form.Group controlId="formGroupConfirmPassword">
                 <Form.Label>Confirm Password</Form.Label>
-                <Form.Control type="text" placeholder="Password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$" required autocomplete="new-password"/>
+                <Form.Control type="password" placeholder="Password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$" required autocomplete="new-password"/>
                 <Form.Text className="text-muted">
                   Password must match the above password
               </Form.Text>

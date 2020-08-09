@@ -7,7 +7,8 @@ import {
   setSelectedRow,
   deleteProduct,
   deleteCoupon,
-  clearSelectedRow
+  clearSelectedRow,
+  getBusinessDetails
 } from "../../store/actions";
 import "./MerchantTableContainer.scss";
 import { Container } from "react-bootstrap";
@@ -47,6 +48,10 @@ const MerchantTableContainer = props => {
 
   useEffect(() => {
     const fetchData = async () => {
+      props.getBusinessDetails({
+        MerchantId: merchantId,
+        PatronId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId
+      });
       switch (name) {
         case "Inventory":
           await props.getMerchantAllProductsAndSegregate({
@@ -116,7 +121,7 @@ const MerchantTableContainer = props => {
   const EditRow = row => {
     console.log(row);
     props.setSelectedRow(row);
-    history.push(`/merchantHome/${name}/edit`);
+    history.push(`/merchantHome/add${name}/edit/${merchantId}`);
   };
 
   const makeData = name => {
@@ -148,7 +153,7 @@ const MerchantTableContainer = props => {
   };
 
   const navigateToAdd = name => {
-    history.push(`/merchantHome/${name}/add`);
+    history.push(`/merchantHome/add${name}/add/${merchantId}`);
   };
 
   return !loading ? (
@@ -191,7 +196,8 @@ const mapDispatchToProps = dispatch =>
       setSelectedRow,
       deleteProduct,
       deleteCoupon,
-      clearSelectedRow
+      clearSelectedRow,
+      getBusinessDetails
     },
     dispatch
   );

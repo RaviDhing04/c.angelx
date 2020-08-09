@@ -128,7 +128,7 @@ const AddCoupons = props => {
                   <Form.Label>Discount(%)</Form.Label>
                   <Form.Control
                     defaultValue={couponDetails && couponDetails.Discount.S}
-                    type="number"
+                    type="number" min="1"
                     placeholder=" Type Discount(%)"
                     required
                   />
@@ -141,7 +141,7 @@ const AddCoupons = props => {
                     defaultValue={
                       couponDetails && couponDetails.MaxDiscountAmount.S
                     }
-                    type="number"
+                    type="number" min="1"
                     placeholder=" Max. Discount Amount"
                     required
                   />

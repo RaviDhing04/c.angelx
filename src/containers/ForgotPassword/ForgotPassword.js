@@ -87,7 +87,7 @@ const ForgotPassword = props => {
               </Form.Group>
               <Form.Group controlId="formGroupConfirmPassword">
                 <Form.Label>Confirm Password</Form.Label>
-                <Form.Control type="text" placeholder="Password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$" required autocomplete="new-password" />
+                <Form.Control type="password" placeholder="Password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$" required autocomplete="new-password" />
                 <Form.Text className="text-muted">
                   Password must match the above password
               </Form.Text>

@@ -122,7 +122,7 @@ const LeftNav = props => {
         </div>
       ) : null}
       {showMerchants ? <Button className="statics-btn" >Show/Hide Statistics</Button> : null}
-      {!showMerchants ? <a href="/support" className="terms" >Edit Terms and Conditionss</a> : null}
+      {!showMerchants && merchantId ? <a href="/support" className="terms" >Edit Terms and Conditionss</a> : null}
     </div>
   );
 };

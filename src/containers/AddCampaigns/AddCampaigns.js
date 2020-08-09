@@ -2,15 +2,22 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Container, Form, Button, Col, InputGroup } from "react-bootstrap";
 import { bindActionCreators } from "redux";
-import { addNewProduct, updateProduct, getSelectedProductDetails, clearSelectedRow } from "../../store/actions";
+import {
+  addNewProduct, updateProduct, getSelectedProductDetails, clearSelectedRow, uploadImage,
+  deleteImage
+} from "../../store/actions";
 import "./AddCampaigns.scss";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import plusIcon from "../../assets/plus.svg";
 import { addCampaignFormFields } from "../../constants/constants";
 import { useHistory } from "react-router-dom";
+import deleteIcon from "../../assets/delete_outline.svg";
 
 const AddCampaigns = props => {
   const [loading, setLoading] = useState(false);
+  const [imgloading, setImgLoading] = useState(false);
+  const [images, addImages] = useState([]);
+  const [thumbnail, addthumbnail] = useState([]);
   const { addNewProduct, selectedBusiness, selectedRow } = props;
   const [productDetails, setProductDetails] = useState(null);
   const action = props.match.params.action;
@@ -18,11 +25,12 @@ const AddCampaigns = props => {
 
   useEffect(() => {
     async function fetchData() {
-      if (selectedRow) {
+      if (selectedRow && selectedBusiness) {
         const payload = {
           ProductId: selectedRow.ProductId.S,
           Timestamp: selectedRow.Timestamp.S
         };
+        setLoading(true);
         const res = await props.getSelectedProductDetails(payload);
         if (res) {
           setProductDetails(res);
@@ -36,10 +44,20 @@ const AddCampaigns = props => {
     if (action === "edit") {
       fetchData();
     }
-    return () => { 
+
+    if (!selectedBusiness) {
+      history.goBack();
+    }
+    return () => {
       props.clearSelectedRow();
     }
   }, []);
+
+  useEffect(() => {
+    const prodImages = [];
+    productDetails && productDetails.ProductImages.L.forEach((img) => { if (img.S !== "null") { prodImages.push(img.S) } });
+    if (prodImages && prodImages.length) addImages([...prodImages]);
+  }, [productDetails]);
 
   const add = async event => {
     let payload = {
@@ -69,21 +87,20 @@ const AddCampaigns = props => {
           break;
       }
     });
-
+    payload['ThumbnailImageURL'] = thumbnail[0] ? thumbnail[0] : null;
+    payload['FullImageURL1'] = images[0] ? images[0] : null;
+    payload['FullImageURL2'] = images[1] ? images[1] : null;
+    payload['FullImageURL3'] = images[2] ? images[2] : null;
     payload["MerchantId"] = selectedBusiness.MerchantId.S;
     payload["MerchantHandle"] = selectedBusiness.BusinessHandle.S;
-    if (action === 'edit') { 
+    if (action === 'edit') {
       payload['Timestamp'] = selectedRow.Timestamp.S;
       payload['ProductId'] = productDetails.ProductId.S;
       payload['IsActive'] = productDetails.IsActive.S;
-      payload['ThumbnailImageURL'] = productDetails.ThumbnailImageURL.S;
-      payload['FullImageURL1'] = productDetails.ProductImages.L.S;
-      payload['FullImageURL2'] = productDetails.ProductImages.L.S;
-      payload['FullImageURL3'] = productDetails.ProductImages.L.S;
-     }
+    }
     setLoading(true);
     const res = action === 'add' ? await addNewProduct(payload) : await updateProduct(payload);
-    res ? setLoading(false) : (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
+    res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
     history.goBack();
   };
 
@@ -94,12 +111,45 @@ const AddCampaigns = props => {
     setLoading(false);
   };
 
-  const addFile = event => {
-    console.log(event.target.files[0]);
+  const toBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+
+  const addFile = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setImgLoading(true);
+      const fileType = event.target.files[0].type;
+      const fileString = await toBase64(file);
+      const payload = { "image_type": "product", "added_info": { "merchant_id": selectedBusiness.MerchantId.S }, "img": fileString.split(',')[1], "image_extension": fileType }
+      const res = await props.uploadImage(payload);
+      res ? setImgLoading(false) : (function () { setImgLoading(false); (alert('something went wrong, Please try again!')) }());
+      if (res) {
+        addImages([...images, res.full_image_url]);
+        addthumbnail([...thumbnail, res.thumb_image_url]);
+      }
+    }
+  };
+
+  const deleteImg = async (url) => {
+    if (url) {
+      setImgLoading(true);
+      const res = await props.deleteImage({
+        "path": url
+      });
+      res ? setImgLoading(false) : (function () { setImgLoading(false); (alert('something went wrong, Please try again!')) }());
+      if (res) {
+        addImages([...images.filter(e => e !== url)]);
+      }
+    }
   };
 
   return !loading ? (
     <React.Fragment>
+      {imgloading ? <CustomLoader /> : null}
       <div className="add-campaigns-heading">Add Campaigns</div>
       <Container className="add-campaigns-container" fluid>
         <div className="AddCampaign">
@@ -131,7 +181,6 @@ const AddCampaigns = props => {
                     required
                   >
                     <option value="testValue"> Environment</option>
-                    <option value="testValue"> PM Cares</option>
                     <option value="testValue"> Social Welfare </option>
                   </Form.Control>
                 </Form.Group>
@@ -149,8 +198,15 @@ const AddCampaigns = props => {
                 </Form.Group>
               </Col> */}
             </Form.Row>
-            <Form.Row className="width-25">
-              <Col className="fileUpload-box">
+            <Form.Row className={images.length > 0 ? `width-${25 * (images.length < 3 ? (images.length + 1) : images.length)}` : `width-25`}>
+              {images.map((image, index) => {
+                return (<Col key={index}>
+                  <div className="prod-img">
+                    <img className="prod-thumb" alt="prod-thumb" src={image} ></img>
+                    <img onClick={() => deleteImg(image)} className="delete-icon" alt="delete-icon" src={deleteIcon}></img>
+                  </div></Col>)
+              })}
+              {images.length < 3 ? <Col className="fileUpload-box">
                 <Form.Group>
                   {/* <img src={gallery} alt="gallery"></img> */}
                   <Form.Label
@@ -175,7 +231,7 @@ const AddCampaigns = props => {
                     style={{ display: "none" }}
                   />
                 </Form.Group>
-              </Col>
+              </Col> : null}
             </Form.Row>
             <Form.Row>
               <Col>
@@ -186,7 +242,7 @@ const AddCampaigns = props => {
                       productDetails &&
                       productDetails.DonationCampaignDetails.M.MinDonation.S
                     }
-                    type="number"
+                    type="number" min="1"
                     placeholder=" Type Minimum Donation"
                     required
                   />
@@ -200,7 +256,7 @@ const AddCampaigns = props => {
                       productDetails &&
                       productDetails.DonationCampaignDetails.M.Target.S
                     }
-                    type="number"
+                    type="number" min="1"
                     placeholder="Type Target Donation"
                     required
                   />
@@ -245,7 +301,7 @@ const AddCampaigns = props => {
                 Cancel
               </Button>
               <Button className="saveButton" type="submit">
-                Save Inventory
+                Save Campaign
               </Button>
             </div>
           </Form>
@@ -253,8 +309,8 @@ const AddCampaigns = props => {
       </Container>
     </React.Fragment>
   ) : (
-    <CustomLoader />
-  );
+      <CustomLoader />
+    );
 };
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
@@ -262,7 +318,9 @@ const mapDispatchToProps = dispatch =>
       addNewProduct,
       updateProduct,
       getSelectedProductDetails,
-      clearSelectedRow
+      clearSelectedRow,
+      uploadImage,
+      deleteImage
     },
     dispatch
   );

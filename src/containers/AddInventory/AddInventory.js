@@ -19,6 +19,7 @@ import deleteIcon from "../../assets/delete_outline.svg";
 
 const AddInventory = props => {
   const [loading, setLoading] = useState(false);
+  const [imgloading, setImgLoading] = useState(false);
   const [colors, addColors] = useState([]);
   const [productDetails, setProductDetails] = useState(null);
   const [images, addImages] = useState([]);
@@ -29,11 +30,12 @@ const AddInventory = props => {
 
   useEffect(() => {
     async function fetchData() {
-      if (selectedRow) {
+      if (selectedRow && selectedBusiness) {
         const payload = {
           ProductId: selectedRow.ProductId.S,
           Timestamp: selectedRow.Timestamp.S
         };
+        setLoading(true);
         const res = await props.getSelectedProductDetails(payload);
         if (res) {
           await setProductDetails(res);
@@ -45,6 +47,10 @@ const AddInventory = props => {
     }
     if (action === "edit") {
       fetchData();
+    }
+
+    if (!selectedBusiness) {
+      history.goBack();
     }
 
     return () => {
@@ -139,12 +145,12 @@ const AddInventory = props => {
   const addFile = async (event) => {
     const file = event.target.files[0];
     if (file) {
-      setLoading(true);
+      setImgLoading(true);
       const fileType = event.target.files[0].type;
       const fileString = await toBase64(file);
       const payload = { "image_type": "product", "added_info": { "merchant_id": selectedBusiness.MerchantId.S }, "img": fileString.split(',')[1], "image_extension": fileType }
       const res = await props.uploadImage(payload);
-      res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
+      res ? setImgLoading(false) : (function () { setImgLoading(false); (alert('something went wrong, Please try again!')) }());
       if (res) {
         addImages([...images, res.full_image_url]);
         addthumbnail([...thumbnail, res.thumb_image_url]);
@@ -154,11 +160,11 @@ const AddInventory = props => {
 
   const deleteImg = async (url) => {
     if (url) {
-      setLoading(true);
+      setImgLoading(true);
       const res = await props.deleteImage({
         "path": url
       });
-      res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
+      res ? setImgLoading(false) : (function () { setImgLoading(false); (alert('something went wrong, Please try again!')) }());
       if (res) {
         addImages([...images.filter(e => e !== url)]);
       }
@@ -173,6 +179,7 @@ const AddInventory = props => {
 
   return !loading ? (
     <React.Fragment>
+      {imgloading ? <CustomLoader /> : null}
       <div className="add-inventory-heading">Add Inventory</div>
       <Container className="add-inventory-container" fluid>
         <div className="AddProduct">
@@ -289,7 +296,7 @@ const AddInventory = props => {
               </Col>
             </Form.Row>
             {colors && colors.length ? (
-              <Form.Row className="">
+              <Form.Row className="width-25">
                 <Form.Label className="width-100">Added Colors</Form.Label>
                 {colors &&
                   colors.length &&
@@ -321,7 +328,7 @@ const AddInventory = props => {
                       productDetails &&
                       productDetails.ProductSpecifications.M.UnitPrice.S
                     }
-                    type="number"
+                    type="number" min="1"
                     placeholder=" Type Unit Price"
                     required
                   />
@@ -335,7 +342,7 @@ const AddInventory = props => {
                       productDetails &&
                       productDetails.ProductSpecifications.M.AvailableQuantity.S
                     }
-                    type="number"
+                    type="number" min="1"
                     placeholder=" Available Quantity"
                     required
                   />
@@ -368,7 +375,7 @@ const AddInventory = props => {
                       productDetails &&
                       productDetails.ProductSpecifications.M.Height.S
                     }
-                    type="number"
+                    type="number" min="1"
                     placeholder=" Type Height (in cm)"
                     required
                   />
@@ -382,7 +389,7 @@ const AddInventory = props => {
                       productDetails &&
                       productDetails.ProductSpecifications.M.Width.S
                     }
-                    type="number"
+                    type="number" min="1"
                     placeholder=" Type Width (in cm)"
                     required
                   />
@@ -396,7 +403,7 @@ const AddInventory = props => {
                       productDetails &&
                       productDetails.ProductSpecifications.M.Length.S
                     }
-                    type="number"
+                    type="number" min="1"
                     placeholder=" Type Length (in cm)"
                     required
                   />
@@ -410,7 +417,7 @@ const AddInventory = props => {
                       productDetails &&
                       productDetails.ProductSpecifications.M.Weight.S
                     }
-                    type="number"
+                    type="number" min="1"
                     placeholder=" Type Weight (in kg)"
                     required
                   />

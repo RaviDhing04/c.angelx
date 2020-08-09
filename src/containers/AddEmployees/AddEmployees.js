@@ -168,7 +168,7 @@ const AddContacts = props => {
                     defaultValue={
                       searchedContact && searchedContact.phone_number
                     }
-                    type="number"
+                    type="number" min="1"
                     placeholder="Contact Phone number"
                     disabled
                   />

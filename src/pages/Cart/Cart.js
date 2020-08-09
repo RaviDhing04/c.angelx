@@ -148,7 +148,7 @@ const Cart = props => {
                 <span> { formatter(activeCurrency)(couponSaving) } </span>
               </div> */}
                 <div className="saving">
-                  <span>Your saving</span>
+                  <span>Your Saving</span>
                   <span> {formatter(activeCurrency)(cartItems.totalUndiscountedAmount - cartItems.totalDiscountedAmount)} </span>
                 </div>
                 <div className="line"></div>
@@ -160,7 +160,7 @@ const Cart = props => {
                   Proceed to checkout
                 </button>
               </div>
-              <Nav.Link as={Link} className="continue-shopping" to={"/"}>Continue shopping</Nav.Link>
+              <Nav.Link as={Link} className="continue-shopping" to={"/"}>Continue Shopping</Nav.Link>
             </div>
           </div>
         )}

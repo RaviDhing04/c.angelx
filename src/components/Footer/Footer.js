@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./Footer.scss";
 import { Container, Row, Col, Nav } from "react-bootstrap";
 import { footerLinks, socialSharing } from "../../constants/constants";
-import brandlogo from "../../assets/brand-logo.svg";
+import brandlogo from "../../assets/brand-logo.png";
 import dhl from "../../assets/dhl.svg";
 import payfast from "../../assets/payfast.png";
 import collivery from "../../assets/collivery.png";

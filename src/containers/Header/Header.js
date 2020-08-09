@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
 import { Navbar, Nav, Container, Dropdown, Button } from "react-bootstrap";
-import brandlogo from "../../assets/brand-logo.svg";
+import brandlogo from "../../assets/brand-logo.png";
 import globe from "../../assets/globe.svg";
 import heart from "../../assets/heart-filled.svg";
 import shoppingcart from "../../assets/shopping-cart.svg";
