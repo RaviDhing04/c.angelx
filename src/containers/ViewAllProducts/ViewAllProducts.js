@@ -54,7 +54,7 @@ const ViewAllProducts = props => {
     const rows = [];
     for (let index = 0; index < Items.length; index = index + itemsPerRow) {
       rows.push(
-        <Row className="product-row">
+        <Row className={(Items.length - index > itemsPerRow) ? "product-row" : "product-row-no-flex"}>
           {Items &&
             Items.slice(index, index + itemsPerRow).map((item, index) => {
               return (

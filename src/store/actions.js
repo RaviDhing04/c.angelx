@@ -8,16 +8,17 @@ export const login = async (body = {}) => {
       method: "POST",
       body: body
     });
-    debugger;
     if (response && response.token) {
       localStorage.setItem("token", response.token);
       localStorage.setItem("refresh_token", response.refresh_token);
       localStorage.setItem("userData", JSON.stringify(response));
-      return true;
-    } else if (response.user_status === 'FORCE_CHANGE_PASSWORD') {
-      window.history.replaceState(null, '', window.location.pathname + `?signUp=true&reset=${body.password}`);
+      return 'success';
+    } else if (response && response.user_status === 'FORCE_CHANGE_PASSWORD') {
+      window.history.replaceState(null, '', window.location.pathname + `?signUp=true&email=${body.email}&reset=${body.password}`);
       window.location.reload();
       return 'reset';
+    } else if (response && response.message) {
+      return true;
     } else {
       return false;
     }
@@ -52,8 +53,10 @@ export const signUp = async (body = {}) => {
       method: "POST",
       body: body
     });
-    if (response) {
-      return response;
+    if (response && response.user_status) {
+      return response
+    } else if (response && response.message) {
+      return true;
     } else {
       return false;
     }
@@ -75,8 +78,10 @@ export const firstLogin = async (body = {}) => {
       localStorage.setItem("refresh_token", response.refresh_token);
       localStorage.setItem("userData", JSON.stringify(response));
       return true;
-    } else {
+    } else if (response && response.message) {
       alert(response.message)
+      return true;
+    } else {
       return false;
     }
   } catch (err) {
@@ -92,8 +97,13 @@ export const forgotPassword = async (body = {}) => {
       method: "POST",
       body: body
     });
-    if (response) {
-      return response;
+    if (response && response.message) {
+      if (response.user_status) {
+        return response;
+      } else {
+        alert(response.message)
+        return true;
+      }
     } else {
       return false;
     }
@@ -110,10 +120,10 @@ export const confirmForgotPassword = async (body = {}) => {
       method: "POST",
       body: body
     });
-    if (response) {
+    if (response && response.message) {
+      alert(response.message);
       return true;
     } else {
-      alert(response.message);
       return false;
     }
   } catch (err) {

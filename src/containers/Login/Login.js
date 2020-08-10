@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CenterModal from "../../components/CenterModal/CenterModal";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
-import { Form, Button} from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import close from "../../assets/close.svg";
 import { login } from "../../store/actions";
 import "./Login.scss";
@@ -16,7 +16,7 @@ const Login = props => {
     const password = formElements.formGroupPassword.value;
     setLoading(true);
     const res = await login({ email: email, password: password });
-    res ? (res === 'reset' ? setLoading(false) : (function() {setLoading(false);  props.history.replace(props.location.pathname);}()) ) : (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
+    res ? (res === 'reset' ? setLoading(false) : res === 'success' ? (function () { setLoading(false); props.location.pathname.includes('landing') ? props.history.replace('/home') : props.history.replace(props.location.pathname) }()) : setLoading(false)) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
   };
 
   const temp = props => {
@@ -37,12 +37,12 @@ const Login = props => {
           <Form onSubmit={e => loginUser(e)}>
             <Form.Group controlId="formGroupEmail">
               <Form.Label>Enter Email</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" required/>
+              <Form.Control type="email" placeholder="Enter email" required />
             </Form.Group>
 
             <Form.Group controlId="formGroupPassword">
               <Form.Label>Enter Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" required/>
+              <Form.Control type="password" placeholder="Password" required />
             </Form.Group>
             <Button className="login-btn" type="submit">
               Login

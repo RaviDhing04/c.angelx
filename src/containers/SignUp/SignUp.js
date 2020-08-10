@@ -17,6 +17,7 @@ const SignUp = props => {
     if (params.get("reset")) {
       setStep2(true);
       setDefPass(params.get("reset"));
+      setEmail(params.get("email"));
     }
     return () => {
       setStep2(false);
@@ -45,19 +46,18 @@ const SignUp = props => {
     const current_password = formElements.formGroupCurrentPass.value;
     const password = formElements.formGroupPassword.value;
     const confirmPassword = formElements.formGroupConfirmPassword.value;
-    if(password && confirmPassword) {
-       if (password === confirmPassword) {
+    if (password && confirmPassword) {
+      if (password === confirmPassword) {
         setLoading(true);
         const res = await firstLogin({
           email: email,
           current_password: current_password,
           new_password: password
         });
-        res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
-        props.history.replace('/home');
-       } else {
-         alert('Password and Confirm Password must be same');
-       }
+        res ? function () { setLoading(false); setStep2(false); props.history.replace('/home'); }() : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
+      } else {
+        alert('Password and Confirm Password must be same');
+      }
     }
   };
 
@@ -80,21 +80,21 @@ const SignUp = props => {
             <Form id="signupForm" onSubmit={e => firstLoginUser(e)} autocomplete="off">
               <Form.Group controlId="formGroupCurrentPass">
                 <Form.Label>Enter Confirmation Code</Form.Label>
-                <Form.Control defaultValue={defPass} type="text" placeholder="Enter Code" key={1} required  autocomplete="no"/>
+                <Form.Control defaultValue={defPass} type="text" placeholder="Enter Code" key={1} required autocomplete="no" />
                 <Form.Text className="text-muted">
                   Enter the confirmation code recieved on your email.
                 </Form.Text>
               </Form.Group>
               <Form.Group controlId="formGroupPassword">
                 <Form.Label>Enter New Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$" required autocomplete="new-password"/>
+                <Form.Control type="password" placeholder="Password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$" required autocomplete="new-password" />
                 <Form.Text className="text-muted">
                   Password must contain minimum 8 characters (uppercase character, lowercase character, number and special character)
               </Form.Text>
               </Form.Group>
               <Form.Group controlId="formGroupConfirmPassword">
                 <Form.Label>Confirm Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$" required autocomplete="new-password"/>
+                <Form.Control type="password" placeholder="Password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$" required autocomplete="new-password" />
                 <Form.Text className="text-muted">
                   Password must match the above password
               </Form.Text>

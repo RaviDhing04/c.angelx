@@ -24,11 +24,8 @@ const ForgotPassword = props => {
     // const password = formElements.formGroupPassword.value;
     setLoading(true);
     const res = await forgotPassword({ email: email });
-    res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
+    res ? (res.user_status === 'VERIFIED' ? function() {setStep2(true); setLoading(false);}() : res.user_status === 'FORCE_CHANGE_PASSWORD' ? function() {setLoading(false); alert(res.message); props.history.replace(props.location.pathname + "?signUp=true")}() : setLoading(false)) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
     setEmail(email);
-    if (res.message) {
-      setStep2(true);
-    }
   };
 
   const confirmForgotPasswordUser = async event => {
