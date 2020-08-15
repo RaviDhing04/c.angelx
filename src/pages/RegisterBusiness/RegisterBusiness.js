@@ -175,7 +175,7 @@ const RegisterBusiness = props => {
                       selectedBusinessDetails.BusinessContact.S
                     }
                     type="tel"
-                    pattern="^[0-9].{10}$"
+                    pattern="^[0-9].{9}$"
                     placeholder="10 digit Contact Number"
                     required
                   />
@@ -203,7 +203,7 @@ const RegisterBusiness = props => {
                       selectedBusinessDetails &&
                       selectedBusinessDetails.OrgWebsite && selectedBusinessDetails.OrgWebsite.S
                     }
-                    type="url"
+                    type="text"
                     placeholder="www.Domain.com"
                   />
                 </Form.Group>
@@ -340,14 +340,14 @@ const RegisterBusiness = props => {
               </Col>
               <Col>
                 <Form.Group controlId="Province">
-                  <Form.Label>Province</Form.Label>
+                  <Form.Label>Province/ State</Form.Label>
                   <Form.Control
                     defaultValue={
                       selectedBusinessDetails &&
                       selectedBusinessDetails.BusinessAddress.M.Province.S
                     }
                     type="text"
-                    placeholder="Type Province"
+                    placeholder="Type Province/ State"
                     required
                   />
                 </Form.Group>

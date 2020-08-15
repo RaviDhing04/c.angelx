@@ -27,6 +27,7 @@ import CustomLoader from "../../components/CustomLoader/CustomLoader";
 const MerchantHome = props => {
   const [loading, setLoading] = useState(false);
   const [merchantId, setMerchantId] = useState('');
+  const [IsMerchantFollowed, setIsMerchantFollowed] = useState('false');
   const { followedMerchants, selectedBusiness } = props;
   const { state } = props.location;
 
@@ -51,6 +52,10 @@ const MerchantHome = props => {
     // }
   }, []);
 
+  useEffect(()=> {
+    setIsMerchantFollowed(selectedBusiness && selectedBusiness.IsMerchantFollowed.S);
+  }, [selectedBusiness]);
+
 
   const toBase64 = file => new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -74,28 +79,30 @@ const MerchantHome = props => {
     }
   };
 
-  const unfollow = () => {
-    const res = props.unfollowmerchant({
+  const unfollow = async () => {
+    const res = await props.unfollowmerchant({
       PatronId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId,
       MerchantId: merchantId,
       "BusinessHandle": selectedBusiness && selectedBusiness.BusinessHandle.S
     });
     res ? function () {
       setLoading(false)
+      setIsMerchantFollowed('false');
       props.getFollowedMerchants({
         PatronId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId
       });
     }() : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
   }
 
-  const follow = () => {
-    const res = props.followmerchant({
+  const follow = async () => {
+    const res = await props.followmerchant({
       PatronId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId,
       MerchantId: merchantId,
       "BusinessHandle": selectedBusiness && selectedBusiness.BusinessHandle.S
     });
     res ? function () {
       setLoading(false)
+      setIsMerchantFollowed('true');
       props.getFollowedMerchants({
         PatronId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId
       });
@@ -141,9 +148,9 @@ const MerchantHome = props => {
               {selectedBusiness && selectedBusiness.BusinessHandle.S}
             </span>
             <span className="merchant-contact">
-              {selectedBusiness && selectedBusiness.OrgWebsite.S} |{" "}
-              {selectedBusiness && selectedBusiness.BusinessContact.S} |{" "}
-              {selectedBusiness && selectedBusiness.BusinessEmail.S}
+              {selectedBusiness && selectedBusiness.OrgWebsite.S ? selectedBusiness.OrgWebsite.S + '|' : null }
+              {selectedBusiness && selectedBusiness.BusinessContact.S ? selectedBusiness.BusinessContact.S + '|' : null }
+              {selectedBusiness && selectedBusiness.BusinessEmail.S ? selectedBusiness.BusinessEmail.S + '|' : null }
             </span>
           </div>
           {state && state.fromUser ? (
@@ -151,7 +158,7 @@ const MerchantHome = props => {
               <a className="user-terms" href="/">
                 Terms and Conditions
               </a>
-              {selectedBusiness && selectedBusiness.IsMerchantFollowed.S === 'true' ? <button onClick={unfollow} className="unfollow">Unfollow</button> : <button onClick={follow} className="unfollow">Follow</button>}
+              {IsMerchantFollowed === 'true' ? <button onClick={unfollow} className="unfollow">Unfollow</button> : <button onClick={follow} className="unfollow">Follow</button>}
             </div>
           ) : null}
         </div>

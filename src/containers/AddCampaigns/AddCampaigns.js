@@ -150,14 +150,14 @@ const AddCampaigns = props => {
   return !loading ? (
     <React.Fragment>
       {imgloading ? <CustomLoader /> : null}
-      <div className="add-campaigns-heading">Add Campaigns</div>
+      <div className="add-campaigns-heading">Add Cause</div>
       <Container className="add-campaigns-container" fluid>
         <div className="AddCampaign">
           <Form id="AddCampaignForm" onSubmit={e => add(e)}>
             <Form.Row className="width-50">
               <Col>
                 <Form.Group controlId="ProductName">
-                  <Form.Label>Campaign Name</Form.Label>
+                  <Form.Label>Cause Name</Form.Label>
                   <Form.Control
                     defaultValue={
                       productDetails &&
@@ -171,7 +171,7 @@ const AddCampaigns = props => {
               </Col>
               <Col>
                 <Form.Group controlId="ProductCategory">
-                  <Form.Label>Campaign Category</Form.Label>
+                  <Form.Label>Cause Category</Form.Label>
                   <Form.Control
                     as="select"
                     defaultValue={
@@ -283,14 +283,14 @@ const AddCampaigns = props => {
             <Form.Row className="width-100">
               <Col>
                 <Form.Group controlId="ProductDescription">
-                  <Form.Label>Campaign Description</Form.Label>
+                  <Form.Label>Cause Description</Form.Label>
                   <Form.Control
                     defaultValue={
                       productDetails &&
                       productDetails.Description.S
                     }
                     as="textarea"
-                    placeholder="Type Campaign Description"
+                    placeholder="Type Cause Description"
                     required
                   />
                 </Form.Group>
@@ -298,10 +298,10 @@ const AddCampaigns = props => {
             </Form.Row>
             <div className="buttons">
               <Button onClick={e => cancel(e)} className="cancelButton">
-                Cancel
+                Reset
               </Button>
               <Button className="saveButton" type="submit">
-                Save Campaign
+                Save Cause
               </Button>
             </div>
           </Form>

@@ -32,10 +32,13 @@ const CheckoutShipping = props => {
     fetchSavedShippingAddresses();
   }, []);
 
-  const next = () => {
+  const next = async () => {
     setLoading(false);
     setSelectedAddress(null);
-  }
+    const res = await getAllShippingAddress();
+    res ? (function () { setAddresses(res); setLoading(false); }()) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
+
+}
 
   const addNew = async event => {
     event.preventDefault();
@@ -235,7 +238,7 @@ const CheckoutShipping = props => {
             </Form.Row>
             <div className="buttons">
               <Button onClick={e => cancel(e)} className="cancelButton">
-                Cancel
+                Reset
             </Button>
               <Button className="saveButton" type="submit">
                 Continue

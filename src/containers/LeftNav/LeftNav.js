@@ -39,7 +39,7 @@ const LeftNav = props => {
                   {link.enable ? <Nav className="flex-column">
                     <Nav.Link
                       as={Link}
-                      to={merchantId ? link.path + link.name + "/" + merchantId : link.path.includes('viewAllProducts') ? link.path + link.name : link.path + userId + "/" + link.name}
+                      to={merchantId ? link.path + ((link.name === "Add Discount Coupons") ? "Coupons" : link.name) + "/" + merchantId : link.path.includes('viewAllProducts') ? link.path + link.name : link.path + userId + "/" + link.name}
                     >
                       {link.name}
                     </Nav.Link>
@@ -51,7 +51,7 @@ const LeftNav = props => {
             })}
         </Card.Body>
       </Card>
-      {showMerchants? (
+      {showMerchants ? (
         <div className="merchant-search">
           <div className="leftNav-heading">Merchant's & NPO's Followed</div>
           <Card className="list">

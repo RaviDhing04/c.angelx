@@ -17,6 +17,7 @@ import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import plusIcon from "../../assets/plus.svg";
 import deleteIcon from "../../assets/delete_outline.svg";
+import downArrow from "../../assets/down-arrow.svg";
 import { useAuth } from "../../context/auth";
 
 const ProductDetails = props => {
@@ -121,10 +122,17 @@ const ProductDetails = props => {
   const groupByOrder = async (event) => {
     event.preventDefault();
     const userShares = {};
+    const totalAmount = ProductSpecifications && ProductSpecifications.M && ProductSpecifications.M.UnitPrice && ProductSpecifications.M.UnitPrice.S * quantity;
     userShares[JSON.parse(localStorage.getItem('userData')).email] = yourContribution;
+    let grpAmount = 0;
     group.forEach((grp) => {
       userShares[grp.email] = grp.amount;
+      grpAmount += +grp.amount;
     });
+    if (totalAmount !== (+grpAmount + +yourContribution)) {
+      alert('Total group contribution should be equal to Total purchase amount i.e. (quantity x Unit Price)');
+      return false;
+    }
     const orderType = {
       "order_type": "group",
       "product_id": productId,
@@ -132,7 +140,7 @@ const ProductDetails = props => {
       "user_shares": userShares,
       "product_price": ProductSpecifications.M.UnitPrice.S,
       "qty": quantity,
-      "total_amount": ProductSpecifications.M.UnitPrice.S * quantity,
+      "total_amount": totalAmount,
       "billing_address_id": null,
       "shipping_address_id": null,
       "payment_type": null
@@ -184,23 +192,23 @@ const ProductDetails = props => {
                     <form onSubmit={(e) => groupByOrder(e)}>
                       <div>
                         <label>Quantity</label>
-                        <input type="number" min="1" onChange={(e) => setQuantity(e.target.value)} value={quantity ? quantity : ''} placeholder="Enter Quantity" required />
+                        <input type="number" min="1" onChange={(e) => setQuantity(e.target.value)} value={quantity ? quantity : ''} placeholder="Enter" required />
                       </div>
                       <div>
                         <label>Your Contribution</label>
-                        <input type="number" min="1" onChange={(e) => setYourContribution(e.target.value)} value={yourContribution ? yourContribution : ''} placeholder="Enter Your Contribution" required />
+                        <input type="number" min="1" onChange={(e) => setYourContribution(e.target.value)} value={yourContribution ? yourContribution : ''} placeholder="Enter" required />
                       </div>
                       <div>
-                        <label>Enter Coupon Code</label>
+                        <label>Select a Contact to collabrate with:</label>
                         {group && group.length && group.map((item, index) => {
                           let i = index;
                           return (
                             <div>
                               <select onChange={(e) => { group[i]['email'] = e.target.value; setGroup([...group]) }} name="contacts" id="contacts" required>
-                                <option value="">Please select contact</option>
+                                <option value="">Select contact</option>
                                 {props.contacts.map((contact) => { return (<option value={contact.email}>{contact.email}</option>) })}
                               </select>
-                              <input type="text" onChange={(e) => { group[i]['amount'] = e.target.value; setGroup([...group]) }} value={item.amount ? item.amount : ''} placeholder="Enter Contribution" required />
+                              <input type="text" onChange={(e) => { group[i]['amount'] = e.target.value; setGroup([...group]) }} value={item.amount ? item.amount : ''} placeholder="Contribution" required />
                               <img onClick={() => setGroup([...group, {}])} className="plus-icon" alt="plus-icon" src={plusIcon}></img>
                               <img onClick={() => { if (group.length > 1) group.splice(i, 1); setGroup([...group]) }} className="delete-icon" alt="delete-icon" src={deleteIcon}></img>
                             </div>
@@ -271,6 +279,11 @@ const ProductDetails = props => {
                 <Card>
                   <Accordion.Toggle as={Card.Header} className="prod-details" eventKey="0">
                     Product Details
+                    <img
+                      className="nav-icon"
+                      alt="downArrow-icon"
+                      src={downArrow}
+                    ></img>
                   </Accordion.Toggle>
                   <Accordion.Collapse eventKey="0">
                     <Card.Body>{Description.S}</Card.Body>

@@ -11,7 +11,7 @@ export const userLeftNavLinks = [
 
 export const merchantLeftNavLinks = [
   { name: "Inventory", path: "/merchantHome/inventory/", icon: "inventory", enable: true },
-  { name: "Campaigns", path: "/merchantHome/campaigns/", icon: "donate", enable: true },
+  { name: "Causes", path: "/merchantHome/campaigns/", icon: "donate", enable: true },
   { name: "Add Discount Coupons", path: "/merchantHome/coupons/", icon: "coupon", enable: true },
   { name: "Subordinate Account", path: "/merchantHome/myEmployees/", icon: "Shape", enable: true },
   { name: "Sales/Pending Deliveriest", path: "/merchantHome/myEmployees/", icon: "hourglass", enable: false },
@@ -45,28 +45,28 @@ export const merchantList = [
 
 export const footerLinks = [
   [
-    { name: "About Us", path: "/aboutUs" },
-    { name: "Support", path: "/support" },
-    { name: "Corporate Info", path: "/aboutUs" },
-    { name: "User Guide", path: "/aboutUs" },
-    { name: "Technical Support", path: "/support" },
-    { name: "Term & Conditions", path: "/aboutUs" },
-    { name: "Privacy Policy", path: "/aboutUs" }
+    { name: "About Us", path: "/aboutUs", "loginRequired": false },
+    { name: "Support", path: "/support", "loginRequired": false },
+    { name: "Corporate Info", path: "/aboutUs", "loginRequired": false },
+    { name: "User Guide", path: "/aboutUs", "loginRequired": false },
+    { name: "Technical Support", path: "/support", "loginRequired": false },
+    { name: "Term & Conditions", path: "/aboutUs", "loginRequired": false },
+    { name: "Privacy Policy", path: "/aboutUs", "loginRequired": false }
   ],
   [
-    { name: "Sponsored", path: "/" },
-    { name: "Previews", path: "/" },
-    { name: "Categories", path: "/" },
-    { name: "Advertisements", path: "/" }
+    { name: "Sponsored", path: "/", "loginRequired": false },
+    { name: "Previews", path: "/", "loginRequired": false },
+    { name: "Categories", path: "/" , "loginRequired": false},
+    { name: "Advertisements", path: "/", "loginRequired": true }
   ],
   [
-    { name: "My Profile", path: "/profile/edit/" },
-    { name: "My Cart", path: "/" },
-    { name: "My Whishlist", path: "/" },
-    { name: "My Orders", path: "/" },
-    { name: "My Contacts", path: "/" },
-    { name: "Donations", path: "/" },
-    { name: "Show Statistics", path: "/" }
+    { name: "My Profile", path: "/profile/edit/", "loginRequired": true },
+    { name: "My Cart", path: "/", "loginRequired": true },
+    { name: "My Whishlist", path: "/", "loginRequired": true },
+    { name: "My Orders", path: "/", "loginRequired": true },
+    { name: "My Contacts", path: "/", "loginRequired": true },
+    { name: "Donations", path: "/" , "loginRequired": true},
+    { name: "Show Statistics", path: "/", "loginRequired": true }
   ]
 ];
 

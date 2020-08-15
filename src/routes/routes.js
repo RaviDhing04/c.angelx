@@ -338,7 +338,7 @@ export const merchant_child_routes = [
     type: "private"
   },
   {
-    path: "/merchantHome/addCampaigns/:action/:merchantId",
+    path: "/merchantHome/addCauses/:action/:merchantId",
     component: AsyncAddCampaign,
     exact: true,
     type: "private"

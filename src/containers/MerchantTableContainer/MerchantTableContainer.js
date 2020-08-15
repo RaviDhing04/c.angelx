@@ -21,8 +21,8 @@ const MerchantTableContainer = props => {
   const { name, merchantId } = props.match.params;
   const tableHeader = {
     Inventory: ["Product Name", "Price", "Product Id"],
-    Campaigns: ["Campaign Name", "Min Price", "Campaign Id"],
-    Coupons: [
+    Causes: ["Campaign Name", "Min Price", "Campaign Id"],
+    "Coupons": [
       "Coupon Code",
       "Discount (%)",
       "Currency",
@@ -33,8 +33,8 @@ const MerchantTableContainer = props => {
   };
   const tableKeys = {
     Inventory: ["Name", "Price", "ProductId"],
-    Campaigns: ["Name", "Price", "ProductId"],
-    Coupons: [
+    Causes: ["Name", "Price", "ProductId"],
+    "Coupons": [
       "CouponCode",
       "Discount",
       "Currency",
@@ -59,7 +59,7 @@ const MerchantTableContainer = props => {
           });
           setLoading(false);
           break;
-        case "Campaigns":
+        case "Causes":
           await props.getMerchantAllProductsAndSegregate({
             MerchantId: merchantId
           });
@@ -83,7 +83,7 @@ const MerchantTableContainer = props => {
   }, [props.allProducts, props.allCampaigns, props.allCoupons]);
 
   const deleteRow = async row => {
-    if (name === "Inventory" || name === "Campaigns") {
+    if (name === "Inventory" || name === "Causes") {
       setLoading(true);
       const res = await deleteProduct({
         ProductId: row.ProductId,
@@ -135,7 +135,7 @@ const MerchantTableContainer = props => {
           Timestamp: item.Timestamp
         };
       });
-    } else if (name === "Campaigns") {
+    } else if (name === "Causes") {
       Items = props.allCampaigns.map(item => {
         return {
           Name: item.Name,

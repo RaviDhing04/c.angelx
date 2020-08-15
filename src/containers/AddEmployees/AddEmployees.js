@@ -33,7 +33,7 @@ const AddContacts = props => {
     async function fetchSavedContacts() {
       name ? setName(name) : setName("");
       const res = await getSavedEmployees({
-        "MerchantId": "1589855354787"
+        "MerchantId": merchantId
       });
       res
         ? setLoading(false)
@@ -70,7 +70,7 @@ const AddContacts = props => {
     });
     if (res) {
       const res = await getSavedEmployees({
-        "MerchantId": "1589855354787"
+        "MerchantId": merchantId
       });
       res
         ? setLoading(false)
@@ -90,7 +90,7 @@ const AddContacts = props => {
       });
     if (res) {
       const res = await getSavedEmployees({
-        "MerchantId": "1589855354787"
+        "MerchantId": merchantId
       });
       res
         ? setLoading(false)
@@ -176,9 +176,9 @@ const AddContacts = props => {
               </Col>
             </Form.Row>
             <Button onClick={e => cancel(e)} className="cancelButton">
-              Cancel
+              Reset
             </Button>
-            <Button className="saveButton" type="submit">
+            <Button disabled={searchedContact && searchedContact.message? true: false} className="saveButton" type="submit">
               Save
             </Button>
           </Form>

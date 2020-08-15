@@ -442,7 +442,7 @@ const AddInventory = props => {
             </Form.Row>
             <div className="buttons">
               <Button onClick={e => cancel(e)} className="cancelButton">
-                Cancel
+                Reset
               </Button>
               <Button className="saveButton" type="submit">
                 Save Inventory

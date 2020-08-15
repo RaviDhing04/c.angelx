@@ -177,7 +177,7 @@ const AddContacts = props => {
               </Col>
             </Form.Row>
             <Button onClick={e => cancel(e)} className="cancelButton">
-              Cancel
+              Reset
             </Button>
             <Button className="saveButton" type="submit">
               Save

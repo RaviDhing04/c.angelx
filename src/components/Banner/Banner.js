@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import { useHistory } from "react-router-dom";
+import apple from "../../assets/apple.svg";
+import android from "../../assets/android.svg";
 
 const Banner = props => {
   const [index, setIndex] = useState(0);
@@ -35,6 +37,35 @@ const Banner = props => {
     "position": "relative",
     "height": "29rem",
     "background": "#d0d0d0"
+  }
+
+  const circleImgGreen = {
+    "width": "2rem",
+    "height": "2rem",
+    "background": "#93C01D",
+    "borderRadius": "50%",
+    "marginLeft": "0.5rem"
+  }
+
+  const circleImgGrey = {
+    "width": "2rem",
+    "height": "2rem",
+    "background": "#989898",
+    "borderRadius": "50%",
+    "marginLeft": "0.5rem"
+  }
+
+  const btnLandingDiv = {
+    "display": "flex",
+    "justifyContent": "center",
+    "marginBottom": "1rem"
+  }
+
+  const img = {
+    "width": "1.5rem",
+    "height": "1.5rem",
+    "borderRadius": "50%",
+    "marginTop": "3px"
   }
 
   const shop = () => {
@@ -72,10 +103,15 @@ const Banner = props => {
                 <h3 style={title}>{banner.Title && banner.Title.S}</h3>
                 <p style={subtitle} >{banner.Subtitle1 && banner.Subtitle1.S}</p>
                 {banner.BannerName && banner.BannerName.S === "Landingpage" ? (
-                  <div className="btn-landing-div">
-                    <button className="startshopping" onClick={shop}>Start Shopping</button>
-                    <button className="startselling" onClick={sell}>Start Selling</button>
-                  </div>
+                  <React.Fragment>
+                    <div style={btnLandingDiv}>
+                      <button className="startshopping" onClick={shop}>Start Shopping</button>
+                      <button className="startselling" onClick={sell}>Start Selling</button>
+                      <div style={circleImgGreen}><img style={img} src={android} alt="playstore"></img></div>
+                      <div style={circleImgGrey}><img style={img} src={apple} alt="appstore"></img></div>
+                    </div>
+                    <div>See how it works</div>
+                  </React.Fragment>
                 ) : null}
               </Carousel.Caption>
             </Carousel.Item>

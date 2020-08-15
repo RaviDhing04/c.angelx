@@ -97,7 +97,7 @@ const SearchBar = props => {
               {searchResults.map((item) => {
                 return (<Link to={`/home/productDetail/${item.ProductId.S}/${item.Timestamp.S}`}>
                   <div className="result">
-                    <img alt="prod-img" src={item.ThumbnailImageURL.S}></img>
+                    {/* <img alt="prod-img" src={item.ThumbnailImageURL.S}></img> */}
                     <p>{item.Name.S}</p>
                   </div> </Link>)
               })}

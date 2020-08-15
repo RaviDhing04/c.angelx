@@ -8,8 +8,11 @@ import dhl from "../../assets/dhl.svg";
 import payfast from "../../assets/payfast.png";
 import collivery from "../../assets/collivery.png";
 import PayPal from "../../assets/PayPal.svg";
+import { useAuth } from "../../context/auth";
 
 const Footer = () => {
+  const isAuthenticated = useAuth();
+
   return (
     <Container className="footer" fluid>
       <Row className="links-row-1">
@@ -19,11 +22,16 @@ const Footer = () => {
               <div className="footer-links" key={i}>
                 {links.map((link, k) => {
                   return (
-                    <Nav key={k} className="flex-column">
+                    link.loginRequired ? (isAuthenticated ? (<Nav key={k} className="flex-column">
                       <Nav.Link as={Link} to={link.path}>
                         {link.name}
                       </Nav.Link>
-                    </Nav>
+                    </Nav>) : null) :
+                      (<Nav key={k} className="flex-column">
+                        <Nav.Link as={Link} to={link.path}>
+                          {link.name}
+                        </Nav.Link>
+                      </Nav>)
                   );
                 })}
               </div>

@@ -120,7 +120,7 @@ const ProfileEdit = props => {
             {editMode ? (
               <div>
                 <Button onClick={e => cancel(e)} className="cancelButton">
-                  Cancel
+                  Reset
                 </Button>
                 <Button className="saveButton" type="submit">
                   Save

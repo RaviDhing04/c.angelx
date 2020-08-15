@@ -23,7 +23,7 @@ const Logout = props => {
           src={close}
           alt="close"
         ></img>
-        <div>
+        <div className="section">
           <h2>Logout</h2>
           <p>Are you sure you want to logout</p>
           <div className="buttons">
