@@ -33,7 +33,7 @@ const App = () => {
     <Container fluid className="app-container">
       <AuthContext.Provider value={(localStorage.getItem('token') && JSON.parse(localStorage.getItem('userData'))) ? true : false}>
         <Header userId={userId} />
-        <div style={{minHeight: '400px'}}>
+        <div style={{ minHeight: '400px' }}>
           <Switch>
             <Route
               exact
@@ -49,8 +49,9 @@ const App = () => {
           <Route path="/" component={ForgotPassword} />
           <Route path="/" component={Logout} />
         </div>
+        <Footer />
       </AuthContext.Provider>
-      <Footer />
+
     </Container>
   );
 };
