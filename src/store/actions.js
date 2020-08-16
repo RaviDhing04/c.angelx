@@ -226,9 +226,23 @@ export const getWishlistProductsWithPagination = (
       }
     );
     if (response && response.result && response.result.data) {
+      let out = [];
+      response.result.data.wishListDetails &&
+        response.result.data.wishListDetails.forEach(orderItem => {
+          response.result.data.productDetails &&
+            response.result.data.productDetails.forEach(product => {
+              if (orderItem.ProductId.S === product.ProductId.S) {
+                out.push({
+                  UserId: orderItem.UserId,
+                  Quantity: orderItem.Quantity,
+                  ...product
+                });
+              }
+            });
+        });
       dispatch({
         type: "WISHLIST_PRODUCTS",
-        value: { payload: response.result.data }
+        value: { payload: {'Items': out} }
       });
       return true;
     } else {
@@ -1041,7 +1055,7 @@ export const searchContactWithEmail = (body = {}) => async dispatch => {
         type: "SEARCHED_CONTACT",
         value: { payload: response.body.user_details[0] }
       });
-      return true;
+      return response.body.user_details[0];
     } else {
       return false;
     }

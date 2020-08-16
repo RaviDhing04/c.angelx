@@ -16,6 +16,7 @@ import CustomLoader from "../../components/CustomLoader/CustomLoader";
 const AddContacts = props => {
   const [loading, setLoading] = useState(true);
   const [pageName, setName] = useState("");
+  const [disableBtn, setDisableBtn] = useState(true);
   const { userId, name } = props.match.params;
   const {
     contacts,
@@ -54,11 +55,18 @@ const AddContacts = props => {
       email_list: [email]
     });
     res
-      ? setLoading(false)
-      : (function () {
-        setLoading(false);
-        alert("something went wrong, Please try again!");
-      })();
+    ? (function () {
+      res && res.message ? (function () {
+        setDisableBtn(true); setLoading(false);
+      })() :
+        (function () {
+          setDisableBtn(false); setLoading(false);
+        })()
+    })()
+    : (function () {
+      setLoading(false);
+      alert("something went wrong, Please try again!");
+    })();
   };
 
   const addContactToList = async event => {
@@ -75,7 +83,11 @@ const AddContacts = props => {
         "UserEmailId": JSON.parse(localStorage.getItem('userData')).email
       });
       res
-        ? setLoading(false)
+        ? (function () {
+          setLoading(false);
+          setDisableBtn(true);
+          document.getElementById("SearchContactForm").reset();
+        })()
         : (function () {
           setLoading(false);
           alert("something went wrong, Please try again!");
@@ -179,7 +191,7 @@ const AddContacts = props => {
             <Button onClick={e => cancel(e)} className="cancelButton">
               Reset
             </Button>
-            <Button className="saveButton" type="submit">
+            <Button disabled={disableBtn}  className="saveButton" type="submit">
               Save
             </Button>
           </Form>

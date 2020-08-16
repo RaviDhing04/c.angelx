@@ -84,7 +84,7 @@ const Cart = props => {
       }
     });
     if (!fail) {
-      localStorage.setItem('orderType', JSON.stringify({'order_type': 'cart'}));
+      localStorage.setItem('orderType', JSON.stringify({ 'order_type': 'cart' }));
       return history.push(`/checkout/shipping/${userData.UserId}/${'Shipping'}`);
     } else {
       alert("You can select Products from single Merchant. Please remove/Wishlist products.");
@@ -93,6 +93,10 @@ const Cart = props => {
 
   const addProductToWish = async (payload) => {
     const res = await props.addToWishlist(payload);
+    if (res) {
+      const resp = await props.getCartItems();
+      resp ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
+    }
   }
 
   return !loading ? (

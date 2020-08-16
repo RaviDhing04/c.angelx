@@ -44,6 +44,9 @@ const ViewAllProducts = props => {
 
   const addToCart = async (payload) => {
     const res = await props.addProductToCart(payload);
+    if(res && name === "Wishlist") {
+      props.getWishlistProducts({UserId: JSON.parse(localStorage.getItem('userData')).UserId,});
+    }
   }
 
   const addProductToWish = async (payload) => {
@@ -54,12 +57,12 @@ const ViewAllProducts = props => {
     const rows = [];
     for (let index = 0; index < Items.length; index = index + itemsPerRow) {
       rows.push(
-        <Row className={(Items.length - index > itemsPerRow) ? "product-row" : "product-row-no-flex"}>
+        <Row className={(Items.length - index >= itemsPerRow) ? "product-row" : "product-row-no-flex"}>
           {Items &&
             Items.slice(index, index + itemsPerRow).map((item, index) => {
               return (
                 <div key={item.ProductId.S}>
-                  <Product data={item} activeCurrency={activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} />
+                  <Product data={item} activeCurrency={activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart}  type={name} />
                 </div>
               );
             })}

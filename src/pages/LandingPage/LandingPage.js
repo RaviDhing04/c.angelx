@@ -42,7 +42,7 @@ const LandingPage = props => {
       <div className="landingpage-container">
         <div>
           <ProductListCarousel
-            name="Sponsored"
+            name="Trending"
             data={props.latestProducts}
             activeCurrency={props.activeCurrency}
             addProductToCart={addToCart}

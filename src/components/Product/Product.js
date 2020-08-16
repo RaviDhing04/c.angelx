@@ -6,13 +6,13 @@ import formatter from "../../utils/commonUtils/currencyUtils";
 import heartIcon from "../../assets/heart.svg";
 
 const Product = props => {
-  const { data, activeCurrency, addProductToCart } = props;
+  const { data, activeCurrency, addProductToCart, type } = props;
   return (
     <React.Fragment>
       {data && Object.keys(data).length ? (
         <Card className="product-card">
           <div className="prod-img">
-            <img className="heart-icon" onClick={() => { props.addToWishlist({ "ProductId": data.ProductId && data.ProductId.S, "UserId": JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId }) }} alt="heart-icon" src={heartIcon}></img>
+            {type && type.toLowerCase() === 'wishlist' ? null : <img className="heart-icon" onClick={() => { props.addToWishlist({ "ProductId": data.ProductId && data.ProductId.S, "UserId": JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId }) }} alt="heart-icon" src={heartIcon}></img>}
             <Link to={`/home/productDetail/${data.ProductId && data.ProductId.S}/${data.Timestamp && data.Timestamp.S}`}>
               <div className="product-image">
                 <Card.Img src={data.ThumbnailImageURL.S} />
@@ -40,7 +40,7 @@ const Product = props => {
                   "CouponCode": null,
                   "MerchantId": data.MerchantId.S
 
-                })} className="product-button">Add to Cart</Button>
+                }, type && type.toLowerCase() === 'wishlist' ? 'wishlist': null)} className="product-button">Add to Cart</Button>
               )}
           </Card.Body>
         </Card>

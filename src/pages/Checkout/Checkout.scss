@@ -64,7 +64,7 @@
             font-size: 0.875rem;
             font-weight: 500;
             background: #558ed4 0% 0% no-repeat padding-box;
-            border-radius: 4px;
+            border-radius:0.25rem;
             opacity: 1;
             width: 9rem;
             margin-left: 1rem;
@@ -90,6 +90,7 @@
             background: #F3F4F5 0% 0% no-repeat padding-box;
             border: 1px solid #E4E4E5;
             opacity: 1;
+            padding-top: 1.5rem;
         }
     }
 }

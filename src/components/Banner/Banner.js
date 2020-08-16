@@ -10,7 +10,7 @@ const Banner = props => {
   const history = useHistory();
   const title = {
     "textAlign": "center",
-    "fontSize": "38px",
+    "fontSize": "2.375rem",
     "letterSpacing": "2.66px",
     color: "#FFFFFF",
     opacity: "1",
@@ -19,7 +19,7 @@ const Banner = props => {
 
   const subtitle = {
     "textAlign": "center",
-    "fontSize": "20px",
+    "fontSize": "1.25rem",
     "letterSpacing": "3px",
     "color": "#FFFFFF",
     opacity: "1"
@@ -100,8 +100,12 @@ const Banner = props => {
                   />
                 </div>}
               <Carousel.Caption>
-                <h3 style={title}>{banner.Title && banner.Title.S}</h3>
-                <p style={subtitle} >{banner.Subtitle1 && banner.Subtitle1.S}</p>
+                {banner.BannerName && banner.BannerName.S === "Landingpage" ? (
+                  <React.Fragment>
+                    <h3 style={title}>{banner.Title && banner.Title.S}</h3>
+                    <p style={subtitle} >{banner.Subtitle1 && banner.Subtitle1.S}</p>
+                  </React.Fragment>
+                ) : null}
                 {banner.BannerName && banner.BannerName.S === "Landingpage" ? (
                   <React.Fragment>
                     <div style={btnLandingDiv}>
