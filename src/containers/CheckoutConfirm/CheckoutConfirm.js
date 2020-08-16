@@ -41,7 +41,7 @@ const CheckoutConfirm = (props) => {
                 }
             } else {
                 alert('Order not slected, please go to cart');
-                history.push('/home');
+                history.push('/home/productsListing');
             }
         } else {
             alert('Please select shipping and billing addresss');

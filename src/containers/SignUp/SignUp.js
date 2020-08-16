@@ -54,7 +54,7 @@ const SignUp = props => {
           current_password: current_password,
           new_password: password
         });
-        res ? function () { setLoading(false); setStep2(false); props.history.replace('/home'); }() : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
+        res ? function () { setLoading(false); setStep2(false); props.history.replace('/home/productsListing'); }() : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
       } else {
         alert('Password and Confirm Password must be same');
       }

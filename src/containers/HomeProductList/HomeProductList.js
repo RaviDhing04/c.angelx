@@ -12,13 +12,13 @@ const HomeProductList = props => {
   useEffect(() => {
     props.getLatestProductsWithPagination();
     props.getSponsoredProductsWithPagination();
-    props.getWishlistProductsWithPagination({UserId: JSON.parse(localStorage.getItem('userData')).UserId});
+    props.getWishlistProductsWithPagination({UserId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId});
   }, []);
 
   const addToCart = async (payload, type) => {
     const res = await props.addProductToCart(payload);
     if(res && type) {
-      props.getWishlistProductsWithPagination({UserId: JSON.parse(localStorage.getItem('userData')).UserId});
+      props.getWishlistProductsWithPagination({UserId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId});
     }
   }
 

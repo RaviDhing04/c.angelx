@@ -69,10 +69,10 @@ const Banner = props => {
   }
 
   const shop = () => {
-    history.push('/home');
+    history.push('/home/productsListing');
   }
   const sell = () => {
-    history.push('/home');
+    history.push('/home/productsListing');
   }
 
   const handleSelect = (selectedIndex, e) => {

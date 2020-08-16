@@ -290,9 +290,10 @@ export const parent_routes = [
 
 export const child_routes = [
   {
-    path: "/home",
+    path: "/home/productsListing",
     component: AsyncHomeProductList,
-    exact: true
+    exact: true,
+    type: "private"
   },
   {
     path: "/home/productDetail/:productId/:productTimeStamp",

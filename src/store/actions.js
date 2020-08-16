@@ -167,10 +167,10 @@ export const getSponsoredProductsWithPagination = (
     const response = await httpFetch(
       getApiEndPoints("SponsoredProductsWithPagination"),
       {
-        method: "POST",
-        body: body
+        method: "GET"
       }
     );
+    debugger;
     if (response && response.result && response.result.data) {
       dispatch({
         type: "SPONSORED_PRODUCTS",

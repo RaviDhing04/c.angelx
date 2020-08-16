@@ -93,7 +93,7 @@ const Header = props => {
 
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto left-links-wrapper">
-              <Nav.Link className="left-links" as={Link} to={`/home`}>
+              <Nav.Link className="left-links" as={Link} to={`/home/productsListing`}>
                 Home
               </Nav.Link>
               <Nav.Link as={Link} to={`/support`} className="left-links">

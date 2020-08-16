@@ -32,7 +32,7 @@ const ViewAllProducts = props => {
         props.getLatestProducts();
         break;
       case "Wishlist":
-        props.getWishlistProducts({UserId: JSON.parse(localStorage.getItem('userData')).UserId,});
+        props.getWishlistProducts({UserId: JSON.parse(localStorage.getItem('userData')) &&  JSON.parse(localStorage.getItem('userData')).UserId,});
         break;
       default:
         break;
@@ -45,7 +45,7 @@ const ViewAllProducts = props => {
   const addToCart = async (payload) => {
     const res = await props.addProductToCart(payload);
     if(res && name === "Wishlist") {
-      props.getWishlistProducts({UserId: JSON.parse(localStorage.getItem('userData')).UserId,});
+      props.getWishlistProducts({UserId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId,});
     }
   }
 
