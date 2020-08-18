@@ -16,7 +16,11 @@ const initialState = {
     selectedProductId: ""
   },
   cartDetailsPage: {
-    cartItems: {}
+    cartItems: {},
+    cartItemCount: 0
+  },
+  patrons: {
+patronsFollowingMerchants: []
   },
   contactPage: {
     contacts: [],
@@ -175,9 +179,18 @@ export const appReducer = (state = initialState, { type, value }) => {
       return {
         ...state,
         cartDetailsPage: {
+          ...state.cartDetailsPage,
           cartItems: value.payload
         }
       };
+      case "UPDATE_CART_ITEMS":
+        return {
+          ...state,
+          cartDetailsPage: {
+            ...state.cartDetailsPage,
+            cartItemCount: value.payload
+          }
+        }
     case "ALL_CONTACTS":
       return {
         ...state,
@@ -185,6 +198,13 @@ export const appReducer = (state = initialState, { type, value }) => {
           ...state.contactPage,
           contacts: value.payload
         }
+      };
+      case "PATRONS_MERCHANTS" :
+      return {
+        ...state,
+        patrons: {
+          patronsFollowingMerchants: value.payload
+            }
       };
     case "SEARCHED_CONTACT":
       return {

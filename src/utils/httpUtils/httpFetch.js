@@ -9,14 +9,11 @@ export const httpFetch = async (url, opts = {}, bypass = 0) => {
   let flag = 0;
   let requestObj = {};
 
-  const refreshToken = async (requestObj, resp) => {
+  const refreshToken = async (requestObj) => {
     const refresh_token = localStorage.getItem('refresh_token');
     if (!refresh_token) {
-      localStorage.clear();
-      window.history.replaceState(null, '', "/landing");
-      // window.history.replaceState(null, '', window.location.pathname + "?login=true");
-      // window.location.reload();
-      return resp;
+      window.history.replaceState(null, '', window.location.pathname + "?login=true");
+      window.location.reload();
     } else {
       const obj = checkRequest(getApiEnpoints('refreshToken'), {
         method: "POST",
@@ -64,12 +61,12 @@ export const httpFetch = async (url, opts = {}, bypass = 0) => {
     response = await fetch(requestObj.url, requestObj.params)
       .then(async resp => {
         // response = resp;
-        debugger;
+        ;
         if (resp.status >= 200 && resp.status < 305) {
           return resp;
         } else if (resp.status === 410 || resp.status === 401) {
           console.log('session expired');
-          const result = await refreshToken(requestObj, resp);
+          const result = await refreshToken(requestObj);
           return result;
         } else {
           flag = 1;

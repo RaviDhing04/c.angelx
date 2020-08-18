@@ -9,13 +9,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import store from "../src/store/store";
 
 ReactDOM.render(
-  // <React.StrictMode>
+  //<React.StrictMode>
     <ReduxProvider store={store}>
     <BrowserRouter>
     <App />
     </BrowserRouter>
     </ReduxProvider>,
-  // </React.StrictMode>,
+   //</React.StrictMode>,
   document.getElementById('root')
 );
 

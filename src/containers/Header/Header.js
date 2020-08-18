@@ -93,7 +93,7 @@ const Header = props => {
 
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto left-links-wrapper">
-              <Nav.Link className="left-links" as={Link} to={`/home/productsListing`}>
+              <Nav.Link className="left-links" as={Link} to={`/home`}>
                 Home
               </Nav.Link>
               <Nav.Link as={Link} to={`/support`} className="left-links">
@@ -155,6 +155,7 @@ const Header = props => {
                       alt="shoppingcart-icon"
                       src={shoppingcart}
                     ></img>
+                    <span className = "cart-items">{props.cartItemCount}</span>
                   </Nav.Link>
                   <Nav.Link onClick={() => toggleNotification(!showNotification)}>
                     <img className="nav-icon bell-icon" alt="bell-icon" src={bell}></img>
@@ -230,10 +231,12 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-const mapStatetoProps = ({ app: { homePage, common } }) => {
-  console.log(common);
+const mapStatetoProps = ({ app: { homePage, common, cartDetailsPage } }) => {
+  //console.log('coomon',common);
+  console.log('how many times',cartDetailsPage.cartItemCount);
   return {
-    searchCategories: homePage.searchCategories
+    searchCategories: homePage.searchCategories,
+    cartItemCount: cartDetailsPage.cartItemCount
   };
 };
 

@@ -18,7 +18,7 @@ export const merchantLeftNavLinks = [
   { name: "Lay By Orders", path: "/merchantHome/myEmployees/", icon: "clock", enable: false },
   { name: "Group Purchase Orders", path: "/merchantHome/myEmployees/", icon: "shopping-cart", enable: false },
   { name: "Declined Orders", path: "/merchantHome/myEmployees/", icon: "blocked-symbol", enable: false },
-  { name: "Patrons", path: "/merchantHome/myEmployees/", icon: "profile", enable: false },
+  { name: "Patrons", path: "/merchantHome/patrons/", icon: "profile", enable: true },
   { name: "Statistics", path: "/merchantHome/myEmployees/", icon: "bar-graph", enable: false }
 ];
 
@@ -133,17 +133,17 @@ export const supportText = ["Contact us for any help or to joint the team"];
 
 export const supportGrid = [
   {
-    text: ["C-Angelx", "qiwuqrwbiu akjnwiohqwodjk", "kjabu9ajhdauiscasdmbiudn"],
+    text: ["H84 Midway Gardens", "First Avenue, Midrand 1685", "Johannesburg, South Africa"],
     title: "Address",
     image: "address"
   },
+  // {
+  //   text: ["+91 982 928 9821", "+91 982 928 9821"],
+  //   title: "Call us at",
+  //   image: "email"
+  // },
   {
-    text: ["+91 982 928 9821", "+91 982 928 9821"],
-    title: "Call us at",
-    image: "email"
-  },
-  {
-    text: ["abc@anglex.com", "abc@anglex.com"],
+    text: ["support@cAngelx.com"],
     title: "Email",
     image: "email"
   }

@@ -9,7 +9,7 @@ const getApiEndPoints = val => {
     case "TrendingProductsWithPagination":
       return baseUrl + "products/getsponsoredproducts";
     case "WishlistProductsWithPagination":
-      return baseUrl + "wishlist/getwishlistdetails";
+      return baseUrl + "products/getsponsoredproducts";
     case "WishlistProducts":
       return baseUrl + "wishlist/getwishlistdetails";
     case "SelectedProductDetails":
@@ -24,6 +24,8 @@ const getApiEndPoints = val => {
       return baseUrl + "products/getallproducts";
     case "AllBusiness":
       return baseUrl + "business/getbusinessdetails";
+    case "PatronsFollowingMerchants" :
+      return baseUrl + "business/getlistofpatronsfollowingmerchants";
     case "SavedContacts":
       return baseUrl + "users/getallcontacts";
     case "SavedEmployees":

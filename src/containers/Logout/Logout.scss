@@ -1,7 +1,6 @@
 .logout-container {
     display: flex;
     justify-content: space-evenly;
-    background: #558ED4 0% 0% no-repeat padding-box;
 
     .close {
         position: absolute;
@@ -11,13 +10,13 @@
 
     .section {
         background: #558ED4 0% 0% no-repeat padding-box;
-        border-radius:0.25rem 0px 0px0.25rem;
+        border-radius: 4px 0px 0px 4px;
         opacity: 1;
         // width: 35%;
         padding: 2rem;
 
         h2 {
-            font-size: 2.375rem;
+            font-size: 38px;
             letter-spacing: 0.11px;
             color: #FFFFFF;
             opacity: 1;
@@ -37,7 +36,7 @@
     display: flex;
     .logout-btn {
         background: #FFFFFF 0% 0% no-repeat padding-box;
-        border-radius:0.25rem;
+        border-radius: 4px;
         opacity: 1;
         width: 100%;
         margin-right: 1rem;

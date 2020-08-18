@@ -10,7 +10,7 @@ const Banner = props => {
   const history = useHistory();
   const title = {
     "textAlign": "center",
-    "fontSize": "2.375rem",
+    "fontSize": "38px",
     "letterSpacing": "2.66px",
     color: "#FFFFFF",
     opacity: "1",
@@ -19,7 +19,7 @@ const Banner = props => {
 
   const subtitle = {
     "textAlign": "center",
-    "fontSize": "1.25rem",
+    "fontSize": "20px",
     "letterSpacing": "3px",
     "color": "#FFFFFF",
     opacity: "1"
@@ -69,10 +69,10 @@ const Banner = props => {
   }
 
   const shop = () => {
-    history.push('/home/productsListing');
+    history.push('/home');
   }
   const sell = () => {
-    history.push('/home/productsListing');
+    history.push('/home');
   }
 
   const handleSelect = (selectedIndex, e) => {
@@ -100,12 +100,8 @@ const Banner = props => {
                   />
                 </div>}
               <Carousel.Caption>
-                {banner.BannerName && banner.BannerName.S === "Landingpage" ? (
-                  <React.Fragment>
-                    <h3 style={title}>{banner.Title && banner.Title.S}</h3>
-                    <p style={subtitle} >{banner.Subtitle1 && banner.Subtitle1.S}</p>
-                  </React.Fragment>
-                ) : null}
+                <h3 style={title}>{banner.Title && banner.Title.S}</h3>
+                <p style={subtitle} >{banner.Subtitle1 && banner.Subtitle1.S}</p>
                 {banner.BannerName && banner.BannerName.S === "Landingpage" ? (
                   <React.Fragment>
                     <div style={btnLandingDiv}>

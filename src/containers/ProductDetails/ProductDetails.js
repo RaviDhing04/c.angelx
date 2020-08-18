@@ -5,7 +5,8 @@ import { useHistory } from "react-router-dom";
 import {
   getSelectedProductDetails,
   addProductToCart,
-  getSavedContacts
+  getSavedContacts,
+  updateItemInCart
 } from "../../store/actions";
 import { Container, Accordion, Card } from "react-bootstrap";
 import { bindActionCreators } from "redux";
@@ -89,6 +90,7 @@ const ProductDetails = props => {
 
     };
     const res = await props.addProductToCart(payload);
+    props.updateItemInCart(res.result.data.TotalCartCount);
     res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
   };
 
@@ -199,7 +201,7 @@ const ProductDetails = props => {
                         <input type="number" min="1" onChange={(e) => setYourContribution(e.target.value)} value={yourContribution ? yourContribution : ''} placeholder="Enter" required />
                       </div>
                       <div>
-                        <label>Select a contact to collaborate with:</label>
+                        <label>Select a Contact to collabrate with:</label>
                         {group && group.length && group.map((item, index) => {
                           let i = index;
                           return (
@@ -208,7 +210,7 @@ const ProductDetails = props => {
                                 <option value="">Select contact</option>
                                 {props.contacts.map((contact) => { return (<option value={contact.email}>{contact.email}</option>) })}
                               </select>
-                              <input type="number" min="1" onChange={(e) => { group[i]['amount'] = e.target.value; setGroup([...group]) }} value={item.amount ? item.amount : ''} placeholder="Contribution" required />
+                              <input type="text" onChange={(e) => { group[i]['amount'] = e.target.value; setGroup([...group]) }} value={item.amount ? item.amount : ''} placeholder="Contribution" required />
                               <img onClick={() => setGroup([...group, {}])} className="plus-icon" alt="plus-icon" src={plusIcon}></img>
                               <img onClick={() => { if (group.length > 1) group.splice(i, 1); setGroup([...group]) }} className="delete-icon" alt="delete-icon" src={deleteIcon}></img>
                             </div>
@@ -306,7 +308,8 @@ const mapDispatchToProps = dispatch =>
     {
       getSelectedProductDetails,
       addProductToCart,
-      getSavedContacts
+      getSavedContacts,
+      updateItemInCart
     },
     dispatch
   );

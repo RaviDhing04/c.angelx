@@ -12,6 +12,7 @@ import {
 } from "../../constants/constants";
 import {
   getFollowedMerchants,
+  updateSelectedBusiness,
   getBusinessDetails
 } from "../../store/actions";
 
@@ -51,6 +52,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getFollowedMerchants,
+      updateSelectedBusiness,
       getBusinessDetails
     },
     dispatch

@@ -167,10 +167,10 @@ export const getSponsoredProductsWithPagination = (
     const response = await httpFetch(
       getApiEndPoints("SponsoredProductsWithPagination"),
       {
-        method: "GET"
+        method: "POST",
+        body: body
       }
     );
-    debugger;
     if (response && response.result && response.result.data) {
       dispatch({
         type: "SPONSORED_PRODUCTS",
@@ -226,23 +226,9 @@ export const getWishlistProductsWithPagination = (
       }
     );
     if (response && response.result && response.result.data) {
-      let out = [];
-      response.result.data.wishListDetails &&
-        response.result.data.wishListDetails.forEach(orderItem => {
-          response.result.data.productDetails &&
-            response.result.data.productDetails.forEach(product => {
-              if (orderItem.ProductId.S === product.ProductId.S) {
-                out.push({
-                  UserId: orderItem.UserId,
-                  Quantity: orderItem.Quantity,
-                  ...product
-                });
-              }
-            });
-        });
       dispatch({
         type: "WISHLIST_PRODUCTS",
-        value: { payload: {'Items': out} }
+        value: { payload: response.result.data }
       });
       return true;
     } else {
@@ -1055,7 +1041,7 @@ export const searchContactWithEmail = (body = {}) => async dispatch => {
         type: "SEARCHED_CONTACT",
         value: { payload: response.body.user_details[0] }
       });
-      return response.body.user_details[0];
+      return true;
     } else {
       return false;
     }
@@ -1248,10 +1234,10 @@ export const getSavedEmployees = (body = {}) => async dispatch => {
   }
 };
 
-export const addProductToCart = (body = {}) => async dispatch => {
+export const getPatronsFollowingMerchants = (body = {}) => async dispatch => {
   try {
 
-    const response = await httpFetch(getApiEndPoints("addProductToCart"), {
+    const response = await httpFetch(getApiEndPoints("PatronsFollowingMerchants"), {
       method: "POST",
       body: body
     });
@@ -1259,10 +1245,47 @@ export const addProductToCart = (body = {}) => async dispatch => {
       response &&
       response.result &&
       response.result.data &&
+      response.result.message === "Success"
+    ) {
+      dispatch({
+        type: "PATRONS_MERCHANTS",
+        value: { payload: response.result.data.body.user_details}
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const updateItemInCart = (itemCount) => dispatch => {
+  console.log('cart count update',itemCount);
+  dispatch({
+    type: "UPDATE_CART_ITEMS",
+    value: { payload: itemCount }
+  });
+}
+
+
+export const addProductToCart = (body = {}) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("addProductToCart"), {
+      method: "POST",
+      body: body
+    });
+    console.log('response in actions', response);
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
       response.result.message !== "Error"
     ) {
       response.result.message === 'Success' ? alert('Product added in cart') : alert(response.result.message);
-      return true;
+      return response;
     } else {
       return false;
     }

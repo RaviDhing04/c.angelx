@@ -116,6 +116,16 @@ const AsyncAddEmployees = Loadable({
   modules: ["AddEmployees"]
 });
 
+const AsyncPatrons = Loadable({
+  loader: () =>
+    import(
+      /* webpackChunkName: "Patrons" */ "../containers/ViewPatrons/ViewPatrons"
+    ),
+  loading: error => <LoadingFallback {...error} />,
+  modules: ["ViewPatrons"]
+});
+
+
 const AsyncHomeViewAllProducts = Loadable({
   loader: () =>
     import(
@@ -290,10 +300,9 @@ export const parent_routes = [
 
 export const child_routes = [
   {
-    path: "/home/productsListing",
+    path: "/home",
     component: AsyncHomeProductList,
-    exact: true,
-    type: "private"
+    exact: true
   },
   {
     path: "/home/productDetail/:productId/:productTimeStamp",
@@ -365,6 +374,12 @@ export const merchant_child_routes = [
   {
     path: "/merchantHome/myEmployees/:name/:merchantId",
     component: AsyncAddEmployees,
+    exact: true,
+    type: "private"
+  },
+  {
+    path: "/merchantHome/patrons/:name/:merchantId",
+    component: AsyncPatrons,
     exact: true,
     type: "private"
   }

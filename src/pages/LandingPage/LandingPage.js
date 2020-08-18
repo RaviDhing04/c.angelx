@@ -9,7 +9,8 @@ import {
   getLatestProductsWithPagination,
   getLandingBanners,
   addProductToCart,
-  addToWishlist
+  addToWishlist,
+  updateItemInCart
 } from "../../store/actions";
 import ProductListCarousel from "../../components/ProductListCarousel/ProductListCarousel";
 import ProductList from "../../components/ProductList/ProductList";
@@ -27,6 +28,9 @@ const LandingPage = props => {
 
   const addToCart = async payload => {
     const res = await props.addProductToCart(payload);
+    console.log('ressss', res);
+     props.updateItemInCart(res.result.data.TotalCartCount);
+    //console.log('res from add to cart', res.result.data.TotalCartCount);
   };
 
   const addProductToWish = async (payload) => {
@@ -42,7 +46,7 @@ const LandingPage = props => {
       <div className="landingpage-container">
         <div>
           <ProductListCarousel
-            name="Trending"
+            name="Sponsored"
             data={props.latestProducts}
             activeCurrency={props.activeCurrency}
             addProductToCart={addToCart}
@@ -108,7 +112,8 @@ const mapDispatchToProps = dispatch =>
       getLatestProductsWithPagination,
       getLandingBanners,
       addProductToCart,
-      addToWishlist
+      addToWishlist,
+      updateItemInCart
     },
     dispatch
   );

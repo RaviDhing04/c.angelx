@@ -20,7 +20,7 @@ const ProductListCarousel = props => {
       {Items && Items.length ? (
         <React.Fragment>
           <div className={isAuthenticated ? "product-row-heading" : "margin-left-4 product-row-heading"}>{name}</div>
-          <Row className={(Items.length  >= 5) ? "product-row" : "product-row-no-flex"}>
+          <Row className="product-row">
             {Items &&
               Items.map((item, index) => {
                 return index < 5 ? (
@@ -30,7 +30,6 @@ const ProductListCarousel = props => {
                       activeCurrency={activeCurrency}
                       addProductToCart={addProductToCart}
                       addToWishlist={addToWishlist}
-                      type={name}
                     />
                   </div>
                 ) : null;

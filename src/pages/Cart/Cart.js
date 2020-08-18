@@ -9,7 +9,8 @@ import {
   deleteProductFromCart,
   deleteAllProductFromCart,
   addProductToCart,
-  addToWishlist
+  addToWishlist,
+  updateItemInCart
 } from "../../store/actions";
 import "./Cart.scss";
 import CartItem from "../../components/CartItem/CartItem";
@@ -24,7 +25,7 @@ const Cart = props => {
   const [subTotal, setSubTotal] = useState(0);
   const [saving, setSaving] = useState(0);
   const [couponSaving, setCouponSaving] = useState(0);
-  const { cartItems, activeCurrency } = props;
+  const { cartItems, activeCurrency,cartItemCount } = props;
   const history = useHistory();
 
   useEffect(() => {
@@ -67,6 +68,8 @@ const Cart = props => {
     const res = payload === "all"
       ? props.deleteAllProductFromCart()
       : await props.deleteProductFromCart(payload);
+      const resCount = payload === "all"?
+      props.updateItemInCart(0):props.updateItemInCart(props.cartItemCount - 1);
     if (res) {
       const resp = await props.getCartItems();
       resp ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
@@ -84,7 +87,7 @@ const Cart = props => {
       }
     });
     if (!fail) {
-      localStorage.setItem('orderType', JSON.stringify({ 'order_type': 'cart' }));
+      localStorage.setItem('orderType', JSON.stringify({'order_type': 'cart'}));
       return history.push(`/checkout/shipping/${userData.UserId}/${'Shipping'}`);
     } else {
       alert("You can select Products from single Merchant. Please remove/Wishlist products.");
@@ -93,10 +96,6 @@ const Cart = props => {
 
   const addProductToWish = async (payload) => {
     const res = await props.addToWishlist(payload);
-    if (res) {
-      const resp = await props.getCartItems();
-      resp ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
-    }
   }
 
   return !loading ? (
@@ -181,7 +180,9 @@ const mapDispatchToProps = dispatch =>
       addProductToCart,
       deleteProductFromCart,
       deleteAllProductFromCart,
-      addToWishlist
+      addToWishlist,
+     updateItemInCart
+
     },
     dispatch
   );
@@ -190,6 +191,7 @@ const mapStatetoProps = ({ app: { cartDetailsPage, common } }) => {
   console.log(cartDetailsPage);
   return {
     cartItems: cartDetailsPage.cartItems,
+    cartItemCount: cartDetailsPage.cartItemCount,
     activeCurrency: common.activeCurrency
   };
 };

@@ -41,7 +41,7 @@ const CheckoutConfirm = (props) => {
                 }
             } else {
                 alert('Order not slected, please go to cart');
-                history.push('/home/productsListing');
+                history.push('/home');
             }
         } else {
             alert('Please select shipping and billing addresss');
@@ -124,9 +124,9 @@ const CheckoutConfirm = (props) => {
 
                             <div>
                                 <p className="text">Your Total payment amount is - {orderType === 'cart' ? (<span> {props.cartItems.totalDiscountedAmount ? formatter(props.activeCurrency)(props.cartItems.totalDiscountedAmount) : formatter(props.activeCurrency)(0)} </span>) :
-                                    (<span> {order && order.total_amount ? (order && order.order_type === 'laybuy' ? formatter(props.activeCurrency)(((+order.total_amount) / (+order.laybuy_months))) : formatter(props.activeCurrency)(order && order.total_amount)) : formatter(props.activeCurrency)(0)} </span>)}
+                                    (<span> {order.total_amount ? (order.order_type === 'laybuy' ? formatter(props.activeCurrency)(((order.total_amount) / (order.laybuy_months))) : formatter(props.activeCurrency)(order.total_amount)) : formatter(props.activeCurrency)(0)} </span>)}
                                 </p>
-                                {order && order.order_type === 'laybuy' ? <p className="text">LayBy months - <span> {order && order.laybuy_months}</span></p> : null}
+                                {order.order_type === 'laybuy' ? <p className="text">Your Total shipping amount is - <span> {formatter(props.activeCurrency)(shippingCharge)}</span></p> : null}
                                 <p className="text">Your Total shipping amount is - <span> {formatter(props.activeCurrency)(shippingCharge)} </span>
 
                                     <div className="shipper">

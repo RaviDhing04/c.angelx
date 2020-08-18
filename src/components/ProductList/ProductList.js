@@ -30,7 +30,6 @@ const ProductList = props => {
                       activeCurrency={activeCurrency}
                       addProductToCart={addProductToCart}
                       addToWishlist={addToWishlist}
-                      type={name}
                     />
                   </div>
                 ) : null;

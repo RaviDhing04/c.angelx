@@ -35,6 +35,7 @@
     }
 
     .nav-icon {
+        position: relative;
         width: 1.5rem;
         height: 1.5rem;
         opacity: 1;
@@ -44,6 +45,16 @@
         color: #6D6D6D;
         opacity: 1;
     }
+        .cart-items {
+            position: absolute;
+            text-align: center;
+            width: 1.7rem;
+            height: 1.5rem;
+            color: white;
+            background-color: #6D6D6D;
+            top: 9px;
+            border-radius: 9px;
+        }
 
     .currency-icon {
         width: 1.1rem;
@@ -66,30 +77,30 @@
 
     .login-btn {
         background: #E8EDF3 0% 0% no-repeat padding-box;
-        border-radius:0.25rem;
+        border-radius: 4px;
         opacity: 1;
         text-align: center;
-        font: 0.875rem;
+        font: 14px;
         font-weight: 500;
         letter-spacing: 0px;
         color: #6D6D6D;
         opacity: 1;
         border: 1px solid #C6CCC8;
-        width: 6.25rem;
+        width: 100px;
     }
 
     .signup-btn {
         border: 1px solid #C6CCC8;
-        border-radius:0.25rem;
+        border-radius: 4px;
         opacity: 1;
         text-align: center;
-        font: 0.875rem;
+        font: 14px;
         font-weight: 500;
         letter-spacing: 0px;
         color: #6D6D6D;
         opacity: 1;
         background: #F6F7F9 0% 0% no-repeat padding-box;
-        width: 6.25rem;
+        width: 100px;
     }
 }
 

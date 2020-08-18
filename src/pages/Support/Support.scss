@@ -29,7 +29,7 @@
         .grid-flex {
             display: flex;
             height: 18rem;
-            width: calc(100%/3);
+            width: calc(100%/2);
 
             .rightLine {
                 margin-top: 1rem;
@@ -83,9 +83,9 @@
 
         .sendButton{
             background: #558ED4 0% 0% no-repeat padding-box;
-            border-radius:0.25rem;
+            border-radius: 4px;
             opacity: 1;
-            border-radius:0.25rem;
+            border-radius: 4px;
             opacity: 1;
             border: none;
             letter-spacing: 0px;
