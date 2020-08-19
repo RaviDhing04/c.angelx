@@ -154,7 +154,7 @@ const Header = props => {
                       className="nav-icon"
                       alt="shoppingcart-icon"
                       src={shoppingcart}
-                    ></img>
+                    ></img> {props.cartCount ? <span className="cartCount">{props.cartCount}</span> : null}
                   </Nav.Link>
                   <Nav.Link onClick={() => toggleNotification(!showNotification)}>
                     <img className="nav-icon bell-icon" alt="bell-icon" src={bell}></img>
@@ -233,7 +233,8 @@ const mapDispatchToProps = dispatch =>
 const mapStatetoProps = ({ app: { homePage, common } }) => {
   console.log(common);
   return {
-    searchCategories: homePage.searchCategories
+    searchCategories: homePage.searchCategories,
+    cartCount: homePage.cartCount
   };
 };
 

@@ -6,7 +6,7 @@
   #contacts {
     font-size: 0.875rem;
     margin: 5px 0;
-    padding:0.25rem;
+    padding: 0.25rem;
     letter-spacing: 0px;
     color: #232121;
     opacity: 1;
@@ -128,7 +128,7 @@
   .delivery-zip-code input {
     font-size: 0.875rem;
     margin: 5px 0;
-    padding:0.25rem;
+    padding: 0.25rem;
     letter-spacing: 0px;
     color: #232121;
     opacity: 1;
@@ -213,6 +213,20 @@
     .nav-link {
       padding: 0rem;
     }
+  }
+
+  .stock-info {
+    font-size: 1.125rem;
+    letter-spacing: 0px;
+    opacity: 1;
+  }
+
+  .in-stock {
+    color: #009d5dde;
+  }
+
+  .out-of-stock {
+    color: rgba(192, 29, 8, 0.871);
   }
 
   .review-label {

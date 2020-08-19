@@ -169,289 +169,305 @@ const RegisterBusiness = props => {
               <Col>
                 <Form.Group controlId="BusinessContact">
                   <Form.Label>Contact Details</Form.Label>
-                  <Form.Control
-                    defaultValue={
-                      selectedBusinessDetails &&
-                      selectedBusinessDetails.BusinessContact.S
-                    }
-                    type="tel"
-                    pattern="^[0-9].{9}$"
-                    placeholder="10 digit Contact Number"
-                    required
-                  />
-                </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group controlId="BusinessEmail">
-                  <Form.Label>Email ID</Form.Label>
-                  <Form.Control
-                    defaultValue={
-                      selectedBusinessDetails &&
-                      selectedBusinessDetails.BusinessEmail.S
-                    }
-                    type="email"
-                    placeholder="Contact Email"
-                    required
-                  />
-                </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group controlId="OrgWebsite">
-                  <Form.Label>Organization Website</Form.Label>
-                  <Form.Control
-                    defaultValue={
-                      selectedBusinessDetails &&
-                      selectedBusinessDetails.OrgWebsite && selectedBusinessDetails.OrgWebsite.S
-                    }
-                    type="text"
-                    placeholder="www.Domain.com"
-                  />
-                </Form.Group>
-              </Col>
-            </Form.Row>
-            <Form.Row className="width-75">
-              <Col>
-                <Form.Group controlId="PayFastId">
-                  <Form.Label>Insert Payfast ID</Form.Label>
-                  <InputGroup>
+                  <div style={{"display": "flex"}}>
+                    <Form.Control
+                     style={{"width": "7rem"}}
+                      as="select"
+                      // defaultValue={
+                      //   selectedBusinessDetails &&
+                      //   selectedBusinessDetails.Country.S
+                      // }
+                      required
+                    >
+                      <option value="none">Code</option>
+                      <option value="India">+91 (India)</option>
+                      <option value="USA">+1 (USA)</option>
+                      <option value="south-africa">+27 (S.A)</option>
+                    </Form.Control>
                     <Form.Control
                       defaultValue={
                         selectedBusinessDetails &&
-                        selectedBusinessDetails.PaymentIDs.M.PayFastId.S
+                        selectedBusinessDetails.BusinessContact.S
                       }
-                      type="text"
-                      placeholder="Payfast ID"
+                      type="tel"
+                      pattern="^[0-9].{9}$"
+                      placeholder="10 digit Contact Number"
                       required
                     />
-                    <InputGroup.Append className="inputGroupPayfastID">
-                      <a
-                        className="signUp"
-                        href="https://www.payfast.co.za/registration"
-                        target="blank"
-                      >
-                        Click to Sign up!
-                      </a>
-                    </InputGroup.Append>
-                  </InputGroup>
+                    </div>
                 </Form.Group>
               </Col>
-              <Col>
-                <Form.Group controlId="PaypalId">
-                  <Form.Label>Insert Paypal ID</Form.Label>
-                  <InputGroup>
+                <Col>
+                  <Form.Group controlId="BusinessEmail">
+                    <Form.Label>Email ID</Form.Label>
                     <Form.Control
                       defaultValue={
                         selectedBusinessDetails &&
-                        selectedBusinessDetails.PaymentIDs.M.PaypalId.S
+                        selectedBusinessDetails.BusinessEmail.S
                       }
-                      type="text"
-                      placeholder="Paypal ID"
+                      type="email"
+                      placeholder="Contact Email"
                       required
                     />
-                    <InputGroup.Append className="inputGroupPayfastID">
-                      <a
-                        className="signUp"
-                        href="https://www.paypal.com/in/webapps/mpp/account-selection"
-                        target="blank"
-                      >
-                        Click to Sign up!
-                      </a>
-                    </InputGroup.Append>
-                  </InputGroup>
-                </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group controlId="DHLId">
-                  <Form.Label>Insert DHL ID</Form.Label>
-                  <InputGroup>
+                  </Form.Group>
+                </Col>
+                <Col>
+                  <Form.Group controlId="OrgWebsite">
+                    <Form.Label>Organization Website</Form.Label>
                     <Form.Control
                       defaultValue={
                         selectedBusinessDetails &&
-                        selectedBusinessDetails.DHLId && selectedBusinessDetails.DHLId.S
+                        selectedBusinessDetails.OrgWebsite && selectedBusinessDetails.OrgWebsite.S
                       }
                       type="text"
-                      placeholder="DHL ID"
+                      placeholder="www.Domain.com"
+                    />
+                  </Form.Group>
+                </Col>
+            </Form.Row>
+              <Form.Row className="width-75">
+                <Col>
+                  <Form.Group controlId="PayFastId">
+                    <Form.Label>Insert Payfast ID</Form.Label>
+                    <InputGroup>
+                      <Form.Control
+                        defaultValue={
+                          selectedBusinessDetails &&
+                          selectedBusinessDetails.PaymentIDs.M.PayFastId.S
+                        }
+                        type="text"
+                        placeholder="Payfast ID"
+                        required
+                      />
+                      <InputGroup.Append className="inputGroupPayfastID">
+                        <a
+                          className="signUp"
+                          href="https://www.payfast.co.za/registration"
+                          target="blank"
+                        >
+                          Click to Sign up!
+                      </a>
+                      </InputGroup.Append>
+                    </InputGroup>
+                  </Form.Group>
+                </Col>
+                <Col>
+                  <Form.Group controlId="PaypalId">
+                    <Form.Label>Insert Paypal ID</Form.Label>
+                    <InputGroup>
+                      <Form.Control
+                        defaultValue={
+                          selectedBusinessDetails &&
+                          selectedBusinessDetails.PaymentIDs.M.PaypalId.S
+                        }
+                        type="text"
+                        placeholder="Paypal ID"
+                        required
+                      />
+                      <InputGroup.Append className="inputGroupPayfastID">
+                        <a
+                          className="signUp"
+                          href="https://www.paypal.com/in/webapps/mpp/account-selection"
+                          target="blank"
+                        >
+                          Click to Sign up!
+                      </a>
+                      </InputGroup.Append>
+                    </InputGroup>
+                  </Form.Group>
+                </Col>
+                <Col>
+                  <Form.Group controlId="DHLId">
+                    <Form.Label>Insert DHL ID</Form.Label>
+                    <InputGroup>
+                      <Form.Control
+                        defaultValue={
+                          selectedBusinessDetails &&
+                          selectedBusinessDetails.DHLId && selectedBusinessDetails.DHLId.S
+                        }
+                        type="text"
+                        placeholder="DHL ID"
+                        required
+                      />
+                      <InputGroup.Append className="inputGroupPayfastID">
+                        <a
+                          className="signUp"
+                          href="https://www.dhl.com/en/express/shipping/open_account.html"
+                          target="blank"
+                        >
+                          Click to Sign up!
+                      </a>
+                      </InputGroup.Append>
+                    </InputGroup>
+                  </Form.Group>
+                </Col>
+              </Form.Row>
+              <div className="sub-heading">Address Details</div>
+              <Form.Row className="width-25">
+                <Col>
+                  <Form.Group controlId="AddressType">
+                    <Form.Label>Address Type</Form.Label>
+                    <Form.Control
+                      as="select"
+                      defaultValue={
+                        selectedBusinessDetails &&
+                        selectedBusinessDetails.BusinessAddress.M.AddressType.S
+                      }
+                      required
+                    >
+                      <option value="none"> Address Type</option>
+                      <option value="Merchant"> Merchant Address</option>
+                    </Form.Control>
+                  </Form.Group>
+                </Col>
+              </Form.Row>
+              <Form.Row>
+                <Col>
+                  <Form.Group controlId="Country">
+                    <Form.Label>Country</Form.Label>
+                    <Form.Control
+                      as="select"
+                      defaultValue={
+                        selectedBusinessDetails &&
+                        selectedBusinessDetails.Country.S
+                      }
+                      required
+                    >
+                      <option value="none"> Select Country</option>
+                      <option value="India"> India</option>
+                      <option value="USA"> USA</option>
+                      <option value="south-africa"> South Africa</option>
+                    </Form.Control>
+                  </Form.Group>
+                </Col>
+                <Col>
+                  <Form.Group controlId="Pincode">
+                    <Form.Label>Pincode</Form.Label>
+                    <Form.Control
+                      defaultValue={
+                        selectedBusinessDetails &&
+                        selectedBusinessDetails.BusinessAddress.M.PostalCode.S
+                      }
+                      type="text"
+                      placeholder="Type Pincode"
                       required
                     />
-                    <InputGroup.Append className="inputGroupPayfastID">
-                      <a
-                        className="signUp"
-                        href="https://www.dhl.com/en/express/shipping/open_account.html"
-                        target="blank"
-                      >
-                        Click to Sign up!
-                      </a>
-                    </InputGroup.Append>
-                  </InputGroup>
-                </Form.Group>
-              </Col>
-            </Form.Row>
-            <div className="sub-heading">Address Details</div>
-            <Form.Row className="width-25">
-              <Col>
-                <Form.Group controlId="AddressType">
-                  <Form.Label>Address Type</Form.Label>
-                  <Form.Control
-                    as="select"
-                    defaultValue={
-                      selectedBusinessDetails &&
-                      selectedBusinessDetails.BusinessAddress.M.AddressType.S
-                    }
-                    required
-                  >
-                    <option value="none"> Address Type</option>
-                    <option value="Merchant"> Merchant Address</option>
-                  </Form.Control>
-                </Form.Group>
-              </Col>
-            </Form.Row>
-            <Form.Row>
-              <Col>
-                <Form.Group controlId="Country">
-                  <Form.Label>Country</Form.Label>
-                  <Form.Control
-                    as="select"
-                    defaultValue={
-                      selectedBusinessDetails &&
-                      selectedBusinessDetails.Country.S
-                    }
-                    required
-                  >
-                    <option value="none"> Select Country</option>
-                    <option value="India"> India</option>
-                    <option value="USA"> USA</option>
-                    <option value="south-africa"> South Africa</option>
-                  </Form.Control>
-                </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group controlId="Pincode">
-                  <Form.Label>Pincode</Form.Label>
-                  <Form.Control
-                    defaultValue={
-                      selectedBusinessDetails &&
-                      selectedBusinessDetails.BusinessAddress.M.PostalCode.S
-                    }
-                    type="text"
-                    placeholder="Type Pincode"
-                    required
-                  />
-                </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group controlId="Province">
-                  <Form.Label>Province/ State</Form.Label>
-                  <Form.Control
-                    defaultValue={
-                      selectedBusinessDetails &&
-                      selectedBusinessDetails.BusinessAddress.M.Province.S
-                    }
-                    type="text"
-                    placeholder="Type Province/ State"
-                    required
-                  />
-                </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group controlId="City">
-                  <Form.Label>City</Form.Label>
-                  <Form.Control
-                    defaultValue={
-                      selectedBusinessDetails &&
-                      selectedBusinessDetails.BusinessAddress.M.City.S
-                    }
-                    type="text"
-                    placeholder="City"
-                    required
-                  />
-                </Form.Group>
-              </Col>
-            </Form.Row>
-            <Form.Row className="width-75">
-              <Col>
-                <Form.Group controlId="StreetName">
-                  <Form.Label>Street Name</Form.Label>
-                  <Form.Control
-                    defaultValue={
-                      selectedBusinessDetails &&
-                      selectedBusinessDetails.BusinessAddress.M.StreetName.S
-                    }
-                    type="text"
-                    placeholder="Type Street Name"
-                    required
-                  />
-                </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group controlId="StreetNumber">
-                  <Form.Label>Street Number</Form.Label>
-                  <Form.Control
-                    defaultValue={
-                      selectedBusinessDetails &&
-                      selectedBusinessDetails.BusinessAddress.M.StreetNumber.S
-                    }
-                    type="text"
-                    placeholder="Type Street Number"
-                    required
-                  />
-                </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group controlId="Suburb">
-                  <Form.Label>Suburb</Form.Label>
-                  <Form.Control
-                    defaultValue={
-                      selectedBusinessDetails &&
-                      selectedBusinessDetails.BusinessAddress.M.Suburb.S
-                    }
-                    type="text"
-                    placeholder="Type Suburb"
-                    required
-                  />
-                </Form.Group>
-              </Col>
-            </Form.Row>
-            <div className="sub-heading">Tags</div>{" "}
-            <span className="hint">
-              (Give your business / organization tags, to make it easily
-              searchable. After each tag, please add a comma (,).)
+                  </Form.Group>
+                </Col>
+                <Col>
+                  <Form.Group controlId="Province">
+                    <Form.Label>Province/State</Form.Label>
+                    <Form.Control
+                      defaultValue={
+                        selectedBusinessDetails &&
+                        selectedBusinessDetails.BusinessAddress.M.Province.S
+                      }
+                      type="text"
+                      placeholder="Type Province/State"
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+                <Col>
+                  <Form.Group controlId="City">
+                    <Form.Label>City</Form.Label>
+                    <Form.Control
+                      defaultValue={
+                        selectedBusinessDetails &&
+                        selectedBusinessDetails.BusinessAddress.M.City.S
+                      }
+                      type="text"
+                      placeholder="City"
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+              </Form.Row>
+              <Form.Row className="width-75">
+                <Col>
+                  <Form.Group controlId="StreetName">
+                    <Form.Label>Address 1</Form.Label>
+                    <Form.Control
+                      defaultValue={
+                        selectedBusinessDetails &&
+                        selectedBusinessDetails.BusinessAddress.M.StreetName.S
+                      }
+                      type="text"
+                      placeholder="Type Address 1"
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+                <Col>
+                  <Form.Group controlId="StreetNumber">
+                    <Form.Label>Address 2</Form.Label>
+                    <Form.Control
+                      defaultValue={
+                        selectedBusinessDetails &&
+                        selectedBusinessDetails.BusinessAddress.M.StreetNumber.S
+                      }
+                      type="text"
+                      placeholder="Type Address 2"
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+                <Col>
+                  <Form.Group controlId="Suburb">
+                    <Form.Label>Suburb</Form.Label>
+                    <Form.Control
+                      defaultValue={
+                        selectedBusinessDetails &&
+                        selectedBusinessDetails.BusinessAddress.M.Suburb.S
+                      }
+                      type="text"
+                      placeholder="Type Suburb"
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+              </Form.Row>
+              <div className="sub-heading">Business Search Tags</div>{" "}
+              <span className="hint">
+                (Give your business / organization tags, to make it easily
+                searchable. After each tag, please add a comma (,).)
             </span>
-            <Form.Row className="width-25">
-              <Col>
-                <Form.Group controlId="Tags">
-                  <Form.Label>Business Tags</Form.Label>
-                  <Form.Control
-                    defaultValue={
-                      selectedBusinessDetails &&
-                      selectedBusinessDetails.Tags.L.length &&
-                      selectedBusinessDetails.Tags.L.reduce((acc, tag) => {
-                        return acc + tag.S + ",";
-                      }, "")
-                    }
-                    type="text"
-                    placeholder="Tags"
-                  />
-                </Form.Group>
-              </Col>
-            </Form.Row>
-            <div className="buttons">
-              <Button onClick={e => cancel(e)} className="cancelButton">
-                Cancel
+              <Form.Row className="width-25">
+                <Col>
+                  <Form.Group controlId="Tags">
+                    <Form.Label>Business Search Tags</Form.Label>
+                    <Form.Control
+                      defaultValue={
+                        selectedBusinessDetails &&
+                        selectedBusinessDetails.Tags.L.length &&
+                        selectedBusinessDetails.Tags.L.reduce((acc, tag) => {
+                          return acc + tag.S + ",";
+                        }, "")
+                      }
+                      type="text"
+                      placeholder="Business Search Tags"
+                    />
+                  </Form.Group>
+                </Col>
+              </Form.Row>
+              <div className="buttons">
+                <Button onClick={e => cancel(e)} className="cancelButton">
+                  Cancel
               </Button>
-              {action === 'edit' ? null : <Button
-                onClick={() => setbuttonClicked(true)}
-                type="submit"
-                className="saveAnotherButton"
-              >
-                Save & Add Another Business
+                {action === 'edit' ? null : <Button
+                  onClick={() => setbuttonClicked(true)}
+                  type="submit"
+                  className="saveAnotherButton"
+                >
+                  Save & Add Another Business
               </Button>}
-              <Button className="saveButton" type="submit">
-                Save Business
+                <Button className="saveButton" type="submit">
+                  Save Business
               </Button>
-            </div>
+              </div>
           </Form>
         </div>
-      </div>
+        </div>
     </Container>
   ) : (
       <CustomLoader />
@@ -460,18 +476,18 @@ const RegisterBusiness = props => {
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
-    {
-      fetchRegisterBusiness,
-      updateBusiness,
-      registerNewBusiness
-    },
+      {
+        fetchRegisterBusiness,
+        updateBusiness,
+        registerNewBusiness
+      },
     dispatch
   );
 
-const mapStatetoProps = ({ app: { manageBusiness } }) => {
-  console.log(manageBusiness);
+const mapStatetoProps = ({ app: { manageBusiness} }) => {
+        console.log(manageBusiness);
   return {
-    selectedBusiness: manageBusiness.selectedBusiness,
+        selectedBusiness: manageBusiness.selectedBusiness,
     selectedBusinessDetails: manageBusiness.selectedBusinessDetails
   };
 };

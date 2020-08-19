@@ -8,7 +8,19 @@
     top: 0px;
     z-index: 99;
 
-
+.cartCount{
+    font-size: 0.75rem;
+    color: #fff;
+    vertical-align: top;
+    margin-left: -7px;
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
+    border-radius: 1rem;
+    line-height: 10px;
+    background: #464646 0% 0% no-repeat padding-box;
+    font-weight: bold;
+    padding: 0.2rem 0.4rem;
+}
     .brand-logo {
         width: 8.125rem;
         height: 2.75rem;

@@ -40,8 +40,11 @@ const Product = props => {
                   "CouponCode": null,
                   "MerchantId": data.MerchantId.S
 
-                }, type && type.toLowerCase() === 'wishlist' ? 'wishlist': null)} className="product-button">Add to Cart</Button>
+                }, type && type.toLowerCase() === 'wishlist' ? 'wishlist' : null)} className="product-button">Add to Cart</Button>
               )}
+            <Link to={`/home/productDetail/${data.ProductId.S}/${data.Timestamp.S}`}>
+            <Button className="more-button">More Options</Button>
+            </Link>
           </Card.Body>
         </Card>
       ) : null

@@ -25,7 +25,7 @@ const AllBusiness = props => {
   const navigate = (event) => {
     const ele = event.target.tagName;
     const merchantId = event.currentTarget.dataset.value;
-    // props.updateSelectedBusiness(merchantId);
+    props.updateSelectedBusiness(merchantId);
     ele !== "BUTTON" ? history.push(`/merchantHome/viewAllProducts/${"Latest Uploads"}/${merchantId}`) : history.push('/registerBusiness/edit');
   }
 

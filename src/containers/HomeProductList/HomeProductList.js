@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Container } from "react-bootstrap";
@@ -9,30 +9,49 @@ import { useAuth } from "../../context/auth";
 
 const HomeProductList = props => {
   const isAuthenticated = useAuth();
+  const [loadingLatest, setLoadingLatest] = useState(true);
+  const [loadingSponsored, setLoadingSponsored] = useState(true);
+  const [loadingWishlist, setLoadingWishlist] = useState(true);
   useEffect(() => {
-    props.getLatestProductsWithPagination();
-    props.getSponsoredProductsWithPagination();
-    props.getWishlistProductsWithPagination({UserId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId});
+    const fetchLatestProducts = async () => {
+      const resLatest = await props.getLatestProductsWithPagination();
+      if (resLatest) setLoadingLatest(false);
+    }
+    const fetchSponsoredProducts = async () => {
+      const resSponsored = await props.getSponsoredProductsWithPagination();
+      if (resSponsored) setLoadingSponsored(false);
+    }
+
+    const fetchWishlistProducts = async () => {
+      const resWishlist = await props.getWishlistProductsWithPagination({ UserId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId });
+      if (resWishlist) setLoadingWishlist(false);
+    }
+    fetchLatestProducts();
+    fetchSponsoredProducts();
+    fetchWishlistProducts();
   }, []);
 
   const addToCart = async (payload, type) => {
     const res = await props.addProductToCart(payload);
-    if(res && type) {
-      props.getWishlistProductsWithPagination({UserId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId});
+    if (res && type) {
+      props.getWishlistProductsWithPagination({ UserId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId });
     }
   }
 
   const addProductToWish = async (payload) => {
     const res = await props.addToWishlist(payload);
+    if (res) {
+      props.getWishlistProductsWithPagination({ UserId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId });
+    }
   }
 
   return (
     <React.Fragment>
       <Container fluid>
-        <ProductListCarousel name="Sponsored" data={props.sponsoredProducts} activeCurrency={props.activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} />
-        <ProductList name="Latest Uploads" data={props.latestProducts} activeCurrency={props.activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} />
-        <ProductList name="Trending" data={props.latestProducts} activeCurrency={props.activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} />
-        {isAuthenticated ? <ProductListCarousel name="Wishlist" data={props.wishlistProducts} activeCurrency={props.activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} /> : null}
+        <ProductListCarousel name="Sponsored" loading={loadingSponsored} data={props.sponsoredProducts} activeCurrency={props.activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} />
+        <ProductList name="Latest Uploads" loading={loadingLatest} data={props.latestProducts} activeCurrency={props.activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} />
+        {/* <ProductList name="Trending" data={props.latestProducts} activeCurrency={props.activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} /> */}
+        {isAuthenticated ? <ProductListCarousel name="Wishlist" loading={loadingWishlist} data={props.wishlistProducts} activeCurrency={props.activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} /> : null}
       </Container>
     </React.Fragment>
   );

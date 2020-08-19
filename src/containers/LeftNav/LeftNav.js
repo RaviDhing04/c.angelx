@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import checkmark from "../../assets/checkmark.svg";
 
 const LeftNav = props => {
-  const { links, merchants, merchantId, showMerchants } = props;
+  const { links, merchants, merchantId, showMerchants, count } = props;
   const userId = JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId;
   const [searchResults, setSearchResults] = useState([]);
 
@@ -45,7 +45,8 @@ const LeftNav = props => {
                     </Nav.Link>
                   </Nav> : (<Nav className="flex-column">
                     <div className="nav-link"> {link.name} </div>
-                  </Nav>)}
+                  </Nav>)} 
+                  {count && count[link.name] ? <span className="count">{count[link.name]}</span> : null}
                 </div>
               );
             })}

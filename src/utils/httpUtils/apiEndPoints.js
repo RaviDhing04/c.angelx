@@ -105,9 +105,15 @@ const getApiEndPoints = val => {
     case "updateUserDetails":
       return baseUrl + "users/updateprofiledetails";
     case "followmerchant":
-      return baseUrl + "users/followmerchant"; 
+      return baseUrl + "users/followmerchant";
     case "unfollowmerchant":
       return baseUrl + "users/unfollowmerchant";
+    case "support":
+      return baseUrl + "users/support";
+    case "UserLinkCount":
+      return baseUrl + "users/getmanagepanelwithcountdata";
+    case "cartCount":
+      return baseUrl + "cart/getcartitemcount";
     default:
       return "/";
   }

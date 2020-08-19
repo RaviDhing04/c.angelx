@@ -133,17 +133,17 @@ export const supportText = ["Contact us for any help or to joint the team"];
 
 export const supportGrid = [
   {
-    text: ["C-Angelx", "qiwuqrwbiu akjnwiohqwodjk", "kjabu9ajhdauiscasdmbiudn"],
+    text: ["C-Angelx", "H84 Midway Gardens", "First Avenue Midrand", "1685 Johannesburg South Africa"],
     title: "Address",
     image: "address"
   },
   {
-    text: ["+91 982 928 9821", "+91 982 928 9821"],
+    text: ["+91 xxx xxx xxxx", "+91 xxx xxx xxxx1"],
     title: "Call us at",
     image: "email"
   },
   {
-    text: ["abc@anglex.com", "abc@anglex.com"],
+    text: ["support@cAngelx.xom"],
     title: "Email",
     image: "email"
   }

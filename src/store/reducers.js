@@ -5,7 +5,9 @@ const initialState = {
     trendingProducts: {},
     wishlistProducts: {},
     followedMerchants: [],
-    searchCategories: []
+    searchCategories: [],
+    userLinkCount: {},
+    cartCount: 0
   },
   merchantHomePage: {
     merchantAllProducts: {},
@@ -95,6 +97,22 @@ export const appReducer = (state = initialState, { type, value }) => {
         merchantHomePage: {
           ...state.merchantHomePage,
           followedMerchants: value.payload
+        }
+      };
+    case "USER_LINKS_COUNT":
+      return {
+        ...state,
+        homePage: {
+          ...state.homePage,
+          userLinkCount: value.payload
+        }
+      };
+    case "CART_COUNT":
+      return {
+        ...state,
+        homePage: {
+          ...state.homePage,
+          cartCount: value.payload
         }
       };
     case "All_BUSINESS":

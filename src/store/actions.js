@@ -144,7 +144,7 @@ export const getLatestProductsWithPagination = (
         body: body
       }
     );
-    if (response && response.result && response.result.data) {
+    if (response && response.result && response.result.data && response.result.data.Items && response.result.data.Items.length) {
       dispatch({
         type: "LATEST_PRODUCTS",
         value: { payload: response.result.data }
@@ -170,8 +170,7 @@ export const getSponsoredProductsWithPagination = (
         method: "GET"
       }
     );
-    debugger;
-    if (response && response.result && response.result.data) {
+    if (response && response.result && response.result.data && response.result.data.Items && response.result.data.Items.length) {
       dispatch({
         type: "SPONSORED_PRODUCTS",
         value: { payload: response.result.data }
@@ -198,7 +197,7 @@ export const getTrendingProductsWithPagination = (
         body: body
       }
     );
-    if (response && response.result && response.result.data) {
+    if (response && response.result && response.result.data && response.result.data.Items && response.result.data.Items.length) {
       dispatch({
         type: "TRENDING_PRODUCTS",
         value: { payload: response.result.data }
@@ -225,8 +224,9 @@ export const getWishlistProductsWithPagination = (
         body: body
       }
     );
-    if (response && response.result && response.result.data) {
+    if (response && response.result && response.result.data && response.result.data.wishListDetails && response.result.data.wishListDetails.length) {
       let out = [];
+
       response.result.data.wishListDetails &&
         response.result.data.wishListDetails.forEach(orderItem => {
           response.result.data.productDetails &&
@@ -242,7 +242,7 @@ export const getWishlistProductsWithPagination = (
         });
       dispatch({
         type: "WISHLIST_PRODUCTS",
-        value: { payload: {'Items': out} }
+        value: { payload: { 'Items': out } }
       });
       return true;
     } else {
@@ -264,7 +264,7 @@ export const getLatestProducts = (body = {}) => async dispatch => {
         body: body
       }
     );
-    if (response && response.result && response.result.data) {
+    if (response && response.result && response.result.data && response.result.data.Items && response.result.data.Items.length) {
       dispatch({
         type: "VIEWALL_PRODUCTS",
         value: { payload: response.result.data }
@@ -289,8 +289,9 @@ export const getWishlistProducts = (body = {}) => async dispatch => {
         body: body
       }
     );
-    if (response && response.result && response.result.data) {
+    if (response && response.result && response.result.data && response.result.data.wishListDetails && response.result.data.wishListDetails.length) {
       let out = [];
+
       response.result.data.wishListDetails &&
         response.result.data.wishListDetails.forEach(orderItem => {
           response.result.data.productDetails &&
@@ -325,7 +326,7 @@ export const getMerchantAllProducts = (body = {}) => async dispatch => {
       method: "POST",
       body: body
     });
-    if (response && response.result && response.result.data) {
+    if (response && response.result && response.result.data && response.result.data.Items && response.result.data.Items.length) {
       dispatch({
         type: "VIEWALL_PRODUCTS",
         value: { payload: response.result.data }
@@ -572,6 +573,69 @@ export const getDashboardBanners = (body = {}) => async dispatch => {
     return false;
   }
 };
+
+export const getUserLinkCount = (body = {}) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("UserLinkCount"), {
+      method: "GET"
+    });
+
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      const out = {};
+      response.result.data.NavigationData.forEach((item) => {
+        out[item.displayName] = item.Count;
+      })
+      dispatch({
+        type: "USER_LINKS_COUNT",
+        value: {
+          payload: out
+        }
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const cartCount = (body = {}) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("cartCount"), {
+      method: "GET"
+    });
+
+    if (
+      response &&
+      response.results &&
+      response.results.data &&
+      response.results.message === "Success"
+    ) {
+      dispatch({
+        type: "CART_COUNT",
+        value: {
+          payload: response.results.data.Count
+        }
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
 
 export const getAllShippingAddress = (body = {}) => async dispatch => {
   try {
@@ -875,6 +939,29 @@ export const registerNewBusiness = (body = {}) => async dispatch => {
   }
 };
 
+export const support = (body = {}) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("support"), {
+      method: "POST",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
 export const updateBusiness = (body = {}) => async dispatch => {
   try {
 
@@ -990,7 +1077,15 @@ export const updateSelectedBusiness = merchantId => async (
   getState
 ) => {
   try {
-
+    if (!merchantId) {
+      dispatch({
+        type: "SELECTED_BUSINESS",
+        value: {
+          payload: null
+        }
+      });
+      return true;
+    }
     const AllBusiness = getState().app.manageBusiness.allBusiness;
     const selectedBusiness = AllBusiness.find(business => {
       return business.MerchantId.S === merchantId;
@@ -1088,7 +1183,8 @@ export const addNewContact = (body = {}) => async dispatch => {
   }
 };
 
-export const addToWishlist = (body = {}) => async dispatch => {
+export const addToWishlist = (body = {}) => async (dispatch,
+  getState) => {
   try {
 
     const response = await httpFetch(getApiEndPoints("addToWishlist"), {
@@ -1101,6 +1197,16 @@ export const addToWishlist = (body = {}) => async dispatch => {
       response.result.data
     ) {
       response.result.message === 'Success' ? alert('Product added to Wishlist') : alert(response.result.message);
+      if (response.result.message === 'Success') {
+        let userLinkCount = getState().app.homePage.userLinkCount;
+        const newCounts = { ...userLinkCount, 'Wishlist': response.result.data.TotalWishlistCount }
+        dispatch({
+          type: "USER_LINKS_COUNT",
+          value: {
+            payload: newCounts
+          }
+        });
+      }
       return true;
     } else {
       return false;
@@ -1248,7 +1354,7 @@ export const getSavedEmployees = (body = {}) => async dispatch => {
   }
 };
 
-export const addProductToCart = (body = {}) => async dispatch => {
+export const addProductToCart = (body = {}) => async (dispatch) => {
   try {
 
     const response = await httpFetch(getApiEndPoints("addProductToCart"), {
@@ -1262,6 +1368,14 @@ export const addProductToCart = (body = {}) => async dispatch => {
       response.result.message !== "Error"
     ) {
       response.result.message === 'Success' ? alert('Product added in cart') : alert(response.result.message);
+      if (response.result.message === 'Success') {
+        dispatch({
+          type: "CART_COUNT",
+          value: {
+            payload: response.result.data.TotalCartCount
+          }
+        });
+      }
       return true;
     } else {
       return false;

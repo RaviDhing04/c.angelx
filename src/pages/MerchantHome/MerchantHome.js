@@ -32,6 +32,7 @@ const MerchantHome = props => {
   const { state } = props.location;
 
   useEffect(() => {
+    props.updateSelectedBusiness(0);
     var temp = window.location.pathname.split('/');
     const merchantId = temp[temp.length - 1];
     setMerchantId(merchantId);

@@ -127,14 +127,14 @@ const ProfileAddresses = props => {
               </Col>
               <Col>
                 <Form.Group controlId="Province">
-                  <Form.Label>Province</Form.Label>
+                  <Form.Label>Province/State</Form.Label>
                   <Form.Control
                     defaultValue={
                       selectedAddress && selectedAddress.Province &&
                       selectedAddress.Province.S
                     }
                     type="text"
-                    placeholder="Type Province"
+                    placeholder="Type Province/State"
                     required
                   />
                 </Form.Group>

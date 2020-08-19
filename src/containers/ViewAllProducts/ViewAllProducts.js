@@ -83,7 +83,7 @@ const ViewAllProducts = props => {
         ) : Items && Items.length === 0 ? (
           <React.Fragment>
             <div className="product-row-heading">{name}</div>
-            <span className="not-found"> No Products added, Go to Inventory to add inventory</span>
+            {merchantId ? <span className="not-found"> No Products added, Go to Inventory to add inventory</span> : <span className="not-found"> No Records Found</span>}
           </React.Fragment>
         ) : (
               <ProductRowShimmer />

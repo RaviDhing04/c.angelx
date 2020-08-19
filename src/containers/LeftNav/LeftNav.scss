@@ -7,7 +7,7 @@
     color: #6d6d6d;
     opacity: 1;
     background: #e8edf3 0% 0% no-repeat padding-box;
-    border-radius:0.25rem;
+    border-radius: 0.25rem;
     opacity: 1;
     width: 12rem;
     height: 2.2rem;
@@ -26,6 +26,25 @@
     color: #656565;
     opacity: 1;
     font-size: 1.125rem;
+  }
+
+  .count {
+    background: #999999 0% 0% no-repeat padding-box;
+    border-radius: 4px;
+    opacity: 1;
+    width: 1.5rem;
+    height: 1.4rem;
+    text-align: center;
+    align-self: center;
+    /* display: flex; */
+    margin-left: auto;
+    margin-right: 1rem;
+    vertical-align: middle;
+    line-height: 1.4rem;
+    color: #ffffff;
+    opacity: 1;
+    font-size: 0.75rem;
+    font-weight: bold;
   }
 
   .disable {

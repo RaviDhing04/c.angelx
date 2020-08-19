@@ -16,13 +16,18 @@ import ProductList from "../../components/ProductList/ProductList";
 
 const LandingPage = props => {
   const [banner, setBanner] = useState(null);
+  const [loadingLatest, setLoadingLatest] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
-    props.getSearchCategories();
-    props.getLatestProductsWithPagination();
-    setBanner([await props.getLandingBanners()]);
+      props.getSearchCategories();
+      setBanner([await props.getLandingBanners()]);
+    }
+    const fetchLatestProducts = async () => {
+      const resLatest = await props.getLatestProductsWithPagination();
+      if (resLatest) setLoadingLatest(false);
     }
     fetchData();
+    fetchLatestProducts();
   }, []);
 
   const addToCart = async payload => {
@@ -37,7 +42,7 @@ const LandingPage = props => {
   return (
     <React.Fragment>
       <div className="landingpage-banner">
-      <Banner banners={banner} />
+        <Banner banners={banner} />
       </div>
       <div className="landingpage-container">
         <div>
@@ -47,6 +52,7 @@ const LandingPage = props => {
             activeCurrency={props.activeCurrency}
             addProductToCart={addToCart}
             addToWishlist={addProductToWish}
+            loading={loadingLatest}
           />
           <ProductList
             name="Latest Uploads"
@@ -54,6 +60,7 @@ const LandingPage = props => {
             activeCurrency={props.activeCurrency}
             addProductToCart={addToCart}
             addToWishlist={addProductToWish}
+            loading={loadingLatest}
           />
         </div>
         <div className="heading"> Explore by Categories </div>

@@ -9,11 +9,11 @@ import { Container } from "react-bootstrap";
 import LeftNav from "../../containers/LeftNav/LeftNav";
 import "./Home.scss";
 import { userLeftNavLinks } from "../../constants/constants";
-import { getFollowedMerchants, getDashboardBanners } from "../../store/actions";
+import { getFollowedMerchants, getDashboardBanners, getUserLinkCount, cartCount } from "../../store/actions";
 import { useAuth } from "../../context/auth";
 
 const Home = props => {
-  const { followedMerchants } = props;
+  const { followedMerchants, getUserLinkCount, userLinkCount, cartCount } = props;
   const [banners, setBanners] = useState(null);
   const isAuthenticated = useAuth();
 
@@ -23,6 +23,8 @@ const Home = props => {
         props.getFollowedMerchants({
           PatronId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId
         });
+      getUserLinkCount();
+      cartCount();
       setBanners(await props.getDashboardBanners());
     };
     fetchData();
@@ -42,6 +44,7 @@ const Home = props => {
                 merchants={followedMerchants}
                 merchantId={""}
                 showMerchants={true}
+                count={userLinkCount}
               />
             </div>
           ) : null}
@@ -60,7 +63,9 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getFollowedMerchants,
-      getDashboardBanners
+      getDashboardBanners,
+      getUserLinkCount,
+      cartCount
     },
     dispatch
   );
@@ -68,7 +73,8 @@ const mapDispatchToProps = dispatch =>
 const mapStatetoProps = ({ app: { homePage } }) => {
   console.log(homePage);
   return {
-    followedMerchants: homePage.followedMerchants
+    followedMerchants: homePage.followedMerchants,
+    userLinkCount: homePage.userLinkCount
   };
 };
 

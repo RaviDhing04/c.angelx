@@ -12,12 +12,13 @@ const ProductList = props => {
     name,
     activeCurrency,
     addProductToCart,
-    addToWishlist
+    addToWishlist,
+    loading
   } = props;
   const isAuthenticated = useAuth();
   return (
     <React.Fragment>
-      {Items && Items.length ? (
+      {!loading ? (Items && Items.length ? (
         <React.Fragment>
           <div className={isAuthenticated ? "product-row-heading" : "margin-left-4 product-row-heading"}>{name}</div>
           <Row className="product-row-1">
@@ -37,10 +38,13 @@ const ProductList = props => {
               })}
           </Row>
         </React.Fragment>
-      ) : (
+      ) : <React.Fragment>
+          <div className={isAuthenticated ? "product-row-heading" : "margin-left-4 product-row-heading"}>{name}</div>
+          <span className="not-found"> No Records Found</span>
+        </React.Fragment>) : (
           <ProductRowShimmer />
         )}
-      {Items && Items.length ? (
+      {!loading ? (Items && Items.length ? (
         <React.Fragment>
           <Row className="product-row-2">
             {Items &&
@@ -56,7 +60,7 @@ const ProductList = props => {
             <Button className={isAuthenticated ? "view-all" : "margin-left-4 view-all"}>View All</Button>
           </Link>
         </React.Fragment>
-      ) : (
+      ) : null) : (
           <ProductRowShimmer />
         )}
     </React.Fragment>

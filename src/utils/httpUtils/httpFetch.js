@@ -64,7 +64,6 @@ export const httpFetch = async (url, opts = {}, bypass = 0) => {
     response = await fetch(requestObj.url, requestObj.params)
       .then(async resp => {
         // response = resp;
-        debugger;
         if (resp.status >= 200 && resp.status < 305) {
           return resp;
         } else if (resp.status === 410 || resp.status === 401) {

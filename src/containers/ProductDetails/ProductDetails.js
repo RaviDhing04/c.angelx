@@ -25,6 +25,7 @@ const ProductDetails = props => {
   const {
     Description,
     IsDonationCampaign,
+    IsInStock,
     MerchantHandle,
     Name,
     ProductImages,
@@ -90,6 +91,25 @@ const ProductDetails = props => {
     };
     const res = await props.addProductToCart(payload);
     res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
+  };
+
+  const preOrder = async (event) => {
+    setLoading(true)
+    event.preventDefault();
+    const orderType = {
+      "order_type": "preorder",
+      "product_id": productId,
+      "product_timestamp": Timestamp.S,
+      "laybuy_months": laybuy_months,
+      "product_price": ProductSpecifications.M.UnitPrice.S,
+      "qty": quantity,
+      "total_amount": ProductSpecifications.M.UnitPrice.S * quantity,
+      "billing_address_id": null,
+      "shipping_address_id": null,
+      "payment_type": null
+    }
+    localStorage.setItem('orderType', JSON.stringify(orderType));
+    history.push(`/checkout/shipping/${JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId}/${'Shipping'}`);
   };
 
   const transformImageDataStructure = images => {
@@ -174,13 +194,15 @@ const ProductDetails = props => {
                 <li>
                   {/* <span className="price-discount">8000</span> */}
                 </li>
-                <li>
+                {IsInStock.S === "false" ? (<li>
                   <span onClick={() => { setGroupBy(false); setNormalPurchase(true); setLayBy(false); addToCart() }} className="sm-btn bg-blue">
                     Add to cart
                   </span>
                   {isAuthenticated ? <span onClick={() => { setGroupBy(true); setNormalPurchase(false); setLayBy(false); setQuantity(0); }} className="sm-btn bg-black">Group Purchase</span> : null}
                   {isAuthenticated ? <span onClick={() => { setGroupBy(false); setNormalPurchase(false); setLayBy(true); setQuantity(0); }} className="sm-btn bg-grey">Lay buy Order</span> : null}
-                </li>
+                </li>) : (<span onClick={(e) => { preOrder(e) }} className="sm-btn bg-blue">
+                  Pre Order
+                </span>)}
                 {/* <li>
                   <div className="delivery-zip-code">
                     <label>Delivery to</label>
@@ -253,6 +275,12 @@ const ProductDetails = props => {
                       return <span key={index} style={{ "backgroundColor": color }} className="palette-box"></span>
                     })
                     }
+                  </div>
+                </li>
+                <li>
+                  {/* <div className="sub-head">Availibility</div> */}
+                  <div className={IsInStock.S === "true" ? "in-stock stock-info" : "out-of-stock stock-info"}>
+                    {IsInStock.S === "true" ? "In Stock" : "Out Of Stock"}
                   </div>
                 </li>
                 <li>
