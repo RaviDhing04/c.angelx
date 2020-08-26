@@ -19,7 +19,7 @@ import { useAuth } from "../../context/auth";
 import { useHistory } from "react-router-dom";
 
 const Header = props => {
-  const [activeCurrency, setActiveCurrency] = useState(currencies[0]);
+  const [activeCurrency, setActiveCurrency] = useState(currencies[1]);
   const [showNotification, toggleNotification] = useState(false);
   const isAuthenticated = useAuth();
   const history = useHistory();
@@ -107,10 +107,11 @@ const Header = props => {
           <SearchBar searchCategories={props.searchCategories} fetchSearchResults={props.headerSearch} />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="ml-auto right-links-wrapper">
-              <Dropdown>
+              <Dropdown disabled={true}>
                 <Dropdown.Toggle
                   as={CustomToggle}
                   id="dropdown-custom-components"
+                  disabled={true}
                 >
                   <img
                     className="currency-icon"
@@ -119,10 +120,11 @@ const Header = props => {
                   ></img>
                   {activeCurrency.shortName}
                 </Dropdown.Toggle>
-                <Dropdown.Menu alignRight as={CustomMenu}>
+                <Dropdown.Menu disabled={true} alignRight as={CustomMenu}>
                   {currencies.map(currency => {
                     return (
                       <Dropdown.Item
+                      disabled={true}
                         onClick={e => changeCurrency(e)}
                         eventKey="3"
                         value={currency.name}

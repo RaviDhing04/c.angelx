@@ -11,14 +11,12 @@
   .product-row {
     padding: 2rem 0;
     justify-content: space-evenly;
-  }
-
-  .product-row-no-flex {
-    padding: 2rem 0;
-    >div {
-      margin-left: 1.5rem;
+    .dummy-prod{
+      width: 16rem;
+      visibility: hidden;
     }
   }
+
 
   .not-found {
     font-size: 1.25rem;

@@ -9,18 +9,41 @@ export const userLeftNavLinks = [
   { name: "Add Contacts", path: "/home/myContacts/", icon: "profile", enable: true }
 ];
 
-export const merchantLeftNavLinks = [
-  { name: "Inventory", path: "/merchantHome/inventory/", icon: "inventory", enable: true },
-  { name: "Causes", path: "/merchantHome/campaigns/", icon: "donate", enable: true },
-  { name: "Add Discount Coupons", path: "/merchantHome/coupons/", icon: "coupon", enable: true },
-  { name: "Subordinate Account", path: "/merchantHome/myEmployees/", icon: "Shape", enable: true },
-  { name: "Sales/Pending Deliveriest", path: "/merchantHome/myEmployees/", icon: "hourglass", enable: false },
-  { name: "Lay By Orders", path: "/merchantHome/myEmployees/", icon: "clock", enable: false },
-  { name: "Group Purchase Orders", path: "/merchantHome/myEmployees/", icon: "shopping-cart", enable: false },
-  { name: "Declined Orders", path: "/merchantHome/myEmployees/", icon: "blocked-symbol", enable: false },
-  { name: "Patrons", path: "/merchantHome/myEmployees/", icon: "profile", enable: false },
-  { name: "Statistics", path: "/merchantHome/myEmployees/", icon: "bar-graph", enable: false }
-];
+export const merchantLeftNavLinks = {
+  'Default': [
+    { name: "Inventory", path: "/merchantHome/inventory/", icon: "inventory", enable: true },
+    { name: "Causes", path: "/merchantHome/campaigns/", icon: "donate", enable: true },
+    { name: "Add Discount Coupons", path: "/merchantHome/coupons/", icon: "coupon", enable: true },
+    { name: "Subordinate Account", path: "/merchantHome/myEmployees/", icon: "Shape", enable: true },
+    { name: "Sales/Pending Deliveriest", path: "/merchantHome/myEmployees/", icon: "hourglass", enable: false },
+    { name: "Lay By Orders", path: "/merchantHome/myEmployees/", icon: "clock", enable: false },
+    { name: "Group Purchase Orders", path: "/merchantHome/myEmployees/", icon: "shopping-cart", enable: false },
+    { name: "Declined Orders", path: "/merchantHome/myEmployees/", icon: "blocked-symbol", enable: false },
+    { name: "Patrons", path: "/merchantHome/Patrons/", icon: "profile", enable: true },
+    { name: "Statistics", path: "/merchantHome/myEmployees/", icon: "bar-graph", enable: false }
+  ],
+  'Retail': [
+    { name: "Inventory", path: "/merchantHome/inventory/", icon: "inventory", enable: true },
+    { name: "Add Discount Coupons", path: "/merchantHome/coupons/", icon: "coupon", enable: true },
+    { name: "Subordinate Account", path: "/merchantHome/myEmployees/", icon: "Shape", enable: true },
+    { name: "Sales/Pending Deliveriest", path: "/merchantHome/myEmployees/", icon: "hourglass", enable: false },
+    { name: "Lay By Orders", path: "/merchantHome/myEmployees/", icon: "clock", enable: false },
+    { name: "Group Purchase Orders", path: "/merchantHome/myEmployees/", icon: "shopping-cart", enable: false },
+    { name: "Declined Orders", path: "/merchantHome/myEmployees/", icon: "blocked-symbol", enable: false },
+    { name: "Patrons", path: "/merchantHome/Patrons/", icon: "profile", enable: true },
+    { name: "Statistics", path: "/merchantHome/myEmployees/", icon: "bar-graph", enable: false }
+  ],
+  'NPO': [
+    { name: "Causes", path: "/merchantHome/campaigns/", icon: "donate", enable: true },
+    { name: "Subordinate Account", path: "/merchantHome/myEmployees/", icon: "Shape", enable: true },
+    { name: "Sales/Pending Deliveriest", path: "/merchantHome/myEmployees/", icon: "hourglass", enable: false },
+    { name: "Lay By Orders", path: "/merchantHome/myEmployees/", icon: "clock", enable: false },
+    { name: "Group Purchase Orders", path: "/merchantHome/myEmployees/", icon: "shopping-cart", enable: false },
+    { name: "Declined Orders", path: "/merchantHome/myEmployees/", icon: "blocked-symbol", enable: false },
+    { name: "Patrons", path: "/merchantHome/Patrons/", icon: "profile", enable: true },
+    { name: "Statistics", path: "/merchantHome/myEmployees/", icon: "bar-graph", enable: false }
+  ]
+};
 
 export const profileLeftNavLinks = [
   { name: "Edit Personal Details", path: "/profile/edit/", icon: "profile", enable: true },
@@ -30,7 +53,7 @@ export const profileLeftNavLinks = [
 export const checkoutLeftNavLinks = [
   { name: "Shipping Address", path: "/checkout/shipping/", icon: "delivery", enable: true },
   { name: "Billing Address", path: "/checkout/billing/", icon: "credit-card", enable: true },
-  { name: "Confirm Order", path: "/checkout/confirm/", icon: "info", enable: true }
+  { name: "Confirm Order", path: "/checkout/Confirm/", icon: "info", enable: true }
 ];
 
 export const merchantList = [
@@ -43,30 +66,50 @@ export const merchantList = [
   { name: "Lorem Ipsum", path: "/" }
 ];
 
-export const footerLinks = [
+export const footerLinksLoggedin = [
   [
-    { name: "About Us", path: "/aboutUs", "loginRequired": false },
-    { name: "Support", path: "/support", "loginRequired": false },
-    { name: "Corporate Info", path: "/aboutUs", "loginRequired": false },
-    { name: "User Guide", path: "/aboutUs", "loginRequired": false },
-    { name: "Technical Support", path: "/support", "loginRequired": false },
-    { name: "Term & Conditions", path: "/aboutUs", "loginRequired": false },
-    { name: "Privacy Policy", path: "/aboutUs", "loginRequired": false }
+    { name: "About Us", path: "/aboutUs" },
+    { name: "Support", path: "/support" },
+    { name: "Corporate Info", path: "/aboutUs" },
+    { name: "User Guide", path: "/aboutUs" },
+    { name: "Technical Support", path: "/support" },
+    { name: "Term & Conditions", path: "/aboutUs" },
+    { name: "Privacy Policy", path: "/aboutUs" }
   ],
   [
-    { name: "Sponsored", path: "/", "loginRequired": false },
-    { name: "Previews", path: "/", "loginRequired": false },
-    { name: "Categories", path: "/" , "loginRequired": false},
-    { name: "Advertisements", path: "/", "loginRequired": true }
+    { name: "Sponsored", path: "/" },
+    { name: "Previews", path: "/" },
+    { name: "Categories", path: "/" },
+    { name: "Advertisements", path: "/" }
   ],
   [
-    { name: "My Profile", path: "/profile/edit/", "loginRequired": true },
-    { name: "My Cart", path: "/", "loginRequired": true },
-    { name: "My Whishlist", path: "/", "loginRequired": true },
-    { name: "My Orders", path: "/", "loginRequired": true },
-    { name: "My Contacts", path: "/", "loginRequired": true },
-    { name: "Donations", path: "/" , "loginRequired": true},
-    { name: "Show Statistics", path: "/", "loginRequired": true }
+    { name: "My Profile", path: "/profile/edit/" },
+    { name: "My Cart", path: "/" },
+    { name: "My Whishlist", path: "/" },
+    { name: "My Orders", path: "/" },
+    { name: "My Contacts", path: "/" },
+    { name: "Donations", path: "/" },
+    { name: "Show Statistics", path: "/" }
+  ]
+];
+
+export const footerLinksLoggedout = [
+  [
+    { name: "About Us", path: "/aboutUs" },
+    { name: "Support", path: "/support" },
+    { name: "Corporate Info", path: "/aboutUs" },
+    { name: "User Guide", path: "/aboutUs" },
+
+  ],
+  [{ name: "Technical Support", path: "/support" },
+  { name: "Term & Conditions", path: "/aboutUs" },
+  { name: "Privacy Policy", path: "/aboutUs" },
+  { name: "Advertisements", path: "/" }
+  ],
+  [
+    { name: "Sponsored", path: "/" },
+    { name: "Previews", path: "/" },
+    { name: "Categories", path: "/", }
   ]
 ];
 
@@ -81,7 +124,7 @@ export const socialSharing = [
 
 export const currencies = [
   { name: "South African Rand", shortName: "ZAR", icon: "rand", conversion: 1 },
-  { name: "US Dollar", shortName: "USD", icon: "dollar", conversion: 0.061 },
+  { name: "US Dollar", shortName: "USD", icon: "dollar", conversion: 1 },
   { name: "Rupee", shortName: "INR", icon: "rupee-indian", conversion: 4.54 }
 ];
 
@@ -154,9 +197,16 @@ export const getNotifications = () => {
   return [1, 2, 3, 4, 5, 6, 7, 8];
 }
 
-export const registerFormFields = ["BusinessType", "BusinessContact", "Country", "BusinessEmail", "BusinessHandle", "OrgName", "OrgWebsite", "PaypalId", "PayFastId", "AddressType", "City", "Pincode", "Province", "StreetName", "StreetNumber", "Suburb"];
+export const registerFormFields = ["BusinessType", "BusinessContact", "Country", "DHLId", "BusinessEmail", "BusinessHandle", "OrgName", "TagsData", "OrgWebsite", "PaypalId", "PayFastId", "AddressType", "City", "Pincode", "Province", "StreetName", "StreetNumber", "Suburb"];
 
-export const addProductFormFields = ["ProductName", "ProductCategory", "UnitPrice", "AvailableQuantity", "Currency", "Height", "Width", "Length", "Weight", "ProductDescription"];
+export const addProductFormFields = ["ProductName", "ProductCategory", "ProductSubCategory", "ProductType", "Height", "Width", "Length", "Depth", "Weight", "ProductDescription"];
+
+export const addProductFormFieldsProductType = {
+  "Electronics": ["Brand", "Model", "Type", "Ram", "Memory", "Os", "Processor", "Storage"],
+  "Furnitures": ["Brand", "MaterialDescription"],
+  "Shoes & Accessories": ["Brand", "MaterialDescription", "Ocassion"],
+  "Clothing": ["Brand", "MaterialDescription", "Ocassion"]
+}
 
 export const addCampaignFormFields = ["ProductName", "ProductCategory", "Currency", "ProductDescription", "MinDonation", "TargetDonationAmount"];
 

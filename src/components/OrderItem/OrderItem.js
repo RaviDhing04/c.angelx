@@ -3,6 +3,7 @@ import { Container, Jumbotron } from "react-bootstrap";
 import "./OrderItem.scss";
 import plusIcon from "../../assets/plus.svg";
 import heartIcon from "../../assets/heart.svg";
+import checkmark from "../../assets/checkmark.svg";
 import formatter from "../../utils/commonUtils/currencyUtils";
 
 const OrderItem = props => {
@@ -24,7 +25,11 @@ const OrderItem = props => {
         <img className="item-image" alt="item" src={ThumbnailImageURL && ThumbnailImageURL.S}></img>
         <div className="item-detail">
           <span className="item-name">{Name && Name.S}</span>
-          <span className="merchant-name">{MerchantHandle && MerchantHandle.S}</span>
+          <span className="merchant-name">{MerchantHandle && MerchantHandle.S}{1 ? <img
+                      className="nav-icon"
+                      alt="checkmark"
+                      src={checkmark}
+                    ></img> : null}</span>
           <span className={IsInStock && IsInStock.S === "true" ? "in-stock stock-info" : "out-of-stock stock-info"}>
             {IsInStock && IsInStock.S === "true" ? "In Stock" : "Out Of Stock"}
           </span>

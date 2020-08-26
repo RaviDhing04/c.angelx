@@ -18,6 +18,7 @@ const CheckoutBilling = props => {
     const [pageName, setName] = useState('');
     const [addresses, setAddresses] = useState([]);
     const [editMode, setEditMode] = useState(false);
+    const [showSame, setShowSame] = useState(false);
     const [selectedAddress, setSelectedAddress] = useState(null);
     const { userId, name } = props.match.params;
     const { getAllBillingAddress, addNewBillingAddress, updateBillingAddress } = props;
@@ -28,6 +29,10 @@ const CheckoutBilling = props => {
             name ? setName(name) : setName("");
             const res = await getAllBillingAddress();
             res ? (function () { setAddresses(res); setLoading(false); }()) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
+        }
+        const shipping = JSON.parse(localStorage.getItem('shippingAddress'));
+        if (shipping) {
+            setShowSame(true);
         }
         fetchSavedBillingAddresses();
     }, []);
@@ -62,7 +67,7 @@ const CheckoutBilling = props => {
 
     const selectAddress = (address) => {
         localStorage.setItem('billingAddress', JSON.stringify(address));
-        history.push(`/checkout/confirm/${userId}/Checkout`); 
+        history.push(`/checkout/Confirm/${userId}/Checkout`);
     }
 
     const editAddress = (address) => {
@@ -70,10 +75,30 @@ const CheckoutBilling = props => {
         setSelectedAddress(address);
     }
 
+    const setSameAdd = (e) => {
+        if (e.target.checked) {
+            const shipping = JSON.parse(localStorage.getItem('shippingAddress'));
+            selectAddress(shipping);
+        }
+    }
+
     return !loading ? (
         <React.Fragment>
             <div className="checkout-billing-heading">{pageName}</div>
             <Container className="checkout-billing-container" fluid>
+                <div className="shipper">
+                    <Form
+                        id="selectShipperForm"
+                    >
+                        <Form.Row className="width-25">
+                            <Col>
+                                <Form.Group controlId="formBasicCheckbox">
+                                    <Form.Check type="checkbox" label="Same as shipping address" onChange={(e) => setSameAdd(e)} />
+                                </Form.Group>
+                            </Col>
+                        </Form.Row>
+                    </Form>
+                </div>
                 <div className="checkout-billing">
                     <Form
                         id="billingAddressFormFields"

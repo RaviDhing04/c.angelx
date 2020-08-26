@@ -6,7 +6,7 @@ import Router from "../../routes/routes";
 import { merchant_child_routes } from "../../routes/routes";
 import { Container } from "react-bootstrap";
 import LeftNav from "../../containers/LeftNav/LeftNav";
-import "./MerchantHome.scss";
+import "./MerchantPageHandle.scss";
 import {
   userLeftNavLinks,
   merchantLeftNavLinks
@@ -15,6 +15,7 @@ import {
   getFollowedMerchants,
   updateSelectedBusiness,
   getBusinessDetails,
+  getBusinessDetailswithMerchantHandle,
   uploadImage,
   updateSelectedBusinessBanner,
   followmerchant,
@@ -34,33 +35,35 @@ const MerchantHome = props => {
   const { followedMerchants, selectedBusiness } = props;
   const { state } = props.location;
   const isAuthenticated = useAuth();
+  const { merchantHandle } = props.match.params;
 
   useEffect(() => {
     props.updateSelectedBusiness(0);
-    var temp = window.location.pathname.split('/');
-    const merchantId = temp[temp.length - 1];
-    if (merchantId && isAuthenticated) {
-      setMerchantId(merchantId);
-      props.getBusinessDetails({
-        MerchantId: merchantId,
-        PatronId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId
-      })
-    }
-    if (state && state.fromUser && isAuthenticated) {
-      !followedMerchants.length &&
-        props.getFollowedMerchants({
-          PatronId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId
-        });
-      if (isAuthenticated) {
-        props.getUserLinkCount();
-        props.cartCount();
+    const fetchData = async () => {
+      if (merchantHandle) {
+        const res = await props.getBusinessDetailswithMerchantHandle({
+          "BusinessHandle": merchantHandle
+        })
+        res ? setMerchantId(res) : setMerchantId('');
       }
     }
+    fetchData();
   }, []);
 
   useEffect(() => {
     setIsMerchantFollowed(selectedBusiness && selectedBusiness.IsMerchantFollowed && selectedBusiness.IsMerchantFollowed.S);
   }, [selectedBusiness]);
+
+  useEffect(() => {
+    if (isAuthenticated && merchantId) {
+      props.history.replace({
+        pathname: `/merchantHome/viewAllProducts/${"Latest Uploads"}/${merchantId}`,
+        state: {
+          fromUser: true
+        }
+      })
+    }
+  }, [isAuthenticated, merchantId]);
 
 
   const toBase64 = file => new Promise((resolve, reject) => {
@@ -112,7 +115,7 @@ const MerchantHome = props => {
       props.getFollowedMerchants({
         PatronId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId
       });
-    }() : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
+    }() : (function () { setLoading(false); }());
   }
 
   return !loading ? (
@@ -125,20 +128,6 @@ const MerchantHome = props => {
               src={selectedBusiness && selectedBusiness.BannerImageURL.S}
               alt="cover"
             />) : null}
-            {state && state.fromUser ? null : (selectedBusiness && selectedBusiness.BannerImageURL.S ? (
-              <div onChange={addFile}>
-                <label htmlFor="fileUpload_merchantBanner" className="btn">Change Cover</label>
-                <input id="fileUpload_merchantBanner"
-                  type="file"
-                  accept=".jgp, .png"
-                  style={{ display: "none" }}
-                /> </div>) : (<div onChange={addFile}>
-                  <input id="fileUploadcenter_merchantBanner"
-                    type="file"
-                    accept=".jgp, .png"
-                    style={{ display: "none" }}
-                  /> <label htmlFor="fileUploadcenter_merchantBanner" className="btn-center">Add Cover Image</label> </div>))
-            }
           </div>
           <div className="img-err">
             <img src={coverError} alt="cover" />
@@ -159,30 +148,28 @@ const MerchantHome = props => {
               {selectedBusiness && selectedBusiness.BusinessEmail.S ? selectedBusiness.BusinessEmail.S + '|' : null}
             </span>
           </div>
-          {state && state.fromUser ? (
-            <div className="user-action">
-              <a className="user-terms" href="/">
-                Terms and Conditions
+          <div className="user-action">
+            <a className="user-terms" href="/">
+              Terms and Conditions
               </a>
-              {IsMerchantFollowed === 'true' ? <button onClick={unfollow} className="unfollow">Unfollow</button> : <button onClick={follow} className="unfollow">Follow</button>}
-            </div>
-          ) : null}
+            {IsMerchantFollowed === 'true' ? <button onClick={unfollow} className="unfollow">Unfollow</button> : <button onClick={follow} className="unfollow">Follow</button>}
+          </div>
         </div>
         <div>
           <Container className="merchantHome-body" fluid>
-            <div className="left-section">
+            {/* {isAuthenticated ? <div className="left-section">
               <LeftNav
                 links={
-                  state && state.fromUser
+                  IsFromUser
                     ? userLeftNavLinks
-                    : merchantLeftNavLinks[selectedBusiness && ['NPO', 'Retail'].includes(selectedBusiness.BusinessType.S) ? selectedBusiness.BusinessType.S : 'Default']
+                    : merchantLeftNavLinks
                 }
-                merchants={state && state.fromUser ? followedMerchants : []}
-                showMerchants={state && state.fromUser ? true : false}
+                merchants={IsFromUser ? followedMerchants : []}
+                showMerchants={IsFromUser ? true : false}
                 merchantId={merchantId}
                 count={props.userLinkCount}
               />
-            </div>
+            </div> : null} */}
             <div className="right-section">
               <Switch>
                 <Router routes={merchant_child_routes} />
@@ -203,6 +190,7 @@ const mapDispatchToProps = dispatch =>
       getFollowedMerchants,
       updateSelectedBusiness,
       getBusinessDetails,
+      getBusinessDetailswithMerchantHandle,
       uploadImage,
       updateSelectedBusinessBanner,
       followmerchant,

@@ -48,6 +48,15 @@ const AsyncMerchantHome = Loadable({
   modules: ["MerchantPage"]
 });
 
+const AsyncMerchantPageHandle = Loadable({
+  loader: () =>
+    import(
+      /* webpackChunkName: "MerchantPage" */ "../pages/MerchantPageHandle/MerchantPageHandle"
+    ),
+  loading: error => <LoadingFallback {...error} />,
+  modules: ["MerchantPageHandle"]
+});
+
 const AsyncAboutUs = Loadable({
   loader: () =>
     import(/* webpackChunkName: "AboutUs" */ "../pages/AboutUs/AboutUs"),
@@ -111,6 +120,15 @@ const AsyncAddEmployees = Loadable({
   loader: () =>
     import(
       /* webpackChunkName: "AddEmployees" */ "../containers/AddEmployees/AddEmployees"
+    ),
+  loading: error => <LoadingFallback {...error} />,
+  modules: ["AddEmployees"]
+});
+
+const AsyncPatrons = Loadable({
+  loader: () =>
+    import(
+      /* webpackChunkName: "AddEmployees" */ "../containers/PatronsList/PatronsList"
     ),
   loading: error => <LoadingFallback {...error} />,
   modules: ["AddEmployees"]
@@ -285,6 +303,11 @@ export const parent_routes = [
     component: AsyncCheckout,
     exact: false,
     type: "private"
+  },
+  {
+    path: "/merchantPage/:merchantHandle",
+    component: AsyncMerchantPageHandle,
+    exact: false,
   }
 ];
 
@@ -320,6 +343,11 @@ export const child_routes = [
 ];
 
 export const merchant_child_routes = [
+  {
+    path: "/merchantPage/:merchantHandle",
+    component: AsyncHomeViewAllProducts,
+    exact: false,
+  },
   {
     path: "/merchantHome/viewAllProducts/:name/:merchantId",
     component: AsyncHomeViewAllProducts,
@@ -367,6 +395,12 @@ export const merchant_child_routes = [
     component: AsyncAddEmployees,
     exact: true,
     type: "private"
+  },
+  {
+    path: "/merchantHome/Patrons/:name/:merchantId",
+    component: AsyncPatrons,
+    exact: true,
+    type: "private"
   }
 ];
 
@@ -410,7 +444,7 @@ export const checkout_child_routes = [
     type: "private"
   },
   {
-    path: "/checkout/confirm/:userId/:name",
+    path: "/checkout/Confirm/:userId/:name",
     component: AsyncCheckoutConfirm,
     exact: true,
     type: "private"
@@ -429,7 +463,7 @@ class Router extends Component {
         {/* <Route path="/" component={AsyncHome} key="/home" exact /> */}
         {/* <Route component={LoginRedirect}>
           <Route path="/" component={ModalCheck}> */}
-            {routes.map((r, i) =>
+            {routes && routes.map((r, i) =>
               r && r.type && r.type === "private" ? (
                 <PrivateRoute
                   path={r.path}

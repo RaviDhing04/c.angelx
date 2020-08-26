@@ -22,9 +22,11 @@ const App = () => {
   }, [location]);
 
   React.useEffect(() => {
-    localStorage.setItem('shippingAddress', null);
-    localStorage.setItem('billingAddress', null);
-    localStorage.setItem('orderType', null);
+    if (!(window.location.pathname.includes('checkout'))) {
+      localStorage.setItem('shippingAddress', null);
+      localStorage.setItem('billingAddress', null);
+      localStorage.setItem('orderType', null);
+    }
   }, []);
 
 
@@ -34,20 +36,20 @@ const App = () => {
       <AuthContext.Provider value={(localStorage.getItem('token') && JSON.parse(localStorage.getItem('userData'))) ? true : false}>
         <Header userId={userId} />
         <div style={{ minHeight: '400px' }}>
-          <Switch>
-            <Route
-              exact
-              path={"/"}
-              render={() => {
-                return <Redirect to={"/landing"} />;
-              }}
-            />
-            <Router routes={parent_routes} />
-          </Switch>
-          <Route path="/" component={Login} />
-          <Route path="/" component={SignUp} />
-          <Route path="/" component={ForgotPassword} />
-          <Route path="/" component={Logout} />
+            <Switch>
+              <Route
+                exact
+                path={"/"}
+                render={() => {
+                  return <Redirect to={"/landing"} />;
+                }}
+              />
+              <Router routes={parent_routes} />
+            </Switch>
+            <Route path="/" component={Login} />
+            <Route path="/" component={SignUp} />
+            <Route path="/" component={ForgotPassword} />
+            <Route path="/" component={Logout} />
         </div>
         <Footer />
       </AuthContext.Provider>

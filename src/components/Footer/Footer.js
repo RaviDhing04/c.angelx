@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Footer.scss";
 import { Container, Row, Col, Nav } from "react-bootstrap";
-import { footerLinks, socialSharing } from "../../constants/constants";
+import { footerLinksLoggedout, footerLinksLoggedin, socialSharing } from "../../constants/constants";
 import brandlogo from "../../assets/brand-logo.png";
 import dhl from "../../assets/dhl.svg";
 import payfast from "../../assets/payfast.png";
@@ -12,28 +12,30 @@ import { useAuth } from "../../context/auth";
 
 const Footer = () => {
   const isAuthenticated = useAuth();
+  const [footerLinks, setFooterLinks] = useState([]);
+
+  useEffect(() => {
+    setFooterLinks((isAuthenticated ? footerLinksLoggedin : footerLinksLoggedout))
+  }, [isAuthenticated]);
+
 
   return (
     <Container className="footer" fluid>
       <Row className="links-row-1">
         <Col className="links-col" xs={7}>
-          {footerLinks.map((links, i) => {
+          {footerLinks && footerLinks.length && footerLinks.map((links, i) => {
             return (
               <div className="footer-links" key={i}>
                 {links.map((link, k) => {
                   return (
-                    link.loginRequired ? (isAuthenticated ? (<Nav key={k} className="flex-column">
+                    <Nav key={k} className="flex-column">
                       <Nav.Link as={Link} to={link.path}>
                         {link.name}
                       </Nav.Link>
-                    </Nav>) : null) :
-                      (<Nav key={k} className="flex-column">
-                        <Nav.Link as={Link} to={link.path}>
-                          {link.name}
-                        </Nav.Link>
-                      </Nav>)
-                  );
-                })}
+                    </Nav>
+                  )
+                })
+                }
               </div>
             );
           })}
@@ -52,12 +54,12 @@ const Footer = () => {
               <div className="logo-border">
                 <img
                   className="partner-logo"
-                  alt="payfast"
-                  src={payfast}
+                  alt="PayPal"
+                  src={PayPal}
                 ></img>
               </div>
               <div className="partner-info-grid">
-                <div className="logo-border">
+                {/* <div className="logo-border">
                   <img
                     className="partner-logo"
                     alt="collivery"
@@ -67,10 +69,10 @@ const Footer = () => {
                 <div className="logo-border">
                   <img
                     className="partner-logo"
-                    alt="PayPal"
-                    src={PayPal}
+                    alt="payfast"
+                    src={payfast}
                   ></img>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

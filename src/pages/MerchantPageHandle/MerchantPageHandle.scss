@@ -1,0 +1,132 @@
+.merchantHome-container {
+  width: calc(100% - 16rem);
+  margin: 0 auto;
+
+  .cover-img {
+    width: 100%;
+    position: relative;
+    height: 24rem;
+    background: #d0d0d0;
+  }
+  .cover-img img {
+    width: 100%;
+    height: 24rem;
+  }
+  .cover-img .btn-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background: #e8edf3 0% 0% no-repeat padding-box;
+    color: #6d6d6d;
+    font-size: 0.875rem;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 10rem;
+    height: 3rem;
+    font-weight: bold;
+  }
+
+  .cover-img .btn {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: #e8edf3 0% 0% no-repeat padding-box;
+    color: #6d6d6d;
+    font-size: 0.875rem;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 9rem;
+    height: 3rem;
+    font-weight: bold;
+  }
+
+  .img-err {
+    margin-top: 3px;
+
+    img {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    span {
+      letter-spacing: 0.98px;
+      color: #6d6d6d;
+      opacity: 1;
+      font-size: 0.875rem;
+    }
+  }
+
+  .merchant-info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    align-items: center;
+
+    .merchant-detail {
+      display: flex;
+      flex-direction: column;
+
+      .merchant-name {
+        letter-spacing: 2.66px;
+        color: #3b3b3b;
+        opacity: 1;
+        font-size: 2.375rem;
+      }
+
+      .merchant-contact {
+        letter-spacing: 0.72px;
+        opacity: 1;
+        font-size: 1.125rem;
+      }
+    }
+  }
+
+  .user-action {
+    .user-terms {
+      letter-spacing: 0px;
+      color: #558ed4;
+      opacity: 1;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .unfollow {
+      text-align: center;
+      letter-spacing: 0px;
+      color: #ffffff;
+      opacity: 1;
+      font-size: 0.875rem;
+      font-weight: 500;
+      background: #558ed4 0% 0% no-repeat padding-box;
+      border-radius:0.25rem;
+      opacity: 1;
+      width: 9rem;
+      margin-left: 1rem;
+      align-self: flex-end;
+      margin-bottom: 2rem;
+      height: 2.25rem;
+    }
+  }
+
+  .merchantHome-body {
+    display: flex;
+    padding: 4rem 0;
+
+    .left-section {
+      width: 25rem;
+      padding-right: 2rem;
+      // min-width: 25rem;
+    }
+
+    .right-section {
+      width: 80%;
+      padding-left: 1.5rem;
+    }
+  }
+}

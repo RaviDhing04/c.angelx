@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./ProductSlider.scss";
+import defaultImg from "../../assets/default-prod.png";
 
 const ProductSlider = ({ images }) => {
   const imageRef = React.createRef();
@@ -61,7 +62,7 @@ const ProductSlider = ({ images }) => {
                 ref={imageRef}
                 onMouseMove={handleImageChange}
                 onMouseOut={handleMouseOut}
-                src={img}
+                src={img? img : defaultImg}
                 style={{ width: "100%", height: "100%" }}
               />
             </a>
@@ -75,7 +76,7 @@ const ProductSlider = ({ images }) => {
                 changeImage(i);
               }}
             >
-              <img alt="img-small" src={img} />
+              <img alt="img-small" src={img? img : defaultImg} />
             </div>
           ))}
         </div>

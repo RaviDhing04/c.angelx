@@ -19,13 +19,17 @@ const Home = props => {
 
   useEffect(() => {
     const fetchData = async () => {
-      !followedMerchants.length &&
-        props.getFollowedMerchants({
-          PatronId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId
-        });
-      getUserLinkCount();
-      cartCount();
-      setBanners(await props.getDashboardBanners());
+      if (isAuthenticated) {
+        getUserLinkCount();
+        cartCount();
+        !followedMerchants.length &&
+          props.getFollowedMerchants({
+            PatronId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId
+          });
+        setBanners(await props.getDashboardBanners());
+      } else {
+        if (!window.location.href.includes("productDetail")) { props.history.push('/landing?login=true'); }
+      }
     };
     fetchData();
   }, []);

@@ -76,10 +76,15 @@ const Cart = props => {
   };
 
   const redirectToCheckout = () => {
-    const MerchantId = cartItems.cartDetails[0].productData.MerchantId;
+    // const MerchantId = cartItems.cartDetails[0].productData.MerchantId;
     let fail = 0;
+    // cartItems.cartDetails.forEach((item, index) => {
+    //   if (MerchantId !== item.productData.MerchantId) {
+    //     fail = 1;
+    //   }
+    // });
     cartItems.cartDetails.forEach((item, index) => {
-      if (MerchantId !== item.productData.MerchantId) {
+      if ("true" !== item.productData.IsInStock) {
         fail = 1;
       }
     });
@@ -87,7 +92,8 @@ const Cart = props => {
       localStorage.setItem('orderType', JSON.stringify({ 'order_type': 'cart' }));
       return history.push(`/checkout/shipping/${userData.UserId}/${'Shipping'}`);
     } else {
-      alert("You can select Products from single Merchant. Please remove/Wishlist products.");
+      // alert("You can select Products from single Merchant. Please remove/Wishlist products.");
+      alert("Some products in your cart are 'Out Of Stock'. Please delete or add to Wishlist to buy later.");
     }
   }
 

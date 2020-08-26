@@ -144,7 +144,7 @@ export const getLatestProductsWithPagination = (
         body: body
       }
     );
-    if (response && response.result && response.result.data && response.result.data.Items && response.result.data.Items.length) {
+    if (response && response.result && response.result.data && response.result.data.Items) {
       dispatch({
         type: "LATEST_PRODUCTS",
         value: { payload: response.result.data }
@@ -170,7 +170,7 @@ export const getSponsoredProductsWithPagination = (
         method: "GET"
       }
     );
-    if (response && response.result && response.result.data && response.result.data.Items && response.result.data.Items.length) {
+    if (response && response.result && response.result.data && response.result.data.Items) {
       dispatch({
         type: "SPONSORED_PRODUCTS",
         value: { payload: response.result.data }
@@ -197,7 +197,7 @@ export const getTrendingProductsWithPagination = (
         body: body
       }
     );
-    if (response && response.result && response.result.data && response.result.data.Items && response.result.data.Items.length) {
+    if (response && response.result && response.result.data && response.result.data.Items) {
       dispatch({
         type: "TRENDING_PRODUCTS",
         value: { payload: response.result.data }
@@ -246,7 +246,11 @@ export const getWishlistProductsWithPagination = (
       });
       return true;
     } else {
-      return false;
+      dispatch({
+        type: "WISHLIST_PRODUCTS",
+        value: { payload: { 'Items': [] } }
+      });
+      return true;
     }
   } catch (err) {
     console.log(err);
@@ -264,7 +268,7 @@ export const getLatestProducts = (body = {}) => async dispatch => {
         body: body
       }
     );
-    if (response && response.result && response.result.data && response.result.data.Items && response.result.data.Items.length) {
+    if (response && response.result && response.result.data && response.result.data.Items) {
       dispatch({
         type: "VIEWALL_PRODUCTS",
         value: { payload: response.result.data }
@@ -311,7 +315,11 @@ export const getWishlistProducts = (body = {}) => async dispatch => {
       });
       return true;
     } else {
-      return false;
+      dispatch({
+        type: "VIEWALL_PRODUCTS",
+        value: { payload: { 'Items': [] } }
+      });
+      return true;
     }
   } catch (err) {
     console.log(err);
@@ -326,7 +334,7 @@ export const getMerchantAllProducts = (body = {}) => async dispatch => {
       method: "POST",
       body: body
     });
-    if (response && response.result && response.result.data && response.result.data.Items && response.result.data.Items.length) {
+    if (response && response.result && response.result.data && response.result.data.Items) {
       dispatch({
         type: "VIEWALL_PRODUCTS",
         value: { payload: response.result.data }
@@ -393,6 +401,34 @@ export const getMerchantAllCoupons = (body = {}) => async dispatch => {
       dispatch({
         type: "MERCHANT_ALL_COUPONS",
         value: { payload: response.result.data.Items }
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const getMerchantAllPatrons = (body = {}) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("MerchantAllPatrons"), {
+      method: "POST",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.data.user_details &&
+      response.result.data.user_details.length
+    ) {
+      dispatch({
+        type: "MERCHANT_ALL_PATRONS",
+        value: { payload: response.result.data.user_details }
       });
       return true;
     } else {
@@ -520,6 +556,63 @@ export const getSelectedProductDetails = (body = {}) => async dispatch => {
         }
       });
       return response.result.data.Item;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const getMasterDataInventory = (body = {}) => async dispatch => {
+  try {
+
+    const response = await httpFetch(
+      getApiEndPoints("MasterDataInventory"),
+      {
+        method: "GET"
+      }
+    );
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.data.Items
+    ) {
+      const out = {};
+      out['productCategory'] = [];
+      response.result.data.Items.forEach((category) => {
+        const productCategory = category.Title.S;
+        out['productCategory'].push(productCategory);
+        out[productCategory] = [];
+        if (category.CategoryHeirarchy && category.CategoryHeirarchy.L) {
+          category.CategoryHeirarchy.L.forEach((subCategory) => {
+            if (subCategory && subCategory.M) {
+              out[productCategory] = (Object.keys(subCategory.M));
+              out[productCategory].forEach((subCat) => {
+                const types = subCategory.M[subCat];
+                if (types && types.L) {
+                  out[subCat] = [];
+                  types.L.forEach((type) => {
+                    out[subCat].push(type.S);
+                  })
+                }
+              });
+            } else if (subCategory && subCategory.S) {
+              out[productCategory].push(subCategory.S);
+              out[subCategory.S] = [subCategory.S];
+            }
+          });
+        }
+      })
+      dispatch({
+        type: "INVENTORY_MASTERDATA",
+        value: {
+          payload: out
+        }
+      });
+      return true;
     } else {
       return false;
     }
@@ -985,6 +1078,34 @@ export const updateBusiness = (body = {}) => async dispatch => {
   }
 };
 
+export const checkMerchantHandle = (body = {}) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("checkMerchantHandle"), {
+      method: "POST",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      return response.result.data;
+    } else if (response &&
+      response.result &&
+      response.result.data &&
+      response.result.message !== "Success") {
+      alert(response.result.message);
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
 export const fetchRegisterBusiness = (body = {}) => async dispatch => {
   try {
 
@@ -1014,6 +1135,48 @@ export const fetchRegisterBusiness = (body = {}) => async dispatch => {
   }
 };
 
+export const fetchRegisterBusinessMasterData = (body) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("RegisterBusinessMasterData"), {
+      method: "GET"
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      dispatch({
+        type: "REGISTER_BUSINESS_MASTERDATA",
+        value: {
+          payload: response.result.data
+        }
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const resetRegisterBusiness = (body = {}) => async dispatch => {
+  try {
+    dispatch({
+      type: "SELECTED_BUSINESS_DETAILS",
+      value: {
+        payload: null
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
 export const getBusinessDetails = (body = {}) => async dispatch => {
   try {
 
@@ -1034,6 +1197,35 @@ export const getBusinessDetails = (body = {}) => async dispatch => {
         }
       });
       return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const getBusinessDetailswithMerchantHandle = (body = {}) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("BusinessDetailswithHandle"), {
+      method: "POST",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      dispatch({
+        type: "SELECTED_BUSINESS",
+        value: {
+          payload: response.result.data.Items[0]
+        }
+      });
+      return response.result.data.Items[0].MerchantId.S;
     } else {
       return false;
     }

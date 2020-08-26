@@ -57,9 +57,9 @@ const CheckoutConfirm = (props) => {
             }
         }
         return () => {
-            localStorage.setItem('shippingAddress', null);
-            localStorage.setItem('billingAddress', null);
-            localStorage.setItem('orderType', null);
+            // localStorage.setItem('shippingAddress', null);
+            // localStorage.setItem('billingAddress', null);
+            // localStorage.setItem('orderType', null);
         };
     }, []);
 

@@ -38,7 +38,10 @@ const initialState = {
     allProducts: [],
     allCampaigns: [],
     allCoupons: [],
-    selectedRow: null
+    selectedRow: null,
+    allPatrons: [],
+    registerBusinessMasterData: null,
+    inventoryMasterData: null
   },
   common: {
     activeCurrency: null
@@ -131,6 +134,22 @@ export const appReducer = (state = initialState, { type, value }) => {
           selectedBusinessDetails: value.payload
         }
       };
+    case "REGISTER_BUSINESS_MASTERDATA":
+      return {
+        ...state,
+        manageBusiness: {
+          ...state.manageBusiness,
+          registerBusinessMasterData: value.payload
+        }
+      };
+    case "INVENTORY_MASTERDATA":
+      return {
+        ...state,
+        manageBusiness: {
+          ...state.manageBusiness,
+          inventoryMasterData: value.payload
+        }
+      };
     case "SELECTED_BUSINESS":
       return {
         ...state,
@@ -172,6 +191,14 @@ export const appReducer = (state = initialState, { type, value }) => {
         manageBusiness: {
           ...state.manageBusiness,
           allCoupons: value.payload
+        }
+      };
+    case "MERCHANT_ALL_PATRONS":
+      return {
+        ...state,
+        manageBusiness: {
+          ...state.manageBusiness,
+          allPatrons: value.payload
         }
       };
     case "VIEWALL_PRODUCTS":

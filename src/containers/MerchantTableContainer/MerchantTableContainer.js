@@ -130,7 +130,7 @@ const MerchantTableContainer = props => {
       Items = props.allProducts.map(item => {
         return {
           Name: item.Name,
-          Price: item.ProductSpecifications.M.UnitPrice,
+          Price: item.ProductVariations && item.ProductVariations.L && item.ProductVariations.L.length && item.ProductVariations.L[0].M.UnitPrice && item.ProductVariations.L[0].M.UnitPrice.S ? item.ProductVariations.L[0].M.UnitPrice.S : 0,
           ProductId: item.ProductId,
           Timestamp: item.Timestamp
         };
@@ -139,7 +139,7 @@ const MerchantTableContainer = props => {
       Items = props.allCampaigns.map(item => {
         return {
           Name: item.Name,
-          Price: item.ProductSpecifications.M.UnitPrice,
+          Price: item.DonationCampaignDetails && item.DonationCampaignDetails.M && item.DonationCampaignDetails.M.MinDonation && item.DonationCampaignDetails.M.MinDonation.S ? item.DonationCampaignDetails.M.MinDonation.S : 0,
           ProductId: item.ProductId,
           Timestamp: item.Timestamp
         };

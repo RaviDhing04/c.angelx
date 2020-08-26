@@ -19,11 +19,11 @@ const TableComp = props => {
         {tableKeys.map((key, index) => {
           return <td key={index}>{rowData[key] && (rowData[key].S || rowData[key].S === "") ? rowData[key].S : rowData[key]}</td>;
         })}
-        <td className="tableEditDelete">
+       {showEdit || showDelete ? <td className="tableEditDelete">
           {showEdit ? <span onClick={() => onEdit(rowData)}>Edit</span> : null}
           {showEdit && showDelete ? <span>|</span> : null}
           {showDelete ? <span onClick={() => onDelete(rowData)}>Delete</span> : null}
-        </td>
+        </td>: null}
       </tr>
     );
   };
@@ -36,7 +36,7 @@ const TableComp = props => {
             {tableData.length > 0 && tableHeader.map((header, index) => {
               return <th key={index}>{header}</th>;
             })}
-            {tableData.length ? <th>Actions</th> : null}
+            {tableData.length && (showEdit || showDelete) ? <th>Actions</th> : null}
           </tr>
         </thead>
         <tbody>{tableData.map(rowData => renderRow(rowData))}</tbody>

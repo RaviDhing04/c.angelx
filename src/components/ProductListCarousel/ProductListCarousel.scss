@@ -10,11 +10,9 @@
 .product-row {
   padding: 2rem 0;
   justify-content: space-evenly;
-}
-.product-row-no-flex {
-  padding: 2rem 0;
-  > div {
-    margin-left: 1rem;
+  .dummy-prod{
+    width: 16rem;
+    visibility: hidden;
   }
 }
 .view-all {
@@ -37,4 +35,9 @@
 .not-found {
   font-size: 1.25rem;
   text-align: center;
+}
+
+.row-div{
+  width: 100%;
+    height: 15rem;
 }

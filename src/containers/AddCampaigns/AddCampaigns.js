@@ -87,10 +87,14 @@ const AddCampaigns = props => {
           break;
       }
     });
-    payload['ThumbnailImageURL'] = thumbnail[0] ? thumbnail[0] : null;
-    payload['FullImageURL1'] = images[0] ? images[0] : null;
-    payload['FullImageURL2'] = images[1] ? images[1] : null;
-    payload['FullImageURL3'] = images[2] ? images[2] : null;
+    payload["IsSponsord"] = "true";
+    payload["ProductCategory"] = "Causes";
+    payload["ProductSubCategory"] = "Causes";
+    payload["ProductType"] = "Causes";
+    payload['ThumbnailImageURL'] = thumbnail[0] ? thumbnail[0] : "";
+    payload['FullImageURL1'] = images[0] ? images[0] : "";
+    payload['FullImageURL2'] = images[1] ? images[1] : "";
+    payload['FullImageURL3'] = images[2] ? images[2] : "";
     payload["MerchantId"] = selectedBusiness.MerchantId.S;
     payload["MerchantHandle"] = selectedBusiness.BusinessHandle.S;
     if (action === 'edit') {

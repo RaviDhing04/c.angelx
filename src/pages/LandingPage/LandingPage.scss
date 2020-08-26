@@ -66,6 +66,7 @@
   .categories {
     display: flex;
     justify-content: space-evenly;
+    overflow: scroll;
 
     .category {
       position: relative;

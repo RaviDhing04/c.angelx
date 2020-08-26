@@ -40,6 +40,17 @@
     margin-bottom: 0.7rem;
   }
 
+  .nav-icon {
+    width: 1.125rem;
+    height: 1.125rem;
+    opacity: 1;
+    text-align: left;
+    font-size: 1rem;
+    letter-spacing: 1.12px;
+    color: #6d6d6d;
+    opacity: 1;
+  }
+
   .card-body {
     padding: 0.875rem;
   }
@@ -62,7 +73,7 @@
     padding: 0.5rem 0px;
   }
 
-  .more-button{
+  .more-button {
     letter-spacing: 0px;
     color: #ffffff;
     opacity: 1;

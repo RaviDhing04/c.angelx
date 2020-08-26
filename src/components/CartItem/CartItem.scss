@@ -37,6 +37,19 @@
       color: #000000de;
       opacity: 1;
       margin-bottom: 1rem;
+      .nav-icon {
+        width: 1.125rem;
+        height: 1.125rem;
+        opacity: 1;
+        text-align: left;
+        font-size: 1rem;
+        letter-spacing: 1.12px;
+        color: #6d6d6d;
+        opacity: 1;
+      }
+      .nav-link{
+        padding: 0px !important;
+      }
     }
 
     .stock-info {
@@ -93,6 +106,7 @@
       opacity: 1;
       width: 1.6875rem;
       height: 1.6875rem;
+      cursor: pointer;
     }
 
     .item-count {

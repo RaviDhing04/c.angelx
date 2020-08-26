@@ -11,9 +11,10 @@ import "./ViewAllProducts.scss";
 const ViewAllProducts = props => {
   const {
     activeCurrency,
+    selectedBusiness,
     products: { Items }
   } = props;
-  const { name, merchantId } = props.match.params;
+  const { name, merchantId, merchantHandle } = props.match.params;
   const itemsPerRow = merchantId ? 4 : 5;
 
   useEffect(() => {
@@ -32,7 +33,7 @@ const ViewAllProducts = props => {
         props.getLatestProducts();
         break;
       case "Wishlist":
-        props.getWishlistProducts({UserId: JSON.parse(localStorage.getItem('userData')) &&  JSON.parse(localStorage.getItem('userData')).UserId,});
+        props.getWishlistProducts({ UserId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId, });
         break;
       default:
         break;
@@ -42,10 +43,20 @@ const ViewAllProducts = props => {
     }
   }, []);
 
+  useEffect(() => {
+    if (!name && !merchantId) {
+      if (merchantHandle) {
+        props.getMerchantAllProducts({
+          MerchantId: selectedBusiness && selectedBusiness.MerchantId && selectedBusiness.MerchantId.S
+        })
+      }
+    }
+  }, [selectedBusiness]);
+
   const addToCart = async (payload) => {
     const res = await props.addProductToCart(payload);
-    if(res && name === "Wishlist") {
-      props.getWishlistProducts({UserId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId,});
+    if (res && name === "Wishlist") {
+      props.getWishlistProducts({ UserId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId, });
     }
   }
 
@@ -57,15 +68,20 @@ const ViewAllProducts = props => {
     const rows = [];
     for (let index = 0; index < Items.length; index = index + itemsPerRow) {
       rows.push(
-        <Row className={(Items.length - index >= itemsPerRow) ? "product-row" : "product-row-no-flex"}>
+        <Row className="product-row">
           {Items &&
             Items.slice(index, index + itemsPerRow).map((item, index) => {
               return (
                 <div key={item.ProductId.S}>
-                  <Product data={item} activeCurrency={activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart}  type={name} />
+                  <Product data={item} activeCurrency={activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} type={name} />
                 </div>
               );
             })}
+          {Items && Items.length && (Items.length - index < itemsPerRow) ? (
+            [...Array((itemsPerRow - (Items.length - index)))].map((item) => {
+              return (<div className="dummy-prod"></div>)
+            })
+          ) : null}
         </Row>
       );
     }
@@ -77,12 +93,12 @@ const ViewAllProducts = props => {
       <Container className="viewallpage-container" fluid>
         {Items && Items.length ? (
           <React.Fragment>
-            <div className="product-row-heading">{name}</div>
+            <div className="product-row-heading">{name ? name : "Latest Uploads"}</div>
             {makeItems()}
           </React.Fragment>
         ) : Items && Items.length === 0 ? (
           <React.Fragment>
-            <div className="product-row-heading">{name}</div>
+            <div className="product-row-heading">{name ? name : "Latest Uploads"}</div>
             {merchantId ? <span className="not-found"> No Products added, Go to Inventory to add inventory</span> : <span className="not-found"> No Records Found</span>}
           </React.Fragment>
         ) : (
@@ -106,11 +122,12 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-const mapStatetoProps = ({ app: { viewAllProductPage, common } }) => {
+const mapStatetoProps = ({ app: { viewAllProductPage, common, manageBusiness } }) => {
   console.log(viewAllProductPage);
   return {
     products: viewAllProductPage.products,
-    activeCurrency: common.activeCurrency
+    activeCurrency: common.activeCurrency,
+    selectedBusiness: manageBusiness.selectedBusiness
   };
 };
 

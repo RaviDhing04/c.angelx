@@ -1,4 +1,3 @@
-// import React from "react";
 import fetch from "node-fetch";
 // import checkResponse from "./responseInterceptor";
 import checkRequest from "./requestInterceptor";
@@ -12,10 +11,10 @@ export const httpFetch = async (url, opts = {}, bypass = 0) => {
   const refreshToken = async (requestObj, resp) => {
     const refresh_token = localStorage.getItem('refresh_token');
     if (!refresh_token) {
+      alert('Please login/signup to perform this action.');
+      const prevPath = localStorage.getItem('prevPath');
       localStorage.clear();
-      window.history.replaceState(null, '', "/landing");
-      // window.history.replaceState(null, '', window.location.pathname + "?login=true");
-      // window.location.reload();
+      localStorage.setItem('prevPath', prevPath);
       return resp;
     } else {
       const obj = checkRequest(getApiEnpoints('refreshToken'), {

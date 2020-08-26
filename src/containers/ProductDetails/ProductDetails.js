@@ -18,20 +18,25 @@ import { Link } from "react-router-dom";
 import plusIcon from "../../assets/plus.svg";
 import deleteIcon from "../../assets/delete_outline.svg";
 import downArrow from "../../assets/down-arrow.svg";
+import checkmark from "../../assets/checkmark.svg";
 import { useAuth } from "../../context/auth";
+import { addProductFormFieldsProductType } from "../../constants/constants";
 
 const ProductDetails = props => {
   const { ProductDetails, productId, activeCurrency } = props;
   const {
+    ProductSpecifications,
+    ProductVariations,
     Description,
     IsDonationCampaign,
+    DonationCampaignDetails,
     IsInStock,
     MerchantHandle,
     Name,
     ProductImages,
-    ProductSpecifications,
     Timestamp,
-    MerchantId
+    MerchantId,
+    ProductCategory
   } = ProductDetails;
 
   const [loading, setLoading] = useState(true);
@@ -40,6 +45,8 @@ const ProductDetails = props => {
   const [group, setGroup] = useState([{}]);
   const [yourContribution, setYourContribution] = useState(0);
   const [quantity, setQuantity] = useState(0);
+  const [donationAmount, setDonationAmount] = useState('');
+  const [selectedVariation, setSelectedVariation] = useState({});
   const [laybuy_months, setLaybuy_months] = useState(0);
   const [normalPurchase, setNormalPurchase] = useState(true);
   const [layBy, setLayBy] = useState(false);
@@ -79,14 +86,40 @@ const ProductDetails = props => {
     }
   }, []);
 
+  useEffect(() => {
+    if (ProductVariations && ProductVariations.L && ProductVariations.L.length) {
+      setSelectedVariation(ProductVariations.L[0]);
+    }
+  }, [ProductVariations])
+
   const addToCart = async () => {
     setLoading(true)
     const payload = {
       "ProductId": productId,
-      "ProductTimestamp": Timestamp.S,
+      "ProductTimestamp": Timestamp && Timestamp.S,
       "Quantity": "1",
       "CouponCode": coupon,
-      "MerchantId": MerchantId.S
+      "MerchantId": MerchantId && MerchantId.S,
+      "SelectedVariation": {
+        "AvailableColor": selectedVariation.M.AvailableColor && selectedVariation.M.AvailableColor.S,
+        "UnitPrice": selectedVariation.M.UnitPrice && selectedVariation.M.UnitPrice.S,
+        "AvailableQuantity": "1",
+        "Currency": selectedVariation.M.Currency && selectedVariation.M.Currency.S,
+      }
+    };
+    const res = await props.addProductToCart(payload);
+    res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
+  };
+
+
+  const Donate = async () => {
+    setLoading(true)
+    const payload = {
+      "ProductId": productId,
+      "ProductTimestamp": Timestamp && Timestamp.S,
+      "Quantity": "1",
+      "CouponCode": coupon,
+      "MerchantId": MerchantId && MerchantId.S
 
     };
     const res = await props.addProductToCart(payload);
@@ -99,11 +132,11 @@ const ProductDetails = props => {
     const orderType = {
       "order_type": "preorder",
       "product_id": productId,
-      "product_timestamp": Timestamp.S,
+      "product_timestamp": Timestamp && Timestamp.S,
       "laybuy_months": laybuy_months,
-      "product_price": ProductSpecifications.M.UnitPrice.S,
+      "product_price": selectedVariation && selectedVariation.M && selectedVariation.M.UnitPrice && selectedVariation.M.UnitPrice.S,
       "qty": quantity,
-      "total_amount": ProductSpecifications.M.UnitPrice.S * quantity,
+      "total_amount": selectedVariation && selectedVariation.M && selectedVariation.M.UnitPrice && (selectedVariation.M.UnitPrice.S * quantity),
       "billing_address_id": null,
       "shipping_address_id": null,
       "payment_type": null
@@ -126,11 +159,11 @@ const ProductDetails = props => {
     const orderType = {
       "order_type": "laybuy",
       "product_id": productId,
-      "product_timestamp": Timestamp.S,
+      "product_timestamp": Timestamp && Timestamp.S,
       "laybuy_months": laybuy_months,
-      "product_price": ProductSpecifications.M.UnitPrice.S,
+      "product_price": selectedVariation && selectedVariation.M && selectedVariation.M.UnitPrice && selectedVariation.M.UnitPrice.S,
       "qty": quantity,
-      "total_amount": ProductSpecifications.M.UnitPrice.S * quantity,
+      "total_amount": selectedVariation && selectedVariation.M && selectedVariation.M.UnitPrice && (selectedVariation.M.UnitPrice.S * quantity),
       "billing_address_id": null,
       "shipping_address_id": null,
       "payment_type": null
@@ -142,7 +175,7 @@ const ProductDetails = props => {
   const groupByOrder = async (event) => {
     event.preventDefault();
     const userShares = {};
-    const totalAmount = ProductSpecifications && ProductSpecifications.M && ProductSpecifications.M.UnitPrice && ProductSpecifications.M.UnitPrice.S * quantity;
+    const totalAmount = selectedVariation && selectedVariation.M && selectedVariation.M.UnitPrice && (selectedVariation.M.UnitPrice.S * quantity);
     userShares[JSON.parse(localStorage.getItem('userData')).email] = yourContribution;
     let grpAmount = 0;
     group.forEach((grp) => {
@@ -156,9 +189,9 @@ const ProductDetails = props => {
     const orderType = {
       "order_type": "group",
       "product_id": productId,
-      "product_timestamp": Timestamp.S,
+      "product_timestamp": Timestamp && Timestamp.S,
       "user_shares": userShares,
-      "product_price": ProductSpecifications.M.UnitPrice.S,
+      "product_price": selectedVariation && selectedVariation.M && selectedVariation.M.UnitPrice && selectedVariation.M.UnitPrice.S,
       "qty": quantity,
       "total_amount": totalAmount,
       "billing_address_id": null,
@@ -183,18 +216,23 @@ const ProductDetails = props => {
             />
             {/* </div> */}
             <div className="product-details">
-              <ul>
-                <li className="product-name">{Name.S}</li>
+              <ul style={IsDonationCampaign && IsDonationCampaign.S === 'true' ? { "paddingBottom": "9rem" } : {}}>
+                <li className="product-name">{Name && Name.S}</li>
                 <li className="product-price">
                   {/* <span>{ProductSpecifications.M.Currency.S}</span>{" "} */}
-                  {formatter(activeCurrency)(
-                    ProductSpecifications.M.UnitPrice.S
+                  {IsDonationCampaign && IsDonationCampaign.S === 'true' ? (formatter(activeCurrency)(
+                    DonationCampaignDetails && DonationCampaignDetails.M && DonationCampaignDetails.M.MinDonation && DonationCampaignDetails.M.MinDonation.S
+                  ) + " (Minimum Donation Amount)") : formatter(activeCurrency)(
+                    selectedVariation && selectedVariation.M && selectedVariation.M.UnitPrice && selectedVariation.M.UnitPrice.S
                   )}
                 </li>
-                <li>
-                  {/* <span className="price-discount">8000</span> */}
-                </li>
-                {IsInStock.S === "false" ? (<li>
+                {IsDonationCampaign && IsDonationCampaign.S === 'true' ? <li>
+                  <div className="delivery-zip-code">
+                    <label>Enter Donation Amount</label>
+                    <input type="number" min="1" onChange={(e) => setDonationAmount(e.target.value)} value={donationAmount ? donationAmount : ''} placeholder="Enter Donation Amount" />
+                  </div>
+                </li> : null}
+                {!(IsDonationCampaign && IsDonationCampaign.S === 'true') ? IsInStock.S === "true" ? (<li>
                   <span onClick={() => { setGroupBy(false); setNormalPurchase(true); setLayBy(false); addToCart() }} className="sm-btn bg-blue">
                     Add to cart
                   </span>
@@ -202,13 +240,9 @@ const ProductDetails = props => {
                   {isAuthenticated ? <span onClick={() => { setGroupBy(false); setNormalPurchase(false); setLayBy(true); setQuantity(0); }} className="sm-btn bg-grey">Lay buy Order</span> : null}
                 </li>) : (<span onClick={(e) => { preOrder(e) }} className="sm-btn bg-blue">
                   Pre Order
-                </span>)}
-                {/* <li>
-                  <div className="delivery-zip-code">
-                    <label>Delivery to</label>
-                    <input type="text" placeholder="Enter zip code" />
-                  </div>
-                </li> */}
+                </span>) : <span onClick={() => Donate()} className="sm-btn bg-blue">
+                    Donate
+                  </span>}
                 {groupBy ? <li>
                   <div className="group-by delivery-zip-code">
                     <form onSubmit={(e) => groupByOrder(e)}>
@@ -226,7 +260,7 @@ const ProductDetails = props => {
                           let i = index;
                           return (
                             <div>
-                              <select onChange={(e) => { group[i]['email'] = e.target.value; setGroup([...group]) }} name="contacts" id="contacts" required>
+                              <select onChange={(e) => { group[i]['email'] = e.target.value; setGroup([...group]) }} value={item.email ? item.email : ''} name="contacts" id="contacts" required>
                                 <option value="">Select contact</option>
                                 {props.contacts.map((contact) => { return (<option value={contact.email}>{contact.email}</option>) })}
                               </select>
@@ -262,29 +296,29 @@ const ProductDetails = props => {
                     </form>
                   </div>
                 </li> : null}
-                {1 ? <li>
+                {!(IsDonationCampaign && IsDonationCampaign.S === 'true') ? <li>
                   <div className="delivery-zip-code">
                     <label>Enter Coupon Code</label>
                     <input type="text" onChange={(e) => setCoupon(e.target.value)} placeholder="Enter coupon code" />
                   </div>
                 </li> : null}
-                <li>
+                {!(IsDonationCampaign && IsDonationCampaign.S === 'true') ? <li>
                   <div className="sub-head">Color</div>
                   <div className="color-palette">
-                    {ProductSpecifications.M.AvailableColors.S.split(' ').map((color, index) => {
-                      return <span key={index} style={{ "backgroundColor": color }} className="palette-box"></span>
+                    {ProductVariations.L.map((variation, index) => {
+                      return <span key={index} onClick={() => setSelectedVariation(variation)} style={{ "backgroundColor": variation.M && variation.M.AvailableColor && variation.M.AvailableColor.S }} className={variation.M && variation.M.AvailableColor && variation.M.AvailableColor.S === selectedVariation.M.AvailableColor.S ? "palette-box active" : "palette-box"}></span>
                     })
                     }
                   </div>
-                </li>
-                <li>
+                </li> : null}
+                {!(IsDonationCampaign && IsDonationCampaign.S === 'true') ? <li>
                   {/* <div className="sub-head">Availibility</div> */}
-                  <div className={IsInStock.S === "true" ? "in-stock stock-info" : "out-of-stock stock-info"}>
-                    {IsInStock.S === "true" ? "In Stock" : "Out Of Stock"}
+                  <div className={IsInStock && IsInStock.S === "true" ? "in-stock stock-info" : "out-of-stock stock-info"}>
+                    {IsInStock && IsInStock.S === "true" ? "In Stock" : "Out Of Stock"}
                   </div>
-                </li>
+                </li> : null}
                 <li>
-                  <div className="sub-head">Seller</div>
+                  <div className="sub-head">{IsDonationCampaign && IsDonationCampaign.S === 'true' ? "NPO" : "Seller"}</div>
                   <div className="seller-reating">
                     <Nav className="flex-column">
                       <Nav.Link
@@ -296,7 +330,11 @@ const ProductDetails = props => {
                           }
                         }}
                       >
-                        {MerchantHandle.S}
+                        {MerchantHandle.S}{1 ? <img
+                          className="nav-icon"
+                          alt="checkmark"
+                          src={checkmark}
+                        ></img> : null}
                       </Nav.Link>
                     </Nav>
                     {/* <a href=""></a> */}
@@ -306,7 +344,7 @@ const ProductDetails = props => {
               <Accordion className="description-accordian">
                 <Card>
                   <Accordion.Toggle as={Card.Header} className="prod-details" eventKey="0">
-                    Product Details
+                    {IsDonationCampaign && IsDonationCampaign.S === 'true' ? "Cause Details" : "Product Details"}
                     <img
                       className="nav-icon"
                       alt="downArrow-icon"
@@ -314,7 +352,32 @@ const ProductDetails = props => {
                     ></img>
                   </Accordion.Toggle>
                   <Accordion.Collapse eventKey="0">
-                    <Card.Body>{Description.S}</Card.Body>
+                    <Card.Body>
+                      <div style={{ "fontWeight": "bold", "fontSize": "1.25rem" }} className="sub-head">{IsDonationCampaign && IsDonationCampaign.S === 'true' ? "Cause Description" : "Product Description"}</div>
+                      {Description && Description.S}
+                      {!(IsDonationCampaign && IsDonationCampaign.S === 'true') && ProductSpecifications && ProductSpecifications.M ? <div style={{ "fontWeight": "bold", "fontSize": "1.25rem", "marginTop": "0.5rem" }} className="sub-head">Product Specifications</div> : null}
+                      {ProductSpecifications && ProductSpecifications.M ? (
+                        ProductCategory && ProductCategory.S && addProductFormFieldsProductType[ProductCategory.S] && addProductFormFieldsProductType[ProductCategory.S].length && addProductFormFieldsProductType[ProductCategory.S].map((item, index) => {
+                          return (
+                            ProductSpecifications.M[item] ? (<div key={index}>
+                              <span>{item}</span> : <span>{ProductSpecifications.M[item].S}</span>
+                            </div>) : null
+                          )
+                        })
+                      ) : null}
+                      {ProductSpecifications.M['productDimensions'] && ProductSpecifications.M['productDimensions'].M ? (["Height", "Width", "Length", "Depth", "Weight"].map((item, index) => {
+                        return (
+                          ProductSpecifications.M['productDimensions'].M[item] ? (<div key={index}>
+                            <span>{item}</span> : <span>{ProductSpecifications.M['productDimensions'].M[item].S}</span>
+                          </div>) : null
+                        )
+                      })) : null}
+                      {ProductSpecifications.M['AvailableSizes'] && ProductSpecifications.M['AvailableSizes'].L && ProductSpecifications.M['AvailableSizes'].L.length ?
+                        <div>
+                          <span>AvailableSizes</span> : <span>{ProductSpecifications.M['AvailableSizes'].L.join(', ')}</span>
+                        </div>
+                        : null}
+                    </Card.Body>
                   </Accordion.Collapse>
                 </Card>
               </Accordion>

@@ -21,8 +21,8 @@ const ProductListCarousel = props => {
       {!loading ? (Items && Items.length ? (
         <React.Fragment>
           <div className={isAuthenticated ? "product-row-heading" : "margin-left-4 product-row-heading"}>{name}</div>
-          <Row className={(Items.length >= 5) ? "product-row" : "product-row-no-flex"}>
-            {Items &&
+          <Row className="product-row">
+            {Items && Items.length &&
               Items.map((item, index) => {
                 return index < 5 ? (
                   <div key={item.ProductId.S}>
@@ -36,14 +36,21 @@ const ProductListCarousel = props => {
                   </div>
                 ) : null;
               })}
+            {Items && Items.length && Items.length < 5 ? (
+              [...Array(5 - Items.length)].map((item) => {
+                return (<div className="dummy-prod"></div>)
+              })
+            ) : null}
           </Row>
           <Link to={`/home/viewAllProducts/${name}`}>
             <Button className={isAuthenticated ? "view-all" : "margin-left-4 view-all"}>View All</Button>
           </Link>
         </React.Fragment>
       ) : <React.Fragment>
-          <div className={isAuthenticated ? "product-row-heading" : "margin-left-4 product-row-heading"}>{name}</div>
-          <span className="not-found"> No Records Found</span>
+          <div className="row-div">
+            <div className={isAuthenticated ? "product-row-heading" : "margin-left-4 product-row-heading"}>{name}</div>
+            <span className="not-found"> No Records Found</span>
+          </div>
         </React.Fragment>) : (
           <ProductRowShimmer />
         )}

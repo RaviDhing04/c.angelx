@@ -36,11 +36,18 @@ const ProductList = props => {
                   </div>
                 ) : null;
               })}
+            {Items && Items.length && Items.length < 5 ? (
+              [...Array(5 - Items.length)].map((item) => {
+                return (<div className="dummy-prod"></div>)
+              })
+            ) : null}
           </Row>
         </React.Fragment>
       ) : <React.Fragment>
-          <div className={isAuthenticated ? "product-row-heading" : "margin-left-4 product-row-heading"}>{name}</div>
-          <span className="not-found"> No Records Found</span>
+          <div className="row-div">
+            <div className={isAuthenticated ? "product-row-heading" : "margin-left-4 product-row-heading"}>{name}</div>
+            <span className="not-found"> No Records Found</span>
+          </div>
         </React.Fragment>) : (
           <ProductRowShimmer />
         )}
@@ -55,6 +62,11 @@ const ProductList = props => {
                   </div>
                 ) : null;
               })}
+            {Items && Items.length && Items.length < 10 ? (
+              [...Array(10 - Items.length)].map((item) => {
+                return (<div className="dummy-prod"></div>)
+              })
+            ) : null}
           </Row>
           <Link to={`/home/viewAllProducts/${name}`}>
             <Button className={isAuthenticated ? "view-all" : "margin-left-4 view-all"}>View All</Button>

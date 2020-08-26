@@ -4,6 +4,7 @@ import { Card, Button } from "react-bootstrap";
 import "./Product.scss";
 import formatter from "../../utils/commonUtils/currencyUtils";
 import heartIcon from "../../assets/heart.svg";
+import checkmark from "../../assets/checkmark.svg";
 
 const Product = props => {
   const { data, activeCurrency, addProductToCart, type } = props;
@@ -25,25 +26,36 @@ const Product = props => {
                 <Card.Title>{data.Name && data.Name.S}</Card.Title>
                 <Card.Text>
                   {data.IsDonationCampaign && data.IsDonationCampaign.S === 'true'
-                    ? "By " + data.MerchantHandle.S
-                    : formatter(activeCurrency)(data.ProductSpecifications.M.UnitPrice.S)}
+                    ? (<span>By {data.MerchantHandle.S} {1 ? <img
+                      className="nav-icon"
+                      alt="checkmark"
+                      src={checkmark}
+                    ></img> : null}</span>)
+                    : formatter(activeCurrency)(data.ProductVariations && data.ProductVariations.L && data.ProductVariations.L.length && data.ProductVariations.L[0].M.UnitPrice && data.ProductVariations.L[0].M.UnitPrice.S ? data.ProductVariations.L[0].M.UnitPrice.S : 0)}
                 </Card.Text>
               </div>
             </Link>
             {data.IsDonationCampaign && data.IsDonationCampaign.S === "true" ? (
-              <Button className="product-button">Donate</Button>
+              <Link to={`/home/productDetail/${data.ProductId.S}/${data.Timestamp.S}`}>
+                <Button className="product-button">Donate</Button>
+              </Link>
             ) : (
                 <Button onClick={() => addProductToCart({
                   "ProductId": data.ProductId.S,
                   "ProductTimestamp": data.Timestamp.S,
                   "Quantity": "1",
                   "CouponCode": null,
-                  "MerchantId": data.MerchantId.S
-
+                  "MerchantId": data.MerchantId.S,
+                  "SelectedVariation": {
+                    "AvailableColor": data.ProductVariations && data.ProductVariations.L && data.ProductVariations.L.length && data.ProductVariations.L[0].M.AvailableColor && data.ProductVariations.L[0].M.AvailableColor.S,
+                    "UnitPrice": data.ProductVariations && data.ProductVariations.L && data.ProductVariations.L.length && data.ProductVariations.L[0].M.UnitPrice && data.ProductVariations.L[0].M.UnitPrice.S,
+                    "AvailableQuantity": "1",
+                    "Currency": data.ProductVariations && data.ProductVariations.L && data.ProductVariations.L.length && data.ProductVariations.L[0].M.Currency && data.ProductVariations.L[0].M.Currency.S,
+                  }
                 }, type && type.toLowerCase() === 'wishlist' ? 'wishlist' : null)} className="product-button">Add to Cart</Button>
               )}
             <Link to={`/home/productDetail/${data.ProductId.S}/${data.Timestamp.S}`}>
-            <Button className="more-button">More Options</Button>
+              <Button className="more-button">More Options</Button>
             </Link>
           </Card.Body>
         </Card>
