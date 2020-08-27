@@ -45,9 +45,14 @@ const HomeProductList = props => {
     }
   }
 
+  const styl = {
+    "paddingRight": "4.0625rem",
+    "paddingLeft": "0.625rem"
+  }
+
   return (
     <React.Fragment>
-      <Container fluid>
+      <Container fluid style={styl}>
         <ProductListCarousel name="Sponsored" loading={loadingSponsored} data={props.sponsoredProducts} activeCurrency={props.activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} />
         <ProductList name="Latest Uploads" loading={loadingLatest} data={props.latestProducts} activeCurrency={props.activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} />
         {/* <ProductList name="Trending" data={props.latestProducts} activeCurrency={props.activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} /> */}

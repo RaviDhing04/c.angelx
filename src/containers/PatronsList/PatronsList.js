@@ -46,6 +46,9 @@ const PatronsList = props => {
         <React.Fragment>
             <div className="patronsTable-heading">{name}</div>
             <Container className="patronsTable-container" fluid>
+            <button style={{ "visibility": "hidden" }} className="unfollow">
+                Add {name}
+            </button>
                 <div className="patronsTable-table">
                     {props.allPatrons && props.allPatrons.length === 0 ? (
                         <React.Fragment>

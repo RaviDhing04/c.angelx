@@ -36,7 +36,8 @@ const ProductDetails = props => {
     ProductImages,
     Timestamp,
     MerchantId,
-    ProductCategory
+    ProductCategory,
+    VerificationStatus
   } = ProductDetails;
 
   const [loading, setLoading] = useState(true);
@@ -330,7 +331,7 @@ const ProductDetails = props => {
                           }
                         }}
                       >
-                        {MerchantHandle.S}{1 ? <img
+                        {MerchantHandle.S}{VerificationStatus.S === 'Verified' ? <img
                           className="nav-icon"
                           alt="checkmark"
                           src={checkmark}

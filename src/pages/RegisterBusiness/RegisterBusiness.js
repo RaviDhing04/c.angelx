@@ -21,6 +21,7 @@ const RegisterBusiness = props => {
   let history = useHistory();
   const action = props.match.params.action;
   const [loading, setLoading] = useState(true);
+  const [handle, setHandle] = useState('');
   const [handleErr, setHandleErr] = useState(false);
   const [buttonClicked, setbuttonClicked] = useState(false);
 
@@ -77,6 +78,11 @@ const RegisterBusiness = props => {
     }
   };
 
+  useEffect(() => {
+    selectedBusinessDetails ? setHandle(selectedBusinessDetails && selectedBusinessDetails.BusinessHandle &&
+      selectedBusinessDetails.BusinessHandle.S) : setHandle('');
+  }, [selectedBusinessDetails]);
+
   const cancel = async event => {
     event.preventDefault();
     document.getElementById("RegisterBusinessForm").reset();
@@ -90,7 +96,7 @@ const RegisterBusiness = props => {
         const res = await props.checkMerchantHandle({
           "BusinessHandle": `${ele.children[0].value}@${ele.children[1].children[1].value}`
         });
-        res && res === 'Available' ? setHandleErr(false) : setHandleErr(true);
+        res && res === 'Available' ? (function () { setHandleErr(false); setHandle(`${ele.children[0].value}@${ele.children[1].children[1].value}`); }()) : (function () { setHandleErr(true); setHandle(''); }())
       }
     }
   }
@@ -106,7 +112,7 @@ const RegisterBusiness = props => {
         <div className="RegisterBusiness">
           <Form id="RegisterBusinessForm" onSubmit={e => registerNew(e)}>
             <div className="sub-heading">Organization Details</div>
-            <Form.Row className="width-25">
+            <Form.Row className="width-75">
               <Col>
                 <Form.Group controlId="BusinessHandle">
                   <Form.Label>Your C-Angelx User Handle</Form.Label>
@@ -146,6 +152,28 @@ const RegisterBusiness = props => {
                       User Handle can contain alphabets, _ and - only
               </Form.Text>}
                 </Form.Group>
+              </Col>
+              <Col>
+                {handle ? (action === 'edit' ?
+                  <React.Fragment>
+                    <div>
+                      <span className="form-label">Your Merchant Page Link:</span>
+                    </div>
+                    <div>
+                      <a href={window.location.origin + '/merchantPage/' + handle} target="blank">{window.location.origin + '/merchantPage/' + handle}</a>
+                    </div>
+                  </React.Fragment> :
+                  <React.Fragment>
+                    <div>
+                      <span className="form-label">Your Merchant Page Link:</span>
+                    </div>
+                    <div>
+                      {window.location.origin + '/merchantPage/' + handle}
+                    </div>
+                    <div>
+                      <span className="hint">(Link will be active once your business registration is completed)</span>
+                    </div>
+                  </React.Fragment>) : null}
               </Col>
               {/* <Col>
                 <Form.Group controlId="formGroupSKUNumber">

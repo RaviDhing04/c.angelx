@@ -45,7 +45,7 @@ const LeftNav = props => {
                     </Nav.Link>
                   </Nav> : (<Nav className="flex-column">
                     <div className="nav-link"> {link.name} </div>
-                  </Nav>)} 
+                  </Nav>)}
                   {count && count[link.name] ? <span className="count">{count[link.name]}</span> : null}
                 </div>
               );
@@ -105,14 +105,14 @@ const LeftNav = props => {
                               }
                             }}
                           >
-                            {merchant.BusinessHandle.S}
+                            {merchant && merchant.BusinessHandle.S}
                           </Nav.Link>
                         </Nav>
-                        <img
+                        {merchant && merchant.VerificationStatus.S === 'Verified' ? <img
                           className="nav-icon"
                           alt="checkmark"
                           src={checkmark}
-                        ></img>
+                        ></img> : null}
                       </div>
                     );
                   })

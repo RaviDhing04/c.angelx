@@ -16,7 +16,7 @@ const Login = props => {
     const password = formElements.formGroupPassword.value;
     setLoading(true);
     const res = await login({ email: email, password: password });
-    res ? (res === 'reset' ? setLoading(false) : res === 'success' ? (function () { setLoading(false); props.location.pathname.includes('landing') ? props.history.replace('/home/productsListing') : props.history.replace(props.location.pathname) }()) : setLoading(false)) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
+    res ? (res === 'reset' ? setLoading(false) : res === 'success' ? (function () { setLoading(false); props.location.pathname.includes('landing') ? (localStorage.getItem('startSelling') ? (function () { localStorage.removeItem('startSelling'); props.history.replace('/registerBusiness/addNew'); }()) : props.history.replace('/home/productsListing')) : props.history.replace(props.location.pathname) }()) : setLoading(false)) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
   };
 
   const temp = props => {

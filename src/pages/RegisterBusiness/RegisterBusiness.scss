@@ -1,142 +1,150 @@
 .RegisterBusiness-page-container {
+  .form-label {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0px;
+    color: #333333de;
+    opacity: 1;
+    font-size: 0.8125rem;
+    font-weight: bold;
+  }
 
-    .RegisterBusiness-page {
-        width: 96rem;
-        margin: 4rem auto;
-        display: flex;
-        justify-content: space-between;
-        flex-direction: column;
+  .RegisterBusiness-page {
+    width: 96rem;
+    margin: 4rem auto;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+  }
+
+  .RegisterBusiness-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.6rem;
+    padding-right: 2.25rem;
+
+    .heading {
+      font-size: 2.375rem;
+      letter-spacing: 2.66px;
+      color: #3b3b3b;
+      opacity: 1;
+    }
+  }
+
+  .RegisterBusiness {
+    .sub-heading {
+      letter-spacing: 1.96px;
+      color: #3b3b3b;
+      opacity: 1;
+      font-size: 1.75rem;
+      margin-bottom: 2rem;
+      margin-top: 1rem;
     }
 
-    .RegisterBusiness-header {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 0.6rem;
-        padding-right: 2.25rem;
-
-        .heading {
-            font-size: 2.375rem;
-            letter-spacing: 2.66px;
-            color: #3B3B3B;
-            opacity: 1;
-        }
+    #formGroupPayfastID {
+      border-right: 0px;
     }
 
-    .RegisterBusiness {
-        .sub-heading {
-            letter-spacing: 1.96px;
-            color: #3B3B3B;
-            opacity: 1;
-            font-size: 1.75rem;
-            margin-bottom: 2rem;
-            margin-top: 1rem;
-        }
-
-        #formGroupPayfastID {
-            border-right: 0px;
-        }
-
-        .inputGroupPayfastID {
-            border: 1px solid #ced4da;
-            vertical-align: middle;
-            border-radius: .25rem;
-        }
-
-        .signUp {
-            vertical-align: middle;
-            line-height: 2rem;
-            border-radius: .25rem;
-            margin: 0 0.5rem;
-            cursor: pointer;
-        }
-
-        .width-25 {
-            width: 25%;
-        }
-
-        .width-50 {
-            width: 50%;
-        }
-
-        .width-75 {
-            width: 75%;
-        }
-
-
-        label {
-            display: inline-block;
-            margin-bottom: .5rem;
-            letter-spacing: 0px;
-            color: #333333DE;
-            opacity: 1;
-            font-size: 0.8125rem;
-            font-weight: bold;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-            width: 95%;
-        }
-
-        .hint {
-            letter-spacing: 0.91px;
-            color: #ef8109;
-            font-size: 0.8125rem;
-        }
-
-        .error{
-            letter-spacing: 0.91px;
-            color: #ff0000;
-            font-size: 0.8125rem;
-        }
-
-        .buttons {
-            text-align: right;
-
-            .cancelButton {
-                background: #E0E1E2 0% 0% no-repeat padding-box;
-                border-radius: 0.25rem;
-                opacity: 1;
-                width: 5.625rem;
-                height: 2.25rem;
-                letter-spacing: 0px;
-                color: #00000099;
-                opacity: 1;
-                font-weight: bold;
-                font-size: 0.875rem;
-                border: none;
-                margin: 0 0.5rem;
-            }
-
-            .saveAnotherButton {
-                background: #1B1C1D 0% 0% no-repeat padding-box;
-                border-radius: 0.25rem;
-                opacity: 1;
-                letter-spacing: 0px;
-                color: #FFFFFF;
-                opacity: 1;
-                font-weight: bold;
-                font-size: 0.875rem;
-                width: 15rem;
-                height: 2.25rem;
-                border: none;
-                margin: 0 0.5rem;
-            }
-
-            .saveButton {
-                background: #558ED4 0% 0% no-repeat padding-box;
-                border-radius: 0.25rem;
-                opacity: 1;
-                letter-spacing: 0px;
-                color: #FFFFFF;
-                opacity: 1;
-                font-weight: 500;
-                font-size: 0.875rem;
-                width: 8.75rem;
-                height: 2.25rem;
-                border: none;
-                margin: 0 0.5rem;
-            }
-        }
+    .inputGroupPayfastID {
+      border: 1px solid #ced4da;
+      vertical-align: middle;
+      border-radius: 0.25rem;
     }
+
+    .signUp {
+      vertical-align: middle;
+      line-height: 2rem;
+      border-radius: 0.25rem;
+      margin: 0 0.5rem;
+      cursor: pointer;
+    }
+
+    .width-25 {
+      width: 25%;
+    }
+
+    .width-50 {
+      width: 50%;
+    }
+
+    .width-75 {
+      width: 75%;
+    }
+
+    label {
+      display: inline-block;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0px;
+      color: #333333de;
+      opacity: 1;
+      font-size: 0.8125rem;
+      font-weight: bold;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+      width: 95%;
+    }
+
+    .hint {
+      letter-spacing: 0.91px;
+      color: #ef8109;
+      font-size: 0.9125rem;
+    }
+
+    .error {
+      letter-spacing: 0.91px;
+      color: #ff0000;
+      font-size: 0.9125rem;
+    }
+
+    .buttons {
+      text-align: right;
+
+      .cancelButton {
+        background: #e0e1e2 0% 0% no-repeat padding-box;
+        border-radius: 0.25rem;
+        opacity: 1;
+        width: 5.625rem;
+        height: 2.25rem;
+        letter-spacing: 0px;
+        color: #00000099;
+        opacity: 1;
+        font-weight: bold;
+        font-size: 0.875rem;
+        border: none;
+        margin: 0 0.5rem;
+      }
+
+      .saveAnotherButton {
+        background: #1b1c1d 0% 0% no-repeat padding-box;
+        border-radius: 0.25rem;
+        opacity: 1;
+        letter-spacing: 0px;
+        color: #ffffff;
+        opacity: 1;
+        font-weight: bold;
+        font-size: 0.875rem;
+        width: 15rem;
+        height: 2.25rem;
+        border: none;
+        margin: 0 0.5rem;
+      }
+
+      .saveButton {
+        background: #558ed4 0% 0% no-repeat padding-box;
+        border-radius: 0.25rem;
+        opacity: 1;
+        letter-spacing: 0px;
+        color: #ffffff;
+        opacity: 1;
+        font-weight: 500;
+        font-size: 0.875rem;
+        width: 8.75rem;
+        height: 2.25rem;
+        border: none;
+        margin: 0 0.5rem;
+      }
+    }
+  }
 }

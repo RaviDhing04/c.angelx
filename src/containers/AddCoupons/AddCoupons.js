@@ -42,7 +42,7 @@ const AddCoupons = props => {
     let payload = {};
     const formElements = event.target.elements;
     addCouponFormFields.forEach(field => {
-      if(["CouponActiveFrom", "CouponExpiryDate"].includes(field)) {
+      if (["CouponActiveFrom", "CouponExpiryDate"].includes(field)) {
         payload[field] = new Date(formElements[field].value).toGMTString();
       } else {
         payload[field] = formElements[field].value;
@@ -60,7 +60,7 @@ const AddCoupons = props => {
       action === "add"
         ? await addNewCoupon(payload)
         : await updateCoupon(payload);
-    res ? setLoading(false) : (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
+    res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
     history.goBack();
   };
 
@@ -152,12 +152,15 @@ const AddCoupons = props => {
                   <Form.Label>Currency</Form.Label>
                   <Form.Control
                     as="select"
-                    defaultValue={couponDetails && couponDetails.Currency.S}
+                    // defaultValue={couponDetails && couponDetails.Currency.S}
+                    defaultValue={'USD'}
+                    disabled={true}
                     required
                   >
-                    <option value="testValue"> ZAR</option>
-                    <option value="testValue"> USD</option>
-                    <option value="testValue"> INR </option>
+                    <option disabled value="" selected> Select Currency</option>
+                    <option value="ZAR"> ZAR</option>
+                    <option value="USD"> USD</option>
+                    <option value="INR"> INR </option>
                   </Form.Control>
                 </Form.Group>
               </Col>
@@ -190,8 +193,8 @@ const AddCoupons = props => {
       </Container>
     </React.Fragment>
   ) : (
-    <CustomLoader />
-  );
+      <CustomLoader />
+    );
 };
 const mapDispatchToProps = dispatch =>
   bindActionCreators(

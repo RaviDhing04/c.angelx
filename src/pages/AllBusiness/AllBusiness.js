@@ -11,17 +11,29 @@ import plusIcon from "../../assets/plus.svg";
 const AllBusiness = props => {
   const { allBusiness } = props;
   let history = useHistory();
+  const userId = props.match.params.userId;
   const [loading, setLoading] = useState(true);
+  const [isMerchant, setIsMerchant] = useState(true);
 
   useEffect(() => {
     async function fetchAllBusiness() {
-      const userId = props.match.params.userId;
       const res = await props.fetchAllBusiness({ PatronId: userId });
-      res ? setLoading(false) : (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
+      res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
     }
     fetchAllBusiness();
   }, []);
 
+  useEffect(() => {
+    if (allBusiness && allBusiness.length) {
+      allBusiness.forEach(business => {
+        if (userId !== business.PatronId.S) {
+          setIsMerchant(false);
+        }
+      });
+    } else {
+      setIsMerchant(true);
+    }
+  }, [allBusiness])
   const navigate = (event) => {
     const ele = event.target.tagName;
     const merchantId = event.currentTarget.dataset.value;
@@ -36,27 +48,27 @@ const AllBusiness = props => {
           <span className="heading">Registered Businesses</span>
         </div>
         <div className="business-card-holder">
-          {allBusiness.map(business => {
+          {allBusiness && allBusiness.length && allBusiness.map(business => {
             return (
               <div data-value={business.MerchantId.S} onClick={(e) => navigate(e)} key={business.MerchantId.S} className="business-card">
                 <p> {business.BusinessHandle.S}</p>
                 <span>{business.BusinessType.S}</span>
-                <button className="edit-business">Edit</button>
+                {isMerchant ? <button className="edit-business">Edit</button> : null}
               </div>
             );
           })}
-          <div className="business-card">
+          {isMerchant ? <div className="business-card">
             <button onClick={() => history.push('/registerBusiness/addNew')} className="add-business">
               <img className="plus-icon" alt="plus-icon" src={plusIcon}></img>
               Add Merchant / Non Profit Organization
             </button>
-          </div>
+          </div> : null}
         </div>
       </div>
     </Container>
   ) : (
-    <CustomLoader />
-  );
+      <CustomLoader />
+    );
 };
 
 const mapDispatchToProps = dispatch =>

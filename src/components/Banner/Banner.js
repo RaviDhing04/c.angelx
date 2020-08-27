@@ -72,7 +72,8 @@ const Banner = props => {
     history.push('/home/productsListing');
   }
   const sell = () => {
-    history.push('/home/productsListing');
+    localStorage.setItem('startSelling', true);
+    history.push('/registerBusiness/addNew');
   }
 
   const handleSelect = (selectedIndex, e) => {
@@ -110,7 +111,7 @@ const Banner = props => {
                   <React.Fragment>
                     <div style={btnLandingDiv}>
                       <button className="startshopping" onClick={shop}>Start Shopping</button>
-                      <button className="startselling" onClick={sell}>Start Selling</button>
+                      <button className="startselling" onClick={sell}>Start Business</button>
                       <div style={circleImgGreen}><img style={img} src={android} alt="playstore"></img></div>
                       <div style={circleImgGrey}><img style={img} src={apple} alt="appstore"></img></div>
                     </div>

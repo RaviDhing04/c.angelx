@@ -208,7 +208,7 @@ export const addProductFormFieldsProductType = {
   "Clothing": ["Brand", "MaterialDescription", "Ocassion"]
 }
 
-export const addCampaignFormFields = ["ProductName", "ProductCategory", "Currency", "ProductDescription", "MinDonation", "TargetDonationAmount"];
+export const addCampaignFormFields = ["ProductName", "Currency", "ProductDescription", "MinDonation", "TargetDonationAmount"];
 
 export const addCouponFormFields = ["CouponCode", "Discount", "Currency", "MaxDiscountAmount", "CouponActiveFrom", "CouponExpiryDate", "CouponDescription"];
 

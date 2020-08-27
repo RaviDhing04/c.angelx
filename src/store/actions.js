@@ -996,7 +996,7 @@ export const getFollowedMerchants = (body = {}) => async dispatch => {
       dispatch({
         type: "FOLLOWED_MERCHANTS",
         value: {
-          payload: response.result.data.Items
+          payload: response.result.data
         }
       });
       return true;
@@ -1398,6 +1398,12 @@ export const addToWishlist = (body = {}) => async (dispatch,
             payload: newCounts
           }
         });
+        dispatch({
+          type: "CART_COUNT",
+          value: {
+            payload: response.result.data.TotalCartCount
+          }
+        });
       }
       return true;
     } else {
@@ -1409,7 +1415,7 @@ export const addToWishlist = (body = {}) => async (dispatch,
   }
 };
 
-export const addNewEmployee = (body = {}) => async dispatch => {
+export const addNewEmployee = (body = {}) => async (dispatch, getState) => {
   try {
 
     const response = await httpFetch(getApiEndPoints("addNewEmployee"), {
@@ -1422,6 +1428,14 @@ export const addNewEmployee = (body = {}) => async dispatch => {
       response.result.data &&
       response.result.message === "Success"
     ) {
+      let userLinkCount = getState().app.homePage.userLinkCount;
+      const newCounts = { ...userLinkCount, 'Add Contacts': response.result.data.TotalContacts }
+      dispatch({
+        type: "USER_LINKS_COUNT",
+        value: {
+          payload: newCounts
+        }
+      });
       return true;
     } else {
       return false;
@@ -1432,7 +1446,7 @@ export const addNewEmployee = (body = {}) => async dispatch => {
   }
 };
 
-export const deleteContact = (body = {}) => async dispatch => {
+export const deleteContact = (body = {}) => async (dispatch, getState) => {
   try {
 
     const response = await httpFetch(getApiEndPoints("deleteContact"), {
@@ -1445,6 +1459,14 @@ export const deleteContact = (body = {}) => async dispatch => {
       response.result.data &&
       response.result.message === "Success"
     ) {
+      let userLinkCount = getState().app.homePage.userLinkCount;
+      const newCounts = { ...userLinkCount, 'Add Contacts': response.result.data.TotalContacts }
+      dispatch({
+        type: "USER_LINKS_COUNT",
+        value: {
+          payload: newCounts
+        }
+      });
       return true;
     } else {
       return false;
@@ -1546,7 +1568,7 @@ export const getSavedEmployees = (body = {}) => async dispatch => {
   }
 };
 
-export const addProductToCart = (body = {}) => async (dispatch) => {
+export const addProductToCart = (body = {}) => async (dispatch, getState) => {
   try {
 
     const response = await httpFetch(getApiEndPoints("addProductToCart"), {
@@ -1561,6 +1583,14 @@ export const addProductToCart = (body = {}) => async (dispatch) => {
     ) {
       response.result.message === 'Success' ? alert('Product added in cart') : alert(response.result.message);
       if (response.result.message === 'Success') {
+        let userLinkCount = getState().app.homePage.userLinkCount;
+        const newCounts = { ...userLinkCount, 'Wishlist': response.result.data.TotalWishlistCount }
+        dispatch({
+          type: "USER_LINKS_COUNT",
+          value: {
+            payload: newCounts
+          }
+        });
         dispatch({
           type: "CART_COUNT",
           value: {
@@ -1618,6 +1648,12 @@ export const deleteProductFromCart = body => async (dispatch) => {
       response.result.data &&
       response.result.message === "Success"
     ) {
+      dispatch({
+        type: "CART_COUNT",
+        value: {
+          payload: response.result.data.TotalCartCount
+        }
+      });
       return true;
     } else {
       return false;

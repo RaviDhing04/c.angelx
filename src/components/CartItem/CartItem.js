@@ -14,6 +14,7 @@ const CartItem = props => {
     productData: { ThumbnailImageURL,
       Name,
       MerchantHandle,
+      VerificationStatus,
       MerchantId,
       IsInStock,
       IsDonationCampaign,
@@ -44,7 +45,7 @@ const CartItem = props => {
                 }
               }}
             >
-              {MerchantHandle}{1 ? <img
+              {MerchantHandle}{VerificationStatus.S === 'Verified' ? <img
                 className="nav-icon"
                 alt="checkmark"
                 src={checkmark}

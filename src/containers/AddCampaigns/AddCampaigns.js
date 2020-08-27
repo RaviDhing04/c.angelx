@@ -158,7 +158,7 @@ const AddCampaigns = props => {
       <Container className="add-campaigns-container" fluid>
         <div className="AddCampaign">
           <Form id="AddCampaignForm" onSubmit={e => add(e)}>
-            <Form.Row className="width-50">
+            <Form.Row className="width-25">
               <Col>
                 <Form.Group controlId="ProductName">
                   <Form.Label>Cause Name</Form.Label>
@@ -173,7 +173,7 @@ const AddCampaigns = props => {
                   />
                 </Form.Group>
               </Col>
-              <Col>
+              {/* <Col>
                 <Form.Group controlId="ProductCategory">
                   <Form.Label>Cause Category</Form.Label>
                   <Form.Control
@@ -188,7 +188,7 @@ const AddCampaigns = props => {
                     <option value="testValue"> Social Welfare </option>
                   </Form.Control>
                 </Form.Group>
-              </Col>
+              </Col> */}
               {/* <Col>
                 <Form.Group controlId="SKUNumber">
                   <Form.Label>SKU Number</Form.Label>
@@ -271,15 +271,18 @@ const AddCampaigns = props => {
                   <Form.Label>Currency</Form.Label>
                   <Form.Control
                     as="select"
-                    defaultValue={
-                      productDetails &&
-                      productDetails.DonationCampaignDetails.M.Currency.S
-                    }
+                    // defaultValue={
+                    //   productDetails &&
+                    //   productDetails.DonationCampaignDetails.M.Currency.S
+                    // }
+                    defaultValue={'USD'}
+                    disabled={true}
                     required
                   >
-                    <option value="testValue"> ZAR</option>
-                    <option value="testValue"> USD</option>
-                    <option value="testValue"> INR </option>
+                    <option disabled value="" selected> Select Currency</option>
+                    <option value="ZAR"> ZAR</option>
+                    <option value="USD"> USD</option>
+                    <option value="INR"> INR </option>
                   </Form.Control>
                 </Form.Group>
               </Col>

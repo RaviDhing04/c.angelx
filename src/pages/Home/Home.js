@@ -22,7 +22,7 @@ const Home = props => {
       if (isAuthenticated) {
         getUserLinkCount();
         cartCount();
-        !followedMerchants.length &&
+        !(followedMerchants && followedMerchants.length) &&
           props.getFollowedMerchants({
             PatronId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId
           });

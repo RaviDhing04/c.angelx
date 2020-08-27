@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { aboutUsGrid } from "../../constants/constants";
 import "./LandingPage.scss";
 import Banner from "../../components/Banner/Banner";
+import { Carousel } from "react-bootstrap";
 import {
   getSearchCategories,
   getLatestProductsWithPagination,
@@ -38,6 +39,42 @@ const LandingPage = props => {
     const res = await props.addToWishlist(payload);
   }
 
+  const makeItems = (Items) => {
+    const rows = [];
+    for (let index = 0; index < Items.length; index = index + 3) {
+      rows.push(
+        <div className="categories">
+          {Items &&
+            Items.slice(index, index + 3).map((item, index) => {
+              return (
+                <div key={item.CategoryId.S} className="category">
+                  <img
+                    className="category-img"
+                    alt="category-img"
+                    src={item.ImageURL.S}
+                  />
+                  <div className="category-name">{item.Title.S}</div>
+                </div>
+              );
+            })}
+          {Items && Items.length && (Items.length - index < 3) ? (
+            [...Array((3 - (Items.length - index)))].map((item) => {
+              return (<div className="dummy-cat"></div>)
+            })
+          ) : null}
+        </div>
+      );
+    }
+    return (rows.map((row, index) => {
+      return (
+        <Carousel.Item key={index}>
+          {row}
+        </Carousel.Item>
+      )
+    })
+    )
+  };
+
 
   return (
     <React.Fragment>
@@ -46,14 +83,14 @@ const LandingPage = props => {
       </div>
       <div className="landingpage-container">
         <div>
-          <ProductListCarousel
+          {/* <ProductListCarousel
             name="Trending"
             data={props.latestProducts}
             activeCurrency={props.activeCurrency}
             addProductToCart={addToCart}
             addToWishlist={addProductToWish}
             loading={loadingLatest}
-          />
+          /> */}
           <ProductList
             name="Latest Uploads"
             data={props.latestProducts}
@@ -64,7 +101,10 @@ const LandingPage = props => {
           />
         </div>
         <div className="heading"> Explore by Categories </div>
-        <div className="categories">
+        {props.searchCategories && props.searchCategories.length ? <Carousel className="prod-carousel" interval={null}>
+          {makeItems(props.searchCategories)}
+        </Carousel> : null}
+        {/* <div className="categories">
           {props.searchCategories.length > 0 &&
             props.searchCategories.map(category => {
               return (
@@ -78,7 +118,7 @@ const LandingPage = props => {
                 </div>
               );
             })}
-        </div>
+        </div> */}
         <div className="heading"> Tell Me More </div>
         <div className="landingpage-grid">
           {aboutUsGrid.map((gridItem, index) => {
