@@ -6,7 +6,9 @@ import { useHistory } from "react-router-dom";
 import {
   getAllBillingAddress,
   addNewBillingAddress,
-  updateBillingAddress
+  updateBillingAddress,
+  updateShippingAddress,
+  addNewShippingAddress
 } from "../../store/actions";
 import "./ProfileAddresses.scss";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
@@ -46,10 +48,19 @@ const ProfileAddresses = props => {
     let payload = {};
     const formElements = event.target.elements;
     billingAddressFormFields.forEach(field => {
-      payload[field] = formElements[field].value;
+      if (["Suburb"].includes(field)) {
+        payload[field] = '';
+      } else {
+        payload[field] = formElements[field].value;
+      }
     });
     setLoading(true);
-    const res = editMode ? await updateBillingAddress(payload, selectedAddress.AddressId.S) : await addNewBillingAddress(payload);
+    let res;
+    if (formElements['AddressType'] && formElements['AddressType'].value && formElements['AddressType'].value === 'Shipping') {
+      res = editMode ? await props.updateBillingAddress(payload, selectedAddress.AddressId.S) : await props.addNewBillingAddress(payload);
+    } else {
+      res = editMode ? await props.updateShippingAddress(payload, selectedAddress.AddressId.S) : await props.addNewShippingAddress(payload);
+    }
     res ? next() : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
   };
 
@@ -87,7 +98,7 @@ const ProfileAddresses = props => {
                     required
                   >
                     <option value="none"> Address Type</option>
-                    <option value="Shipping"> Shipping Address</option>
+                    <option value="Shipping">Shipping Address</option>
                     <option value="Billing"> Billing Address</option>
                   </Form.Control>
                 </Form.Group>
@@ -107,7 +118,7 @@ const ProfileAddresses = props => {
                     <option value="none"> Select Country</option>
                     <option value="India"> India</option>
                     <option value="USA"> USA</option>
-                    <option value="south-africa"> South Africa</option>
+                    <option value="South Africa"> South Africa</option>
                   </Form.Control>
                 </Form.Group>
               </Col>
@@ -154,7 +165,7 @@ const ProfileAddresses = props => {
                 </Form.Group>
               </Col>
             </Form.Row>
-            <Form.Row className="width-75">
+            <Form.Row className="width-50">
               <Col>
                 <Form.Group controlId="StreetName">
                   <Form.Label>Street Name</Form.Label>
@@ -183,7 +194,7 @@ const ProfileAddresses = props => {
                   />
                 </Form.Group>
               </Col>
-              <Col>
+              {/* <Col>
                 <Form.Group controlId="Suburb">
                   <Form.Label>Suburb</Form.Label>
                   <Form.Control
@@ -196,7 +207,7 @@ const ProfileAddresses = props => {
                     required
                   />
                 </Form.Group>
-              </Col>
+              </Col> */}
             </Form.Row>
             <div className="buttons">
               <Button onClick={e => cancel(e)} className="cancelButton">
@@ -238,7 +249,9 @@ const mapDispatchToProps = dispatch =>
     {
       getAllBillingAddress,
       addNewBillingAddress,
-      updateBillingAddress
+      updateBillingAddress,
+      addNewShippingAddress,
+      updateShippingAddress
     },
     dispatch
   );

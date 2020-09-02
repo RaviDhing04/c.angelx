@@ -18,6 +18,7 @@ import {
   isBrowser,
   isMobile
 } from "react-device-detect";
+import ScrollToTop from "./ScrollToTop";
 
 const App = () => {
   const userId = JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId;; // to be update from login info later
@@ -44,6 +45,7 @@ const App = () => {
         <Header userId={userId} />
         <BrowserView>
           <div style={{ minHeight: '400px' }}>
+          <ScrollToTop />
             <Switch>
               <Route
                 exact

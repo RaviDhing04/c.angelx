@@ -81,7 +81,7 @@ const ProductListCarousel = props => {
             </Row> */}
             {makeItems()}
           </Carousel>
-          {name !== 'Searched Products' ? <Link to={`/home/viewAllProducts/${name}`}>
+          { !(['Searched Products', "Searched Merchants"].includes(name)) ? <Link to={`/home/viewAllProducts/${name}`}>
             <Button className={isAuthenticated ? "view-all" : "margin-left-4 view-all"}>View All</Button>
           </Link> : null}
         </React.Fragment>

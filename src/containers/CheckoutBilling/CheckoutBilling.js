@@ -51,7 +51,11 @@ const CheckoutBilling = props => {
         let payload = {};
         const formElements = event.target.elements;
         billingAddressFormFields.forEach(field => {
-            payload[field] = formElements[field].value;
+            if (["Suburb"].includes(field)) {
+                payload[field] = '';
+            } else {
+                payload[field] = formElements[field].value;
+            }
         });
         setLoading(true);
         const res = editMode ? await updateBillingAddress(payload, selectedAddress.AddressId.S) : await addNewBillingAddress(payload);
@@ -136,7 +140,7 @@ const CheckoutBilling = props => {
                                         <option value="none"> Select Country</option>
                                         <option value="India"> India</option>
                                         <option value="USA"> USA</option>
-                                        <option value="south-africa"> South Africa</option>
+                                        <option value="South Africa"> South Africa</option>
                                     </Form.Control>
                                 </Form.Group>
                             </Col>
@@ -212,7 +216,7 @@ const CheckoutBilling = props => {
                                     />
                                 </Form.Group>
                             </Col>
-                            <Col>
+                            {/* <Col>
                                 <Form.Group controlId="Suburb">
                                     <Form.Label>Suburb</Form.Label>
                                     <Form.Control
@@ -225,7 +229,7 @@ const CheckoutBilling = props => {
                                         required
                                     />
                                 </Form.Group>
-                            </Col>
+                            </Col> */}
                         </Form.Row>
                         <div className="buttons">
                             <Button onClick={e => cancel(e)} className="cancelButton">

@@ -55,7 +55,11 @@ const RegisterBusiness = props => {
       let payload = {};
       const formElements = event.target.elements;
       registerFormFields.forEach(field => {
+        if (["Suburb"].includes(field)){
+          payload[field] = '';
+        } else {
         payload[field] = formElements[field].value;
+        }
       });
       payload['BusinessContact'] = formElements['BusinessContact'][0].value + '-' + formElements['BusinessContact'][1].value;
       payload['BusinessHandle'] = formElements['BusinessHandle'][0].value + '@' + formElements['BusinessHandle'][1].value;
@@ -236,7 +240,7 @@ const RegisterBusiness = props => {
                     <option value="none"> Select Country</option>
                     <option value="India"> India</option>
                     <option value="USA"> USA</option>
-                    <option value="south-africa"> South Africa</option>
+                    <option value="South Africa"> South Africa</option>
                   </Form.Control>
                 </Form.Group>
               </Col> */}
@@ -464,7 +468,7 @@ const RegisterBusiness = props => {
                 </Form.Group>
               </Col>
             </Form.Row>
-            <Form.Row className="width-75">
+            <Form.Row className="width-50">
               <Col>
                 <Form.Group controlId="StreetName">
                   <Form.Label>Address 1</Form.Label>
@@ -493,7 +497,7 @@ const RegisterBusiness = props => {
                   />
                 </Form.Group>
               </Col>
-              <Col>
+              {/* <Col>
                 <Form.Group controlId="Suburb">
                   <Form.Label>Suburb</Form.Label>
                   <Form.Control
@@ -506,7 +510,7 @@ const RegisterBusiness = props => {
                     required
                   />
                 </Form.Group>
-              </Col>
+              </Col> */}
             </Form.Row>
             <div className="sub-heading">Business Search Tags</div>{" "}
             <span className="hint">

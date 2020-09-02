@@ -70,7 +70,6 @@ export const footerLinksLoggedin = [
     { name: "Support", path: "/support" },
     { name: "Corporate Info", path: "/aboutUs" },
     { name: "User Guide", path: "/aboutUs" },
-    { name: "Technical Support", path: "/support" },
     { name: "Term & Conditions", path: "https://docs.google.com/gview?url=https://cangelx-documents.s3.us-east-2.amazonaws.com/Terms+and+Conditions.docx" },
     { name: "Privacy Policy", path: "https://docs.google.com/gview?url=https://cangelx-documents.s3.us-east-2.amazonaws.com/Privacy+Policy.docx" },
   ],
@@ -99,8 +98,7 @@ export const footerLinksLoggedout = [
     { name: "User Guide", path: "/aboutUs" },
 
   ],
-  [{ name: "Technical Support", path: "/support" },
-  { name: "Term & Conditions", path: "https://docs.google.com/gview?url=https://cangelx-documents.s3.us-east-2.amazonaws.com/Terms+and+Conditions.docx" },
+  [{ name: "Term & Conditions", path: "https://docs.google.com/gview?url=https://cangelx-documents.s3.us-east-2.amazonaws.com/Terms+and+Conditions.docx" },
   { name: "Privacy Policy", path: "https://docs.google.com/gview?url=https://cangelx-documents.s3.us-east-2.amazonaws.com/Privacy+Policy.docx" },
   { name: "Advertisements", path: "/" }
   ],

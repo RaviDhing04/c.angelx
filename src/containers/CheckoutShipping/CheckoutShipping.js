@@ -46,7 +46,11 @@ const CheckoutShipping = props => {
     let payload = {};
     const formElements = event.target.elements;
     shippingAddressFormFields.forEach(field => {
+      if (["Suburb"].includes(field)){
+        payload[field] = '';
+      } else {
       payload[field] = formElements[field].value;
+      }
     });
     setLoading(true);
     const res = editMode ? await updateShippingAddress(payload, selectedAddress.AddressId.S) : await addNewShippingAddress(payload);
@@ -145,7 +149,7 @@ const CheckoutShipping = props => {
                     <option value="none"> Select Country</option>
                     <option value="India"> India</option>
                     <option value="USA"> USA</option>
-                    <option value="south-africa"> South Africa</option>
+                    <option value="South Africa"> South Africa</option>
                   </Form.Control>
                 </Form.Group>
               </Col>
@@ -192,7 +196,7 @@ const CheckoutShipping = props => {
                 </Form.Group>
               </Col>
             </Form.Row>
-            <Form.Row className="width-75">
+            <Form.Row className="width-50">
               <Col>
                 <Form.Group controlId="StreetName">
                   <Form.Label>Street Name</Form.Label>
@@ -221,7 +225,7 @@ const CheckoutShipping = props => {
                   />
                 </Form.Group>
               </Col>
-              <Col>
+              {/* <Col>
                 <Form.Group controlId="Suburb">
                   <Form.Label>Suburb</Form.Label>
                   <Form.Control
@@ -234,7 +238,7 @@ const CheckoutShipping = props => {
                     required
                   />
                 </Form.Group>
-              </Col>
+              </Col> */}
             </Form.Row>
             <div className="buttons">
               <Button onClick={e => cancel(e)} className="cancelButton">

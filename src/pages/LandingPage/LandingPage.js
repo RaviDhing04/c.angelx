@@ -96,7 +96,7 @@ const LandingPage = props => {
             loading={loadingLatest}
           /> */}
           <ProductList
-            name="Latest Uploads"
+            name="Preview"
             data={props.latestProducts}
             activeCurrency={props.activeCurrency}
             addProductToCart={addToCart}

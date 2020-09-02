@@ -1,102 +1,103 @@
 .support-container {
-    width: calc(100% - 16rem);
-    margin: 6rem auto;
+  width: calc(100% - 16rem);
+  margin: 6rem auto;
 
-    .heading {
-        font-size: 2.375rem;
-        letter-spacing: 2.66px;
-        color: #3B3B3B;
+  .heading {
+    font-size: 2.375rem;
+    letter-spacing: 2.66px;
+    color: #3b3b3b;
+    opacity: 1;
+    text-align: center;
+    margin: 6rem 0rem 1rem 0rem;
+  }
+
+  .support-text {
+    letter-spacing: 0px;
+    color: #000000de;
+    opacity: 1;
+    font-size: 1.125rem;
+    padding: 0rem 3rem;
+    text-align: center;
+    margin-bottom: 5rem;
+  }
+
+  .support-grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 6rem;
+    justify-content: center;
+
+    .grid-flex {
+      display: flex;
+      height: 18rem;
+      width: calc(100% / 3);
+
+      .rightLine {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        border: 0;
+        border-right: 1px solid rgba(0, 0, 0, 0.1);
+        height: 90%;
+      }
+
+      .bottomLine {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      .grid-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        padding: 2rem 3rem 3rem 3rem;
+        margin-right: 1rem;
+        margin-left: 1rem;
+        width: 100%;
+      }
+
+      .grid-image {
+        width: 6.25rem;
+        height: 5rem;
+      }
+
+      .grid-title {
+        letter-spacing: 1.4px;
+        color: #3b3b3b;
         opacity: 1;
-        text-align: center;
-        margin: 6rem 0rem 1rem 0rem;
-    }
+        font-size: 1.25rem;
+      }
 
-    .support-text {
-        letter-spacing: 0px;
-        color: #000000DE;
+      .grid-text {
+        letter-spacing: 1.26px;
+        color: #878787;
         opacity: 1;
         font-size: 1.125rem;
-        padding: 0rem 3rem;
-        text-align: center;
-        margin-bottom: 5rem;
+      }
     }
+  }
+  .contact-form {
+    width: 50%;
+    margin: 0 auto;
+    padding: 2rem;
+    background: #f6f7f9 0% 0% no-repeat padding-box;
+    opacity: 1;
 
-    .support-grid {
-        display: flex;
-        flex-wrap: wrap;
-        margin-bottom: 6rem;
-
-        .grid-flex {
-            display: flex;
-            height: 18rem;
-            width: calc(100%/3);
-
-            .rightLine {
-                margin-top: 1rem;
-                margin-bottom: 1rem;
-                border: 0;
-                border-right: 1px solid rgba(0, 0, 0, 0.1);
-                height: 90%;
-            }
-
-            .bottomLine {
-                border-bottom: 1px solid rgba(0, 0, 0, .1);
-            }
-
-            .grid-item {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: space-evenly;
-                padding: 2rem 3rem 3rem 3rem;
-                margin-right: 1rem;
-                margin-left: 1rem;
-                width: 100%;
-            }
-
-            .grid-image {
-                width: 6.25rem;
-                height: 5rem;
-            }
-
-            .grid-title {
-                letter-spacing: 1.4px;
-                color: #3B3B3B;
-                opacity: 1;
-                font-size: 1.25rem;
-            }
-
-            .grid-text {
-                letter-spacing: 1.26px;
-                color: #878787;
-                opacity: 1;
-                font-size: 1.125rem;
-            }
-        }
+    .sendButton {
+      background: #558ed4 0% 0% no-repeat padding-box;
+      border-radius: 0.25rem;
+      opacity: 1;
+      border-radius: 0.25rem;
+      opacity: 1;
+      border: none;
+      letter-spacing: 0px;
+      color: #00000099;
+      opacity: 1;
+      font-size: 0.875rem;
+      width: 6rem;
+      height: 2.25rem;
+      font-weight: bold;
+      color: #ffffff;
+      margin-left: 45%;
     }
-    .contact-form{
-        width: 50%;
-        margin: 0 auto;
-        padding: 2rem;
-        background: #F6F7F9 0% 0% no-repeat padding-box;
-        opacity: 1;
-
-        .sendButton{
-            background: #558ED4 0% 0% no-repeat padding-box;
-            border-radius:0.25rem;
-            opacity: 1;
-            border-radius:0.25rem;
-            opacity: 1;
-            border: none;
-            letter-spacing: 0px;
-            color: #00000099;
-            opacity: 1;
-            font-size: 0.875rem;
-            width: 6rem;
-            height: 2.25rem;
-            font-weight: bold;
-            color: #FFFFFF;
-            margin-left: 45%;
-        }
-    }
+  }
 }

@@ -127,7 +127,7 @@ const Cart = props => {
                 Remove all items
               </span> */}
               </div>
-              {cartItems.cartDetails.map(cartItem => {
+              {cartItems && cartItems.cartDetails && cartItems.cartDetails.length && cartItems.cartDetails.map(cartItem => {
                 return (
                   cartItem && (
                     <CartItem

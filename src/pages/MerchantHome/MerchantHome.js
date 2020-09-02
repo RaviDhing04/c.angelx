@@ -154,9 +154,9 @@ const MerchantHome = props => {
               {selectedBusiness && selectedBusiness.BusinessHandle.S}
             </span>
             <span className="merchant-contact">
-              {selectedBusiness && selectedBusiness.OrgWebsite.S ? selectedBusiness.OrgWebsite.S + '|' : null}
-              {selectedBusiness && selectedBusiness.BusinessContact.S ? selectedBusiness.BusinessContact.S + '|' : null}
-              {selectedBusiness && selectedBusiness.BusinessEmail.S ? selectedBusiness.BusinessEmail.S + '|' : null}
+              {selectedBusiness && selectedBusiness.OrgWebsite.S ? selectedBusiness.OrgWebsite.S + ' | ' : null}
+              {selectedBusiness && selectedBusiness.BusinessContact.S ? selectedBusiness.BusinessContact.S + ' | ' : null}
+              {selectedBusiness && selectedBusiness.BusinessEmail.S ? selectedBusiness.BusinessEmail.S + ' | ' : null}
             </span>
           </div>
           {state && state.fromUser ? (

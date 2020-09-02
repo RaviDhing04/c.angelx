@@ -24,7 +24,10 @@ const ViewAllProducts = props => {
           ? props.getMerchantAllProducts({
             MerchantId: merchantId
           })
-          : props.getLatestProducts();
+          :  props.getLatestProducts();
+        break;
+      case "Followed":
+        props.getLatestProducts();
         break;
       case "Sponsored":
         props.getLatestProducts();

@@ -116,7 +116,7 @@ const ProductDetails = props => {
   const Donate = async () => {
     setLoading(true)
     const payload = {
-      "ProductId": productId,
+      "product_id": productId,
       "ProductTimestamp": Timestamp && Timestamp.S,
       "Quantity": "1",
       "MerchantId": MerchantId && MerchantId.S,
@@ -136,7 +136,7 @@ const ProductDetails = props => {
     event.preventDefault();
     const orderType = {
       "order_type": "PREORDER",
-      "productId": productId,
+      "product_id": productId,
       "unitPrice": selectedVariation && selectedVariation.M && selectedVariation.M.UnitPrice && selectedVariation.M.UnitPrice.S,
       "qty": 1,
       "couponData": null,
