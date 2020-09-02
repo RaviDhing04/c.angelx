@@ -802,15 +802,13 @@ export const updateUserDetails = (body = {}, addressId) => async dispatch => {
   try {
 
     const response = await httpFetch(getApiEndPoints("updateUserDetails"), {
-      method: "PUT",
+      method: "POST",
       body: body
     });
-    if (
-      response &&
-      response.result &&
-      response.result.data &&
-      response.result.message === "Success"
-    ) {
+    if (response && response.token) {
+      localStorage.setItem("token", response.token);
+      localStorage.setItem("refresh_token", response.refresh_token);
+      localStorage.setItem("userData", JSON.stringify(response));
       return true;
     } else {
       return false;
@@ -1781,7 +1779,30 @@ export const headerSearch = (text, category) => async dispatch => {
       response.result.data &&
       response.result.message === "Success"
     ) {
-      return response.result.data.Items;
+      return response.result.data;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const searchMerchants = (text, category) => async dispatch => {
+  try {
+    let url = `${getApiEndPoints("searchMerchants")}?text=${text}`;
+    url = category ? url + `&category=${category}` : url;
+    const response = await httpFetch(url, {
+      method: "GET"
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      return response.result.data;
     } else {
       return false;
     }

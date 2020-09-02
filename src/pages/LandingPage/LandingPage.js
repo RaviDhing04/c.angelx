@@ -10,14 +10,18 @@ import {
   getLatestProductsWithPagination,
   getLandingBanners,
   addProductToCart,
-  addToWishlist
+  addToWishlist,
+  cartCount
 } from "../../store/actions";
 import ProductListCarousel from "../../components/ProductListCarousel/ProductListCarousel";
 import ProductList from "../../components/ProductList/ProductList";
+import { useAuth } from "../../context/auth";
 
 const LandingPage = props => {
   const [banner, setBanner] = useState(null);
   const [loadingLatest, setLoadingLatest] = useState(true);
+  const isAuthenticated = useAuth();
+
   useEffect(() => {
     const fetchData = async () => {
       props.getSearchCategories();
@@ -155,7 +159,8 @@ const mapDispatchToProps = dispatch =>
       getLatestProductsWithPagination,
       getLandingBanners,
       addProductToCart,
-      addToWishlist
+      addToWishlist,
+      cartCount
     },
     dispatch
   );

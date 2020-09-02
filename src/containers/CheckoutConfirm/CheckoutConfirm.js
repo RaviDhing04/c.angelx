@@ -6,7 +6,8 @@ import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import {
     checkout,
-    getCartItems
+    getCartItems,
+    cartCount
 } from "../../store/actions";
 import "./CheckoutConfirm.scss";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
@@ -93,6 +94,7 @@ const CheckoutConfirm = (props) => {
 
     const next = () => {
         setLoading(false);
+        props.cartCount();
         setPostCheckout(true);
     }
 
@@ -123,11 +125,11 @@ const CheckoutConfirm = (props) => {
                             ) : null}
 
                             <div>
-                                <p className="text">Your Total payment amount is - {orderType === 'cart' ? (<span> {props.cartItems.totalDiscountedAmount ? formatter(props.activeCurrency)(props.cartItems.totalDiscountedAmount) : formatter(props.activeCurrency)(0)} </span>) :
+                                <p className="text">Your total payment amount is - {orderType === 'cart' ? (<span> {props.cartItems.totalDiscountedAmount ? formatter(props.activeCurrency)(props.cartItems.totalDiscountedAmount) : formatter(props.activeCurrency)(0)} </span>) :
                                     (<span> {order && order.total_amount ? (order && order.order_type === 'laybuy' ? formatter(props.activeCurrency)(((+order.total_amount) / (+order.laybuy_months))) : formatter(props.activeCurrency)(order && order.total_amount)) : formatter(props.activeCurrency)(0)} </span>)}
                                 </p>
                                 {order && order.order_type === 'laybuy' ? <p className="text">LayBy months - <span> {order && order.laybuy_months}</span></p> : null}
-                                <p className="text">Your Total shipping amount is - <span> {formatter(props.activeCurrency)(shippingCharge)} </span>
+                                <p className="text">Your total shipping amount is - <span> {formatter(props.activeCurrency)(shippingCharge)} </span>
 
                                     <div className="shipper">
                                         <Form
@@ -136,14 +138,14 @@ const CheckoutConfirm = (props) => {
                                             <Form.Row className="width-25">
                                                 <Col>
                                                     <Form.Group controlId="selectPaymentType">
-                                                        <Form.Label>Select Payment Option</Form.Label>
+                                                        <Form.Label>Select payment option</Form.Label>
                                                         <Form.Control
                                                             as="select"
                                                             defaultValue="Payfast"
                                                             required
                                                             onChange={(e) => selectPaymentType(e)}
                                                         >
-                                                            <option value="none"> Select Payment Option</option>
+                                                            <option value="none"> Select payment option</option>
                                                             <option value="payfast"> Payfast</option>
                                                             <option value="paypal"> PayPal</option>
                                                         </Form.Control>
@@ -155,7 +157,7 @@ const CheckoutConfirm = (props) => {
 
                                     <div className="buttons">
                                         <Button className="saveButton" onClick={checkoutNow}>
-                                            Pay Now
+                                            Pay now
                     </Button>
                                     </div>
                                 </p>
@@ -186,7 +188,8 @@ const mapDispatchToProps = dispatch =>
     bindActionCreators(
         {
             checkout,
-            getCartItems
+            getCartItems,
+            cartCount
         },
         dispatch
     );

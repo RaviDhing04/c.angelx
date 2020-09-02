@@ -10,7 +10,9 @@ const TableComp = props => {
     onDelete,
     showDelete,
     showEdit,
-    onEdit
+    onEdit,
+    editText,
+    deleteText
   } = props;
 
   const renderRow = (rowData, index) => {
@@ -19,11 +21,11 @@ const TableComp = props => {
         {tableKeys.map((key, index) => {
           return <td key={index}>{rowData[key] && (rowData[key].S || rowData[key].S === "") ? rowData[key].S : rowData[key]}</td>;
         })}
-       {showEdit || showDelete ? <td className="tableEditDelete">
-          {showEdit ? <span onClick={() => onEdit(rowData)}>Edit</span> : null}
+        {showEdit || showDelete ? <td className="tableEditDelete">
+          {showEdit ? <span onClick={() => onEdit(rowData)}>{editText}</span> : null}
           {showEdit && showDelete ? <span>|</span> : null}
-          {showDelete ? <span onClick={() => onDelete(rowData)}>Delete</span> : null}
-        </td>: null}
+          {showDelete ? <span onClick={() => onDelete(rowData)}> {deleteText} </span> : null}
+        </td> : null}
       </tr>
     );
   };

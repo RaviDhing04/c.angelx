@@ -5,6 +5,7 @@ import "./Product.scss";
 import formatter from "../../utils/commonUtils/currencyUtils";
 import heartIcon from "../../assets/heart.svg";
 import checkmark from "../../assets/checkmark.svg";
+import defaultImg from "../../assets/default-prod.png";
 
 const Product = props => {
   const { data, activeCurrency, addProductToCart, type } = props;
@@ -16,7 +17,7 @@ const Product = props => {
             {type && type.toLowerCase() === 'wishlist' ? null : <img className="heart-icon" onClick={() => { props.addToWishlist({ "ProductId": data.ProductId && data.ProductId.S, "UserId": JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId }) }} alt="heart-icon" src={heartIcon}></img>}
             <Link to={`/home/productDetail/${data.ProductId && data.ProductId.S}/${data.Timestamp && data.Timestamp.S}`}>
               <div className="product-image">
-                <Card.Img src={data.ThumbnailImageURL.S} />
+                <Card.Img src={data.ThumbnailImageURL.S ? data.ThumbnailImageURL.S : defaultImg} />
               </div>
             </Link>
           </div>
@@ -26,11 +27,13 @@ const Product = props => {
                 <Card.Title>{data.Name && data.Name.S}</Card.Title>
                 <Card.Text>
                   {data.IsDonationCampaign && data.IsDonationCampaign.S === 'true'
-                    ? (<span>By {data.MerchantHandle.S} {1 ? <img
+                    ? (<span>By {data.MerchantHandle.S}
+                      {/* {1 ? <img
                       className="nav-icon"
                       alt="checkmark"
                       src={checkmark}
-                    ></img> : null}</span>)
+                    ></img> : null} */}
+                    </span>)
                     : formatter(activeCurrency)(data.ProductVariations && data.ProductVariations.L && data.ProductVariations.L.length && data.ProductVariations.L[0].M.UnitPrice && data.ProductVariations.L[0].M.UnitPrice.S ? data.ProductVariations.L[0].M.UnitPrice.S : 0)}
                 </Card.Text>
               </div>

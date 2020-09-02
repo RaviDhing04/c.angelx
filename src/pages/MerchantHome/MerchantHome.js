@@ -53,7 +53,7 @@ const MerchantHome = props => {
         });
       if (isAuthenticated) {
         props.getUserLinkCount();
-        props.cartCount();
+        // props.cartCount();
       }
     }
   }, []);

@@ -21,7 +21,7 @@ const Home = props => {
     const fetchData = async () => {
       if (isAuthenticated) {
         getUserLinkCount();
-        cartCount();
+        // cartCount();
         !(followedMerchants && followedMerchants.length) &&
           props.getFollowedMerchants({
             PatronId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId

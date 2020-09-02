@@ -24,6 +24,18 @@ const AsyncLandingPage = Loadable({
   modules: ["LandingPage"]
 });
 
+const AsyncMobileHome = Loadable({
+  loader: () => import(/* webpackChunkName: "LandingPage" */ "../pages/MobileHome/MobileHome"),
+  loading: error => <LoadingFallback {...error} />,
+  modules: ["LandingPage"]
+});
+
+const AsyncSearchPage = Loadable({
+  loader: () => import(/* webpackChunkName: "SearchPage" */ "../pages/SearchPage/SearchPage"),
+  loading: error => <LoadingFallback {...error} />,
+  modules: ["SearchPage"]
+});
+
 const AsyncCart = Loadable({
   loader: () => import(/* webpackChunkName: "CartPage" */ "../pages/Cart/Cart"),
   loading: error => <LoadingFallback {...error} />,
@@ -254,6 +266,11 @@ export const parent_routes = [
     exact: false
   },
   {
+    path: "/mobile",
+    component: AsyncMobileHome,
+    exact: false
+  },
+  {
     path: "/home",
     component: AsyncHome,
     exact: false
@@ -339,6 +356,11 @@ export const child_routes = [
     path: "/home/viewAllProducts/:name",
     component: AsyncHomeViewAllProducts,
     exact: true
+  },
+  {
+    path: "/home/search/:text/:selectedCategory",
+    component: AsyncSearchPage,
+    exact: false
   }
 ];
 
@@ -463,24 +485,24 @@ class Router extends Component {
         {/* <Route path="/" component={AsyncHome} key="/home" exact /> */}
         {/* <Route component={LoginRedirect}>
           <Route path="/" component={ModalCheck}> */}
-            {routes && routes.map((r, i) =>
-              r && r.type && r.type === "private" ? (
-                <PrivateRoute
-                  path={r.path}
-                  component={r.component}
-                  key={i}
-                  exact={r.exact}
-                />
-              ) : (
-                <Route
-                  path={r.path}
-                  component={r.component}
-                  key={i}
-                  exact={r.exact}
-                />
-              )
-            )}
-          {/* </Route>
+        {routes && routes.map((r, i) =>
+          r && r.type && r.type === "private" ? (
+            <PrivateRoute
+              path={r.path}
+              component={r.component}
+              key={i}
+              exact={r.exact}
+            />
+          ) : (
+              <Route
+                path={r.path}
+                component={r.component}
+                key={i}
+                exact={r.exact}
+              />
+            )
+        )}
+        {/* </Route>
         </Route> */}
         {/* </Switch> */}
       </>

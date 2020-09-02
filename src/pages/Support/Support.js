@@ -10,18 +10,19 @@ import { connect } from "react-redux";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 
 const Support = (props) => {
-
   const [loading, setLoading] = useState(false);
+
   const askSupport = async (event) => {
+    event.preventDefault();
     let payload = {};
     const formElements = event.target.elements;
-    ['name', 'email', 'message'].forEach(field => {
+    ['Name', 'Email', 'Message'].forEach(field => {
       payload[field] = formElements[field].value;
     });
 
     setLoading(true);
     const res = await props.support(payload);
-    res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
+    res ? (function () { setLoading(false); (alert('Message sent successfully!')) }()) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
   }
 
   return (
@@ -53,17 +54,17 @@ const Support = (props) => {
         </div>
         <div className="contact-form">
           <Form id="SupportForm" onSubmit={e => askSupport(e)}>
-            <Form.Group controlId="name">
+            <Form.Group controlId="Name">
               <Form.Label>Name</Form.Label>
-              <Form.Control type="text" placeholder="Your Name" />
+              <Form.Control type="text" placeholder="Your Name" required/>
             </Form.Group>
-            <Form.Group controlId="email">
+            <Form.Group controlId="Email">
               <Form.Label>Email</Form.Label>
-              <Form.Control type="email" placeholder="Your Email" />
+              <Form.Control type="email" placeholder="Your Email" required/>
             </Form.Group>
-            <Form.Group controlId="message">
+            <Form.Group controlId="Message">
               <Form.Label>Message</Form.Label>
-              <Form.Control as="textarea" rows="3" placeholder="Type your message"  />
+              <Form.Control as="textarea" rows="3" placeholder="Type your message" required />
             </Form.Group>
             <Button className="sendButton" type="submit">
               Send

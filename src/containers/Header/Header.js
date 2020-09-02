@@ -14,7 +14,7 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 import Notification from "../../components/Notification/Notification";
 import { currencies, profileOptions } from "../../constants/constants";
 import "./Header.scss";
-import { setGlobalCurrency, getSearchCategories, headerSearch } from "../../store/actions";
+import { setGlobalCurrency, getSearchCategories, headerSearch, cartCount } from "../../store/actions";
 import { useAuth } from "../../context/auth";
 import { useHistory } from "react-router-dom";
 
@@ -33,6 +33,12 @@ const Header = props => {
       props.setGlobalCurrency(selected);
     }
   };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      props.cartCount();
+    }
+  }, [isAuthenticated]);
 
   useEffect(() => {
     props.setGlobalCurrency(activeCurrency);
@@ -124,7 +130,7 @@ const Header = props => {
                   {currencies.map(currency => {
                     return (
                       <Dropdown.Item
-                      disabled={true}
+                        disabled={true}
                         onClick={e => changeCurrency(e)}
                         eventKey="3"
                         value={currency.name}
@@ -156,7 +162,7 @@ const Header = props => {
                       className="nav-icon"
                       alt="shoppingcart-icon"
                       src={shoppingcart}
-                    ></img> {props.cartCount ? <span className="cartCount">{props.cartCount}</span> : null}
+                    ></img> {props.cartNumber ? <span className="cartCount">{props.cartNumber}</span> : null}
                   </Nav.Link>
                   <Nav.Link onClick={() => toggleNotification(!showNotification)}>
                     <img className="nav-icon bell-icon" alt="bell-icon" src={bell}></img>
@@ -227,7 +233,8 @@ const mapDispatchToProps = dispatch =>
     {
       setGlobalCurrency,
       getSearchCategories,
-      headerSearch
+      headerSearch,
+      cartCount
     },
     dispatch
   );
@@ -236,7 +243,7 @@ const mapStatetoProps = ({ app: { homePage, common } }) => {
   console.log(common);
   return {
     searchCategories: homePage.searchCategories,
-    cartCount: homePage.cartCount
+    cartNumber: homePage.cartCount
   };
 };
 

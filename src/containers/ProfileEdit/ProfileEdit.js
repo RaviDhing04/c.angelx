@@ -31,20 +31,25 @@ const ProfileEdit = props => {
         "email": formElements.formGroupEmail.value,
         "password": formElements.formGroupPassword.value,
         "profile_data": {
-          "phone_number": formElements.formGroupPhone.value,
-          "birthdate": userData.birthdate,
+          "phone_number": formElements['formGroupPhone'][0].value + '0000' + formElements['formGroupPhone'][1].value,
+          "birthdate": formElements.birthdate.value,
           "name": formElements.formGroupName.value,
-          "gender": userData.gender
+          "gender": formElements.gender.value,
+          "locale": formElements.locale.value, // mapped to ussd
+          "website": formElements['website'][0].value + '0000' + formElements['website'][1].value // mapped to alternate number
         }
       }
     );
     res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
-
+    if (res) {
+      setUserData(JSON.parse(localStorage.getItem('userData')));
+    }
   };
 
   const cancel = async event => {
     // setLoading(true);
     setEditMode(false);
+    document.getElementById("DisplaySearchContactForm").reset();
     event.preventDefault();
     // const res = await resetuserData();
     // res ? setLoading(false) : (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
@@ -92,16 +97,113 @@ const ProfileEdit = props => {
               <Col>
                 <Form.Group controlId="formGroupPhone">
                   <Form.Label>Phone Number</Form.Label>
+                  <div style={{ "display": "flex" }}>
+                    <Form.Control
+                      style={{ "width": "7rem" }}
+                      as="select"
+                      defaultValue={userData && userData.phone_number && userData.phone_number.split('0000')[0]
+                      }
+                      required
+                    // disabled={!editMode}
+                    >
+                      <option disabled value="" selected> Code</option>
+                      {["+91", "+27", "+1"].map((code, index) => {
+                        return (<option key={index} value={code}> {code}</option>)
+                      })
+                      }
+                    </Form.Control>
+                    <Form.Control
+                      defaultValue={
+                        userData && userData.website ? userData.website.split('0000')[1]
+                          : ""
+                      }
+                      type="tel"
+                      pattern="^[0-9].{9}$"
+                      placeholder="10 digit Phone Number"
+                      disabled={!editMode}
+                      required
+                    />
+                  </div>
+                </Form.Group>
+              </Col>
+            </Form.Row>
+            <Form.Row>
+              <Col>
+                <Form.Group controlId="website">
+                  <Form.Label>Alternate Phone Number</Form.Label>
+                  <div style={{ "display": "flex" }}>
+                    <Form.Control
+                      style={{ "width": "7rem" }}
+                      as="select"
+                      defaultValue={userData && userData.phone_number && userData.phone_number.split('0000')[0]
+                      }
+                      required
+                    // disabled={!editMode}
+                    >
+                      <option disabled value="" selected> Code</option>
+                      {["+91", "+27", "+1"].map((code, index) => {
+                        return (<option key={index} value={code}> {code}</option>)
+                      })
+                      }
+                    </Form.Control>
+                    <Form.Control
+                      defaultValue={
+                        userData && userData.website ? userData.website.split('0000')[1]
+                          : ""
+                      }
+                      type="tel"
+                      pattern="^[0-9].{9}$"
+                      placeholder="10 digit Alternate Phone Number"
+                      disabled={!editMode}
+                      required
+                    />
+                  </div>
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group controlId="locale">
+                  <Form.Label>USSD</Form.Label>
                   <Form.Control
                     defaultValue={
-                      userData && userData.phone_number ? userData.phone_number
+                      userData && userData.locale ? userData.locale
                         : ""
                     }
                     type="tel"
-                    placeholder="Phone number"
+                    placeholder="Enter USSD"
                     disabled={!editMode}
                     required
                   />
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group controlId="birthdate">
+                  <Form.Label>Select birth date</Form.Label>
+                  <Form.Control defaultValue={
+                    userData && userData.birthdate ? userData.birthdate
+                      : ""
+                  }
+                    disabled={!editMode} type="date" name="birthdate" placeholder="Date of Birth" />
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group controlId="gender">
+                  <Form.Label>Gender</Form.Label>
+                  <Form.Control
+                    // style={{ "width": "7rem" }}
+                    as="select"
+                    defaultValue={
+                      userData && userData.gender ? userData.gender
+                        : ""
+                    }
+                    disabled={!editMode}
+                    required
+                  >
+                    <option disabled value="" selected> Gender</option>
+                    {["Male", "Female", "Other"].map((code, index) => {
+                      return (<option key={index} value={code}> {code}</option>)
+                    })
+                    }
+                  </Form.Control>
                 </Form.Group>
               </Col>
             </Form.Row>

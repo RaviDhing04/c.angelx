@@ -85,12 +85,12 @@ const MerchantTableContainer = props => {
   const deleteRow = async row => {
     if (name === "Inventory" || name === "Causes") {
       setLoading(true);
-      const res = await deleteProduct({
-        ProductId: row.ProductId,
-        Timestamp: row.Timestamp
+      const res = await props.deleteProduct({
+        ProductId: row.ProductId.S,
+        Timestamp: row.Timestamp.S
       });
       if (res) {
-        const res1 = await await props.getMerchantAllProductsAndSegregate({
+        const res1 = await props.getMerchantAllProductsAndSegregate({
           MerchantId: merchantId
         });
         setLoading(false);
@@ -101,9 +101,9 @@ const MerchantTableContainer = props => {
       }
     } else if (name === "Coupons") {
       setLoading(true);
-      const res = await deleteCoupon({
+      const res = await props.deleteCoupon({
         MerchantId: merchantId,
-        Timestamp: row.Timestamp
+        Timestamp: row.Timestamp.S
       });
       if (res) {
         const res1 = await props.getMerchantAllCoupons({
@@ -170,7 +170,7 @@ const MerchantTableContainer = props => {
               <span className="not-found"> No data added, Go to {name} to add {name}</span>
             </React.Fragment>
           ) : (
-              < TableComp
+              <TableComp
                 tableData={Items}
                 tableHeader={tableHeader[name]}
                 tableKeys={tableKeys[name]}
@@ -178,6 +178,8 @@ const MerchantTableContainer = props => {
                 showDelete={true}
                 showEdit={true}
                 onEdit={EditRow}
+                editText={'Edit'}
+                deleteText={'Delete'}
               />)
           }
         </div>

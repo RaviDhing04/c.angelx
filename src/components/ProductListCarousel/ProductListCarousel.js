@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Row, Col, Button, Carousel } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Product from "../Product/Product";
+import Merchant from "../Merchant/Merchant";
 import "./ProductListCarousel.scss";
 import ProductRowShimmer from "../ProductRowShimmer/ProductRowShimmer";
 import { useAuth } from "../../context/auth";
@@ -26,8 +27,10 @@ const ProductListCarousel = props => {
           {Items &&
             Items.slice(index, index + itemsPerRow).map((item, index) => {
               return (
-                <div key={item.ProductId.S}>
-                  <Product data={item} activeCurrency={activeCurrency} addToWishlist={addToWishlist} addProductToCart={addProductToCart} type={name} />
+                <div key={item.Timestamp.S}>
+                  {name !== 'Searched Merchants' ? <Product data={item} activeCurrency={activeCurrency} addToWishlist={addToWishlist} addProductToCart={addProductToCart} type={name} /> :
+                    <Merchant data={item} activeCurrency={activeCurrency} addToWishlist={addToWishlist} addProductToCart={addProductToCart} type={name} />
+                  }
                 </div>
               );
             })}
@@ -78,9 +81,9 @@ const ProductListCarousel = props => {
             </Row> */}
             {makeItems()}
           </Carousel>
-          <Link to={`/home/viewAllProducts/${name}`}>
+          {name !== 'Searched Products' ? <Link to={`/home/viewAllProducts/${name}`}>
             <Button className={isAuthenticated ? "view-all" : "margin-left-4 view-all"}>View All</Button>
-          </Link>
+          </Link> : null}
         </React.Fragment>
       ) : <React.Fragment>
           <div className="row-div">

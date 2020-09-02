@@ -206,6 +206,8 @@ const AddContacts = props => {
               onDelete={deleteRow}
               showDelete={true}
               showEdit={false}
+              editText={'Edit'}
+              deleteText={'Delete'}
             />
           }
         </div>

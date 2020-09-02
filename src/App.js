@@ -9,8 +9,15 @@ import { AuthContext } from "./context/auth";
 import Login from "./containers/Login/Login";
 import "./App.scss";
 import SignUp from "./containers/SignUp/SignUp";
+import MobileHome from "./pages/MobileHome/MobileHome";
 import Logout from "./containers/Logout/Logout";
 import ForgotPassword from "./containers/ForgotPassword/ForgotPassword";
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile
+} from "react-device-detect";
 
 const App = () => {
   const userId = JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId;; // to be update from login info later
@@ -32,10 +39,11 @@ const App = () => {
 
 
   return (
-    <Container fluid className="app-container">
+    <Container fluid className={isBrowser ? "app-container" : "mobile-container"}>
       <AuthContext.Provider value={(localStorage.getItem('token') && JSON.parse(localStorage.getItem('userData'))) ? true : false}>
         <Header userId={userId} />
-        <div style={{ minHeight: '400px' }}>
+        <BrowserView>
+          <div style={{ minHeight: '400px' }}>
             <Switch>
               <Route
                 exact
@@ -50,8 +58,21 @@ const App = () => {
             <Route path="/" component={SignUp} />
             <Route path="/" component={ForgotPassword} />
             <Route path="/" component={Logout} />
-        </div>
-        <Footer />
+          </div>
+        </BrowserView>
+        <MobileView>
+          {/* <Switch>
+            <Route
+              exact
+              path={"/"}
+              render={() => {
+                return <Redirect to={"/mobile"} />;
+              }}
+            />
+          </Switch> */}
+          <Route path="/" component={MobileHome} />
+        </MobileView>
+        <Footer userId={userId} />
       </AuthContext.Provider>
 
     </Container>

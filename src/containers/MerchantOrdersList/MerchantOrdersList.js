@@ -2,17 +2,17 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
-    getMerchantAllPatrons,
-    getBusinessDetails
+    getOrderItemsMerchant
 } from "../../store/actions";
-import "./PatronsList.scss";
+import "./MerchantOrdersList.scss";
 import { Container } from "react-bootstrap";
 import TableComp from "../../components/TableComp/TableComp";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import { useHistory } from "react-router-dom";
 
-const PatronsList = props => {
+const MerchantOrdersList = props => {
     const [loading, setLoading] = useState(true);
+    const [pageName, setName] = useState("");
     const { name, merchantId } = props.match.params;
     const tableHeader = {
         "Patrons": ["Patron Name", "Status"]
@@ -22,35 +22,41 @@ const PatronsList = props => {
     };
     const history = useHistory();
 
+
     useEffect(() => {
-        const fetchData = async () => {
-            //   props.getBusinessDetails({
-            //     MerchantId: merchantId,
-            //     PatronId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId
-            //   });
+        async function fetchOrderItems() {
+            name ? setName(name) : setName("");
+            let res;
             switch (name) {
-                case "Patrons":
-                    await props.getMerchantAllPatrons({
-                        MerchantId: merchantId
-                    });
-                    setLoading(false);
+                case 'Pending in Total':
+                    res = await getOrderItemsMerchant({ MerchantId: merchantId, "OrderType": "CART", "OrderStatus": "PAYMENT_PROCESSING" });
+                    break;
+                case 'Lay Buys in Total':
+                    res = await getOrderItemsMerchant({ UserId: merchantId, "OrderType": "LAYBUY", "OrderStatus": "PAYMENT_PROCESSING" });
+                    break;
+                case 'Group Buys in Total':
+                    res = await getOrderItemsMerchant({ UserId: merchantId, "OrderType": "GROUP", "OrderStatus": "PAYMENT_PROCESSING" });
+                    break;
+                case 'Donations':
+                    res = await getOrderItemsMerchant({ UserId: merchantId, "OrderType": "DONATION", "OrderStatus": "PAYMENT_PROCESSING" });
                     break;
                 default:
                     break;
             }
-        };
-        fetchData();
+            res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
+        }
+        fetchOrderItems();
     }, []);
 
     return !loading ? (
         <React.Fragment>
-            <div className="patronsTable-heading">{name}</div>
+            <div className="patronsTable-heading">{pageName}</div>
             <Container className="patronsTable-container" fluid>
                 <button style={{ "visibility": "hidden" }} className="unfollow">
                     Add {name}
                 </button>
                 <div className="patronsTable-table">
-                    {props.allPatrons && props.allPatrons.length === 0 ? (
+                    {props.merchant && props.allPatrons.length === 0 ? (
                         <React.Fragment>
                             {/* <div className="product-row-heading">{name}</div> */}
                             <span className="not-found"> No records found</span>
@@ -77,8 +83,7 @@ const PatronsList = props => {
 const mapDispatchToProps = dispatch =>
     bindActionCreators(
         {
-            getMerchantAllPatrons,
-            getBusinessDetails
+            getOrderItemsMerchant
         },
         dispatch
     );
@@ -93,4 +98,4 @@ const mapStatetoProps = ({ app: { manageBusiness } }) => {
 export default connect(
     mapStatetoProps,
     mapDispatchToProps
-)(PatronsList);
+)(MerchantOrdersList);

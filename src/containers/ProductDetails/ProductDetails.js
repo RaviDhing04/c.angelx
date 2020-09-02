@@ -119,9 +119,13 @@ const ProductDetails = props => {
       "ProductId": productId,
       "ProductTimestamp": Timestamp && Timestamp.S,
       "Quantity": "1",
-      "CouponCode": coupon,
-      "MerchantId": MerchantId && MerchantId.S
-
+      "MerchantId": MerchantId && MerchantId.S,
+      "order_type": "DONATION",
+      "billing_address_id": null,
+      "shipping_address_id": null,
+      "payment_type": null,
+      "unitPrice": donationAmount,
+      "SelectedColor": null,
     };
     const res = await props.addProductToCart(payload);
     res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
@@ -131,13 +135,13 @@ const ProductDetails = props => {
     setLoading(true)
     event.preventDefault();
     const orderType = {
-      "order_type": "preorder",
-      "product_id": productId,
-      "product_timestamp": Timestamp && Timestamp.S,
-      "laybuy_months": laybuy_months,
-      "product_price": selectedVariation && selectedVariation.M && selectedVariation.M.UnitPrice && selectedVariation.M.UnitPrice.S,
-      "qty": quantity,
-      "total_amount": selectedVariation && selectedVariation.M && selectedVariation.M.UnitPrice && (selectedVariation.M.UnitPrice.S * quantity),
+      "order_type": "PREORDER",
+      "productId": productId,
+      "unitPrice": selectedVariation && selectedVariation.M && selectedVariation.M.UnitPrice && selectedVariation.M.UnitPrice.S,
+      "qty": 1,
+      "couponData": null,
+      "discountedPrice": selectedVariation && selectedVariation.M && selectedVariation.M.UnitPrice && selectedVariation.M.UnitPrice.S,
+      "SelectedColor": selectedVariation && selectedVariation.M && selectedVariation.M.AvailableColor && selectedVariation.M.AvailableColor.S,
       "billing_address_id": null,
       "shipping_address_id": null,
       "payment_type": null
@@ -217,7 +221,7 @@ const ProductDetails = props => {
             />
             {/* </div> */}
             <div className="product-details">
-              <ul style={IsDonationCampaign && IsDonationCampaign.S === 'true' ? { "paddingBottom": "9rem" } : {}}>
+              <ul style={IsDonationCampaign && IsDonationCampaign.S === 'true' ? { "paddingBottom": "7.5rem" } : {}}>
                 <li className="product-name">{Name && Name.S}</li>
                 <li className="product-price">
                   {/* <span>{ProductSpecifications.M.Currency.S}</span>{" "} */}
@@ -241,7 +245,7 @@ const ProductDetails = props => {
                   {isAuthenticated ? <span onClick={() => { setGroupBy(false); setNormalPurchase(false); setLayBy(true); setQuantity(0); }} className="sm-btn bg-grey">Lay buy Order</span> : null}
                 </li>) : (<span onClick={(e) => { preOrder(e) }} className="sm-btn bg-blue">
                   Pre Order
-                </span>) : <span onClick={() => Donate()} className="sm-btn bg-blue">
+                </span>) : <span onClick={() => Donate()} style={{ "marginBottom": "2rem" }} className="sm-btn bg-blue">
                     Donate
                   </span>}
                 {groupBy ? <li>
@@ -297,12 +301,12 @@ const ProductDetails = props => {
                     </form>
                   </div>
                 </li> : null}
-                {!(IsDonationCampaign && IsDonationCampaign.S === 'true') ? <li>
+                {!(IsDonationCampaign && IsDonationCampaign.S === 'true') ? IsInStock.S === "true" ? <li>
                   <div className="delivery-zip-code">
                     <label>Enter Coupon Code</label>
                     <input type="text" onChange={(e) => setCoupon(e.target.value)} placeholder="Enter coupon code" />
                   </div>
-                </li> : null}
+                </li> : null : null}
                 {!(IsDonationCampaign && IsDonationCampaign.S === 'true') ? <li>
                   <div className="sub-head">Color</div>
                   <div className="color-palette">

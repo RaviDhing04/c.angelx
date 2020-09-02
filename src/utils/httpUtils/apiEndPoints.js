@@ -109,7 +109,7 @@ const getApiEndPoints = val => {
     case "unfollowmerchant":
       return baseUrl + "users/unfollowmerchant";
     case "support":
-      return baseUrl + "users/support";
+      return baseUrl + "sendsupportemail";
     case "UserLinkCount":
       return baseUrl + "users/getmanagepanelwithcountdata";
     case "cartCount":
@@ -121,9 +121,11 @@ const getApiEndPoints = val => {
     case "RegisterBusinessMasterData":
       return baseUrl + "business/getmasterdataforregisterbusiness";
     case "BusinessDetailswithHandle":
-      return baseUrl + "business/getbusinessdetailsbymerchanthandler"; 
+      return baseUrl + "business/getbusinessdetailsbymerchanthandler";
     case "MasterDataInventory":
       return baseUrl + "products/getmasterdataforaddinventory";
+    case "searchMerchants":
+      return baseUrl + "business/search";
     default:
       return "/";
   }

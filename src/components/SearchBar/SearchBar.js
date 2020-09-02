@@ -7,9 +7,10 @@ import {
   Form
 } from "react-bootstrap";
 import downArrow from "../../assets/down-arrow.svg";
+import searchIcon from "../../assets/search-icon.png";
 import "./SearchBar.scss";
 import { debounce } from "../../utils/commonUtils/basicUtils";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   <a
@@ -52,8 +53,10 @@ const CustomMenu = React.forwardRef(
 
 const SearchBar = props => {
   const [selectedCategory, setselectedCategory] = useState("");
+  const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [showDiv, setShowDiv] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     window.addEventListener('click', function (event) {
@@ -73,9 +76,16 @@ const SearchBar = props => {
   }
 
   const search = async (text) => {
+    text ? setSearchText(text) : setSearchText('');
     const res = await props.fetchSearchResults(text, (selectedCategory && selectedCategory.Title && selectedCategory.Title.S ? selectedCategory.Title.S : ''));
-    setSearchResults(res);
+    setSearchResults(res.Items);
     setShowDiv(true);
+  }
+
+  const navigateToSearchPage = () => {
+    if (searchText) {
+      history.push(`/home/search/${searchText}/${(selectedCategory && selectedCategory.Title && selectedCategory.Title.S ? selectedCategory.Title.S : 'x')}`);
+    }
   }
 
 
@@ -115,6 +125,9 @@ const SearchBar = props => {
                 })}
             </Dropdown.Menu>
           </Dropdown>
+          <div onClick={navigateToSearchPage} className="searchIconDiv">
+            <img className="searchIcon" src={searchIcon} alt="search" />
+          </div>
         </InputGroup>
       </Form>
     </React.Fragment>

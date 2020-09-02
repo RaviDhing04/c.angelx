@@ -10,7 +10,7 @@ import collivery from "../../assets/collivery.png";
 import PayPal from "../../assets/PayPal.svg";
 import { useAuth } from "../../context/auth";
 
-const Footer = () => {
+const Footer = (props) => {
   const isAuthenticated = useAuth();
   const [footerLinks, setFooterLinks] = useState([]);
 
@@ -18,6 +18,32 @@ const Footer = () => {
     setFooterLinks((isAuthenticated ? footerLinksLoggedin : footerLinksLoggedout))
   }, [isAuthenticated]);
 
+  const makeItems = (link, k) => {
+    let path = link.path;
+    if (["My Profile", "My Cart", "My Orders", "My Contacts"].includes(link.name)) {
+      path = path + props.userId;
+      if (link.name === "My Orders") {
+        path = path + "/Pending in Total";
+      } else if (link.name === "My Contacts") {
+        path = path + "/Add Contacts";
+      }
+    }
+    console.log(path);
+    if (["Privacy Policy", "Term & Conditions"].includes(link.name)) {
+      return (
+        <Nav key={k} className="flex-column">
+          <a className="nav-link" href={path} target="blank">
+            {link.name}
+          </a>
+        </Nav>)
+    } else {
+      return (<Nav key={k} className="flex-column">
+        <Nav.Link as={Link} to={path}>
+          {link.name}
+        </Nav.Link>
+      </Nav>)
+    }
+  }
 
   return (
     <Container className="footer" fluid>
@@ -28,11 +54,7 @@ const Footer = () => {
               <div className="footer-links" key={i}>
                 {links.map((link, k) => {
                   return (
-                    <Nav key={k} className="flex-column">
-                      <Nav.Link as={Link} to={link.path}>
-                        {link.name}
-                      </Nav.Link>
-                    </Nav>
+                    makeItems(link, k)
                   )
                 })
                 }

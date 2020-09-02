@@ -4,7 +4,7 @@ export const userLeftNavLinks = [
   { name: "Lay Buys in Total", path: "/home/ordersList/", icon: "shipping", enable: true },
   { name: "Group Buys in Total", path: "/home/ordersList/", icon: "shipping", enable: true },
   { name: "Pre-orders in Total", path: "/home/ordersList/", icon: "clock", enable: false },
-  { name: "Donations", path: "/home/ordersList/", icon: "donate", enable: false },
+  { name: "Donations", path: "/home/ordersList/", icon: "donate", enable: true },
   { name: "Wishlist", path: "/home/viewAllProducts/", icon: "heart-filled", enable: true },
   { name: "Add Contacts", path: "/home/myContacts/", icon: "profile", enable: true }
 ];
@@ -15,9 +15,10 @@ export const merchantLeftNavLinks = {
     { name: "Causes", path: "/merchantHome/campaigns/", icon: "donate", enable: true },
     { name: "Add Discount Coupons", path: "/merchantHome/coupons/", icon: "coupon", enable: true },
     { name: "Subordinate Account", path: "/merchantHome/myEmployees/", icon: "Shape", enable: true },
-    { name: "Sales/Pending Deliveriest", path: "/merchantHome/myEmployees/", icon: "hourglass", enable: false },
-    { name: "Lay By Orders", path: "/merchantHome/myEmployees/", icon: "clock", enable: false },
-    { name: "Group Purchase Orders", path: "/merchantHome/myEmployees/", icon: "shopping-cart", enable: false },
+    { name: "Sales/Pending Deliveries", path: "/merchantHome/myEmployees/", icon: "hourglass", enable: false },
+    { name: "Lay By Orders", path: "/merchantHome/myEmployees/", icon: "clock", enable: true },
+    { name: "Pending in Total", path: "/merchantHome/myEmployees/", icon: "clock", enable: true },
+    { name: "Group Purchase Orders", path: "/merchantHome/myEmployees/", icon: "shopping-cart", enable: true },
     { name: "Declined Orders", path: "/merchantHome/myEmployees/", icon: "blocked-symbol", enable: false },
     { name: "Patrons", path: "/merchantHome/Patrons/", icon: "profile", enable: true },
     { name: "Statistics", path: "/merchantHome/myEmployees/", icon: "bar-graph", enable: false }
@@ -26,9 +27,9 @@ export const merchantLeftNavLinks = {
     { name: "Inventory", path: "/merchantHome/inventory/", icon: "inventory", enable: true },
     { name: "Add Discount Coupons", path: "/merchantHome/coupons/", icon: "coupon", enable: true },
     { name: "Subordinate Account", path: "/merchantHome/myEmployees/", icon: "Shape", enable: true },
-    { name: "Sales/Pending Deliveriest", path: "/merchantHome/myEmployees/", icon: "hourglass", enable: false },
-    { name: "Lay By Orders", path: "/merchantHome/myEmployees/", icon: "clock", enable: false },
-    { name: "Group Purchase Orders", path: "/merchantHome/myEmployees/", icon: "shopping-cart", enable: false },
+    { name: "Sales/Pending Deliveries", path: "/merchantHome/myEmployees/", icon: "hourglass", enable: false },
+    { name: "Lay By Orders", path: "/merchantHome/myEmployees/", icon: "clock", enable: true },
+    { name: "Group Purchase Orders", path: "/merchantHome/myEmployees/", icon: "shopping-cart", enable: true },
     { name: "Declined Orders", path: "/merchantHome/myEmployees/", icon: "blocked-symbol", enable: false },
     { name: "Patrons", path: "/merchantHome/Patrons/", icon: "profile", enable: true },
     { name: "Statistics", path: "/merchantHome/myEmployees/", icon: "bar-graph", enable: false }
@@ -36,10 +37,7 @@ export const merchantLeftNavLinks = {
   'NPO': [
     { name: "Causes", path: "/merchantHome/campaigns/", icon: "donate", enable: true },
     { name: "Subordinate Account", path: "/merchantHome/myEmployees/", icon: "Shape", enable: true },
-    { name: "Sales/Pending Deliveriest", path: "/merchantHome/myEmployees/", icon: "hourglass", enable: false },
-    { name: "Lay By Orders", path: "/merchantHome/myEmployees/", icon: "clock", enable: false },
-    { name: "Group Purchase Orders", path: "/merchantHome/myEmployees/", icon: "shopping-cart", enable: false },
-    { name: "Declined Orders", path: "/merchantHome/myEmployees/", icon: "blocked-symbol", enable: false },
+    { name: "Donations", path: "/merchantHome/myEmployees/", icon: "donate", enable: true },
     { name: "Patrons", path: "/merchantHome/Patrons/", icon: "profile", enable: true },
     { name: "Statistics", path: "/merchantHome/myEmployees/", icon: "bar-graph", enable: false }
   ]
@@ -73,21 +71,21 @@ export const footerLinksLoggedin = [
     { name: "Corporate Info", path: "/aboutUs" },
     { name: "User Guide", path: "/aboutUs" },
     { name: "Technical Support", path: "/support" },
-    { name: "Term & Conditions", path: "/aboutUs" },
-    { name: "Privacy Policy", path: "/aboutUs" }
+    { name: "Term & Conditions", path: "https://docs.google.com/gview?url=https://cangelx-documents.s3.us-east-2.amazonaws.com/Terms+and+Conditions.docx" },
+    { name: "Privacy Policy", path: "https://docs.google.com/gview?url=https://cangelx-documents.s3.us-east-2.amazonaws.com/Privacy+Policy.docx" },
   ],
   [
-    { name: "Sponsored", path: "/" },
-    { name: "Previews", path: "/" },
-    { name: "Categories", path: "/" },
+    { name: "Sponsored", path: "/home/productsListing" },
+    { name: "Previews", path: "/home/productsListing" },
+    { name: "Categories", path: "/landing" },
     { name: "Advertisements", path: "/" }
   ],
   [
     { name: "My Profile", path: "/profile/edit/" },
-    { name: "My Cart", path: "/" },
-    { name: "My Whishlist", path: "/" },
-    { name: "My Orders", path: "/" },
-    { name: "My Contacts", path: "/" },
+    { name: "My Cart", path: "/cart/" },
+    { name: "My Whishlist", path: "/home/viewAllProducts/Wishlist" },
+    { name: "My Orders", path: "/home/ordersList/" },
+    { name: "My Contacts", path: "/home/myContacts/" },
     { name: "Donations", path: "/" },
     { name: "Show Statistics", path: "/" }
   ]
@@ -102,14 +100,14 @@ export const footerLinksLoggedout = [
 
   ],
   [{ name: "Technical Support", path: "/support" },
-  { name: "Term & Conditions", path: "/aboutUs" },
-  { name: "Privacy Policy", path: "/aboutUs" },
+  { name: "Term & Conditions", path: "https://docs.google.com/gview?url=https://cangelx-documents.s3.us-east-2.amazonaws.com/Terms+and+Conditions.docx" },
+  { name: "Privacy Policy", path: "https://docs.google.com/gview?url=https://cangelx-documents.s3.us-east-2.amazonaws.com/Privacy+Policy.docx" },
   { name: "Advertisements", path: "/" }
   ],
   [
-    { name: "Sponsored", path: "/" },
-    { name: "Previews", path: "/" },
-    { name: "Categories", path: "/", }
+    { name: "Sponsored", path: "/home/productsListing" },
+    { name: "Previews", path: "/home/productsListing" },
+    { name: "Categories", path: "/landing", }
   ]
 ];
 

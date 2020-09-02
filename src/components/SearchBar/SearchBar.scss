@@ -11,7 +11,19 @@
 
     input {
       height: 2.75rem;
-      border-radius:0.25rem;
+      border-radius: 0.25rem;
+    }
+    .searchIconDiv {
+      background: #e8edf3 0% 0% no-repeat padding-box;
+        border: 1px solid #c6ccc8;
+        border-radius: 0px 4px 4px 0px;
+        opacity: 1;
+      .searchIcon {
+        height: 1.6rem;
+        width: 1.75rem;
+        margin: 0.5rem;
+        cursor: pointer;
+      }
     }
 
     .dropdown {

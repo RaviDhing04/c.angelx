@@ -29,6 +29,9 @@ const OrdersList = props => {
         case 'Group Buys in Total':
           res = await getOrderItems({ UserId: userId, "OrderType": "GROUP" });
           break;
+          case 'Donations':
+          res = await getOrderItems({ UserId: userId, "OrderType": "DONATION" });
+          break;
         default:
           break;
       }

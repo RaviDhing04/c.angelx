@@ -48,7 +48,7 @@ const AllBusiness = props => {
           <span className="heading">Registered Businesses</span>
         </div>
         <div className="business-card-holder">
-          {allBusiness && allBusiness.length && allBusiness.map(business => {
+          {allBusiness && allBusiness.length  ? allBusiness.map(business => {
             return (
               <div data-value={business.MerchantId.S} onClick={(e) => navigate(e)} key={business.MerchantId.S} className="business-card">
                 <p> {business.BusinessHandle.S}</p>
@@ -56,7 +56,7 @@ const AllBusiness = props => {
                 {isMerchant ? <button className="edit-business">Edit</button> : null}
               </div>
             );
-          })}
+          }): null}
           {isMerchant ? <div className="business-card">
             <button onClick={() => history.push('/registerBusiness/addNew')} className="add-business">
               <img className="plus-icon" alt="plus-icon" src={plusIcon}></img>
