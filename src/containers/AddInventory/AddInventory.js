@@ -708,7 +708,7 @@ const AddInventory = props => {
                       productDetails.PackageDimensions.M.Depth && productDetails.PackageDimensions.M.Depth.S
                     }
                     type="number" min="1"
-                    placeholder=" Type Depth (in kg)"
+                    placeholder=" Type Depth (in cm)"
                     required
                   />
                 </Form.Group>

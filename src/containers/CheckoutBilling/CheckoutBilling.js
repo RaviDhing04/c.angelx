@@ -119,9 +119,10 @@ const CheckoutBilling = props => {
                                             selectedAddress.AddressType.S
                                         }
                                         required
+                                        disabled
                                     >
                                         <option value="none"> Address Type</option>
-                                        <option value="Billing"> Billing Address</option>
+                                        <option value="Billing" selected> Billing Address</option>
                                     </Form.Control>
                                 </Form.Group>
                             </Col>
@@ -236,7 +237,7 @@ const CheckoutBilling = props => {
                                 Reset
             </Button>
                             <Button className="saveButton" type="submit">
-                                Continue
+                            Save Address
             </Button>
                         </div>
                     </Form>

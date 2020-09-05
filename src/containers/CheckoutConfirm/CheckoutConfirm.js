@@ -165,16 +165,12 @@ const CheckoutConfirm = (props) => {
                         </div>
                     ) : (
                             <div className="Status-container">
-                                <h2>
-                                    Your Order has been placed!
- </h2>
+                                <h4>
+                                    Your Order has been placed! Pull up chair, sit back and relax
+                                    as your order is on its way to you.
+ </h4>
 
-                                <p className="text">
-                                    Pull up chair, sit back and relax
- </p>
-                                <p className="text">
-                                    as your order is on its way to you
- </p>
+
 
                                 <Nav.Link as={Link} className="continue-shopping" to={"/"}>Continue shopping</Nav.Link>
                             </div>

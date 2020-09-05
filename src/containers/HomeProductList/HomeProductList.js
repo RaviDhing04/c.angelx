@@ -53,8 +53,12 @@ const HomeProductList = props => {
   return (
     <React.Fragment>
       <Container fluid style={styl}>
+        <div id="Sponsored">
         <ProductListCarousel name="Sponsored" loading={loadingSponsored} data={props.sponsoredProducts} activeCurrency={props.activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} />
+        </div>
+        <div id="Followed">
         <ProductList name="Followed" loading={loadingLatest} data={props.latestProducts} activeCurrency={props.activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} />
+        </div>
         {/* <ProductList name="Trending" data={props.latestProducts} activeCurrency={props.activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} /> */}
         {isAuthenticated ? <ProductListCarousel name="Wishlist" loading={loadingWishlist} data={props.wishlistProducts} activeCurrency={props.activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} /> : null}
       </Container>

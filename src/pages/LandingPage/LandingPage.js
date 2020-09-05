@@ -11,6 +11,7 @@ import {
   getLandingBanners,
   addProductToCart,
   addToWishlist,
+  getSponsoredProductsWithPagination,
   cartCount
 } from "../../store/actions";
 import ProductListCarousel from "../../components/ProductListCarousel/ProductListCarousel";
@@ -20,6 +21,7 @@ import { useAuth } from "../../context/auth";
 const LandingPage = props => {
   const [banner, setBanner] = useState(null);
   const [loadingLatest, setLoadingLatest] = useState(true);
+  const [loadingSponsored, setLoadingSponsored] = useState(true);
   const isAuthenticated = useAuth();
 
   useEffect(() => {
@@ -31,8 +33,13 @@ const LandingPage = props => {
       const resLatest = await props.getLatestProductsWithPagination();
       if (resLatest) setLoadingLatest(false);
     }
+    const fetchSponsoredProducts = async () => {
+      const resSponsored = await props.getSponsoredProductsWithPagination();
+      if (resSponsored) setLoadingSponsored(false);
+    }
     fetchData();
     fetchLatestProducts();
+    fetchSponsoredProducts();
   }, []);
 
   const addToCart = async payload => {
@@ -95,16 +102,21 @@ const LandingPage = props => {
             addToWishlist={addProductToWish}
             loading={loadingLatest}
           /> */}
-          <ProductList
-            name="Preview"
-            data={props.latestProducts}
-            activeCurrency={props.activeCurrency}
-            addProductToCart={addToCart}
-            addToWishlist={addProductToWish}
-            loading={loadingLatest}
-          />
+          <div id="Sponsored">
+            <ProductListCarousel name="Sponsored" loading={loadingSponsored} data={props.sponsoredProducts} activeCurrency={props.activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} />
+          </div>
+          <div id="Previews">
+            <ProductList
+              name="Preview"
+              data={props.latestProducts}
+              activeCurrency={props.activeCurrency}
+              addProductToCart={addToCart}
+              addToWishlist={addProductToWish}
+              loading={loadingLatest}
+            />
+          </div>
         </div>
-        <div className="heading"> Explore by Categories </div>
+        <div id="Categories" className="heading"> Explore by Categories </div>
         {props.searchCategories && props.searchCategories.length ? <Carousel className="prod-carousel" interval={null}>
           {makeItems(props.searchCategories)}
         </Carousel> : null}
@@ -157,6 +169,7 @@ const mapDispatchToProps = dispatch =>
     {
       getSearchCategories,
       getLatestProductsWithPagination,
+      getSponsoredProductsWithPagination,
       getLandingBanners,
       addProductToCart,
       addToWishlist,
@@ -170,7 +183,8 @@ const mapStatetoProps = ({ app: { homePage, common } }) => {
   return {
     searchCategories: homePage.searchCategories,
     latestProducts: homePage.latestProducts,
-    activeCurrency: common.activeCurrency
+    activeCurrency: common.activeCurrency,
+    sponsoredProducts: homePage.sponsoredProducts,
   };
 };
 

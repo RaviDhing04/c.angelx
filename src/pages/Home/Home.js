@@ -28,7 +28,7 @@ const Home = props => {
           });
         setBanners(await props.getDashboardBanners());
       } else {
-        if (!window.location.href.includes("productDetail")) { props.history.push('/landing?login=true'); }
+        if (!(window.location.href.includes("productDetail") || window.location.href.includes("viewAllProducts"))) { props.history.push('/abc?login=true'); }
       }
     };
     fetchData();

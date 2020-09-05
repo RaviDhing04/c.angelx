@@ -18,9 +18,11 @@ import { Link } from "react-router-dom";
 import plusIcon from "../../assets/plus.svg";
 import deleteIcon from "../../assets/delete_outline.svg";
 import downArrow from "../../assets/down-arrow.svg";
+import upArrow from "../../assets/up-arrow.svg";
 import checkmark from "../../assets/checkmark.svg";
 import { useAuth } from "../../context/auth";
-import { addProductFormFieldsProductType } from "../../constants/constants";
+import { addProductFormFieldsProductType, displayNameMap } from "../../constants/constants";
+import { useAccordionToggle } from 'react-bootstrap/AccordionToggle';
 
 const ProductDetails = props => {
   const { ProductDetails, productId, activeCurrency } = props;
@@ -41,6 +43,7 @@ const ProductDetails = props => {
   } = ProductDetails;
 
   const [loading, setLoading] = useState(true);
+  const [toggleArrow, setToggleArrow] = useState(false);
   const [coupon, setCoupon] = useState(null);
   const [groupBy, setGroupBy] = useState(false);
   const [group, setGroup] = useState([{}]);
@@ -109,17 +112,16 @@ const ProductDetails = props => {
       }
     };
     const res = await props.addProductToCart(payload);
-    res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
+    res ? setLoading(false) : (function () { setLoading(false); }());
   };
 
 
   const Donate = async () => {
     setLoading(true)
-    const payload = {
+    const orderType = {
       "product_id": productId,
-      "ProductTimestamp": Timestamp && Timestamp.S,
-      "Quantity": "1",
-      "MerchantId": MerchantId && MerchantId.S,
+      // "Quantity": "1",
+      // "MerchantId": MerchantId && MerchantId.S,
       "order_type": "DONATION",
       "billing_address_id": null,
       "shipping_address_id": null,
@@ -127,8 +129,8 @@ const ProductDetails = props => {
       "unitPrice": donationAmount,
       "SelectedColor": null,
     };
-    const res = await props.addProductToCart(payload);
-    res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
+    localStorage.setItem('orderType', JSON.stringify(orderType));
+    history.push(`/checkout/shipping/${JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId}/${'Shipping'}`);
   };
 
   const preOrder = async (event) => {
@@ -207,7 +209,23 @@ const ProductDetails = props => {
     history.push(`/checkout/shipping/${JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId}/${'Shipping'}`);
   }
 
+  function CustomToggle({ children, eventKey }) {
+    const decoratedOnClick = useAccordionToggle(eventKey, () =>
+      setToggleArrow(!toggleArrow)
+    );
 
+    return (
+      // <button
+      //   type="button"
+      //   style={{ backgroundColor: 'pink' }}
+      //   onClick={decoratedOnClick}
+      // >
+      <div className="prod-details" onClick={decoratedOnClick}>
+        {children}
+      </div>
+      // </button>
+    );
+  }
 
   return (
     <Container fluid>
@@ -221,7 +239,7 @@ const ProductDetails = props => {
             />
             {/* </div> */}
             <div className="product-details">
-              <ul style={IsDonationCampaign && IsDonationCampaign.S === 'true' ? { "paddingBottom": "7.5rem" } : {}}>
+              <ul style={IsDonationCampaign && IsDonationCampaign.S === 'true' ? { "paddingBottom": "7.5rem" } : ( IsInStock && IsInStock.S === "true" ? {} : {"paddingBottom": "8rem"} )} >
                 <li className="product-name">{Name && Name.S}</li>
                 <li className="product-price">
                   {/* <span>{ProductSpecifications.M.Currency.S}</span>{" "} */}
@@ -292,7 +310,10 @@ const ProductDetails = props => {
                       </div>
                       <div>
                         <label>Laybuy months</label>
-                        <input type="number" min="1" onChange={(e) => setLaybuy_months(e.target.value)} value={laybuy_months ? laybuy_months : ''} placeholder="Enter Laybuy Months" required />
+                        <select onChange={(e) => setLaybuy_months(e.target.value)} name="lay_months" id="contacts" required>
+                          <option value="">Select Laybuy months</option>
+                          {['03 Months', '06 Months', '09 Months', '12 Months'].map((month) => { return (<option value={month.split(' ')[0]}>{month}</option>) })}
+                        </select>
                       </div>
                       <div className="buttons">
                         <button onClick={() => { setGroupBy(false); setNormalPurchase(true); setLayBy(false); }} className="cancelButton">Cancel</button>
@@ -348,14 +369,24 @@ const ProductDetails = props => {
               </ul>
               <Accordion className="description-accordian">
                 <Card>
-                  <Accordion.Toggle as={Card.Header} className="prod-details" eventKey="0">
-                    {IsDonationCampaign && IsDonationCampaign.S === 'true' ? "Cause Details" : "Product Details"}
-                    <img
-                      className="nav-icon"
-                      alt="downArrow-icon"
-                      src={downArrow}
-                    ></img>
-                  </Accordion.Toggle>
+                  <Card.Header>
+                    <CustomToggle eventKey="0">
+                      {IsDonationCampaign && IsDonationCampaign.S === 'true' ? "Cause Details" : "Product Details"}
+                      {!toggleArrow ? <img
+                        className="nav-icon"
+                        alt="downArrow-icon"
+                        src={downArrow}
+                      ></img> : <img
+                        className="nav-icon"
+                        alt="downArrow-icon"
+                        style={{"width":"0.8rem", "height":"0.8rem"}}
+                        src={upArrow}
+                      ></img>}
+                    </CustomToggle>
+                  </Card.Header>
+                  {/* <Accordion.Toggle  as={Card.Header} > */}
+
+                  {/* </Accordion.Toggle> */}
                   <Accordion.Collapse eventKey="0">
                     <Card.Body>
                       <div style={{ "fontWeight": "bold", "fontSize": "1.25rem" }} className="sub-head">{IsDonationCampaign && IsDonationCampaign.S === 'true' ? "Cause Description" : "Product Description"}</div>
@@ -365,7 +396,7 @@ const ProductDetails = props => {
                         ProductCategory && ProductCategory.S && addProductFormFieldsProductType[ProductCategory.S] && addProductFormFieldsProductType[ProductCategory.S].length && addProductFormFieldsProductType[ProductCategory.S].map((item, index) => {
                           return (
                             ProductSpecifications.M[item] ? (<div key={index}>
-                              <span>{item}</span> : <span>{ProductSpecifications.M[item].S}</span>
+                              <span>{ displayNameMap[item] ? displayNameMap[item] : item}</span> : <span>{ProductSpecifications.M[item].S}</span>
                             </div>) : null
                           )
                         })
@@ -379,7 +410,7 @@ const ProductDetails = props => {
                       })) : null}
                       {ProductSpecifications.M['AvailableSizes'] && ProductSpecifications.M['AvailableSizes'].L && ProductSpecifications.M['AvailableSizes'].L.length ?
                         <div>
-                          <span>AvailableSizes</span> : <span>{ProductSpecifications.M['AvailableSizes'].L.join(', ')}</span>
+                          <span>Available Sizes</span> : <span>{ProductSpecifications.M['AvailableSizes'].L.map((size) => size.S )}</span>
                         </div>
                         : null}
                     </Card.Body>

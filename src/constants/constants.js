@@ -70,13 +70,12 @@ export const footerLinksLoggedin = [
     { name: "Support", path: "/support" },
     { name: "Corporate Info", path: "/aboutUs" },
     { name: "User Guide", path: "/aboutUs" },
-    { name: "Term & Conditions", path: "https://docs.google.com/gview?url=https://cangelx-documents.s3.us-east-2.amazonaws.com/Terms+and+Conditions.docx" },
-    { name: "Privacy Policy", path: "https://docs.google.com/gview?url=https://cangelx-documents.s3.us-east-2.amazonaws.com/Privacy+Policy.docx" },
+    { name: "Term & Conditions", path: "https://docs.google.com/viewer?url=https://cangelx-documents.s3.us-east-2.amazonaws.com/Terms+and+Conditions.docx" },
+    { name: "Privacy Policy", path: "https://docs.google.com/viewer?url=https://cangelx-documents.s3.us-east-2.amazonaws.com/Privacy+Policy.docx" },
   ],
   [
-    { name: "Sponsored", path: "/home/productsListing" },
-    { name: "Previews", path: "/home/productsListing" },
-    { name: "Categories", path: "/landing" },
+    { name: "Sponsored", path: "/home/productsListing#Sponsored" },
+    { name: "Followed", path: "/home/productsListing#Followed" },
     { name: "Advertisements", path: "/" }
   ],
   [
@@ -85,7 +84,7 @@ export const footerLinksLoggedin = [
     { name: "My Whishlist", path: "/home/viewAllProducts/Wishlist" },
     { name: "My Orders", path: "/home/ordersList/" },
     { name: "My Contacts", path: "/home/myContacts/" },
-    { name: "Donations", path: "/" },
+    { name: "Donations", path: `/home/ordersList/${JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId}/Donations` },
     { name: "Show Statistics", path: "/" }
   ]
 ];
@@ -98,14 +97,14 @@ export const footerLinksLoggedout = [
     { name: "User Guide", path: "/aboutUs" },
 
   ],
-  [{ name: "Term & Conditions", path: "https://docs.google.com/gview?url=https://cangelx-documents.s3.us-east-2.amazonaws.com/Terms+and+Conditions.docx" },
-  { name: "Privacy Policy", path: "https://docs.google.com/gview?url=https://cangelx-documents.s3.us-east-2.amazonaws.com/Privacy+Policy.docx" },
+  [{ name: "Term & Conditions", path: "https://docs.google.com/viewer?url=https://cangelx-documents.s3.us-east-2.amazonaws.com/Terms+and+Conditions.docx" },
+  { name: "Privacy Policy", path: "https://docs.google.com/viewer?url=https://cangelx-documents.s3.us-east-2.amazonaws.com/Privacy+Policy.docx" },
   { name: "Advertisements", path: "/" }
   ],
   [
-    { name: "Sponsored", path: "/home/productsListing" },
-    { name: "Previews", path: "/home/productsListing" },
-    { name: "Categories", path: "/landing", }
+    { name: "Sponsored", path: "/landing#Sponsored" },
+    { name: "Previews", path: "/landing#Previews" },
+    { name: "Categories", path: "/landing#Categories", }
   ]
 ];
 
@@ -202,6 +201,12 @@ export const addProductFormFieldsProductType = {
   "Furnitures": ["Brand", "MaterialDescription"],
   "Shoes & Accessories": ["Brand", "MaterialDescription", "Ocassion"],
   "Clothing": ["Brand", "MaterialDescription", "Ocassion"]
+}
+
+export const displayNameMap = {
+  "Ram": "RAM",
+  "Os": "OS",
+  "MaterialDescription": "Material Description"
 }
 
 export const addCampaignFormFields = ["ProductName", "Currency", "ProductDescription", "MinDonation", "TargetDonationAmount"];

@@ -128,9 +128,10 @@ const CheckoutShipping = props => {
                       selectedAddress.AddressType.S
                     }
                     required
+                    disabled
                   >
                     <option value="none"> Address Type</option>
-                    <option value="Shipping"> Shipping Address</option>
+                    <option value="Shipping" selected> Shipping Address</option>
                   </Form.Control>
                 </Form.Group>
               </Col>
@@ -245,7 +246,7 @@ const CheckoutShipping = props => {
                 Reset
             </Button>
               <Button className="saveButton" type="submit">
-                Continue
+                Save Address
             </Button>
             </div>
           </Form>
