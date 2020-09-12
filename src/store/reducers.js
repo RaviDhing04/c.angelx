@@ -28,6 +28,9 @@ const initialState = {
     orderItems: {},
     orderProductDetails: {}
   },
+  ordersListMerchantPage: {
+    orderItems: {},
+  },
   viewAllProductPage: {
     products: {}
   },
@@ -246,6 +249,13 @@ export const appReducer = (state = initialState, { type, value }) => {
           orderItems: value.payload,
         }
       };
+      case "ORDER_DETAILS_MERCHANT":
+        return {
+          ...state,
+          ordersListMerchantPage: {
+            orderItems: value.payload,
+          }
+        };
     case "SET_ACTIVE_CURRENCY":
       return {
         ...state,

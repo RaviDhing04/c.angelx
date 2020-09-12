@@ -10,7 +10,7 @@ import {
 } from "../../store/actions";
 import "./CheckoutShipping.scss";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
-import { shippingAddressFormFields } from "../../constants/constants";
+import { shippingAddressFormFields, countryCodes } from "../../constants/constants";
 import edit from "../../assets/edit.svg";
 
 const CheckoutShipping = props => {
@@ -38,7 +38,7 @@ const CheckoutShipping = props => {
     const res = await getAllShippingAddress();
     res ? (function () { setAddresses(res); setLoading(false); }()) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
 
-}
+  }
 
   const addNew = async event => {
     event.preventDefault();
@@ -46,10 +46,10 @@ const CheckoutShipping = props => {
     let payload = {};
     const formElements = event.target.elements;
     shippingAddressFormFields.forEach(field => {
-      if (["Suburb"].includes(field)){
+      if (["Suburb"].includes(field)) {
         payload[field] = '';
       } else {
-      payload[field] = formElements[field].value;
+        payload[field] = formElements[field].value;
       }
     });
     setLoading(true);
@@ -148,9 +148,9 @@ const CheckoutShipping = props => {
                     required
                   >
                     <option value="none"> Select Country</option>
-                    <option value="India"> India</option>
-                    <option value="USA"> USA</option>
-                    <option value="South Africa"> South Africa</option>
+                    <option value={countryCodes["India"]} > India</option>
+                    <option value={countryCodes["USA"]} > USA</option>
+                    <option value={countryCodes["South Africa"]} > South Africa</option>
                   </Form.Control>
                 </Form.Group>
               </Col>

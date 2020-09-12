@@ -29,6 +29,22 @@
     color: #000000de;
     opacity: 1;
     margin-bottom: 0px !important;
+
+    span {
+      display: inline-block;
+      width: 13rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      height: 1.6rem;
+    }
+
+    span:hover {
+      height: 1.85rem;
+      z-index: 1;
+      overflow: visible;
+      // position: absolute;
+    }
   }
 
   .card-text {

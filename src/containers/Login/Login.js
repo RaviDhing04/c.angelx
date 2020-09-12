@@ -24,7 +24,7 @@ const Login = props => {
       <div className="login-container">
         {loading ? <CustomLoader /> : null}
         <img
-          onClick={() => props.history.replace(props.location.pathname)}
+          onClick={() => { localStorage.removeItem('startSelling'); props.history.replace(props.location.pathname) }}
           className="close"
           src={close}
           alt="close"
@@ -77,6 +77,7 @@ const Login = props => {
     params.get("login") && (
       <CenterModal
         onHide={() => {
+          localStorage.removeItem('startSelling');
           props.history.replace(props.location.pathname);
         }}
         component={temp(props)}

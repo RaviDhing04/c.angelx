@@ -12,7 +12,7 @@ import {
 } from "../../store/actions";
 import "./ProfileAddresses.scss";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
-import { billingAddressFormFields } from "../../constants/constants";
+import { billingAddressFormFields, countryCodes } from "../../constants/constants";
 import edit from "../../assets/edit.svg";
 
 const ProfileAddresses = props => {
@@ -116,9 +116,9 @@ const ProfileAddresses = props => {
                     required
                   >
                     <option value="none"> Select Country</option>
-                    <option value="India"> India</option>
-                    <option value="USA"> USA</option>
-                    <option value="South Africa"> South Africa</option>
+                    <option value={countryCodes["India"]} > India</option>
+                    <option value={countryCodes["USA"]} > USA</option>
+                    <option value={countryCodes["South Africa"]} > South Africa</option>
                   </Form.Control>
                 </Form.Group>
               </Col>

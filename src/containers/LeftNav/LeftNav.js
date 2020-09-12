@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./LeftNav.scss";
 import { Nav, Card, Form, InputGroup, FormControl, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { uploadTermsAndConditions } from "../../store/actions";
 import checkmark from "../../assets/checkmark.svg";
 
 const LeftNav = props => {
@@ -21,6 +22,23 @@ const LeftNav = props => {
   const submit = (e) => {
     e.preventDefault();
   }
+
+  const toBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+
+  const addFile = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const fileString = await toBase64(file);
+      const payload = { "FileExtention": "pdf", "MerchantId": merchantId, "base64": fileString.split(',')[1] }
+      const res = await uploadTermsAndConditions(payload);
+      res ? alert('Terms and Conditions updated successfully') : (function () { (alert('something went wrong, Please try again!')) }());
+    }
+  };
 
   return (
     <div className="leftNav">
@@ -123,7 +141,15 @@ const LeftNav = props => {
         </div>
       ) : null}
       {showMerchants ? <Button className="statics-btn" >Show/Hide Statistics</Button> : null}
-      {!showMerchants && merchantId ? <a href="/support" className="terms" >Edit Terms and Conditionss</a> : null}
+      {!showMerchants && merchantId ? <div onChange={addFile}>
+        <label htmlFor="Upload_Terms" className="terms">Edit terms and conditions</label>
+        <input id="Upload_Terms"
+          type="file"
+          accept=".pdf"
+          style={{ display: "none" }}
+        /> </div> 
+        // <a href="/support" className="terms" >Edit Terms and Conditionss</a>
+         : null}
     </div>
   );
 };

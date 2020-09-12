@@ -24,7 +24,7 @@ const Product = props => {
           <Card.Body>
             <Link to={`/home/productDetail/${data.ProductId.S}/${data.Timestamp.S}`}>
               <div >
-                <Card.Title>{data.Name && data.Name.S}</Card.Title>
+                <Card.Title><span> {data.Name && data.Name.S} </span> </Card.Title>
                 <Card.Text>
                   {data.IsDonationCampaign && data.IsDonationCampaign.S === 'true'
                     ? (<span>By {data.MerchantHandle.S}
@@ -34,7 +34,7 @@ const Product = props => {
                       src={checkmark}
                     ></img> : null} */}
                     </span>)
-                    : formatter(activeCurrency)(data.ProductVariations && data.ProductVariations.L && data.ProductVariations.L.length && data.ProductVariations.L[0].M.UnitPrice && data.ProductVariations.L[0].M.UnitPrice.S ? data.ProductVariations.L[0].M.UnitPrice.S : 0)}
+                    : (<span> {formatter(activeCurrency)(data.ProductVariations && data.ProductVariations.L && data.ProductVariations.L.length && data.ProductVariations.L[0].M.UnitPrice && data.ProductVariations.L[0].M.UnitPrice.S ? data.ProductVariations.L[0].M.UnitPrice.S : 0)} </span>)}
                 </Card.Text>
               </div>
             </Link>

@@ -46,7 +46,7 @@ const Merchant = props => {
                 }}
               >
                 <div >
-                  <Card.Title>{data.OrgName && data.OrgName.S}</Card.Title>
+                  <Card.Title><span>{data.OrgName && data.OrgName.S}</span></Card.Title>
                   <Card.Text>
                     <span>{data.BusinessHandle.S}
                     </span>

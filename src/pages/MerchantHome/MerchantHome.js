@@ -21,6 +21,7 @@ import {
   getBusinessDetailsUser,
   unfollowmerchant,
   getUserLinkCount,
+  getMerchantLinkCount,
   cartCount
 } from "../../store/actions";
 import coverError from "../../assets/cover-error.svg";
@@ -31,6 +32,7 @@ const MerchantHome = props => {
   const [loading, setLoading] = useState(false);
   const [merchantId, setMerchantId] = useState('');
   const [IsMerchantFollowed, setIsMerchantFollowed] = useState('false');
+  const [terms, setTerms] = useState('');
   const { followedMerchants, selectedBusiness } = props;
   const { state } = props.location;
   const isAuthenticated = useAuth();
@@ -40,6 +42,9 @@ const MerchantHome = props => {
     var temp = window.location.pathname.split('/');
     const merchantId = temp[temp.length - 1];
     if (merchantId && isAuthenticated) {
+      props.getMerchantLinkCount({
+        "MerchantId": merchantId
+      });
       setMerchantId(merchantId);
       props.getBusinessDetails({
         MerchantId: merchantId,
@@ -60,6 +65,7 @@ const MerchantHome = props => {
 
   useEffect(() => {
     setIsMerchantFollowed(selectedBusiness && selectedBusiness.IsMerchantFollowed && selectedBusiness.IsMerchantFollowed.S);
+    setTerms(`https://docs.google.com/viewer?url=${selectedBusiness && selectedBusiness.TermsAndConditions && selectedBusiness.TermsAndConditions.S}`);
   }, [selectedBusiness]);
 
 
@@ -161,7 +167,7 @@ const MerchantHome = props => {
           </div>
           {state && state.fromUser ? (
             <div className="user-action">
-              <a className="user-terms" href="/">
+              <a className="user-terms" target="blank" href={terms}>
                 Terms and Conditions
               </a>
               {IsMerchantFollowed === 'true' ? <button onClick={unfollow} className="unfollow">Unfollow</button> : <button onClick={follow} className="unfollow">Follow</button>}
@@ -209,7 +215,8 @@ const mapDispatchToProps = dispatch =>
       unfollowmerchant,
       getBusinessDetailsUser,
       getUserLinkCount,
-      cartCount
+      cartCount,
+      getMerchantLinkCount
     },
     dispatch
   );

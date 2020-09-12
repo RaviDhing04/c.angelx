@@ -46,6 +46,24 @@ export const checkout = (body = {}) => async dispatch => {
   }
 };
 
+export const getShippingChagres = (body = {}) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("getShippingChagres"), {
+      method: "POST",
+      body: body
+    });
+    if (response) {
+      return response;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
 export const signUp = async (body = {}) => {
   try {
 
@@ -80,7 +98,7 @@ export const firstLogin = async (body = {}) => {
       return true;
     } else if (response && response.message) {
       alert(response.message)
-      return true;
+      return 'msg';
     } else {
       return false;
     }
@@ -684,6 +702,38 @@ export const getUserLinkCount = (body = {}) => async dispatch => {
       response.result.data.NavigationData.forEach((item) => {
         out[item.displayName] = item.Count;
       })
+      dispatch({
+        type: "USER_LINKS_COUNT",
+        value: {
+          payload: out
+        }
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const getMerchantLinkCount = (body = {}) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("MerchantLinkCount"), {
+      method: "POST",
+      body: body
+    });
+
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      const out = {};
+      out['Patrons'] = response.result.data;
       dispatch({
         type: "USER_LINKS_COUNT",
         value: {
@@ -1350,7 +1400,7 @@ export const searchContactWithEmail = (body = {}) => async dispatch => {
   }
 };
 
-export const addNewContact = (body = {}) => async dispatch => {
+export const addNewContact = (body = {}) => async (dispatch, getState) => {
   try {
 
     const response = await httpFetch(getApiEndPoints("addNewContact"), {
@@ -1363,6 +1413,14 @@ export const addNewContact = (body = {}) => async dispatch => {
       response.result.data &&
       response.result.message === "Success"
     ) {
+      let userLinkCount = getState().app.homePage.userLinkCount;
+      const newCounts = { ...userLinkCount, 'Add Contacts': response.result.data.TotalContacts }
+      dispatch({
+        type: "USER_LINKS_COUNT",
+        value: {
+          payload: newCounts
+        }
+      });
       return true;
     } else {
       return false;
@@ -1413,7 +1471,7 @@ export const addToWishlist = (body = {}) => async (dispatch,
   }
 };
 
-export const addNewEmployee = (body = {}) => async (dispatch, getState) => {
+export const addNewEmployee = (body = {}) => async (dispatch) => {
   try {
 
     const response = await httpFetch(getApiEndPoints("addNewEmployee"), {
@@ -1426,14 +1484,6 @@ export const addNewEmployee = (body = {}) => async (dispatch, getState) => {
       response.result.data &&
       response.result.message === "Success"
     ) {
-      let userLinkCount = getState().app.homePage.userLinkCount;
-      const newCounts = { ...userLinkCount, 'Add Contacts': response.result.data.TotalContacts }
-      dispatch({
-        type: "USER_LINKS_COUNT",
-        value: {
-          payload: newCounts
-        }
-      });
       return true;
     } else {
       return false;
@@ -1696,6 +1746,33 @@ export const getOrderItems = (body = {}) => async dispatch => {
   }
 };
 
+export const getOrderItemsMerchant = (body = {}) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("OrderItemsMerchant"), {
+      method: "POST",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      dispatch({
+        type: "ORDER_DETAILS_MERCHANT",
+        value: { payload: response.result.data.Items }
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
 export const setGlobalCurrency = activeCurrency => dispatch => {
   dispatch({
     type: "SET_ACTIVE_CURRENCY",
@@ -1728,6 +1805,23 @@ export const getSearchCategories = (body = {}) => async dispatch => {
 export const uploadImage = (body = {}) => async dispatch => {
   try {
     const response = await httpFetch(getApiEndPoints("uploadImage"), {
+      method: "POST",
+      body: body
+    });
+    if (response) {
+      return response;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const uploadTermsAndConditions = async (body = {}) => {
+  try {
+    const response = await httpFetch(getApiEndPoints("uploadTermsAndConditions"), {
       method: "POST",
       body: body
     });

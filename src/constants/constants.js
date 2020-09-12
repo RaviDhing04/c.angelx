@@ -76,7 +76,7 @@ export const footerLinksLoggedin = [
   [
     { name: "Sponsored", path: "/home/productsListing#Sponsored" },
     { name: "Followed", path: "/home/productsListing#Followed" },
-    { name: "Advertisements", path: "/" }
+    { name: "Advertisements", path: "#" }
   ],
   [
     { name: "My Profile", path: "/profile/edit/" },
@@ -85,7 +85,7 @@ export const footerLinksLoggedin = [
     { name: "My Orders", path: "/home/ordersList/" },
     { name: "My Contacts", path: "/home/myContacts/" },
     { name: "Donations", path: `/home/ordersList/${JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId}/Donations` },
-    { name: "Show Statistics", path: "/" }
+    { name: "Show Statistics", path: "#" }
   ]
 ];
 
@@ -99,7 +99,7 @@ export const footerLinksLoggedout = [
   ],
   [{ name: "Term & Conditions", path: "https://docs.google.com/viewer?url=https://cangelx-documents.s3.us-east-2.amazonaws.com/Terms+and+Conditions.docx" },
   { name: "Privacy Policy", path: "https://docs.google.com/viewer?url=https://cangelx-documents.s3.us-east-2.amazonaws.com/Privacy+Policy.docx" },
-  { name: "Advertisements", path: "/" }
+  { name: "Advertisements", path: "#" }
   ],
   [
     { name: "Sponsored", path: "/landing#Sponsored" },
@@ -176,11 +176,6 @@ export const supportGrid = [
     image: "address"
   },
   {
-    text: ["+91 xxx xxx xxxx", "+91 xxx xxx xxxx1"],
-    title: "Call us at",
-    image: "email"
-  },
-  {
     text: ["support@cAngelx.xom"],
     title: "Email",
     image: "email"
@@ -192,7 +187,7 @@ export const getNotifications = () => {
   return [1, 2, 3, 4, 5, 6, 7, 8];
 }
 
-export const registerFormFields = ["BusinessType", "BusinessContact", "Country", "DHLId", "BusinessEmail", "BusinessHandle", "OrgName", "TagsData", "OrgWebsite", "PaypalId", "PayFastId", "AddressType", "City", "Pincode", "Province", "StreetName", "StreetNumber", "Suburb"];
+export const registerFormFields = ["BusinessType", "BusinessContact", "Country", "DHLId", "BusinessEmail", "BusinessHandle", "OrgName", "MerchantBio", "TagsData", "OrgWebsite", "PaypalId", "PayFastId", "AddressType", "City", "Pincode", "Province", "StreetName", "StreetNumber", "Suburb"];
 
 export const addProductFormFields = ["ProductName", "ProductCategory", "ProductSubCategory", "ProductType", "Height", "Width", "Length", "Depth", "Weight", "ProductDescription"];
 
@@ -216,3 +211,9 @@ export const addCouponFormFields = ["CouponCode", "Discount", "Currency", "MaxDi
 export const shippingAddressFormFields = ["Country", "AddressType", "City", "ZipCode", "Province", "StreetName", "StreetNumber", "Suburb"];
 
 export const billingAddressFormFields = ["Country", "AddressType", "City", "ZipCode", "Province", "StreetName", "StreetNumber", "Suburb"];
+
+export const countryCodes = {
+  "India": "IN",
+  "South Africa": "ZA",
+  "USA": "USA"
+}

@@ -24,7 +24,7 @@ const ForgotPassword = props => {
     // const password = formElements.formGroupPassword.value;
     setLoading(true);
     const res = await forgotPassword({ email: email });
-    res ? (res.user_status === 'VERIFIED' ? function() {setStep2(true); setLoading(false);}() : res.user_status === 'FORCE_CHANGE_PASSWORD' ? function() {setLoading(false); alert(res.message); props.history.replace(props.location.pathname + "?signUp=true")}() : setLoading(false)) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
+    res ? (res.user_status === 'VERIFIED' ? function () { setStep2(true); setLoading(false); }() : res.user_status === 'FORCE_CHANGE_PASSWORD' ? function () { setLoading(false); alert(res.message); props.history.replace(props.location.pathname + "?signUp=true") }() : setLoading(false)) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
     setEmail(email);
   };
 
@@ -90,9 +90,17 @@ const ForgotPassword = props => {
               </Form.Text>
               </Form.Group>
               <Button className="signUp-btn" type="submit">
-                Signup
+                Change Password
               </Button>
             </Form>
+            <div
+              onClick={() =>
+                props.history.replace(props.location.pathname + "?login=true")
+              }
+              className="signup-link"
+            >
+              Existing User? Log in
+            </div>
           </div>
         ) : (
             <div className="form-section">

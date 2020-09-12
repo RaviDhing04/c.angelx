@@ -16,8 +16,12 @@ const getApiEndPoints = val => {
       return baseUrl + "products/getproductdetails";
     case "CartItems":
       return baseUrl + "cart/getcartdetails";
+    case "getShippingChagres":
+      return baseUrl + "dhlraterequest";
     case "OrderItems":
       return baseUrl + "users/getorderhistoryforuser";
+    case "OrderItemsMerchant":
+      return baseUrl + "business/getorderdetailsformerchant";
     case "FollowedMerchants":
       return baseUrl + "users/getfollowedmerchants";
     case "MerchantAllProducts":
@@ -82,6 +86,8 @@ const getApiEndPoints = val => {
       return baseUrl + "products/search";
     case "uploadImage":
       return baseUrl + "images/upload";
+    case "uploadTermsAndConditions":
+      return baseUrl + "business/updatetermsandconditions";
     case "deleteImage":
       return baseUrl + "images/delete";
     case "deleteProductFromCart":
@@ -112,6 +118,8 @@ const getApiEndPoints = val => {
       return baseUrl + "sendsupportemail";
     case "UserLinkCount":
       return baseUrl + "users/getmanagepanelwithcountdata";
+    case "MerchantLinkCount":
+      return baseUrl + "business/getfollowedpatronscount";
     case "cartCount":
       return baseUrl + "cart/getcartitemcount";
     case "MerchantAllPatrons":

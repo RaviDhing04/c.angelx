@@ -151,12 +151,12 @@ const Header = props => {
               English{" "}
               {isAuthenticated ?
                 <React.Fragment>
-                  <Nav.Link
+                  {/* <Nav.Link
                     as={Link}
                     to={`/home/viewAllProducts/Wishlist`}
                   >
                     <img className="nav-icon" alt="heart-icon" src={heart}></img>
-                  </Nav.Link>
+                  </Nav.Link> */}
                   <Nav.Link as={Link} to={`/cart/${props.userId}`}>
                     <img
                       className="nav-icon"

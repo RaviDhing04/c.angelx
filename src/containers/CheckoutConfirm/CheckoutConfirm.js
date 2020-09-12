@@ -7,11 +7,13 @@ import { Link } from "react-router-dom";
 import {
     checkout,
     getCartItems,
-    cartCount
+    cartCount,
+    getShippingChagres
 } from "../../store/actions";
 import "./CheckoutConfirm.scss";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import formatter from "../../utils/commonUtils/currencyUtils";
+import CartItem from "../../components/CartItem/CartItem";
 
 const CheckoutConfirm = (props) => {
 
@@ -21,7 +23,7 @@ const CheckoutConfirm = (props) => {
     const [paymentType, setPaymentType] = useState('');
     const [orderType, setOrderType] = useState(null);
     const [order, setOrder] = useState(null);
-    const [shippingCharge, setShippingCharge] = useState('');
+    const [shippingCharge, setShippingCharge] = useState(0);
     const history = useHistory();
 
 
@@ -38,7 +40,7 @@ const CheckoutConfirm = (props) => {
                 } else {
                     setOrderType(o.order_type);
                     setOrder(o);
-                    setLoading(false);
+                    fetchShippingCharge([o.product_id]);
                 }
             } else {
                 alert('Order not slected, please go to cart');
@@ -51,11 +53,21 @@ const CheckoutConfirm = (props) => {
         async function fetchCartItems() {
             const res = await props.getCartItems();
             if (res) {
-                setLoading(false);
+                const products = props.cartItems && props.cartItems.cartDetails && props.cartItems.cartDetails.length && props.cartItems.cartDetails.map(cartItem => {
+                    return cartItem.productId;
+                })
+                fetchShippingCharge(products);
             } else {
                 setLoading(false);
                 (alert('something went wrong, Please try again!'));
             }
+        }
+        async function fetchShippingCharge(products) {
+            setShippingCharge(await props.getShippingChagres({
+                "shippingAddress": shipping,
+                "products": products
+            }))
+            setLoading(false);
         }
         return () => {
             // localStorage.setItem('shippingAddress', null);
@@ -126,7 +138,7 @@ const CheckoutConfirm = (props) => {
 
                             <div>
                                 <p className="text">Your total payment amount is - {orderType === 'cart' ? (<span> {props.cartItems.totalDiscountedAmount ? formatter(props.activeCurrency)(props.cartItems.totalDiscountedAmount) : formatter(props.activeCurrency)(0)} </span>) :
-                                    (<span> {order && order.total_amount ? (order && order.order_type === 'laybuy' ? formatter(props.activeCurrency)(((+order.total_amount) / (+order.laybuy_months))) : formatter(props.activeCurrency)(order && order.total_amount)) : formatter(props.activeCurrency)(0)} </span>)}
+                                    (<span> {order && (order.total_amount || +order.unitPrice) ? (order && order.order_type === 'laybuy' ? formatter(props.activeCurrency)(((+order.total_amount) / (+order.laybuy_months))) : formatter(props.activeCurrency)(order && (order.total_amount || +order.unitPrice))) : formatter(props.activeCurrency)(0)} </span>)}
                                 </p>
                                 {order && order.order_type === 'laybuy' ? <p className="text">LayBy months - <span> {order && order.laybuy_months}</span></p> : null}
                                 <p className="text">Your total shipping amount is - <span> {formatter(props.activeCurrency)(shippingCharge)} </span>
@@ -185,7 +197,8 @@ const mapDispatchToProps = dispatch =>
         {
             checkout,
             getCartItems,
-            cartCount
+            cartCount,
+            getShippingChagres
         },
         dispatch
     );

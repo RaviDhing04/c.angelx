@@ -29,16 +29,16 @@ const MerchantOrdersList = props => {
             let res;
             switch (name) {
                 case 'Pending in Total':
-                    res = await getOrderItemsMerchant({ MerchantId: merchantId, "OrderType": "CART", "OrderStatus": "PAYMENT_PROCESSING" });
+                    res = await getOrderItemsMerchant({ MerchantId: merchantId, "OrderType": "CART", "OrderStatus": "PAYMENT_COMPLETED" });
                     break;
                 case 'Lay Buys in Total':
-                    res = await getOrderItemsMerchant({ UserId: merchantId, "OrderType": "LAYBUY", "OrderStatus": "PAYMENT_PROCESSING" });
+                    res = await getOrderItemsMerchant({ UserId: merchantId, "OrderType": "LAYBUY", "OrderStatus": "PAYMENT_COMPLETED" });
                     break;
                 case 'Group Buys in Total':
-                    res = await getOrderItemsMerchant({ UserId: merchantId, "OrderType": "GROUP", "OrderStatus": "PAYMENT_PROCESSING" });
+                    res = await getOrderItemsMerchant({ UserId: merchantId, "OrderType": "GROUP", "OrderStatus": "PAYMENT_COMPLETED" });
                     break;
                 case 'Donations':
-                    res = await getOrderItemsMerchant({ UserId: merchantId, "OrderType": "DONATION", "OrderStatus": "PAYMENT_PROCESSING" });
+                    res = await getOrderItemsMerchant({ UserId: merchantId, "OrderType": "DONATION", "OrderStatus": "PAYMENT_COMPLETED" });
                     break;
                 default:
                     break;
@@ -88,10 +88,11 @@ const mapDispatchToProps = dispatch =>
         dispatch
     );
 
-const mapStatetoProps = ({ app: { manageBusiness } }) => {
-    console.log(manageBusiness);
+const mapStatetoProps = ({ app: { ordersListMerchantPage, common } }) => {
+    console.log(ordersListMerchantPage);
     return {
-        allPatrons: manageBusiness.allPatrons
+        orderItems: ordersListMerchantPage.orderItems,
+        activeCurrency: common.activeCurrency
     };
 };
 

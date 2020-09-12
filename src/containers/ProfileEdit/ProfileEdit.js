@@ -35,14 +35,15 @@ const ProfileEdit = props => {
           "birthdate": formElements.birthdate.value,
           "name": formElements.formGroupName.value,
           "gender": formElements.gender.value,
-          "locale": formElements.locale.value, // mapped to ussd
+          "locale": 'NA', // mapped to ussd
           "website": formElements['website'][0].value + '0000' + formElements['website'][1].value // mapped to alternate number
         }
       }
     );
-    res ? setLoading(false) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
+    res ? (function () { setLoading(false); }()) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
     if (res) {
       setUserData(JSON.parse(localStorage.getItem('userData')));
+      setEditMode(false);
     }
   };
 
@@ -94,6 +95,8 @@ const ProfileEdit = props => {
                   />
                 </Form.Group>
               </Col>
+            </Form.Row>
+            <Form.Row>
               <Col>
                 <Form.Group controlId="formGroupPhone">
                   <Form.Label>Phone Number</Form.Label>
@@ -126,8 +129,6 @@ const ProfileEdit = props => {
                   </div>
                 </Form.Group>
               </Col>
-            </Form.Row>
-            <Form.Row>
               <Col>
                 <Form.Group controlId="website">
                   <Form.Label>Alternate Phone Number</Form.Label>
@@ -160,7 +161,7 @@ const ProfileEdit = props => {
                   </div>
                 </Form.Group>
               </Col>
-              <Col>
+              {/* <Col>
                 <Form.Group controlId="locale">
                   <Form.Label>USSD</Form.Label>
                   <Form.Control
@@ -174,7 +175,9 @@ const ProfileEdit = props => {
                     required
                   />
                 </Form.Group>
-              </Col>
+              </Col> */}
+            </Form.Row>
+            <Form.Row>
               <Col>
                 <Form.Group controlId="birthdate">
                   <Form.Label>Select birth date</Form.Label>
@@ -195,7 +198,7 @@ const ProfileEdit = props => {
                       userData && userData.gender ? userData.gender
                         : ""
                     }
-                    disabled={!editMode}
+                    // disabled={!editMode}
                     required
                   >
                     <option disabled value="" selected> Gender</option>
@@ -210,7 +213,7 @@ const ProfileEdit = props => {
             {editMode ? <Form.Row>
               <Col>
                 <Form.Group controlId="formGroupPassword">
-                  <Form.Label>Password</Form.Label>
+                  <Form.Label>Enter Password to Confirm the Changes</Form.Label>
                   <Form.Control
                     type="password"
                     placeholder="Enter Password"

@@ -14,7 +14,7 @@ import {
 import "./RegisterBusiness.scss";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import { Form, Col, Button, InputGroup } from "react-bootstrap";
-import { registerFormFields } from "../../constants/constants";
+import { registerFormFields, countryCodes } from "../../constants/constants";
 
 const RegisterBusiness = props => {
   const { selectedBusiness, selectedBusinessDetails, registerBusinessMasterData } = props;
@@ -55,10 +55,10 @@ const RegisterBusiness = props => {
       let payload = {};
       const formElements = event.target.elements;
       registerFormFields.forEach(field => {
-        if (["Suburb"].includes(field)){
+        if (["Suburb"].includes(field)) {
           payload[field] = '';
         } else {
-        payload[field] = formElements[field].value;
+          payload[field] = formElements[field].value;
         }
       });
       payload['BusinessContact'] = formElements['BusinessContact'][0].value + '-' + formElements['BusinessContact'][1].value;
@@ -383,6 +383,22 @@ const RegisterBusiness = props => {
                 </Form.Group>
               </Col>
             </Form.Row>
+            <Form.Row className="width-75">
+            <Col>
+                <Form.Group controlId="MerchantBio">
+                  <Form.Label>Merchant Bio</Form.Label>
+                  <Form.Control
+                    defaultValue={
+                      selectedBusinessDetails &&
+                      selectedBusinessDetails.MerchantBio.S
+                    }
+                    as="textarea"
+                    placeholder="Type Merchant Bio"
+                    required
+                  />
+                </Form.Group>
+              </Col>
+            </Form.Row>
             <div className="sub-heading">Address Details</div>
             <Form.Row className="width-25">
               <Col>
@@ -419,7 +435,7 @@ const RegisterBusiness = props => {
                   >
                     <option value="none"> Select Country</option>
                     {registerBusinessMasterData && registerBusinessMasterData.Country && registerBusinessMasterData.Country.length && registerBusinessMasterData.Country.map((type, index) => {
-                      return (<option key={index} value={type}> {type}</option>)
+                      return (<option key={index} value={countryCodes[type]}> {type}</option>)
                     })
                     }
                   </Form.Control>
