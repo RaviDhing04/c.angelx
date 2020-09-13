@@ -136,6 +136,8 @@ const getApiEndPoints = val => {
       return baseUrl + "products/getmasterdataforaddinventory";
     case "searchMerchants":
       return baseUrl + "business/search";
+    case "ViralDonations":
+      return baseUrl + "users/addusernotification";
     default:
       return "/";
   }

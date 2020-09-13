@@ -1640,6 +1640,30 @@ export const getSavedEmployees = (body = {}) => async dispatch => {
     console.log(err);
     return false;
   }
+}; 
+
+export const publishViralDonations = (body = {}) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("ViralDonations"), {
+      method: "POST",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      alert('Successfully shared with contacts')
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
 };
 
 export const addProductToCart = (body = {}) => async (dispatch, getState) => {

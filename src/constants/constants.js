@@ -194,8 +194,8 @@ export const addProductFormFields = ["ProductName", "ProductCategory", "ProductS
 export const addProductFormFieldsProductType = {
   "Electronics": ["Brand", "Model", "Type", "Ram", "Memory", "Os", "Processor", "Storage"],
   "Furnitures": ["Brand", "MaterialDescription"],
-  "Shoes & Accessories": ["Brand", "MaterialDescription", "Ocassion"],
-  "Clothing": ["Brand", "MaterialDescription", "Ocassion"]
+  "Shoes & Accessories": ["Brand", "MaterialDescription", "Occasion"],
+  "Clothing": ["Brand", "MaterialDescription", "Occasion"]
 }
 
 export const displayNameMap = {

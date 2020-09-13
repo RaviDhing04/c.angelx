@@ -362,7 +362,7 @@ const AddInventory = props => {
                       type="number" min="1"
                       placeholder=" Type Unit Price"
                       value={item.UnitPrice ? item.UnitPrice : ''}
-                      onChange={(e) => { productVariation[i]['UnitPrice'] = e.target.value; setProductVariation([...productVariation]) }}
+                      onChange={(e) => { productVariation[i]['UnitPrice'] = e.target.value; if (!productVariation[i]['AvailableColor']) { productVariation[i]['AvailableColor'] = '#ff0000'; } setProductVariation([...productVariation]) }}
                       required
                     />
                   </Form.Group>
@@ -627,15 +627,15 @@ const AddInventory = props => {
                     </Col>
                   </React.Fragment>) : null}
                 {["Clothing", "Shoes & Accessories"].includes(selectedCategory) ? (<Col>
-                  <Form.Group controlId="Ocassion">
-                    <Form.Label>Ocassion</Form.Label>
+                  <Form.Group controlId="Occasion">
+                    <Form.Label>Occasion</Form.Label>
                     <Form.Control
                       defaultValue={
-                        productDetails && productDetails.ProductSpecifications && productDetails.ProductSpecifications.M && productDetails.ProductSpecifications.M.Ocassion &&
-                        productDetails.ProductSpecifications.M.Ocassion.S
+                        productDetails && productDetails.ProductSpecifications && productDetails.ProductSpecifications.M && productDetails.ProductSpecifications.M.Occasion &&
+                        productDetails.ProductSpecifications.M.Occasion.S
                       }
                       type="text"
-                      placeholder="Ocassion"
+                      placeholder="Occasion"
                     />
                   </Form.Group>
                 </Col>) : null}
