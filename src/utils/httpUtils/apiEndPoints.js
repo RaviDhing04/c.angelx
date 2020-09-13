@@ -4,6 +4,8 @@ const getApiEndPoints = val => {
   switch (val) {
     case "LatestProductsWithPagination":
       return baseUrl + "products/getlatestproducts";
+    case "PreviewProductsWithPagination":
+      return baseUrl + "products/getpreviewproducts";
     case "SponsoredProductsWithPagination":
       return baseUrl + "products/getsponsoredproducts";
     case "TrendingProductsWithPagination":

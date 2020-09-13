@@ -177,6 +177,32 @@ export const getLatestProductsWithPagination = (
   }
 };
 
+export const getPreviewProductsWithPagination = (
+  body = {}
+) => async dispatch => {
+  try {
+
+    const response = await httpFetch(
+      getApiEndPoints("PreviewProductsWithPagination"),
+      {
+        method: "GET"
+      }
+    );
+    if (response && response.result && response.result.data && response.result.data.Items) {
+      dispatch({
+        type: "PREVIEW_PRODUCTS",
+        value: { payload: response.result.data }
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
 export const getSponsoredProductsWithPagination = (
   body = {}
 ) => async dispatch => {

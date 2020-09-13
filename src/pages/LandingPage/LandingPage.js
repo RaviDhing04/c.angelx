@@ -7,7 +7,7 @@ import Banner from "../../components/Banner/Banner";
 import { Carousel } from "react-bootstrap";
 import {
   getSearchCategories,
-  getLatestProductsWithPagination,
+  getPreviewProductsWithPagination,
   getLandingBanners,
   addProductToCart,
   addToWishlist,
@@ -29,8 +29,8 @@ const LandingPage = props => {
       props.getSearchCategories();
       setBanner([await props.getLandingBanners()]);
     }
-    const fetchLatestProducts = async () => {
-      const resLatest = await props.getLatestProductsWithPagination();
+    const fetchPreviewProducts = async () => {
+      const resLatest = await props.getPreviewProductsWithPagination();
       if (resLatest) setLoadingLatest(false);
     }
     const fetchSponsoredProducts = async () => {
@@ -38,7 +38,7 @@ const LandingPage = props => {
       if (resSponsored) setLoadingSponsored(false);
     }
     fetchData();
-    fetchLatestProducts();
+    fetchPreviewProducts();
     fetchSponsoredProducts();
   }, []);
 
@@ -96,7 +96,7 @@ const LandingPage = props => {
         <div>
           {/* <ProductListCarousel
             name="Trending"
-            data={props.latestProducts}
+            data={props.previewProducts}
             activeCurrency={props.activeCurrency}
             addProductToCart={addToCart}
             addToWishlist={addProductToWish}
@@ -108,7 +108,7 @@ const LandingPage = props => {
           <div id="Previews">
             <ProductList
               name="Preview"
-              data={props.latestProducts}
+              data={props.previewProducts}
               activeCurrency={props.activeCurrency}
               addProductToCart={addToCart}
               addToWishlist={addProductToWish}
@@ -116,10 +116,12 @@ const LandingPage = props => {
             />
           </div>
         </div>
-        <div id="Categories" className="heading"> Explore by Categories </div>
-        {props.searchCategories && props.searchCategories.length ? <Carousel className="prod-carousel" interval={null}>
-          {makeItems(props.searchCategories)}
-        </Carousel> : null}
+        <div style={{ "background": "#F6F7F9 0% 0% no-repeat padding-box", "paddingBottom": "5rem", "paddingTop": "2rem", "marginTop": "4rem" }}>
+          <div id="Categories" className="heading" style={{"marginTop": "2rem"}}> Explore by Categories </div>
+          {props.searchCategories && props.searchCategories.length ? <Carousel className="prod-carousel" interval={null}>
+            {makeItems(props.searchCategories)}
+          </Carousel> : null}
+        </div>
         {/* <div className="categories">
           {props.searchCategories.length > 0 &&
             props.searchCategories.map(category => {
@@ -168,7 +170,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getSearchCategories,
-      getLatestProductsWithPagination,
+      getPreviewProductsWithPagination,
       getSponsoredProductsWithPagination,
       getLandingBanners,
       addProductToCart,
@@ -182,7 +184,7 @@ const mapStatetoProps = ({ app: { homePage, common } }) => {
   console.log(homePage);
   return {
     searchCategories: homePage.searchCategories,
-    latestProducts: homePage.latestProducts,
+    previewProducts: homePage.previewProducts,
     activeCurrency: common.activeCurrency,
     sponsoredProducts: homePage.sponsoredProducts,
   };

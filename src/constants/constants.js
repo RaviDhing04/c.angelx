@@ -213,7 +213,7 @@ export const shippingAddressFormFields = ["Country", "AddressType", "City", "Zip
 export const billingAddressFormFields = ["Country", "AddressType", "City", "ZipCode", "Province", "StreetName", "StreetNumber", "Suburb"];
 
 export const countryCodes = {
-  "India": "IN",
-  "South Africa": "ZA",
+  "India": "India",
+  "South Africa": "South Africa",
   "USA": "USA"
 }

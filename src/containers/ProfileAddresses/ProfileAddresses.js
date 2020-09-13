@@ -8,7 +8,8 @@ import {
   addNewBillingAddress,
   updateBillingAddress,
   updateShippingAddress,
-  addNewShippingAddress
+  addNewShippingAddress,
+  getAllShippingAddress
 } from "../../store/actions";
 import "./ProfileAddresses.scss";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
@@ -22,14 +23,15 @@ const ProfileAddresses = props => {
   const [editMode, setEditMode] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const { userId, name } = props.match.params;
-  const { getAllBillingAddress, addNewBillingAddress, updateBillingAddress } = props;
+  const { getAllBillingAddress, addNewBillingAddress, updateBillingAddress, getAllShippingAddress } = props;
   const history = useHistory();
 
   useEffect(() => {
     async function fetchSavedBillingAddresses() {
       name ? setName(name) : setName("");
-      const res = await getAllBillingAddress();
-      res ? (function () { setAddresses(res); setLoading(false); }()) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
+      const res1 = await getAllBillingAddress();
+      const res2 = await getAllShippingAddress();
+      res1 && res2 ? (function () { setAddresses([...res1, ...res2]); setLoading(false); }()) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
     }
     fetchSavedBillingAddresses();
   }, []);
@@ -37,8 +39,9 @@ const ProfileAddresses = props => {
   const next = async () => {
     setLoading(false);
     setSelectedAddress(null);
-    const res = await getAllBillingAddress();
-    res ? (function () { setAddresses(res); setLoading(false); }()) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
+    const res1 = await getAllBillingAddress();
+    const res2 = await getAllShippingAddress();
+    res1 && res2 ? (function () { setAddresses([...res1, ...res2]); setLoading(false); }()) : (function () { setLoading(false); (alert('something went wrong, Please try again!')) }());
 
   }
 
@@ -56,7 +59,7 @@ const ProfileAddresses = props => {
     });
     setLoading(true);
     let res;
-    if (formElements['AddressType'] && formElements['AddressType'].value && formElements['AddressType'].value === 'Shipping') {
+    if (formElements['AddressType'] && formElements['AddressType'].value && formElements['AddressType'].value === 'Billing') {
       res = editMode ? await props.updateBillingAddress(payload, selectedAddress.AddressId.S) : await props.addNewBillingAddress(payload);
     } else {
       res = editMode ? await props.updateShippingAddress(payload, selectedAddress.AddressId.S) : await props.addNewShippingAddress(payload);
@@ -110,7 +113,7 @@ const ProfileAddresses = props => {
                   <Form.Label>Country</Form.Label>
                   <Form.Control
                     as="select"
-                    defaultValue={
+                    value={
                       selectedAddress && selectedAddress.Country && selectedAddress.Country.S
                     }
                     required
@@ -168,28 +171,28 @@ const ProfileAddresses = props => {
             <Form.Row className="width-50">
               <Col>
                 <Form.Group controlId="StreetName">
-                  <Form.Label>Street Name</Form.Label>
+                  <Form.Label>Address 1</Form.Label>
                   <Form.Control
                     defaultValue={
                       selectedAddress && selectedAddress.StreetName &&
                       selectedAddress.StreetName.S
                     }
                     type="text"
-                    placeholder="Type Street Name"
+                    placeholder="Type Address 1"
                     required
                   />
                 </Form.Group>
               </Col>
               <Col>
                 <Form.Group controlId="StreetNumber">
-                  <Form.Label>Street Number</Form.Label>
+                  <Form.Label>Address 2</Form.Label>
                   <Form.Control
                     defaultValue={
                       selectedAddress && selectedAddress.StreetNumber &&
                       selectedAddress.StreetNumber.S
                     }
                     type="text"
-                    placeholder="Type Street Number"
+                    placeholder="Type Address 2"
                     required
                   />
                 </Form.Group>
@@ -251,7 +254,8 @@ const mapDispatchToProps = dispatch =>
       addNewBillingAddress,
       updateBillingAddress,
       addNewShippingAddress,
-      updateShippingAddress
+      updateShippingAddress,
+      getAllShippingAddress
     },
     dispatch
   );

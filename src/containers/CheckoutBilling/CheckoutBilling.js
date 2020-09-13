@@ -82,7 +82,8 @@ const CheckoutBilling = props => {
     const setSameAdd = (e) => {
         if (e.target.checked) {
             const shipping = JSON.parse(localStorage.getItem('shippingAddress'));
-            selectAddress(shipping);
+            setEditMode(true);
+            setSelectedAddress(shipping);
         }
     }
 
@@ -133,7 +134,7 @@ const CheckoutBilling = props => {
                                     <Form.Label>Country</Form.Label>
                                     <Form.Control
                                         as="select"
-                                        defaultValue={
+                                        value={
                                             selectedAddress && selectedAddress.Country && selectedAddress.Country.S
                                         }
                                         required
@@ -191,28 +192,28 @@ const CheckoutBilling = props => {
                         <Form.Row className="width-75">
                             <Col>
                                 <Form.Group controlId="StreetName">
-                                    <Form.Label>Street Name</Form.Label>
+                                    <Form.Label>Address 1</Form.Label>
                                     <Form.Control
                                         defaultValue={
                                             selectedAddress && selectedAddress.StreetName &&
                                             selectedAddress.StreetName.S
                                         }
                                         type="text"
-                                        placeholder="Type Street Name"
+                                        placeholder="Type Address 1"
                                         required
                                     />
                                 </Form.Group>
                             </Col>
                             <Col>
                                 <Form.Group controlId="StreetNumber">
-                                    <Form.Label>Street Number</Form.Label>
+                                    <Form.Label>Address 2</Form.Label>
                                     <Form.Control
                                         defaultValue={
                                             selectedAddress && selectedAddress.StreetNumber &&
                                             selectedAddress.StreetNumber.S
                                         }
                                         type="text"
-                                        placeholder="Type Street Number"
+                                        placeholder="Type Address 2"
                                         required
                                     />
                                 </Form.Group>

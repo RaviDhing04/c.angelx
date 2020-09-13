@@ -1,6 +1,7 @@
 const initialState = {
   homePage: {
     latestProducts: {},
+    previewProducts: {},
     sponsoredProducts: {},
     trendingProducts: {},
     wishlistProducts: {},
@@ -61,6 +62,14 @@ export const appReducer = (state = initialState, { type, value }) => {
           latestProducts: value.payload
         }
       };
+      case "PREVIEW_PRODUCTS":
+        return {
+          ...state,
+          homePage: {
+            ...state.homePage,
+            previewProducts: value.payload
+          }
+        };
     case "SPONSORED_PRODUCTS":
       return {
         ...state,

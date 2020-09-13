@@ -55,7 +55,7 @@ const RegisterBusiness = props => {
       let payload = {};
       const formElements = event.target.elements;
       registerFormFields.forEach(field => {
-        if (["Suburb"].includes(field)) {
+        if (["Suburb", "PayFastId"].includes(field)) {
           payload[field] = '';
         } else {
           payload[field] = formElements[field].value;
@@ -307,7 +307,7 @@ const RegisterBusiness = props => {
               </Col>
             </Form.Row>
             <Form.Row className="width-75">
-              <Col>
+              {/* <Col>
                 <Form.Group controlId="PayFastId">
                   <Form.Label>Insert Payfast ID</Form.Label>
                   <InputGroup>
@@ -331,7 +331,7 @@ const RegisterBusiness = props => {
                     </InputGroup.Append>
                   </InputGroup>
                 </Form.Group>
-              </Col>
+              </Col> */}
               <Col>
                 <Form.Group controlId="PaypalId">
                   <Form.Label>Insert Paypal ID</Form.Label>

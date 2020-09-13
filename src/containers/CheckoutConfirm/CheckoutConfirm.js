@@ -53,21 +53,14 @@ const CheckoutConfirm = (props) => {
         async function fetchCartItems() {
             const res = await props.getCartItems();
             if (res) {
-                const products = props.cartItems && props.cartItems.cartDetails && props.cartItems.cartDetails.length && props.cartItems.cartDetails.map(cartItem => {
-                    return cartItem.productId;
-                })
-                fetchShippingCharge(products);
+                // const products = props.cartItems && props.cartItems.cartDetails && props.cartItems.cartDetails.length && props.cartItems.cartDetails.map(cartItem => {
+                //     return cartItem.productId;
+                // })
+                // fetchShippingCharge(products);
             } else {
                 setLoading(false);
                 (alert('something went wrong, Please try again!'));
             }
-        }
-        async function fetchShippingCharge(products) {
-            setShippingCharge(await props.getShippingChagres({
-                "shippingAddress": shipping,
-                "products": products
-            }))
-            setLoading(false);
         }
         return () => {
             // localStorage.setItem('shippingAddress', null);
@@ -75,6 +68,27 @@ const CheckoutConfirm = (props) => {
             // localStorage.setItem('orderType', null);
         };
     }, []);
+
+    const fetchShippingCharge = async (products) => {
+        if (addresses[1] && addresses[1].AddressId.S) {
+            setShippingCharge(await props.getShippingChagres({
+                "shippingAddress": addresses[1] ? addresses[1].AddressId.S : null,
+                "products": products
+            }))
+            setLoading(false);
+        } else {
+            setLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        if (props.cartItems && props.cartItems.cartDetails && props.cartItems.cartDetails.length) {
+            const products = props.cartItems && props.cartItems.cartDetails && props.cartItems.cartDetails.length && props.cartItems.cartDetails.map(cartItem => {
+                return cartItem.productId;
+            })
+            fetchShippingCharge(products);
+        }
+    }, [props.cartItems]);
 
 
     const selectPaymentType = (e) => {
@@ -153,12 +167,11 @@ const CheckoutConfirm = (props) => {
                                                         <Form.Label>Select payment option</Form.Label>
                                                         <Form.Control
                                                             as="select"
-                                                            defaultValue="Payfast"
+                                                            defaultValue="none"
                                                             required
                                                             onChange={(e) => selectPaymentType(e)}
                                                         >
                                                             <option value="none"> Select payment option</option>
-                                                            <option value="payfast"> Payfast</option>
                                                             <option value="paypal"> PayPal</option>
                                                         </Form.Control>
                                                     </Form.Group>
