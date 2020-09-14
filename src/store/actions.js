@@ -1823,6 +1823,29 @@ export const getOrderItemsMerchant = (body = {}) => async dispatch => {
   }
 };
 
+export const updateOrderStatus = (body = {}) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("updateOrderStatus"), {
+      method: "POST",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
 export const setGlobalCurrency = activeCurrency => dispatch => {
   dispatch({
     type: "SET_ACTIVE_CURRENCY",

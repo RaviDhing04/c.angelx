@@ -30,7 +30,7 @@ const initialState = {
     orderProductDetails: {}
   },
   ordersListMerchantPage: {
-    orderItems: {},
+    orderItems: [],
   },
   viewAllProductPage: {
     products: {}

@@ -182,7 +182,8 @@ const ProductDetails = props => {
       "total_amount": selectedVariation && selectedVariation.M && selectedVariation.M.UnitPrice && (selectedVariation.M.UnitPrice.S * quantity),
       "billing_address_id": null,
       "shipping_address_id": null,
-      "payment_type": null
+      "payment_type": null,
+      "SelectedColor": selectedVariation && selectedVariation.M && selectedVariation.M.AvailableColor && selectedVariation.M.AvailableColor.S,
     }
     localStorage.setItem('orderType', JSON.stringify(orderType));
     history.push(`/checkout/shipping/${JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId}/${'Shipping'}`);
@@ -212,7 +213,8 @@ const ProductDetails = props => {
       "total_amount": totalAmount,
       "billing_address_id": null,
       "shipping_address_id": null,
-      "payment_type": null
+      "payment_type": null,
+      "SelectedColor": selectedVariation && selectedVariation.M && selectedVariation.M.AvailableColor && selectedVariation.M.AvailableColor.S,
     }
     localStorage.setItem('orderType', JSON.stringify(orderType));
     history.push(`/checkout/shipping/${JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId}/${'Shipping'}`);

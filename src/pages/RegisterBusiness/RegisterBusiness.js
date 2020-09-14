@@ -212,7 +212,7 @@ const RegisterBusiness = props => {
                   <Form.Label>Type of Business</Form.Label>
                   <Form.Control
                     as="select"
-                    defaultValue={
+                    value={
                       selectedBusinessDetails &&
                       selectedBusinessDetails.BusinessType.S
                     }
@@ -306,7 +306,7 @@ const RegisterBusiness = props => {
                 </Form.Group>
               </Col>
             </Form.Row>
-            <Form.Row className="width-75">
+            <Form.Row className="width-50">
               {/* <Col>
                 <Form.Group controlId="PayFastId">
                   <Form.Label>Insert Payfast ID</Form.Label>

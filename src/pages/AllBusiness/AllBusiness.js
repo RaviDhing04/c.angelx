@@ -36,9 +36,10 @@ const AllBusiness = props => {
   }, [allBusiness])
   const navigate = (event) => {
     const ele = event.target.tagName;
-    const merchantId = event.currentTarget.dataset.value;
+    const merchantId = event.currentTarget.dataset.value.split('---')[0];
+    const type = event.currentTarget.dataset.value.split('---')[1];
     props.updateSelectedBusiness(merchantId);
-    ele !== "BUTTON" ? history.push(`/merchantHome/inventory/Inventory/${merchantId}`) : history.push('/registerBusiness/edit');
+    ele !== "BUTTON" ? type !== 'NPO' ? history.push(`/merchantHome/inventory/Inventory/${merchantId}`) : history.push(`/merchantHome/campaigns/Causes/${merchantId}`) : history.push('/registerBusiness/edit');
   }
 
   return !loading ? (
@@ -48,15 +49,15 @@ const AllBusiness = props => {
           <span className="heading">Registered Businesses</span>
         </div>
         <div className="business-card-holder">
-          {allBusiness && allBusiness.length  ? allBusiness.map(business => {
+          {allBusiness && allBusiness.length ? allBusiness.map(business => {
             return (
-              <div data-value={business.MerchantId.S} onClick={(e) => navigate(e)} key={business.MerchantId.S} className="business-card">
+              <div data-value={business.MerchantId.S + '---' + business.BusinessType.S} onClick={(e) => navigate(e)} key={business.MerchantId.S} className="business-card">
                 <p> {business.BusinessHandle.S}</p>
                 <span>{business.BusinessType.S}</span>
                 {isMerchant ? <button className="edit-business">Edit</button> : null}
               </div>
             );
-          }): null}
+          }) : null}
           {isMerchant ? <div className="business-card">
             <button onClick={() => history.push('/registerBusiness/addNew')} className="add-business">
               <img className="plus-icon" alt="plus-icon" src={plusIcon}></img>

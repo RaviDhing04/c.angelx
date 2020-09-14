@@ -15,11 +15,11 @@ export const merchantLeftNavLinks = {
     { name: "Causes", path: "/merchantHome/campaigns/", icon: "donate", enable: true },
     { name: "Add Discount Coupons", path: "/merchantHome/coupons/", icon: "coupon", enable: true },
     { name: "Subordinate Account", path: "/merchantHome/myEmployees/", icon: "Shape", enable: true },
-    { name: "Sales/Pending Deliveries", path: "/merchantHome/myEmployees/", icon: "hourglass", enable: false },
-    { name: "Lay By Orders", path: "/merchantHome/myEmployees/", icon: "clock", enable: true },
-    { name: "Pending in Total", path: "/merchantHome/myEmployees/", icon: "clock", enable: true },
-    { name: "Group Purchase Orders", path: "/merchantHome/myEmployees/", icon: "shopping-cart", enable: true },
-    { name: "Declined Orders", path: "/merchantHome/myEmployees/", icon: "blocked-symbol", enable: false },
+    { name: "Sales-Pending Deliveries", path: "/merchantHome/ordersList/", icon: "hourglass", enable: true },
+    { name: "Pending Total Orders", path: "/merchantHome/ordersList/", icon: "clock", enable: true },
+    { name: "Lay Buy Orders", path: "/merchantHome/ordersList/", icon: "clock", enable: true },
+    { name: "Group Purchase Orders", path: "/merchantHome/ordersList/", icon: "shopping-cart", enable: true },
+    { name: "Declined Orders", path: "/merchantHome/ordersList/", icon: "blocked-symbol", enable: true },
     { name: "Patrons", path: "/merchantHome/Patrons/", icon: "profile", enable: true },
     { name: "Statistics", path: "/merchantHome/myEmployees/", icon: "bar-graph", enable: false }
   ],
@@ -27,17 +27,19 @@ export const merchantLeftNavLinks = {
     { name: "Inventory", path: "/merchantHome/inventory/", icon: "inventory", enable: true },
     { name: "Add Discount Coupons", path: "/merchantHome/coupons/", icon: "coupon", enable: true },
     { name: "Subordinate Account", path: "/merchantHome/myEmployees/", icon: "Shape", enable: true },
-    { name: "Sales/Pending Deliveries", path: "/merchantHome/myEmployees/", icon: "hourglass", enable: false },
-    { name: "Lay By Orders", path: "/merchantHome/myEmployees/", icon: "clock", enable: true },
-    { name: "Group Purchase Orders", path: "/merchantHome/myEmployees/", icon: "shopping-cart", enable: true },
-    { name: "Declined Orders", path: "/merchantHome/myEmployees/", icon: "blocked-symbol", enable: false },
+    { name: "Sales-Pending Deliveries", path: "/merchantHome/ordersList/", icon: "hourglass", enable: true },
+    { name: "Pending Total Orders", path: "/merchantHome/ordersList/", icon: "clock", enable: true },
+    { name: "Lay Buy Orders", path: "/merchantHome/ordersList/", icon: "clock", enable: true },
+    { name: "Group Purchase Orders", path: "/merchantHome/ordersList/", icon: "shopping-cart", enable: true },
+    { name: "Declined Orders", path: "/merchantHome/ordersList/", icon: "blocked-symbol", enable: true },
     { name: "Patrons", path: "/merchantHome/Patrons/", icon: "profile", enable: true },
     { name: "Statistics", path: "/merchantHome/myEmployees/", icon: "bar-graph", enable: false }
   ],
   'NPO': [
     { name: "Causes", path: "/merchantHome/campaigns/", icon: "donate", enable: true },
     { name: "Subordinate Account", path: "/merchantHome/myEmployees/", icon: "Shape", enable: true },
-    { name: "Donations", path: "/merchantHome/myEmployees/", icon: "donate", enable: true },
+    { name: "Donations", path: "/merchantHome/ordersList/", icon: "donate", enable: true },
+    { name: "Declined Orders", path: "/merchantHome/ordersList/", icon: "blocked-symbol", enable: true },
     { name: "Patrons", path: "/merchantHome/Patrons/", icon: "profile", enable: true },
     { name: "Statistics", path: "/merchantHome/myEmployees/", icon: "bar-graph", enable: false }
   ]
@@ -208,9 +210,9 @@ export const addCampaignFormFields = ["ProductName", "Currency", "ProductDescrip
 
 export const addCouponFormFields = ["CouponCode", "Discount", "Currency", "MaxDiscountAmount", "CouponActiveFrom", "CouponExpiryDate", "CouponDescription"];
 
-export const shippingAddressFormFields = ["Country", "AddressType", "City", "ZipCode", "Province", "StreetName", "StreetNumber", "Suburb"];
+export const shippingAddressFormFields = ["Country", "AddressType", "City", "Zipcode", "Province", "StreetName", "StreetNumber", "Suburb"];
 
-export const billingAddressFormFields = ["Country", "AddressType", "City", "ZipCode", "Province", "StreetName", "StreetNumber", "Suburb"];
+export const billingAddressFormFields = ["Country", "AddressType", "City", "Zipcode", "Province", "StreetName", "StreetNumber", "Suburb"];
 
 export const countryCodes = {
   "India": "India",

@@ -18,13 +18,30 @@ const ViewAllProducts = props => {
   const itemsPerRow = merchantId ? 4 : 5;
 
   useEffect(() => {
+    fetchData();
+    return () => {
+      props.clearViewAllProducts();
+    }
+  }, [name]);
+
+  useEffect(() => {
+    if (!name && !merchantId) {
+      if (merchantHandle) {
+        props.getMerchantAllProducts({
+          MerchantId: selectedBusiness && selectedBusiness.MerchantId && selectedBusiness.MerchantId.S
+        })
+      }
+    }
+  }, [selectedBusiness]);
+
+  const fetchData = () => {
     switch (name) {
       case "Latest Uploads":
         merchantId
           ? props.getMerchantAllProducts({
             MerchantId: merchantId
           })
-          :  props.getLatestProducts();
+          : props.getLatestProducts();
         break;
       case "Followed":
         props.getLatestProducts();
@@ -41,20 +58,7 @@ const ViewAllProducts = props => {
       default:
         break;
     }
-    return () => {
-      props.clearViewAllProducts();
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!name && !merchantId) {
-      if (merchantHandle) {
-        props.getMerchantAllProducts({
-          MerchantId: selectedBusiness && selectedBusiness.MerchantId && selectedBusiness.MerchantId.S
-        })
-      }
-    }
-  }, [selectedBusiness]);
+  }
 
   const addToCart = async (payload) => {
     const res = await props.addProductToCart(payload);

@@ -82,6 +82,7 @@ const Login = props => {
         }}
         component={temp(props)}
         show={true}
+        size="lg"
       />
     )
   );

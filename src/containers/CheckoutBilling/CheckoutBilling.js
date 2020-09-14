@@ -147,12 +147,12 @@ const CheckoutBilling = props => {
                                 </Form.Group>
                             </Col>
                             <Col>
-                                <Form.Group controlId="ZipCode">
+                                <Form.Group controlId="Zipcode">
                                     <Form.Label>Pincode</Form.Label>
                                     <Form.Control
                                         defaultValue={
-                                            selectedAddress && selectedAddress.ZipCode &&
-                                            selectedAddress.ZipCode.S
+                                            selectedAddress && selectedAddress.Zipcode &&
+                                            selectedAddress.Zipcode.S
                                         }
                                         type="text"
                                         placeholder="Type Pincode"

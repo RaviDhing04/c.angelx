@@ -5,14 +5,14 @@ const CenterModal = props => {
   return (
     <Modal
       {...props}
-      size="lg"
+      size={props.size}
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
       {/* <Modal.Header closeButton>
       </Modal.Header> */}
       <Modal.Body>
-       {props.component}
+        {props.component}
       </Modal.Body>
     </Modal>
   );

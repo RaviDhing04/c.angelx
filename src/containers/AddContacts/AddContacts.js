@@ -57,6 +57,7 @@ const AddContacts = props => {
     res
     ? (function () {
       res && res.message ? (function () {
+        alert(res.message)
         setDisableBtn(true); setLoading(false);
       })() :
         (function () {

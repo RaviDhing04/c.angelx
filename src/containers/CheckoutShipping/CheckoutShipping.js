@@ -22,6 +22,7 @@ const CheckoutShipping = props => {
   const { userId, name } = props.match.params;
   const { getAllShippingAddress, addNewShippingAddress, updateShippingAddress } = props;
   const history = useHistory();
+  const o = JSON.parse(localStorage.getItem('orderType'));
 
   useEffect(() => {
     async function fetchSavedShippingAddresses() {
@@ -89,7 +90,7 @@ const CheckoutShipping = props => {
       <div className="checkout-billing-heading">{pageName}</div>
       <Container className="checkout-billing-container" fluid>
 
-        <div className="shipper">
+        {o && o.order_type !== 'DONATION' ? <div className="shipper">
           <Form
             id="selectShipperForm"
           >
@@ -111,7 +112,7 @@ const CheckoutShipping = props => {
               </Col>
             </Form.Row>
           </Form>
-        </div>
+        </div> : null}
         <div className="checkout-billing">
           <Form
             id="shippingAddressFormFields"
@@ -155,12 +156,12 @@ const CheckoutShipping = props => {
                 </Form.Group>
               </Col>
               <Col>
-                <Form.Group controlId="ZipCode">
+                <Form.Group controlId="Zipcode">
                   <Form.Label>Pincode</Form.Label>
                   <Form.Control
                     defaultValue={
-                      selectedAddress && selectedAddress.ZipCode &&
-                      selectedAddress.ZipCode.S
+                      selectedAddress && selectedAddress.Zipcode &&
+                      selectedAddress.Zipcode.S
                     }
                     type="text"
                     placeholder="Type Pincode"

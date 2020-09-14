@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./LeftNav.scss";
 import { Nav, Card, Form, InputGroup, FormControl, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { uploadTermsAndConditions } from "../../store/actions";
 import checkmark from "../../assets/checkmark.svg";
 
@@ -9,6 +9,7 @@ const LeftNav = props => {
   const { links, merchants, merchantId, showMerchants, count } = props;
   const userId = JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId;
   const [searchResults, setSearchResults] = useState([]);
+  const history = useHistory();
 
   const filterMerchants = (val) => {
     let searchArray = val.trim().split(" ");
@@ -48,7 +49,7 @@ const LeftNav = props => {
           {links &&
             links.map(link => {
               return (
-                <div key={link.name} className={window.location.href.includes(link.name.split(' ')[0]) ? "list-item active" : link.enable ? "list-item" : "list-item disable"}>
+                <div key={link.name} className={(['Sales-Pending Deliveries', 'Pending Total Orders'].includes(link.name) ? window.location.href.includes(link.name.split(' ')[1]) : window.location.href.includes(link.name.split(' ')[0])) ? "list-item active" : link.enable ? "list-item" : "list-item disable"}>
                   <img
                     className="nav-icon"
                     alt="bell-icon"
@@ -147,9 +148,9 @@ const LeftNav = props => {
           type="file"
           accept=".pdf"
           style={{ display: "none" }}
-        /> </div> 
+        /> </div>
         // <a href="/support" className="terms" >Edit Terms and Conditionss</a>
-         : null}
+        : null}
     </div>
   );
 };

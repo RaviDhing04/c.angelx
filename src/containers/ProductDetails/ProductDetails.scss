@@ -289,7 +289,7 @@
 }
 
 .drop-down-alike {
-  width: 13rem;
+  width: 17rem;
   height: 2rem;
   font-size: 0.875rem;
   margin: 5px 0;
@@ -303,10 +303,10 @@
 
   .custom-dropdown {
     height: 10rem;
-    overflow: scroll;
+    overflow-y: scroll;
     background-color: #e0e1e2;
     position: absolute;
-    width: 13rem;
+    width: 17rem;
 
     .custom-select-option {
       display: flex;

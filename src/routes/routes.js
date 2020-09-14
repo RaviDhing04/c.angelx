@@ -173,6 +173,15 @@ const AsyncAddInventory = Loadable({
   modules: ["AddInventory"]
 });
 
+const AsyncMerchantOrdersList = Loadable({
+  loader: () =>
+    import(
+      /* webpackChunkName: "MerchantOrdersList" */ "../containers/MerchantOrdersList/MerchantOrdersList"
+    ),
+  loading: error => <LoadingFallback {...error} />,
+  modules: ["MerchantOrdersList"]
+});
+
 const AsyncAddCampaign = Loadable({
   loader: () =>
     import(
@@ -385,6 +394,12 @@ export const merchant_child_routes = [
   {
     path: "/merchantHome/addInventory/:action/:merchantId",
     component: AsyncAddInventory,
+    exact: true,
+    type: "private"
+  },
+  {
+    path: "/merchantHome/ordersList/:name/:merchantId",
+    component: AsyncMerchantOrdersList,
     exact: true,
     type: "private"
   },

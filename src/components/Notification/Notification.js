@@ -75,6 +75,7 @@ const Notification = () => {
         component={makeNotifications(allNotification.length)}
         show={modalShow}
         onHide={() => setModalShow(false)}
+        size="lg"
       />
     )
   ) : null;

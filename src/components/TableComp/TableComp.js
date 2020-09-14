@@ -19,7 +19,7 @@ const TableComp = props => {
     return (
       <tr key={index}>
         {tableKeys.map((key, index) => {
-          return <td key={index}>{rowData[key] && (rowData[key].S || rowData[key].S === "") ? rowData[key].S : rowData[key]}</td>;
+          return <td key={index}>{rowData[key] && (rowData[key].S || rowData[key].S === "") ? rowData[key].S : rowData[key] && rowData[key].N && (rowData[key].N || rowData[key].N === "") ? rowData[key].N : rowData[key]}</td>;
         })}
         {showEdit || showDelete ? <td className="tableEditDelete">
           {showEdit ? <span onClick={() => onEdit(rowData)}>{editText}</span> : null}

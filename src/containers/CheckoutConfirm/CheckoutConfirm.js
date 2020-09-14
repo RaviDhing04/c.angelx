@@ -24,6 +24,7 @@ const CheckoutConfirm = (props) => {
     const [orderType, setOrderType] = useState(null);
     const [order, setOrder] = useState(null);
     const [shippingCharge, setShippingCharge] = useState(0);
+    const [shipper, setShipper] = useState(0);
     const history = useHistory();
 
 
@@ -31,6 +32,7 @@ const CheckoutConfirm = (props) => {
         const shipping = JSON.parse(localStorage.getItem('shippingAddress'));
         const billing = JSON.parse(localStorage.getItem('billingAddress'));
         const o = JSON.parse(localStorage.getItem('orderType'));
+        setShipper(localStorage.getItem('shipper'));
         if (billing) {
             setAddresses([billing, shipping]);
             if (o) {
@@ -40,7 +42,9 @@ const CheckoutConfirm = (props) => {
                 } else {
                     setOrderType(o.order_type);
                     setOrder(o);
-                    fetchShippingCharge([o.product_id]);
+                    if (shipper === 'DHL') {
+                        fetchShippingCharge([o.product_id]);
+                    }
                 }
             } else {
                 alert('Order not slected, please go to cart');
@@ -86,7 +90,9 @@ const CheckoutConfirm = (props) => {
             const products = props.cartItems && props.cartItems.cartDetails && props.cartItems.cartDetails.length && props.cartItems.cartDetails.map(cartItem => {
                 return cartItem.productId;
             })
-            fetchShippingCharge(products);
+            if (shipper === 'DHL') {
+                fetchShippingCharge(products);
+            }
         }
     }, [props.cartItems]);
 
@@ -154,38 +160,37 @@ const CheckoutConfirm = (props) => {
                                 <p className="text">Your total payment amount is - {orderType === 'cart' ? (<span> {props.cartItems.totalDiscountedAmount ? formatter(props.activeCurrency)(props.cartItems.totalDiscountedAmount) : formatter(props.activeCurrency)(0)} </span>) :
                                     (<span> {order && (order.total_amount || +order.unitPrice) ? (order && order.order_type === 'laybuy' ? formatter(props.activeCurrency)(((+order.total_amount) / (+order.laybuy_months))) : formatter(props.activeCurrency)(order && (order.total_amount || +order.unitPrice))) : formatter(props.activeCurrency)(0)} </span>)}
                                 </p>
-                                {order && order.order_type === 'laybuy' ? <p className="text">LayBy months - <span> {order && order.laybuy_months}</span></p> : null}
-                                <p className="text">Your total shipping amount is - <span> {formatter(props.activeCurrency)(shippingCharge)} </span>
+                                {order && order.order_type === 'laybuy' ? <p className="text">Lay buy months - <span> {order && order.laybuy_months}</span></p> : null}
+                                {shippingCharge ? <p className="text">Your total shipping amount is - <span> {formatter(props.activeCurrency)(shippingCharge)} </span> </p> : null}
 
-                                    <div className="shipper">
-                                        <Form
-                                            id="selectPaymentTypeForm"
-                                        >
-                                            <Form.Row className="width-25">
-                                                <Col>
-                                                    <Form.Group controlId="selectPaymentType">
-                                                        <Form.Label>Select payment option</Form.Label>
-                                                        <Form.Control
-                                                            as="select"
-                                                            defaultValue="none"
-                                                            required
-                                                            onChange={(e) => selectPaymentType(e)}
-                                                        >
-                                                            <option value="none"> Select payment option</option>
-                                                            <option value="paypal"> PayPal</option>
-                                                        </Form.Control>
-                                                    </Form.Group>
-                                                </Col>
-                                            </Form.Row>
-                                        </Form>
-                                    </div>
+                                <div className="shipper">
+                                    <Form
+                                        id="selectPaymentTypeForm"
+                                    >
+                                        <Form.Row className="width-25">
+                                            <Col>
+                                                <Form.Group controlId="selectPaymentType">
+                                                    <Form.Label>Select payment option</Form.Label>
+                                                    <Form.Control
+                                                        as="select"
+                                                        defaultValue="none"
+                                                        required
+                                                        onChange={(e) => selectPaymentType(e)}
+                                                    >
+                                                        <option value="none"> Select payment option</option>
+                                                        <option value="paypal"> PayPal</option>
+                                                    </Form.Control>
+                                                </Form.Group>
+                                            </Col>
+                                        </Form.Row>
+                                    </Form>
+                                </div>
 
-                                    <div className="buttons">
-                                        <Button className="saveButton" onClick={checkoutNow}>
-                                            Pay now
+                                <div className="buttons">
+                                    <Button className="saveButton" onClick={checkoutNow}>
+                                        Pay now
                     </Button>
-                                    </div>
-                                </p>
+                                </div>
                             </div>
                         </div>
                     ) : (
@@ -201,7 +206,7 @@ const CheckoutConfirm = (props) => {
                             </div>
                         )
                 } </React.Fragment>
-        </React.Fragment>
+        </React.Fragment >
     )
 }
 

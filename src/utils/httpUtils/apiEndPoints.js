@@ -138,6 +138,8 @@ const getApiEndPoints = val => {
       return baseUrl + "business/search";
     case "ViralDonations":
       return baseUrl + "users/addusernotification";
+    case "updateOrderStatus":
+      return baseUrl + "business/updateorderstatus";
     default:
       return "/";
   }
