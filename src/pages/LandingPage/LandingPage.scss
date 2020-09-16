@@ -110,7 +110,7 @@
 
     .grid-flex {
       display: flex;
-      height: 18rem;
+      height: 25rem;
       width: calc(100% / 3);
 
       .rightLine {
@@ -129,7 +129,7 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        justify-content: space-evenly;
+        // justify-content: space-evenly;
         padding: 2rem 5rem 3rem 0rem;
         margin-right: 1rem;
         margin-left: 1rem;
@@ -145,6 +145,7 @@
         color: #3b3b3b;
         opacity: 1;
         font-size: 1.25rem;
+        margin-top: 1rem;
       }
 
       .grid-text {

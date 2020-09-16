@@ -143,21 +143,25 @@ const LandingPage = props => {
             const i = index + 1;
             return (
               <div className="grid-flex">
-                <div
-                  className={
-                    [1, 2, 3].includes(i) ? "bottomLine grid-item" : "grid-item"
-                  }
-                >
+              <div
+                className={
+                  [1, 2, 3].includes(i) ? "bottomLine grid-item" : "grid-item"
+                }
+              >
+                <div style={{ "display": "flex", "flexDirection": "column", "marginBottom": "2rem", "height": "7rem" }}>
                   <img
                     className="grid-image"
                     alt={gridItem.image + "name"}
                     src={require(`../../assets/${gridItem.image}.svg`)}
                   ></img>
                   <span className="grid-title">{gridItem.title}</span>
-                  <p className="grid-text">{gridItem.text}</p>
                 </div>
-                <hr className={i % 3 ? "rightLine" : "none"} />
+                <div>
+                  <span className="grid-text">{gridItem.text}</span>
+                </div>
               </div>
+              <hr className={i % 3 ? "rightLine" : "none"} />
+            </div>
             );
           })}
         </div>
