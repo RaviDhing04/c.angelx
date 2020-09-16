@@ -203,6 +203,32 @@ export const getPreviewProductsWithPagination = (
   }
 };
 
+export const getPreviewProducts = (
+  body = {}
+) => async dispatch => {
+  try {
+
+    const response = await httpFetch(
+      getApiEndPoints("PreviewProductsWithPagination"),
+      {
+        method: "GET"
+      }
+    );
+    if (response && response.result && response.result.data && response.result.data.Items) {
+      dispatch({
+        type: "VIEWALL_PRODUCTS",
+        value: { payload: response.result.data }
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
 export const getSponsoredProductsWithPagination = (
   body = {}
 ) => async dispatch => {
@@ -732,6 +758,35 @@ export const getUserLinkCount = (body = {}) => async dispatch => {
         type: "USER_LINKS_COUNT",
         value: {
           payload: out
+        }
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const getUserNotification = (body = {}) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("UserNotification"), {
+      method: "GET"
+    });
+
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message === "Success"
+    ) {
+      dispatch({
+        type: "USER_NOTIFICATIONS",
+        value: {
+          payload: response.result.data.Items
         }
       });
       return true;
@@ -1640,7 +1695,7 @@ export const getSavedEmployees = (body = {}) => async dispatch => {
     console.log(err);
     return false;
   }
-}; 
+};
 
 export const publishViralDonations = (body = {}) => async dispatch => {
   try {
@@ -1838,10 +1893,11 @@ export const updateOrderStatus = (body = {}) => async dispatch => {
     ) {
       return true;
     } else {
+      alert('Some error occured while updating order. Please contact admin.');
       return false;
     }
   } catch (err) {
-    console.log(err);
+    alert('Some error occured while updating order. Please contact admin.')
     return false;
   }
 };
@@ -1983,6 +2039,20 @@ export const clearViewAllProducts = () => dispatch => {
   dispatch({
     type: "VIEWALL_PRODUCTS",
     value: { payload: {} }
+  });
+};
+
+export const clearUserOrderList = () => dispatch => {
+  dispatch({
+    type: "ORDER_DETAILS",
+    value: { payload: {} }
+  });
+};
+
+export const clearMerchantOrderList = () => dispatch => {
+  dispatch({
+    type: "ORDER_DETAILS_MERCHANT",
+    value: { payload: [] }
   });
 };
 

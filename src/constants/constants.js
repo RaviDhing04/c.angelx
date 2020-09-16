@@ -39,7 +39,6 @@ export const merchantLeftNavLinks = {
     { name: "Causes", path: "/merchantHome/campaigns/", icon: "donate", enable: true },
     { name: "Subordinate Account", path: "/merchantHome/myEmployees/", icon: "Shape", enable: true },
     { name: "Donations", path: "/merchantHome/ordersList/", icon: "donate", enable: true },
-    { name: "Declined Orders", path: "/merchantHome/ordersList/", icon: "blocked-symbol", enable: true },
     { name: "Patrons", path: "/merchantHome/Patrons/", icon: "profile", enable: true },
     { name: "Statistics", path: "/merchantHome/myEmployees/", icon: "bar-graph", enable: false }
   ]
@@ -139,33 +138,39 @@ export const aboutUsText = [
 export const aboutUsGrid = [
   {
     text:
-      "C-Angelx enables you to shop online, or donate to any listed NPO of your choice.",
+      "C-Angelx enables individual Patrons (customers, supporters, etc) to follow listed merchants & NPOs of their choice on this platform -  & shop online, place lay-buys, or donate to any of the listed NPOs they like.",
     title: "Shop, Sell and Support",
     image: "aboutUs1"
   },
   {
     text:
-      "You can create an online merchant & sell online, or an NPO/NGO account for superior fundraising and receiving donations.",
+      "You are also able to create an online merchant & sell online, or an NPO (cause) account for superior fundraising & receiving donations online safely. Add your staff as subordinates to upload inventory & process sales’ while you manage the business...",
     title: "Give and Take",
     image: "aboutUs2"
   },
   {
     text:
-      "C-Angelx has everything figured out for your merchant: Courier services will collect directly from your shop & deliver directly to your customers address, securely. No Hassles!",
+      "C-Angelx has everything figured out for your merchant: DHL Courier services can collect directly from your shop & deliver directly to your customer’s door, securely & safely. No Hassles!",
     title: "One Stop Solution",
     image: "aboutUs3"
   },
   {
     text:
-      "C-Angelx is designed with security in mind, & further hosted in highly secure & reliable global servers.",
+      "C-Angelx is designed with security in mind, & further hosted in highly secure & reliable global servers’ as a Global-Platform.",
     title: "Safe and Secured",
     image: "aboutUs4"
   },
   {
     text:
-      "We have partnered with known and trusted 3rd party suppliers – for secure transactions, and courier services.",
+      "We have partnered with known and trusted 3rd party suppliers in the global ecommerce industry – for secure transactions, and reliable courier services.",
     title: "Quick and Easy",
     image: "aboutUs5"
+  },
+  {
+    text:
+      "There are No fixed monthly fees on merchants, but a 3% commission for each sale - plus the separate Payment gateway’s fee of 2,9 – 3,5% (around 7% in total, which is still lower than the 10 – 15% charged by other platforms!). NPOs (causes) are exempt of our fee, except of the payment gateway’s fee.",
+    title: "So how much",
+    image: "aboutUs3"
   }
 ];
 

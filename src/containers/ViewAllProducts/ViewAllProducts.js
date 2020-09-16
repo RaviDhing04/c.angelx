@@ -3,10 +3,11 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Container, Row } from "react-bootstrap";
-import { getLatestProducts, getMerchantAllProducts, clearViewAllProducts, addToWishlist, addProductToCart, getWishlistProducts } from "../../store/actions";
+import { getLatestProducts, getMerchantAllProducts, clearViewAllProducts, addToWishlist, addProductToCart, getWishlistProducts, getPreviewProducts } from "../../store/actions";
 import Product from "../../components/Product/Product";
 import ProductRowShimmer from "../../components/ProductRowShimmer/ProductRowShimmer";
 import "./ViewAllProducts.scss";
+import { useAuth } from "../../context/auth";
 
 const ViewAllProducts = props => {
   const {
@@ -16,6 +17,7 @@ const ViewAllProducts = props => {
   } = props;
   const { name, merchantId, merchantHandle } = props.match.params;
   const itemsPerRow = merchantId ? 4 : 5;
+  const isAuthenticated = useAuth();
 
   useEffect(() => {
     fetchData();
@@ -51,6 +53,9 @@ const ViewAllProducts = props => {
         break;
       case "Trending":
         props.getLatestProducts();
+        break;
+      case 'Preview':
+        props.getPreviewProducts();
         break;
       case "Wishlist":
         props.getWishlistProducts({ UserId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId, });
@@ -100,7 +105,7 @@ const ViewAllProducts = props => {
       <Container className="viewallpage-container" fluid>
         {Items && Items.length ? (
           <React.Fragment>
-            <div className="product-row-heading">{name ? name : "Latest Uploads"}</div>
+            <div className={isAuthenticated ? "product-row-heading" : "margin-left-4 product-row-heading"} >{name ? name : "Latest Uploads"}</div>
             {makeItems()}
           </React.Fragment>
         ) : Items && Items.length === 0 ? (
@@ -124,7 +129,8 @@ const mapDispatchToProps = dispatch =>
       clearViewAllProducts,
       addToWishlist,
       getWishlistProducts,
-      addProductToCart
+      addProductToCart,
+      getPreviewProducts
     },
     dispatch
   );

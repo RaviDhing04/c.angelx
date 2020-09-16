@@ -343,7 +343,7 @@ const RegisterBusiness = props => {
                       }
                       type="text"
                       placeholder="Paypal ID"
-                      required
+                      
                     />
                     <InputGroup.Append className="inputGroupPayfastID">
                       <a
@@ -368,7 +368,6 @@ const RegisterBusiness = props => {
                       }
                       type="text"
                       placeholder="DHL ID"
-                      required
                     />
                     <InputGroup.Append className="inputGroupPayfastID">
                       <a

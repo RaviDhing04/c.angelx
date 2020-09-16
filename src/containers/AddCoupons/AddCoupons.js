@@ -153,7 +153,7 @@ const AddCoupons = props => {
                   <Form.Control
                     as="select"
                     // defaultValue={couponDetails && couponDetails.Currency.S}
-                    defaultValue={'USD'}
+                    defaultValue={'ZAR'}
                     disabled={true}
                     required
                   >

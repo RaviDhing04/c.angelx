@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
     getOrderItemsMerchant,
-    updateOrderStatus
+    updateOrderStatus,
+    clearMerchantOrderList
 } from "../../store/actions";
 import "./MerchantOrdersList.scss";
 import { Container } from "react-bootstrap";
@@ -39,6 +40,9 @@ const MerchantOrdersList = props => {
 
     useEffect(() => {
         fetchOrderItems();
+        return () => {
+            props.clearMerchantOrderList();
+        }
     }, [name]);
 
     async function fetchOrderItems() {
@@ -105,7 +109,7 @@ const MerchantOrdersList = props => {
                     "OrderId": selectedRow.OrderId && selectedRow.OrderId.S,
                     "Status": "APPROVED",
                     "Comments": "Approved",
-                    "ShippingDate": date + 'GMT' + minTommss(Math.abs(offset / 60))
+                    "ShippingDate": date + 'GMT+' + minTommss(Math.abs(offset / 60))
                 });
             if (res) {
                 setModalType('')
@@ -203,7 +207,7 @@ const MerchantOrdersList = props => {
                             {/* <div className="product-row-heading">{name}</div> */}
                             <span className="not-found"> No records found</span>
                         </React.Fragment>
-                    ) : (['Pending Total Orders', 'Lay Buy Orders', 'Group Purchase Orders', 'Donations'].includes(pageName) ?
+                    ) : (['Pending Total Orders', 'Lay Buy Orders', 'Group Purchase Orders'].includes(pageName) ?
                         <TableComp
                             tableData={props.orderItems}
                             tableHeader={tableHeader[name]}
@@ -242,7 +246,8 @@ const mapDispatchToProps = dispatch =>
     bindActionCreators(
         {
             getOrderItemsMerchant,
-            updateOrderStatus
+            updateOrderStatus,
+            clearMerchantOrderList
         },
         dispatch
     );

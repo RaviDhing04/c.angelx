@@ -382,7 +382,7 @@ const AddInventory = props => {
                   <Form.Group controlId="Currency">
                     <Form.Control
                       as="select"
-                      value={item.Currency ? item.Currency : 'USD'}
+                      value={item.Currency ? item.Currency : 'ZAR'}
                       onChange={(e) => { productVariation[i]['Currency'] = e.target.value; setProductVariation([...productVariation]) }}
                       required
                       disabled="true"
@@ -442,14 +442,14 @@ const AddInventory = props => {
                 </Col>
                 <Col>
                   <Form.Group controlId="ProdWeight">
-                    <Form.Label>Weight (in kg)</Form.Label>
+                    <Form.Label>Weight (in gms)</Form.Label>
                     <Form.Control
                       defaultValue={
                         productDetails && productDetails.ProductSpecifications && productDetails.ProductSpecifications.M && productDetails.ProductSpecifications.M.ProductDimensions &&
                         productDetails.ProductSpecifications.M.ProductDimensions.M && productDetails.ProductSpecifications.M.ProductDimensions.M.Weight && productDetails.ProductSpecifications.M.ProductDimensions.M.Weight.S
                       }
                       type="number" min="1"
-                      placeholder=" Type Weight (in kg)"
+                      placeholder=" Type Weight (in gms)"
                     />
                   </Form.Group>
                 </Col>
@@ -687,14 +687,14 @@ const AddInventory = props => {
               </Col>
               <Col>
                 <Form.Group controlId="Weight">
-                  <Form.Label>Weight (in kg)</Form.Label>
+                  <Form.Label>Weight (in gms)</Form.Label>
                   <Form.Control
                     defaultValue={
                       productDetails && productDetails.PackageDimensions && productDetails.PackageDimensions.M &&
                       productDetails.PackageDimensions.M.Weight && productDetails.PackageDimensions.M.Weight.S
                     }
                     type="number" min="1"
-                    placeholder=" Type Weight (in kg)"
+                    placeholder=" Type Weight (in gms)"
                     required
                   />
                 </Form.Group>

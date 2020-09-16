@@ -147,6 +147,9 @@ const MerchantHome = props => {
               {selectedBusiness && selectedBusiness.BusinessContact.S ? selectedBusiness.BusinessContact.S + '|' : null}
               {selectedBusiness && selectedBusiness.BusinessEmail.S ? selectedBusiness.BusinessEmail.S + '|' : null}
             </span>
+            <span className="merchant-contact">
+              {selectedBusiness && selectedBusiness.MerchantBio.S ? selectedBusiness.MerchantBio.S : ""}
+            </span>
           </div>
           <div className="user-action">
             <a className="user-terms" href="/">

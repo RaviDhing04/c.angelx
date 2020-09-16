@@ -51,7 +51,7 @@ const OrderItem = props => {
           </span>
         </div>
         <div className="item-actions">
-          <img className="heart-icon" alt="heart-icon" src={heartIcon}></img>
+          {/* <img className="heart-icon" alt="heart-icon" src={heartIcon}></img> */}
           {/* <span className="more-details">More Details</span> */}
         </div>
         {console.log(props.orderItem)}

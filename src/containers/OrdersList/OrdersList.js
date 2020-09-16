@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Container } from "react-bootstrap";
 import { bindActionCreators } from "redux";
-import { getOrderItems } from "../../store/actions";
+import { getOrderItems, clearUserOrderList } from "../../store/actions";
 import "./OrdersList.scss";
 import OrderItem from "../../components/OrderItem/OrderItem";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
@@ -41,6 +41,9 @@ const OrdersList = props => {
 
   useEffect(() => {
     fetchData();
+    return () => {
+      props.clearUserOrderList();
+    }
   }, [name]);
 
   return !loading ? (
@@ -49,7 +52,7 @@ const OrdersList = props => {
       {orderItems && orderItems.length === 0 ? (
         <React.Fragment>
           {/* <div className="product-row-heading">{name}</div> */}
-          <div className="not-found" style={{'marginTop': '3rem', 'textAlign': 'left'}}> No records found</div>
+          <div className="not-found" style={{ 'marginTop': '3rem', 'textAlign': 'left' }}> No records found</div>
         </React.Fragment>
       ) :
         <Container className="order-page-container" fluid>
@@ -79,7 +82,8 @@ const OrdersList = props => {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getOrderItems
+      getOrderItems,
+      clearUserOrderList
     },
     dispatch
   );

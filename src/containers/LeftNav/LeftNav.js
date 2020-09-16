@@ -49,7 +49,7 @@ const LeftNav = props => {
           {links &&
             links.map(link => {
               return (
-                <div key={link.name} className={(['Sales-Pending Deliveries', 'Pending Total Orders'].includes(link.name) ? window.location.href.includes(link.name.split(' ')[1]) : window.location.href.includes(link.name.split(' ')[0])) ? "list-item active" : link.enable ? "list-item" : "list-item disable"}>
+                <div key={link.name} className={(['Sales-Pending Deliveries', 'Pending Total Orders'].includes(link.name) ? window.location.href.includes(link.name.split(' ')[1]) :  ["Add Discount Coupons"].includes(link.name) ? window.location.href.includes(link.name.split(' ')[2]) : window.location.href.includes(link.name.split(' ')[0])) ? "list-item active" : link.enable ? "list-item" : "list-item disable"}>
                   <img
                     className="nav-icon"
                     alt="bell-icon"

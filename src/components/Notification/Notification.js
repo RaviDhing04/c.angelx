@@ -4,34 +4,26 @@ import CenterModal from "../../components/CenterModal/CenterModal";
 import close from "../../assets/close.svg";
 import "./Notification.scss";
 
-const Notification = () => {
-  const [loading, setLoading] = useState(true);
+const Notification = (props) => {
+  const [loading, setLoading] = useState(false);
   const [allNotification, setNotifications] = useState([]);
   const [modalShow, setModalShow] = useState(false);
 
   useEffect(() => {
-    async function fetchData() {
-      const res = await getNotifications();
-      ;
-      if (res) {
-        setLoading(false);
-        setNotifications(res);
-      } else {
-        (function() {setLoading(false); (alert('something went wrong, Please try again!'))} ());
-      }
+    if (props.data && props.data.length) {
+      setNotifications(props.data);
     }
-    fetchData();
-  }, []);
+  }, [props]);
 
   const makeNotificationRow = (notification, i) => {
     return (
       <div className={i % 2 === 0 ? "evenRow" : "oddRow"}>
         <div className="type-time">
-          <span className="type">Order Update</span>
-          <span className="time">10 mins</span>
+          <span className="type">{notification.NotificationType.S}</span>
+          <span className="time">5 mins</span>
         </div>
-        <p className="product">LG Washing Machine</p>
-        <p className="status">Your order has been shipped</p>
+        <p className="product">{notification.Message.S}</p>
+        <p className="status">{notification.Message1.S}</p>
       </div>
     );
   };
@@ -40,7 +32,7 @@ const Notification = () => {
     return (
       <div className="notifications-container">
         <div className="notification-heading">
-          <span>NOTIFICATIONS (08)</span>
+          <span>NOTIFICATIONS ({allNotification.length})</span>
           {modalShow ? (
             <img
               onClick={() => setModalShow(false)}
@@ -71,13 +63,13 @@ const Notification = () => {
     !modalShow ? (
       makeNotifications(4)
     ) : (
-      <CenterModal
-        component={makeNotifications(allNotification.length)}
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-        size="lg"
-      />
-    )
+        <CenterModal
+          component={makeNotifications(allNotification.length)}
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          size="lg"
+        />
+      )
   ) : null;
 };
 

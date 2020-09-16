@@ -157,12 +157,15 @@ const MerchantHome = props => {
         <div className="merchant-info">
           <div className="merchant-detail">
             <span className="merchant-name">
-              {selectedBusiness && selectedBusiness.BusinessHandle.S}
+              {selectedBusiness && selectedBusiness.BusinessHandle && selectedBusiness.BusinessHandle.S}
             </span>
             <span className="merchant-contact">
               {selectedBusiness && selectedBusiness.OrgWebsite.S ? selectedBusiness.OrgWebsite.S + ' | ' : null}
               {selectedBusiness && selectedBusiness.BusinessContact.S ? selectedBusiness.BusinessContact.S + ' | ' : null}
               {selectedBusiness && selectedBusiness.BusinessEmail.S ? selectedBusiness.BusinessEmail.S + ' | ' : null}
+            </span>
+            <span className="merchant-contact">
+              {selectedBusiness && selectedBusiness.MerchantBio && selectedBusiness.MerchantBio.S ? selectedBusiness.MerchantBio.S : ""}
             </span>
           </div>
           {state && state.fromUser ? (

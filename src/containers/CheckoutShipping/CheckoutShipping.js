@@ -16,6 +16,7 @@ import edit from "../../assets/edit.svg";
 const CheckoutShipping = props => {
   const [loading, setLoading] = useState(true);
   const [pageName, setName] = useState('');
+  const [shippinOption, setShipping] = useState('');
   const [addresses, setAddresses] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
@@ -66,8 +67,12 @@ const CheckoutShipping = props => {
   };
 
   const selectAddress = (address) => {
+    if(shippinOption) {
     localStorage.setItem('shippingAddress', JSON.stringify(address));
     history.push(`/checkout/billing/${userId}/Billing Address`);
+    } else {
+      alert('Please select a shipping option');
+    }
   }
 
   const editAddress = (address) => {
@@ -77,6 +82,7 @@ const CheckoutShipping = props => {
 
   const selectShipper = (e) => {
     const shipper = e.target.value;
+    setShipping(shipper);
     if (shipper === 'Self') {
       alert("You will recieve a confirmation mail along with merchant address for pick up");
       history.push(`/checkout/billing/${userId}/Billing Address`);
@@ -100,11 +106,10 @@ const CheckoutShipping = props => {
                   <Form.Label>Select Shipping Option</Form.Label>
                   <Form.Control
                     as="select"
-                    defaultValue="DHL"
                     required
                     onChange={(e) => selectShipper(e)}
                   >
-                    <option value="testValue"> Select Shipping Option</option>
+                    <option value="" disabled selected> Select Shipping Option</option>
                     <option value="DHL"> DHL</option>
                     <option value="Self"> Self PickUp</option>
                   </Form.Control>

@@ -44,6 +44,9 @@ const CheckoutConfirm = (props) => {
                     setOrder(o);
                     if (shipper === 'DHL') {
                         fetchShippingCharge([o.product_id]);
+                    } else {
+                        setLoading(false);
+                        setShippingCharge(0);
                     }
                 }
             } else {
@@ -92,6 +95,9 @@ const CheckoutConfirm = (props) => {
             })
             if (shipper === 'DHL') {
                 fetchShippingCharge(products);
+            } else {
+                setLoading(false);
+                setShippingCharge(0);
             }
         }
     }, [props.cartItems]);

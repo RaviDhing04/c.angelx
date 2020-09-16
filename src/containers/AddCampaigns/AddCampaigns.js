@@ -275,7 +275,7 @@ const AddCampaigns = props => {
                     //   productDetails &&
                     //   productDetails.DonationCampaignDetails.M.Currency.S
                     // }
-                    defaultValue={'USD'}
+                    defaultValue={'ZAR'}
                     disabled={true}
                     required
                   >

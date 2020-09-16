@@ -8,7 +8,8 @@ const initialState = {
     followedMerchants: [],
     searchCategories: [],
     userLinkCount: {},
-    cartCount: 0
+    cartCount: 0,
+    userNotifications: []
   },
   merchantHomePage: {
     merchantAllProducts: {},
@@ -62,14 +63,14 @@ export const appReducer = (state = initialState, { type, value }) => {
           latestProducts: value.payload
         }
       };
-      case "PREVIEW_PRODUCTS":
-        return {
-          ...state,
-          homePage: {
-            ...state.homePage,
-            previewProducts: value.payload
-          }
-        };
+    case "PREVIEW_PRODUCTS":
+      return {
+        ...state,
+        homePage: {
+          ...state.homePage,
+          previewProducts: value.payload
+        }
+      };
     case "SPONSORED_PRODUCTS":
       return {
         ...state,
@@ -120,6 +121,14 @@ export const appReducer = (state = initialState, { type, value }) => {
         homePage: {
           ...state.homePage,
           userLinkCount: value.payload
+        }
+      };
+    case "USER_NOTIFICATIONS":
+      return {
+        ...state,
+        homePage: {
+          ...state.homePage,
+          userNotifications: value.payload
         }
       };
     case "CART_COUNT":
@@ -258,13 +267,13 @@ export const appReducer = (state = initialState, { type, value }) => {
           orderItems: value.payload,
         }
       };
-      case "ORDER_DETAILS_MERCHANT":
-        return {
-          ...state,
-          ordersListMerchantPage: {
-            orderItems: value.payload,
-          }
-        };
+    case "ORDER_DETAILS_MERCHANT":
+      return {
+        ...state,
+        ordersListMerchantPage: {
+          orderItems: value.payload,
+        }
+      };
     case "SET_ACTIVE_CURRENCY":
       return {
         ...state,

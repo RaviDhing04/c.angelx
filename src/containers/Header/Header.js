@@ -14,12 +14,12 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 import Notification from "../../components/Notification/Notification";
 import { currencies, profileOptions } from "../../constants/constants";
 import "./Header.scss";
-import { setGlobalCurrency, getSearchCategories, headerSearch, cartCount } from "../../store/actions";
+import { setGlobalCurrency, getSearchCategories, headerSearch, cartCount, getUserLinkCount, getUserNotification } from "../../store/actions";
 import { useAuth } from "../../context/auth";
 import { useHistory } from "react-router-dom";
 
 const Header = props => {
-  const [activeCurrency, setActiveCurrency] = useState(currencies[1]);
+  const [activeCurrency, setActiveCurrency] = useState(currencies[0]);
   const [showNotification, toggleNotification] = useState(false);
   const isAuthenticated = useAuth();
   const history = useHistory();
@@ -37,6 +37,8 @@ const Header = props => {
   useEffect(() => {
     if (isAuthenticated) {
       props.cartCount();
+      props.getUserLinkCount();
+      props.getUserNotification();
     }
   }, [isAuthenticated]);
 
@@ -169,7 +171,7 @@ const Header = props => {
                   </Nav.Link>
                   {showNotification ? (
                     <div className="notification-div">
-                      <Notification />
+                      <Notification data={props.userNotifications} />
                     </div>
                   ) : null}
                   {/* <Nav.Link href="#memes">
@@ -234,7 +236,9 @@ const mapDispatchToProps = dispatch =>
       setGlobalCurrency,
       getSearchCategories,
       headerSearch,
-      cartCount
+      cartCount,
+      getUserLinkCount,
+      getUserNotification
     },
     dispatch
   );
@@ -243,7 +247,8 @@ const mapStatetoProps = ({ app: { homePage, common } }) => {
   console.log(common);
   return {
     searchCategories: homePage.searchCategories,
-    cartNumber: homePage.cartCount
+    cartNumber: homePage.cartCount,
+    userNotifications: homePage.userNotifications
   };
 };
 
