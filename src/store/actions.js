@@ -663,15 +663,15 @@ export const getMasterDataInventory = (body = {}) => async dispatch => {
               out[productCategory].forEach((subCat) => {
                 const types = subCategory.M[subCat];
                 if (types && types.L) {
-                  out[subCat] = [];
+                  out[productCategory+'+'+subCat] = [];
                   types.L.forEach((type) => {
-                    out[subCat].push(type.S);
+                    out[productCategory+'+'+subCat].push(type.S);
                   })
                 }
               });
             } else if (subCategory && subCategory.S) {
               out[productCategory].push(subCategory.S);
-              out[subCategory.S] = [subCategory.S];
+              out[productCategory+'+'+subCategory.S] = [subCategory.S];
             }
           });
         }
@@ -810,7 +810,6 @@ export const getMerchantLinkCount = (body = {}) => async dispatch => {
     if (
       response &&
       response.result &&
-      response.result.data &&
       response.result.message === "Success"
     ) {
       const out = {};

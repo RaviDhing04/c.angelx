@@ -162,7 +162,7 @@ const CheckoutConfirm = (props) => {
                                 </React.Fragment>
                             ) : null}
 
-                            <div>
+                            <div style={{"marginBottom":"2rem"}}>
                                 <p className="text">Your total payment amount is - {orderType === 'cart' ? (<span> {props.cartItems.totalDiscountedAmount ? formatter(props.activeCurrency)(props.cartItems.totalDiscountedAmount) : formatter(props.activeCurrency)(0)} </span>) :
                                     (<span> {order && (order.total_amount || +order.unitPrice) ? (order && order.order_type === 'laybuy' ? formatter(props.activeCurrency)(((+order.total_amount) / (+order.laybuy_months))) : formatter(props.activeCurrency)(order && (order.total_amount || +order.unitPrice))) : formatter(props.activeCurrency)(0)} </span>)}
                                 </p>

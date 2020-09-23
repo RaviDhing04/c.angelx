@@ -71,8 +71,8 @@ export const footerLinksLoggedin = [
     { name: "Support", path: "/support" },
     { name: "Corporate Info", path: "/aboutUs" },
     { name: "User Guide", path: "/aboutUs" },
-    { name: "Term & Conditions", path: "https://docs.google.com/viewer?url=https://cangelx-documents.s3.us-east-2.amazonaws.com/Terms+and+Conditions.docx" },
-    { name: "Privacy Policy", path: "https://docs.google.com/viewer?url=https://cangelx-documents.s3.us-east-2.amazonaws.com/Privacy+Policy.docx" },
+    { name: "Term & Conditions", path: "https://cangelx-documents.s3.us-east-2.amazonaws.com/C-Angelx-UserTerms%26Conditions.pdf" },
+    { name: "Privacy Policy", path: "https://cangelx-documents.s3.us-east-2.amazonaws.com/C-Angelx-PrivacyPolicy.pdf" },
   ],
   [
     { name: "Sponsored", path: "/home/productsListing#Sponsored" },
@@ -98,8 +98,8 @@ export const footerLinksLoggedout = [
     { name: "User Guide", path: "/aboutUs" },
 
   ],
-  [{ name: "Term & Conditions", path: "https://docs.google.com/viewer?url=https://cangelx-documents.s3.us-east-2.amazonaws.com/Terms+and+Conditions.docx" },
-  { name: "Privacy Policy", path: "https://docs.google.com/viewer?url=https://cangelx-documents.s3.us-east-2.amazonaws.com/Privacy+Policy.docx" },
+  [{ name: "Term & Conditions", path: "https://cangelx-documents.s3.us-east-2.amazonaws.com/C-Angelx-UserTerms%26Conditions.pdf" },
+  { name: "Privacy Policy", path: "https://cangelx-documents.s3.us-east-2.amazonaws.com/C-Angelx-PrivacyPolicy.pdf" },
   { name: "Advertisements", path: "#" }
   ],
   [
@@ -170,7 +170,7 @@ export const aboutUsGrid = [
     text:
       "There are No fixed monthly fees on merchants, but a 3% commission for each sale - plus the separate Payment gateway’s fee of 2,9 – 3,5% (around 7% in total, which is still lower than the 10 – 15% charged by other platforms!). NPOs (causes) are exempt of our fee, except of the payment gateway’s fee.",
     title: "So how much",
-    image: "aboutUs3"
+    image: "aboutUs6"
   }
 ];
 
@@ -183,7 +183,7 @@ export const supportGrid = [
     image: "address"
   },
   {
-    text: ["support@cAngelx.xom"],
+    text: ["support@cangelx.com", "adverts@cangelx.com (For Ads inquiries)"],
     title: "Email",
     image: "email"
   }
@@ -200,8 +200,9 @@ export const addProductFormFields = ["ProductName", "ProductCategory", "ProductS
 
 export const addProductFormFieldsProductType = {
   "Electronics": ["Brand", "Model", "Type", "Ram", "Memory", "Os", "Processor", "Storage"],
-  "Furnitures": ["Brand", "MaterialDescription"],
-  "Shoes & Accessories": ["Brand", "MaterialDescription", "Occasion"],
+  "Furniture": ["Brand", "MaterialDescription"],
+  "Footware": ["Brand", "MaterialDescription", "Occasion"],
+  "Accessories": ["Brand", "MaterialDescription", "Occasion"],
   "Clothing": ["Brand", "MaterialDescription", "Occasion"]
 }
 

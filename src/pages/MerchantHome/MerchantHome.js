@@ -92,6 +92,7 @@ const MerchantHome = props => {
   };
 
   const unfollow = async () => {
+    setLoading(true);
     const res = await props.unfollowmerchant({
       PatronId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId,
       MerchantId: merchantId,
@@ -107,6 +108,7 @@ const MerchantHome = props => {
   }
 
   const follow = async () => {
+    setLoading(true);
     const res = await props.followmerchant({
       PatronId: JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId,
       MerchantId: merchantId,
@@ -146,13 +148,13 @@ const MerchantHome = props => {
                   /> <label htmlFor="fileUploadcenter_merchantBanner" className="btn-center">Add Cover Image</label> </div>))
             }
           </div>
-          <div className="img-err">
+          {!(state && state.fromUser) ? <div className="img-err">
             <img src={coverError} alt="cover" />
             <span>
               Please upload high quality images more then width - 800px to
                 ensure your cover image looks great.{" "}
             </span>
-          </div>
+          </div> : null}
         </React.Fragment>
         <div className="merchant-info">
           <div className="merchant-detail">
@@ -163,10 +165,11 @@ const MerchantHome = props => {
               {selectedBusiness && selectedBusiness.OrgWebsite.S ? selectedBusiness.OrgWebsite.S + ' | ' : null}
               {selectedBusiness && selectedBusiness.BusinessContact.S ? selectedBusiness.BusinessContact.S + ' | ' : null}
               {selectedBusiness && selectedBusiness.BusinessEmail.S ? selectedBusiness.BusinessEmail.S + ' | ' : null}
+              {selectedBusiness && selectedBusiness.MerchantBio && selectedBusiness.MerchantBio.S ? 'About us: ' + selectedBusiness.MerchantBio.S : ""}
             </span>
-            <span className="merchant-contact">
+            {/* <span className="merchant-contact">
               {selectedBusiness && selectedBusiness.MerchantBio && selectedBusiness.MerchantBio.S ? selectedBusiness.MerchantBio.S : ""}
-            </span>
+            </span> */}
           </div>
           {state && state.fromUser ? (
             <div className="user-action">

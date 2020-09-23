@@ -6,7 +6,7 @@ import plusIcon from "../../assets/plus.svg";
 import minusIcon from "../../assets/minus.svg";
 import deleteIcon from "../../assets/delete_outline.svg";
 import heartIcon from "../../assets/heart.svg";
-import checkmark from "../../assets/checkmark.svg";
+import checkmark from "../../assets/checkmark.png";
 import formatter from "../../utils/commonUtils/currencyUtils";
 
 const CartItem = props => {
@@ -47,6 +47,11 @@ const CartItem = props => {
             >
               {MerchantHandle}{VerificationStatus.S === 'Verified' ? <img
                 className="nav-icon"
+                style={{
+                  "width": "1.5rem",
+                  "height": "1.5rem",
+                  "marginLeft": "0.25rem"
+                }}
                 alt="checkmark"
                 src={checkmark}
               ></img> : null}

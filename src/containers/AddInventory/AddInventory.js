@@ -121,7 +121,7 @@ const AddInventory = props => {
     addProductFormFieldsProductType[selectedCategory].forEach(field => {
       payload.ProductSpecifications[field] = formElements[field].value ? formElements[field].value : '';
     });
-    if (["Electronics", "Furnitures"].includes(selectedCategory)) {
+    if (["Electronics", "Furniture"].includes(selectedCategory)) {
       payload.ProductSpecifications['ProductDimensions'] = {};
       payload.ProductSpecifications['ProductDimensions']['Height'] = formElements.ProdHeight.value;
       payload.ProductSpecifications['ProductDimensions']['Weight'] = formElements.ProdWeight.value;
@@ -265,7 +265,7 @@ const AddInventory = props => {
                     required
                   >
                     <option disabled value="" selected> Product Type</option>
-                    {inventoryMasterData[selectedSubCategory] && inventoryMasterData[selectedSubCategory].length && inventoryMasterData[selectedSubCategory].map((type, index) => {
+                    {inventoryMasterData[selectedCategory + '+' + selectedSubCategory] && inventoryMasterData[selectedCategory + '+' + selectedSubCategory].length && inventoryMasterData[selectedCategory + '+' + selectedSubCategory].map((type, index) => {
                       return (<option key={index} value={type}> {type}</option>)
                     })}
                   </Form.Control>
@@ -400,7 +400,7 @@ const AddInventory = props => {
             })}
             <div className="product-specs">
               {selectedCategory ? <div className="sub-heading">Product Specifications</div> : null}
-              {["Electronics", "Furnitures"].includes(selectedCategory) ? (<Form.Row>
+              {["Electronics", "Furniture"].includes(selectedCategory) ? (<Form.Row>
                 <Col>
                   <Form.Group controlId="ProdHeight">
                     <Form.Label>Height (in cm)</Form.Label>
@@ -467,7 +467,7 @@ const AddInventory = props => {
                   </Form.Group>
                 </Col>
               </Form.Row>) : null}
-              {["Clothing", "Shoes & Accessories"].includes(selectedCategory) ? (<Form.Row className="width-50">
+              {["Clothing", "Footware", "Accessories"].includes(selectedCategory) ? (<Form.Row className="width-50">
                 <Col>
                   <Form.Group controlId="AvailableSizes">
                     <Form.Label>Avaialable Sizes <span className="hint">(After each size, please add a comma (,)) </span></Form.Label>
@@ -597,7 +597,7 @@ const AddInventory = props => {
                 </React.Fragment>
               ) : null}
               <Form.Row>
-                {["Clothing", "Shoes & Accessories", "Furnitures"].includes(selectedCategory) ? (
+                {["Clothing", "Footware", "Accessories", "Furniture"].includes(selectedCategory) ? (
                   <React.Fragment>
                     <Col>
                       <Form.Group controlId="Brand">
@@ -626,7 +626,7 @@ const AddInventory = props => {
                       </Form.Group>
                     </Col>
                   </React.Fragment>) : null}
-                {["Clothing", "Shoes & Accessories"].includes(selectedCategory) ? (<Col>
+                {["Clothing", "Footware", "Accessories"].includes(selectedCategory) ? (<Col>
                   <Form.Group controlId="Occasion">
                     <Form.Label>Occasion</Form.Label>
                     <Form.Control

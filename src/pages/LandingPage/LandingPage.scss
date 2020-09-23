@@ -26,6 +26,14 @@
     color: #fff;
     text-align: center;
   }
+
+  .carousel-control-prev{
+    display:none;
+  }
+
+  .carousel-control-next{
+    display:none;
+  }
 }
 
 .landingpage-container {
@@ -47,12 +55,18 @@
     color: #3b3b3b;
     opacity: 1;
     text-align: center;
-    margin: 6rem 0rem 3rem 0rem;
+    margin: 3rem 0rem 2rem 0rem;
   }
 
   .view-all {
     margin-left: 50%;
     margin-bottom: 0px;
+    margin-left: 50%;
+    margin-bottom: 0px;
+    font-size: 1rem;
+    background: #007bff;
+    color: #fff700;
+    font-weight: 600;
   }
 
   .landingpage-text {

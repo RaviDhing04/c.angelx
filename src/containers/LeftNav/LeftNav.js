@@ -3,7 +3,7 @@ import "./LeftNav.scss";
 import { Nav, Card, Form, InputGroup, FormControl, Button } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import { uploadTermsAndConditions } from "../../store/actions";
-import checkmark from "../../assets/checkmark.svg";
+import checkmark from "../../assets/checkmark.png";
 
 const LeftNav = props => {
   const { links, merchants, merchantId, showMerchants, count } = props;
@@ -49,7 +49,7 @@ const LeftNav = props => {
           {links &&
             links.map(link => {
               return (
-                <div key={link.name} className={(['Sales-Pending Deliveries', 'Pending Total Orders'].includes(link.name) ? window.location.href.includes(link.name.split(' ')[1]) :  ["Add Discount Coupons"].includes(link.name) ? window.location.href.includes(link.name.split(' ')[2]) : window.location.href.includes(link.name.split(' ')[0])) ? "list-item active" : link.enable ? "list-item" : "list-item disable"}>
+                <div key={link.name} className={(['Sales-Pending Deliveries', 'Pending Total Orders'].includes(link.name) ? window.location.href.includes(link.name.split(' ')[1]) : ["Add Discount Coupons"].includes(link.name) ? window.location.href.includes(link.name.split(' ')[2]) : window.location.href.includes(link.name.split(' ')[0])) ? "list-item active" : link.enable ? "list-item" : "list-item disable"}>
                   <img
                     className="nav-icon"
                     alt="bell-icon"
@@ -65,7 +65,7 @@ const LeftNav = props => {
                   </Nav> : (<Nav className="flex-column">
                     <div className="nav-link"> {link.name} </div>
                   </Nav>)}
-                  {count && count[link.name] ? <span className="count">{count[link.name]}</span> : null}
+                  {count && (count[link.name] || count[link.name] === 0) ? <span className="count">{count[link.name]}</span> : null}
                 </div>
               );
             })}
@@ -103,11 +103,16 @@ const LeftNav = props => {
                           {merchant.BusinessHandle.S}
                         </Nav.Link>
                       </Nav>
-                      <img
+                      {merchant && merchant.VerificationStatus.S === 'Verified' ? <img
                         className="nav-icon"
+                        style={{
+                          "width": "1.5rem",
+                          "height": "1.5rem",
+                          "marginLeft": "0.25rem"
+                        }}
                         alt="checkmark"
                         src={checkmark}
-                      ></img>
+                      ></img> : null}
                     </div>
                   );
                 })) : (merchants &&
@@ -129,6 +134,11 @@ const LeftNav = props => {
                         </Nav>
                         {merchant && merchant.VerificationStatus.S === 'Verified' ? <img
                           className="nav-icon"
+                          style={{
+                            "width": "1.5rem",
+                            "height": "1.5rem",
+                            "marginLeft": "0.25rem"
+                          }}
                           alt="checkmark"
                           src={checkmark}
                         ></img> : null}

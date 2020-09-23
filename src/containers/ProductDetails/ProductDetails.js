@@ -20,7 +20,7 @@ import plusIcon from "../../assets/plus.svg";
 import deleteIcon from "../../assets/delete_outline.svg";
 import downArrow from "../../assets/down-arrow.svg";
 import upArrow from "../../assets/up-arrow.svg";
-import checkmark from "../../assets/checkmark.svg";
+import checkmark from "../../assets/checkmark.png";
 import { useAuth } from "../../context/auth";
 import { addProductFormFieldsProductType, displayNameMap } from "../../constants/constants";
 import { useAccordionToggle } from 'react-bootstrap/AccordionToggle';
@@ -150,7 +150,7 @@ const ProductDetails = props => {
       "product_id": productId,
       "unitPrice": selectedVariation && selectedVariation.M && selectedVariation.M.UnitPrice && selectedVariation.M.UnitPrice.S,
       "qty": 1,
-      "couponData": null,
+      "coupon_code": coupon,
       "discountedPrice": selectedVariation && selectedVariation.M && selectedVariation.M.UnitPrice && selectedVariation.M.UnitPrice.S,
       "SelectedColor": selectedVariation && selectedVariation.M && selectedVariation.M.AvailableColor && selectedVariation.M.AvailableColor.S,
       "billing_address_id": null,
@@ -183,6 +183,7 @@ const ProductDetails = props => {
       "billing_address_id": null,
       "shipping_address_id": null,
       "payment_type": null,
+      "coupon_code": coupon,
       "SelectedColor": selectedVariation && selectedVariation.M && selectedVariation.M.AvailableColor && selectedVariation.M.AvailableColor.S,
     }
     localStorage.setItem('orderType', JSON.stringify(orderType));
@@ -214,6 +215,7 @@ const ProductDetails = props => {
       "billing_address_id": null,
       "shipping_address_id": null,
       "payment_type": null,
+      "coupon_code": coupon,
       "SelectedColor": selectedVariation && selectedVariation.M && selectedVariation.M.AvailableColor && selectedVariation.M.AvailableColor.S,
     }
     localStorage.setItem('orderType', JSON.stringify(orderType));
@@ -411,6 +413,11 @@ const ProductDetails = props => {
                       >
                         {MerchantHandle.S}{VerificationStatus.S === 'Verified' ? <img
                           className="nav-icon"
+                          style={{
+                            "width": "1.5rem",
+                            "height": "1.5rem",
+                            "marginLeft": "0.25rem"
+                          }}
                           alt="checkmark"
                           src={checkmark}
                         ></img> : null}

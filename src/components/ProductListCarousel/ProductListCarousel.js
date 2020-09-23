@@ -57,7 +57,7 @@ const ProductListCarousel = props => {
       {!loading ? (Items && Items.length ? (
         <React.Fragment>
           <div className={isAuthenticated ? "product-row-heading" : "margin-left-4 product-row-heading"}>{name}</div>
-          <Carousel className="prod-carousel" fade={true} interval={null}>
+          <Carousel className="prod-carousel" fade={true} interval={5000}>
             {/* <Row className="product-row">
               {Items && Items.length &&
                 Items.map((item, index) => {
@@ -88,7 +88,7 @@ const ProductListCarousel = props => {
       ) : <React.Fragment>
           <div className="row-div">
             <div className={isAuthenticated ? "product-row-heading" : "margin-left-4 product-row-heading"}>{name}</div>
-            <div className="not-found"> No Records Found</div>
+            <div className={isAuthenticated ? "not-found" : "margin-left-4 not-found"}> No Records Found</div>
           </div>
         </React.Fragment>) : (
           <ProductRowShimmer />
