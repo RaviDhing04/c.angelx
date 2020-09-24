@@ -82,8 +82,11 @@ const SearchBar = props => {
     setShowDiv(true);
   }
 
-  const navigateToSearchPage = () => {
+  const navigateToSearchPage = (e) => {
+    e.preventDefault();
     if (searchText) {
+      document.getElementById("searchForm").reset();
+      setSearchResults([]);
       history.push(`/home/search/${searchText}/${(selectedCategory && selectedCategory.Title && selectedCategory.Title.S ? selectedCategory.Title.S : 'x')}`);
     }
   }
@@ -93,7 +96,7 @@ const SearchBar = props => {
   console.log(fetchSearchResults);
   return (
     <React.Fragment>
-      <Form className="search-bar">
+      <Form className="search-bar" id="searchForm" onSubmit={(e) => navigateToSearchPage(e)}>
         <InputGroup className="search-input">
           <FormControl
             placeholder="Search"
@@ -119,13 +122,14 @@ const SearchBar = props => {
             </Dropdown.Toggle>
 
             <Dropdown.Menu as={CustomMenu}>
+            <Dropdown.Item value='All Categories' onClick={e => setselectedCategory('')}>All Categories</Dropdown.Item>
               {props.searchCategories.length > 0 &&
                 props.searchCategories.map((category, index) => {
                   return <Dropdown.Item active={(selectedCategory && (selectedCategory.CategoryId.S === category.CategoryId.S)) ? true : false} onClick={e => changeCategory(e)} value={category.CategoryId.S} eventKey={index}>{category.Title.S}</Dropdown.Item>
                 })}
             </Dropdown.Menu>
           </Dropdown>
-          <div onClick={navigateToSearchPage} className="searchIconDiv">
+          <div onClick={(e) => navigateToSearchPage(e)} className="searchIconDiv">
             <img className="searchIcon" src={searchIcon} alt="search" />
           </div>
         </InputGroup>

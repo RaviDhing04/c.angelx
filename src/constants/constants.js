@@ -183,8 +183,13 @@ export const supportGrid = [
     image: "address"
   },
   {
-    text: ["support@cangelx.com", "adverts@cangelx.com (For Ads inquiries)"],
+    text: ["support@cangelx.com"],
     title: "Email",
+    image: "email"
+  },
+  {
+    text: ["adverts@cangelx.com"],
+    title: "Adverts (For ads inquiries)",
     image: "email"
   }
 ];

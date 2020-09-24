@@ -382,7 +382,7 @@ const AddInventory = props => {
                   <Form.Group controlId="Currency">
                     <Form.Control
                       as="select"
-                      value={item.Currency ? item.Currency : 'ZAR'}
+                      value={item.Currency ? item.Currency : 'USD'}
                       onChange={(e) => { productVariation[i]['Currency'] = e.target.value; setProductVariation([...productVariation]) }}
                       required
                       disabled="true"

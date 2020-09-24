@@ -19,7 +19,7 @@ import { useAuth } from "../../context/auth";
 import { useHistory } from "react-router-dom";
 
 const Header = props => {
-  const [activeCurrency, setActiveCurrency] = useState(currencies[0]);
+  const [activeCurrency, setActiveCurrency] = useState(currencies[1]);
   const [showNotification, toggleNotification] = useState(false);
   const isAuthenticated = useAuth();
   const history = useHistory();

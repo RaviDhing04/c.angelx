@@ -47,7 +47,7 @@ const Support = (props) => {
                     return <p className="grid-text">{text}</p>;
                   })}
                 </div>
-                {i % 2 ? <hr className="rightLine" /> : null}
+                {i % 3 ? <hr className="rightLine" /> : null}
               </div>
             );
           })}
