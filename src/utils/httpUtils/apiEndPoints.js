@@ -1,4 +1,6 @@
-const baseUrl = "https://h6cru8yrb8.execute-api.us-east-2.amazonaws.com/api/";
+// const baseUrl = "https://h6cru8yrb8.execute-api.us-east-2.amazonaws.com/api/";
+
+const baseUrl = "https://h2wwgaxvwd.execute-api.us-east-2.amazonaws.com/api/";
 
 const getApiEndPoints = val => {
   switch (val) {

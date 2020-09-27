@@ -206,7 +206,7 @@ export const addProductFormFields = ["ProductName", "ProductCategory", "ProductS
 export const addProductFormFieldsProductType = {
   "Electronics": ["Brand", "Model", "Type", "Ram", "Memory", "Os", "Processor", "Storage"],
   "Furniture": ["Brand", "MaterialDescription"],
-  "Footware": ["Brand", "MaterialDescription", "Occasion"],
+  "Footwear": ["Brand", "MaterialDescription", "Occasion"],
   "Accessories": ["Brand", "MaterialDescription", "Occasion"],
   "Clothing": ["Brand", "MaterialDescription", "Occasion"]
 }

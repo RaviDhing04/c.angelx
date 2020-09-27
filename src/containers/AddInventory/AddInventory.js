@@ -467,7 +467,7 @@ const AddInventory = props => {
                   </Form.Group>
                 </Col>
               </Form.Row>) : null}
-              {["Clothing", "Footware", "Accessories"].includes(selectedCategory) ? (<Form.Row className="width-50">
+              {["Clothing", "Footwear", "Accessories"].includes(selectedCategory) ? (<Form.Row className="width-50">
                 <Col>
                   <Form.Group controlId="AvailableSizes">
                     <Form.Label>Avaialable Sizes <span className="hint">(After each size, please add a comma (,)) </span></Form.Label>
@@ -597,7 +597,7 @@ const AddInventory = props => {
                 </React.Fragment>
               ) : null}
               <Form.Row>
-                {["Clothing", "Footware", "Accessories", "Furniture"].includes(selectedCategory) ? (
+                {["Clothing", "Footwear", "Accessories", "Furniture"].includes(selectedCategory) ? (
                   <React.Fragment>
                     <Col>
                       <Form.Group controlId="Brand">
@@ -626,7 +626,7 @@ const AddInventory = props => {
                       </Form.Group>
                     </Col>
                   </React.Fragment>) : null}
-                {["Clothing", "Footware", "Accessories"].includes(selectedCategory) ? (<Col>
+                {["Clothing", "Footwear", "Accessories"].includes(selectedCategory) ? (<Col>
                   <Form.Group controlId="Occasion">
                     <Form.Label>Occasion</Form.Label>
                     <Form.Control

@@ -46,7 +46,7 @@ const ProductList = props => {
       ) : <React.Fragment>
           <div className="row-div">
             <div className={isAuthenticated ? "product-row-heading" : "margin-left-4 product-row-heading"}>{name}</div>
-            <div className="not-found"> No Records Found</div>
+            <div className={isAuthenticated ? "not-found" : "margin-left-4 not-found"} > No Records Found</div>
           </div>
         </React.Fragment>) : (
           <ProductRowShimmer />

@@ -51,11 +51,11 @@ const MobileHome = props => {
     return (
         <React.Fragment>
             <Container fluid style={styl}>
-                {/* <ProductListCarousel name="Sponsored" loading={loadingSponsored} data={props.sponsoredProducts} activeCurrency={props.activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} />
-          <ProductList name="Latest Uploads" loading={loadingLatest} data={props.latestProducts} activeCurrency={props.activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} /> */}
+                <ProductListMobile name="Sponsored" loading={loadingSponsored} data={props.sponsoredProducts} activeCurrency={props.activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} />
+          {/* <ProductList name="Latest Uploads" loading={loadingLatest} data={props.latestProducts} activeCurrency={props.activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} /> */}
                 {/* <ProductList name="Trending" data={props.latestProducts} activeCurrency={props.activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} /> */}
                 {/* {isAuthenticated ? <ProductListCarousel name="Wishlist" loading={loadingWishlist} data={props.wishlistProducts} activeCurrency={props.activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} /> : null} */}
-                <ProductListMobile name="Latest Uploads" loading={loadingLatest} data={props.latestProducts} activeCurrency={props.activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} />
+                {/* <ProductListMobile name="Latest Uploads" loading={loadingLatest} data={props.latestProducts} activeCurrency={props.activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} /> */}
             </Container>
         </React.Fragment>
     );
