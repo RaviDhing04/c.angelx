@@ -99,17 +99,20 @@ const SignUp = props => {
                   Password must match the above password
               </Form.Text>
               </Form.Group>
-              <Button className="signUp-btn" type="submit">
-                Signup
+              <Form.Group controlId="formGroupCheckbox">
+                <Form.Check required type="checkbox" label="I agree"/> to <a href="https://cangelx-documents.s3.us-east-2.amazonaws.com/C-Angelx-UserTerms%26Conditions.pdf" target="blank">terms and conditions</a> and <a href="https://cangelx-documents.s3.us-east-2.amazonaws.com/C-Angelx-PrivacyPolicy.pdf" target="blank">privacy policy</a>
+                 </Form.Group>
+                <Button className="signUp-btn" type="submit">
+                  Signup
               </Button>
             </Form>
-            <div
-              onClick={() =>
-                props.history.replace(props.location.pathname + "?login=true")
-              }
-              className="signup-link"
-            >
-              Existing User? Log in
+              <div
+                onClick={() =>
+                  props.history.replace(props.location.pathname + "?login=true")
+                }
+                className="signup-link"
+              >
+                Existing User? Log in
             </div>
           </div>
         ) : (
@@ -131,22 +134,22 @@ const SignUp = props => {
             </div>
             </div>
           )}
-      </div>
-    );
+          </div>
+        );
   };
 
   let params = new URLSearchParams(props.location.search);
   return (
     params.get("signUp") && (
-      <CenterModal
-        onHide={() => {
-          setStep2(false);
-          props.history.replace(props.location.pathname);
-        }}
-        component={temp(props)}
-        show={true}
-        size="lg"
-      />
+        <CenterModal
+          onHide={() => {
+            setStep2(false);
+            props.history.replace(props.location.pathname);
+          }}
+          component={temp(props)}
+          show={true}
+          size="lg"
+        />
     )
   );
 };

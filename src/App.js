@@ -4,12 +4,15 @@ import { Route, Switch, Redirect, useLocation } from "react-router-dom";
 import { parent_routes } from "../src/routes/routes";
 import Container from "react-bootstrap/Container";
 import Header from "./containers/Header/Header";
+import MobileHeader from "./containers/MobileHeader/MobileHeader";
 import Footer from "./components/Footer/Footer";
+import MobileFooter from "./components/MobileFooter/MobileFooter";
 import { AuthContext } from "./context/auth";
 import Login from "./containers/Login/Login";
 import "./App.scss";
 import SignUp from "./containers/SignUp/SignUp";
 import MobileHome from "./pages/MobileHome/MobileHome";
+import SearchPage from "./pages/SearchPage/SearchPage";
 import Logout from "./containers/Logout/Logout";
 import ForgotPassword from "./containers/ForgotPassword/ForgotPassword";
 import {
@@ -57,10 +60,10 @@ const App = () => {
   return (
     <Container fluid className={isBrowser ? "app-container" : "mobile-container"}>
       <AuthContext.Provider value={(localStorage.getItem('token') && JSON.parse(localStorage.getItem('userData'))) ? true : false}>
-        <Header userId={userId} />
         <BrowserView>
+          <Header userId={userId} />
           <div style={{ minHeight: '400px' }}>
-          <ScrollToTop />
+            <ScrollToTop />
             <Switch>
               <Route
                 exact
@@ -76,20 +79,23 @@ const App = () => {
             <Route path="/" component={ForgotPassword} />
             <Route path="/" component={Logout} />
           </div>
+          <Footer userId={userId} />
         </BrowserView>
         <MobileView>
-          {/* <Switch>
-            <Route
-              exact
-              path={"/"}
-              render={() => {
-                return <Redirect to={"/mobile"} />;
-              }}
-            />
-          </Switch> */}
-          <Route path="/" component={MobileHome} />
+          <MobileHeader userId={userId} />
+          <Switch>
+          <Route
+                exact
+                path={"/"}
+                render={() => {
+                  return <Redirect to={"/landing"} />;
+                }}
+              />
+          <Route path="/landing" component={MobileHome} />
+          <Route path="/home/search/:text/:selectedCategory" component={SearchPage} exact={true} />
+          </Switch>
         </MobileView>
-        <Footer userId={userId} />
+        <MobileFooter userId={userId} />
       </AuthContext.Provider>
 
     </Container>

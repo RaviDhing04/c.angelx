@@ -93,6 +93,7 @@ const LeftNav = props => {
                       <Nav className="flex-column">
                         <Nav.Link
                           as={Link}
+                          style={{"color": "#558ed4"}}
                           to={{
                             pathname: `/merchantHome/viewAllProducts/${"Latest Uploads"}/${merchant.MerchantId.S}`,
                             state: {
@@ -122,6 +123,7 @@ const LeftNav = props => {
                         <Nav className="flex-column">
                           <Nav.Link
                             as={Link}
+                            style={{"color": "#558ed4"}}
                             to={{
                               pathname: `/merchantHome/viewAllProducts/${"Latest Uploads"}/${merchant.MerchantId.S}`,
                               state: {

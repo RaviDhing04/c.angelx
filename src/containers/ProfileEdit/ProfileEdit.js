@@ -138,7 +138,6 @@ const ProfileEdit = props => {
                       as="select"
                       defaultValue={userData && userData.phone_number && userData.phone_number.split('0000')[0]
                       }
-                      required
                     // disabled={!editMode}
                     >
                       <option disabled value="" selected> Code</option>

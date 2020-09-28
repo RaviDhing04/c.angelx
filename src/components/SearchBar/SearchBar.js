@@ -11,6 +11,9 @@ import searchIcon from "../../assets/search-icon.png";
 import "./SearchBar.scss";
 import { debounce } from "../../utils/commonUtils/basicUtils";
 import { Link, useHistory } from "react-router-dom";
+import {
+  isMobile
+} from "react-device-detect";
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   <a
@@ -77,18 +80,33 @@ const SearchBar = props => {
 
   const search = async (text) => {
     text ? setSearchText(text) : setSearchText('');
+    if (text) {
     const res = await props.fetchSearchResults(text, (selectedCategory && selectedCategory.Title && selectedCategory.Title.S ? selectedCategory.Title.S : ''));
     setSearchResults(res.Items);
     setShowDiv(true);
+    }
   }
 
   const navigateToSearchPage = (e) => {
+    debugger;
     e.preventDefault();
     if (searchText) {
       document.getElementById("searchForm").reset();
       setSearchResults([]);
-      history.push(`/home/search/${searchText}/${(selectedCategory && selectedCategory.Title && selectedCategory.Title.S ? selectedCategory.Title.S : 'x')}`);
+      const searchPageUrl = `/home/search/${searchText}/${(selectedCategory && selectedCategory.Title && selectedCategory.Title.S ? selectedCategory.Title.S : 'x')}`;
+      history.push(searchPageUrl);
     }
+  }
+
+  const mobileStyle = {
+    "fontSize": "1rem",
+    "letterSpacing": "1.12px",
+    "color": "#c6ccc8",
+    "opacity": "1",
+    "minWidth": "275px",
+    "marginBottom": "1rem",
+    "display": "inline-block",
+    "width": "76.8%"
   }
 
 
@@ -96,7 +114,7 @@ const SearchBar = props => {
   console.log(fetchSearchResults);
   return (
     <React.Fragment>
-      <Form className="search-bar" id="searchForm" onSubmit={(e) => navigateToSearchPage(e)}>
+      <Form className="search-bar" style={isMobile ? mobileStyle : null} id="searchForm" onSubmit={(e) => navigateToSearchPage(e)}>
         <InputGroup className="search-input">
           <FormControl
             placeholder="Search"
@@ -122,7 +140,7 @@ const SearchBar = props => {
             </Dropdown.Toggle>
 
             <Dropdown.Menu as={CustomMenu}>
-            <Dropdown.Item value='All Categories' onClick={e => setselectedCategory('')}>All Categories</Dropdown.Item>
+              <Dropdown.Item value='All Categories' onClick={e => setselectedCategory('')}>All Categories</Dropdown.Item>
               {props.searchCategories.length > 0 &&
                 props.searchCategories.map((category, index) => {
                   return <Dropdown.Item active={(selectedCategory && (selectedCategory.CategoryId.S === category.CategoryId.S)) ? true : false} onClick={e => changeCategory(e)} value={category.CategoryId.S} eventKey={index}>{category.Title.S}</Dropdown.Item>

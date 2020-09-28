@@ -7,6 +7,9 @@ import { addToWishlist, addProductToCart, headerSearch, searchMerchants } from "
 import Product from "../../components/Product/Product";
 import ProductListCarousel from "../../components/ProductListCarousel/ProductListCarousel";
 import "./SearchPage.scss";
+import {
+    isMobile
+  } from "react-device-detect";
 
 const SearchPage = props => {
     const [resloadingProd, setResProds] = useState(true);
@@ -49,9 +52,14 @@ const SearchPage = props => {
         "paddingLeft": "0.625rem"
     }
 
+    const styl1 = {
+        "paddingRight": "4.625rem",
+        "paddingLeft": "4.625rem"
+    }
+
     return (
         <React.Fragment>
-            <Container fluid style={styl}>
+            <Container fluid style={isMobile ? styl1 : styl}>
                 <ProductListCarousel name="Searched Products" loading={resloadingProd} data={products} activeCurrency={props.activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} />
                 <ProductListCarousel name="Searched Merchants" loading={resloadingMerch} data={merchants} activeCurrency={props.activeCurrency} addToWishlist={addProductToWish} addProductToCart={addToCart} />
                 </Container>

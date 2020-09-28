@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 import "./ProductListMobile.scss";
 import ProductRowShimmer from "../ProductRowShimmer/ProductRowShimmer";
 import { useAuth } from "../../context/auth";
+import {
+  isMobile
+} from "react-device-detect";
 
 const ProductListMobile = props => {
   const {
@@ -20,8 +23,13 @@ const ProductListMobile = props => {
     <React.Fragment>
       {!loading ? (Items && Items.length ? (
         <React.Fragment>
-          <div className={isAuthenticated ? "product-row-heading" : "margin-left-4 product-row-heading"}>{name}</div>
-          <Row className="product-row-1">
+          <div style={{ "display": "flex", "justifyContent": "space-between", "alignItems": "center", "marginBottom": "2rem" }}>
+            <div className={isAuthenticated ? "product-row-heading" : "margin-left-4 product-row-heading"}>{name}</div>
+            <Link to={ !isMobile ? `/home/viewAllProducts/${name}` : window.location.pathname}>
+              <Button className={isAuthenticated ? "view-all" : "margin-right-4 view-all"}>View All</Button>
+            </Link>
+          </div>
+          <Row className="product-row-1" >
             {Items &&
               Items.slice(0, 2).map((item, index) => {
                 return index < 2 ? (
@@ -68,9 +76,6 @@ const ProductListMobile = props => {
               })
             ) : null}
           </Row>
-          <Link to={`/home/viewAllProducts/${name}`}>
-            <Button className={isAuthenticated ? "view-all" : "margin-left-4 view-all"}>View All</Button>
-          </Link>
         </React.Fragment>
       ) : null) : (
           <ProductRowShimmer />

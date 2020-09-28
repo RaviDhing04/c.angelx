@@ -13,13 +13,13 @@ import downArrow from "../../assets/down-arrow.svg";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import Notification from "../../components/Notification/Notification";
 import { currencies, profileOptions } from "../../constants/constants";
-import "./Header.scss";
+import "./MobileHeader.scss";
 import { setGlobalCurrency, getSearchCategories, headerSearch, cartCount, getUserLinkCount, getUserNotification } from "../../store/actions";
 import { useAuth } from "../../context/auth";
 import { useHistory } from "react-router-dom";
 
-const Header = props => {
-  const [activeCurrency, setActiveCurrency] = useState(currencies[0]);
+const MobileHeader = props => {
+  const [activeCurrency, setActiveCurrency] = useState(currencies[1]);
   const [showNotification, toggleNotification] = useState(false);
   const isAuthenticated = useAuth();
   const history = useHistory();
@@ -90,16 +90,15 @@ const Header = props => {
   return (
     <React.Fragment>
       <Container fluid className="header">
-        <Navbar collapseOnSelect>
-          <Navbar.Brand as={Link} to={`/landing`}>
-            <img
-              className="brand-logo"
-              alt="c.Anglex-logo"
-              src={brandlogo}
-            ></img>
-          </Navbar.Brand>
-
-          <Navbar.Collapse id="responsive-navbar-nav">
+        <Navbar.Brand as={Link} to={`/landing`}>
+          <img
+            className="brand-logo"
+            alt="c.Anglex-logo"
+            src={brandlogo}
+          ></img>
+        </Navbar.Brand>
+        {/* <Navbar collapseOnSelect> */}
+        {/* <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto left-links-wrapper">
               <Nav.Link className="left-links" as={Link} to={`/home/productsListing`}>
                 Home
@@ -111,9 +110,9 @@ const Header = props => {
                 About Us
               </Nav.Link>
             </Nav>
-          </Navbar.Collapse>
-          <SearchBar searchCategories={props.searchCategories} fetchSearchResults={props.headerSearch} />
-          <Navbar.Collapse id="responsive-navbar-nav">
+          </Navbar.Collapse> */}
+        <SearchBar searchCategories={props.searchCategories} fetchSearchResults={props.headerSearch} />
+        {/* <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="ml-auto right-links-wrapper">
               <Dropdown disabled={true}>
                 <Dropdown.Toggle
@@ -148,18 +147,18 @@ const Header = props => {
                     );
                   })}
                 </Dropdown.Menu>
-              </Dropdown>
-              <img className="nav-icon" alt="globe-icon" src={globe}></img>{" "}
+              </Dropdown> */}
+        {/* <img className="nav-icon" alt="globe-icon" src={globe}></img>{" "}
               English{" "}
               {isAuthenticated ?
-                <React.Fragment>
-                  {/* <Nav.Link
+                <React.Fragment> */}
+        {/* <Nav.Link
                     as={Link}
                     to={`/home/viewAllProducts/Wishlist`}
                   >
                     <img className="nav-icon" alt="heart-icon" src={heart}></img>
                   </Nav.Link> */}
-                  <Nav.Link as={Link} to={`/cart/${props.userId}`}>
+        {/* <Nav.Link as={Link} to={`/cart/${props.userId}`}>
                     <img
                       className="nav-icon"
                       alt="shoppingcart-icon"
@@ -173,8 +172,8 @@ const Header = props => {
                     <div className="notification-div">
                       <Notification data={props.userNotifications} />
                     </div>
-                  ) : null}
-                  {/* <Nav.Link href="#memes">
+                  ) : null} */}
+        {/* <Nav.Link href="#memes">
                 <img
                   className="nav-icon"
                   alt="profile-icon"
@@ -186,7 +185,7 @@ const Header = props => {
                   src={downArrow}
                 ></img>
               </Nav.Link> */}
-                  <Dropdown>
+        {/* <Dropdown>
                     <Dropdown.Toggle
                       as={CustomToggle}
                       id="dropdown-custom-components"
@@ -215,16 +214,16 @@ const Header = props => {
                         );
                       })}
                     </Dropdown.Menu>
-                  </Dropdown>
-                </React.Fragment> :
+                  </Dropdown> */}
+        {/* </React.Fragment> :
                 <React.Fragment>
                   <Button onClick={() => history.replace(history.location.pathname + "?login=true")} className="login-btn">Log in</Button>
                   <Button onClick={() => history.replace(history.location.pathname + "?signUp=true")} className="signup-btn" >Sign up</Button>
                 </React.Fragment>}
             </Nav>
-          </Navbar.Collapse>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        </Navbar>
+          </Navbar.Collapse> */}
+        {/* <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        </Navbar> */}
       </Container>
     </React.Fragment>
   );
@@ -252,4 +251,4 @@ const mapStatetoProps = ({ app: { homePage, common } }) => {
   };
 };
 
-export default connect(mapStatetoProps, mapDispatchToProps)(Header);
+export default connect(mapStatetoProps, mapDispatchToProps)(MobileHeader);

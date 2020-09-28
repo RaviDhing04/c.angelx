@@ -6,23 +6,26 @@ import formatter from "../../utils/commonUtils/currencyUtils";
 import heartIcon from "../../assets/heart.svg";
 import checkmark from "../../assets/checkmark.svg";
 import defaultImg from "../../assets/default-prod.png";
+import {
+  isMobile
+} from "react-device-detect";
 
 const Product = props => {
   const { data, activeCurrency, addProductToCart, type } = props;
   return (
     <React.Fragment>
       {data && Object.keys(data).length ? (
-        <Card className="product-card">
+        <Card className="product-card" style={isMobile ? {"width": "22rem" } : null}>
           <div className="prod-img">
             {type && type.toLowerCase() === 'wishlist' ? null : <img className="heart-icon" onClick={() => { props.addToWishlist({ "ProductId": data.ProductId && data.ProductId.S, "UserId": JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId }) }} alt="heart-icon" src={heartIcon}></img>}
-            <Link to={`/home/productDetail/${data.ProductId && data.ProductId.S}/${data.Timestamp && data.Timestamp.S}`}>
+            <Link to={!isMobile ? `/home/productDetail/${data.ProductId && data.ProductId.S}/${data.Timestamp && data.Timestamp.S}`: window.location.pathname}>
               <div className="product-image">
                 <Card.Img src={data.ThumbnailImageURL.S ? data.ThumbnailImageURL.S : defaultImg} />
               </div>
             </Link>
           </div>
           <Card.Body>
-            <Link to={`/home/productDetail/${data.ProductId.S}/${data.Timestamp.S}`}>
+            <Link to={!isMobile ? `/home/productDetail/${data.ProductId.S}/${data.Timestamp.S}`: window.location.pathname}>
               <div >
                 <Card.Title><span> {data.Name && data.Name.S} </span> </Card.Title>
                 <Card.Text>
@@ -39,7 +42,7 @@ const Product = props => {
               </div>
             </Link>
             {data.IsDonationCampaign && data.IsDonationCampaign.S === "true" ? (
-              <Link to={`/home/productDetail/${data.ProductId.S}/${data.Timestamp.S}`}>
+              <Link to={!isMobile ? `/home/productDetail/${data.ProductId.S}/${data.Timestamp.S}`: window.location.pathname}>
                 <Button className="product-button">Donate</Button>
               </Link>
             ) : (
@@ -57,7 +60,7 @@ const Product = props => {
                   }
                 }, type && type.toLowerCase() === 'wishlist' ? 'wishlist' : null)} className="product-button">Add to Cart</Button>
               )}
-            <Link to={`/home/productDetail/${data.ProductId.S}/${data.Timestamp.S}`}>
+            <Link to={!isMobile ? `/home/productDetail/${data.ProductId.S}/${data.Timestamp.S}`: window.location.pathname}>
               <Button className="more-button">More Options</Button>
             </Link>
           </Card.Body>

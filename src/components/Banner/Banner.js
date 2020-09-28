@@ -3,6 +3,9 @@ import Carousel from "react-bootstrap/Carousel";
 import { useHistory } from "react-router-dom";
 import apple from "../../assets/apple.svg";
 import android from "../../assets/android.svg";
+import {
+  isMobile
+} from "react-device-detect";
 
 const Banner = props => {
   const [index, setIndex] = useState(0);
@@ -33,6 +36,13 @@ const Banner = props => {
   }
 
   const imgHolderLanding = {
+    "width": "100%",
+    "position": "relative",
+    "height": "29rem",
+    "background": "#d0d0d0"
+  }
+
+  const mobileStyleimgHolderLanding = {
     "width": "100%",
     "position": "relative",
     "height": "29rem",
@@ -87,9 +97,10 @@ const Banner = props => {
         banners.map(banner => {
           return (
             <Carousel.Item key={banner.BannerOrder.S}>
-              {window.location.href.includes('landing') ? <div style={imgHolderLanding}>
+              {window.location.href.includes('landing') ? <div style={isMobile ? mobileStyleimgHolderLanding : imgHolderLanding} >
                 <img
                   className="d-block w-100"
+                  style={{"height": "29rem"}}
                   src={banner.ImageURL.S}
                   alt="First slide"
                 />

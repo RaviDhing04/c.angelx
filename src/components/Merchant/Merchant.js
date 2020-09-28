@@ -6,13 +6,16 @@ import formatter from "../../utils/commonUtils/currencyUtils";
 import heartIcon from "../../assets/heart.svg";
 import checkmark from "../../assets/checkmark.svg";
 import defaultImg from "../../assets/default-prod.png";
+import {
+  isMobile
+} from "react-device-detect";
 
 const Merchant = props => {
   const { data, activeCurrency, addProductToCart, type } = props;
   return (
     <React.Fragment>
       {data && Object.keys(data).length ? (
-        <Card className="product-card">
+        <Card className="product-card" style={isMobile ? { "width": "22rem" } : null}>
           <div className="prod-img">
             {/* {type && type.toLowerCase() === 'wishlist' ? null : <img className="heart-icon" onClick={() => { props.addToWishlist({ "ProductId": data.ProductId && data.ProductId.S, "UserId": JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId }) }} alt="heart-icon" src={heartIcon}></img>} */}
             {/* <Link to={`/home/productDetail/${data.ProductId && data.ProductId.S}/${data.Timestamp && data.Timestamp.S}`}>
@@ -21,12 +24,17 @@ const Merchant = props => {
             <Nav className="flex-column">
               <Nav.Link
                 as={Link}
-                to={{
+                to={!isMobile ? {
                   pathname: `/merchantHome/viewAllProducts/${"Latest Uploads"}/${data.MerchantId && data.MerchantId.S}`,
                   state: {
                     fromUser: true
                   }
-                }}
+                } : {
+                    pathname: window.location.pathname,
+                    state: {
+                      fromUser: true
+                    }
+                  }}
               >
                 <div className="product-image">
                   <Card.Img src={data.BannerImageURL && data.BannerImageURL.S ? data.BannerImageURL.S : defaultImg} />
@@ -38,12 +46,17 @@ const Merchant = props => {
             <Nav className="flex-column">
               <Nav.Link
                 as={Link}
-                to={{
+                to={!isMobile ? {
                   pathname: `/merchantHome/viewAllProducts/${"Latest Uploads"}/${data.MerchantId && data.MerchantId.S}`,
                   state: {
                     fromUser: true
                   }
-                }}
+                } : {
+                    pathname: window.location.pathname,
+                    state: {
+                      fromUser: true
+                    }
+                  }}
               >
                 <div >
                   <Card.Title><span>{data.OrgName && data.OrgName.S}</span></Card.Title>
@@ -76,12 +89,17 @@ const Merchant = props => {
             <Nav className="flex-column">
               <Nav.Link
                 as={Link}
-                to={{
+                to={!isMobile ? {
                   pathname: `/merchantHome/viewAllProducts/${"Latest Uploads"}/${data.MerchantId && data.MerchantId.S}`,
                   state: {
                     fromUser: true
                   }
-                }}
+                } : {
+                    pathname: window.location.pathname,
+                    state: {
+                      fromUser: true
+                    }
+                  }}
               >
                 <Button className="more-button">More Options</Button>
               </Nav.Link>

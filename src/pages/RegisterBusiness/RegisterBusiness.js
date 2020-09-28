@@ -393,6 +393,7 @@ const RegisterBusiness = props => {
                     }
                     as="textarea"
                     placeholder="Type Merchant Bio"
+                    maxlength="150"
                     required
                   />
                 </Form.Group>
@@ -442,14 +443,14 @@ const RegisterBusiness = props => {
               </Col>
               <Col>
                 <Form.Group controlId="Pincode">
-                  <Form.Label>Pincode</Form.Label>
+                  <Form.Label>Postalcode</Form.Label>
                   <Form.Control
                     defaultValue={
                       selectedBusinessDetails &&
                       selectedBusinessDetails.BusinessAddress.M.PostalCode.S
                     }
                     type="text"
-                    placeholder="Type Pincode"
+                    placeholder="Type Postalcode"
                     required
                   />
                 </Form.Group>

@@ -1,0 +1,101 @@
+.footer {
+    width: 100%;
+    margin-top:auto; 
+    // position: absolute;
+    // bottom: 0px;
+
+    .links-row-1 {
+        background: #F6F7F9 0% 0% no-repeat padding-box;
+        opacity: 1;
+        margin-bottom: -1px;
+        min-height: 14rem;
+    }
+
+    .links-row-2 {
+        background: #F6F7F9 0% 0% no-repeat padding-box;
+        opacity: 1;
+        padding: 1rem 0px;
+    }
+
+    .links-row-3 {
+        padding: 1.5rem 0px 0.5rem 0px;
+    }
+
+
+    .links-col {
+        display: flex;
+        justify-content: space-evenly;
+        padding: 2rem 2rem 0px 4rem;
+    }
+
+    .nav-link {
+        letter-spacing: 1.12px;
+        color: #6D6D6D;
+        text-transform: uppercase;
+        opacity: 1;
+        font-size: 1rem;
+    }
+
+    .social-links {
+        display: flex;
+        justify-content: safe;
+        width: 100%;
+        justify-content: space-around;
+        .nav-icon{
+            width: 2rem;
+            height: 2rem;
+            opacity: 1;
+            text-align: left;
+            font-size: 1rem;
+            letter-spacing: 1.12px;
+            color: #6D6D6D;
+            opacity: 1;
+        }
+    }
+
+    .footer-copyright {
+        display: flex;
+        justify-content: center;
+    }
+
+    .partner-info {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .partner-info-text {
+        letter-spacing: 1.12px;
+        color: #6D6D6D;
+        text-transform: uppercase;
+        opacity: 1;
+        font-size: 1rem;
+    }
+
+    .partner-info-grid {
+        width: 21.875rem;
+        height: 5.4375rem;
+        // border: 1px solid #D0D2D6;
+        opacity: 1;
+    }
+    
+    .logo-border{
+        padding: 0.75rem;
+        border: 1px solid #D0D2D6;
+        width: 50%;
+        display: inline-block;
+    }
+    
+    .partner-logo {
+        width: 100%;
+        height: 4.4375rem;
+        opacity: 1;
+    }
+
+    .footer-brand-logo{
+        // width: 4.625rem;
+        // height: 1.75;
+        width: 7.625rem;
+        height: 4rem;
+    }
+}
