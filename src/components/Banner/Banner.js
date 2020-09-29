@@ -31,7 +31,7 @@ const Banner = props => {
   const imgHolder = {
     "width": "100%",
     "position": "relative",
-    "height": "20rem",
+    "height": "19.5rem",
     "background": "#d0d0d0"
   }
 
@@ -75,7 +75,7 @@ const Banner = props => {
     "width": "1.5rem",
     "height": "1.5rem",
     "borderRadius": "50%",
-    "marginTop": "3px"
+    "marginTop": "1px"
   }
 
   const shop = () => {
@@ -121,8 +121,8 @@ const Banner = props => {
                 {banner.BannerName && banner.BannerName.S === "Landingpage" ? (
                   <React.Fragment>
                     <div style={btnLandingDiv}>
-                      <button className="startshopping" onClick={shop}>Start Shopping</button>
-                      <button className="startselling" onClick={sell}>Start Business</button>
+                    {!isMobile ? <button className="startshopping" onClick={shop}>Start Shopping</button> : null}
+                    {!isMobile ? <button className="startselling" onClick={sell}>Start Business</button> : null}
                       <div style={circleImgGreen}><img style={img} src={android} alt="playstore"></img></div>
                       <div style={circleImgGrey}><img style={img} src={apple} alt="appstore"></img></div>
                     </div>

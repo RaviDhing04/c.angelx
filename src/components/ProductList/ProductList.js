@@ -23,8 +23,8 @@ const ProductList = props => {
           <div className={isAuthenticated ? "product-row-heading" : "margin-left-4 product-row-heading"}>{name}</div>
           <Row className="product-row-1">
             {Items &&
-              Items.slice(0, 5).map((item, index) => {
-                return index < 5 ? (
+              Items.slice(0, 4).map((item, index) => {
+                return index < 4 ? (
                   <div key={item.ProductId.S}>
                     <Product
                       data={item}
@@ -36,8 +36,8 @@ const ProductList = props => {
                   </div>
                 ) : null;
               })}
-            {Items && Items.length && Items.length < 5 ? (
-              [...Array(5 - Items.length)].map((item) => {
+            {Items && Items.length && Items.length < 4 ? (
+              [...Array(4 - Items.length)].map((item) => {
                 return (<div className="dummy-prod"></div>)
               })
             ) : null}
@@ -55,15 +55,15 @@ const ProductList = props => {
         <React.Fragment>
           <Row className="product-row-2">
             {Items &&
-              Items.slice(5).map((item, index) => {
-                return index < 5 ? (
+              Items.slice(4).map((item, index) => {
+                return index < 4 ? (
                   <div key={item.ProductId.S}>
                     <Product data={item} activeCurrency={activeCurrency} addProductToCart={addProductToCart} addToWishlist={addToWishlist} />
                   </div>
                 ) : null;
               })}
-            {Items && Items.length && Items.length < 10 ? (
-              [...Array(10 - Items.length)].map((item) => {
+            {Items && Items.length && Items.length < 8 ? (
+              [...Array(8 - Items.length)].map((item) => {
                 return (<div className="dummy-prod"></div>)
               })
             ) : null}

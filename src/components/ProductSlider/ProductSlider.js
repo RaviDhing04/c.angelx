@@ -63,7 +63,7 @@ const ProductSlider = ({ images }) => {
                 onMouseMove={handleImageChange}
                 onMouseOut={handleMouseOut}
                 src={img? img : defaultImg}
-                style={{ width: "85%", height: "85%", "marginLeft": "1.5rem" }}
+                style={{ "width": "19rem", "height": "25rem", "marginLeft": "1.5rem" }}
               />
             </a>
           </div>

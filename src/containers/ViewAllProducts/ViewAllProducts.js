@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Container, Row } from "react-bootstrap";
-import { getLatestProducts, getMerchantAllProducts, clearViewAllProducts, addToWishlist, addProductToCart, getWishlistProducts, getPreviewProducts } from "../../store/actions";
+import { getLatestProducts, getMerchantAllProducts, clearViewAllProducts, addToWishlist, addProductToCart, getWishlistProducts, getPreviewProducts, getSponsoredProducts } from "../../store/actions";
 import Product from "../../components/Product/Product";
 import ProductRowShimmer from "../../components/ProductRowShimmer/ProductRowShimmer";
 import "./ViewAllProducts.scss";
@@ -16,7 +16,7 @@ const ViewAllProducts = props => {
     products: { Items }
   } = props;
   const { name, merchantId, merchantHandle } = props.match.params;
-  const itemsPerRow = merchantId ? 4 : 5;
+  const itemsPerRow = merchantId ? 3 : 4;
   const isAuthenticated = useAuth();
 
   useEffect(() => {
@@ -49,7 +49,7 @@ const ViewAllProducts = props => {
         props.getLatestProducts();
         break;
       case "Sponsored":
-        props.getLatestProducts();
+        props.getSponsoredProducts();
         break;
       case "Trending":
         props.getLatestProducts();
@@ -130,7 +130,8 @@ const mapDispatchToProps = dispatch =>
       addToWishlist,
       getWishlistProducts,
       addProductToCart,
-      getPreviewProducts
+      getPreviewProducts,
+      getSponsoredProducts
     },
     dispatch
   );

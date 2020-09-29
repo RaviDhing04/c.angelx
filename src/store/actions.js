@@ -255,6 +255,31 @@ export const getSponsoredProductsWithPagination = (
   }
 };
 
+export const getSponsoredProducts = (body = {}) => async dispatch => {
+  try {
+
+    const response = await httpFetch(
+      getApiEndPoints("SponsoredProductsWithPagination"),
+      {
+        method: "POST",
+        body: body
+      }
+    );
+    if (response && response.result && response.result.data && response.result.data.Items) {
+      dispatch({
+        type: "VIEWALL_PRODUCTS",
+        value: { payload: response.result.data }
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
 export const getTrendingProductsWithPagination = (
   body = {}
 ) => async dispatch => {
@@ -1711,6 +1736,29 @@ export const publishViralDonations = (body = {}) => async dispatch => {
     ) {
       alert('Successfully shared with contacts')
       return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const verifyCoupon = (body = {}) => async dispatch => {
+  try {
+
+    const response = await httpFetch(getApiEndPoints("verifyCoupon"), {
+      method: "POST",
+      body: body
+    });
+    if (
+      response &&
+      response.result &&
+      response.result.data &&
+      response.result.message
+    ) {
+      return response.result;
     } else {
       return false;
     }

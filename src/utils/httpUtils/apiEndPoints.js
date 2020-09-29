@@ -144,6 +144,8 @@ const getApiEndPoints = val => {
       return baseUrl + "users/getnotifications";
     case "updateOrderStatus":
       return baseUrl + "business/updateorderstatus";
+    case "verifyCoupon":
+      return baseUrl + "coupons/verifycoupon";
     default:
       return "/";
   }

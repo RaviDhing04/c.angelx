@@ -65,7 +65,7 @@ const MerchantHome = props => {
 
   useEffect(() => {
     setIsMerchantFollowed(selectedBusiness && selectedBusiness.IsMerchantFollowed && selectedBusiness.IsMerchantFollowed.S);
-    setTerms(`https://docs.google.com/viewer?url=${selectedBusiness && selectedBusiness.TermsAndConditions && selectedBusiness.TermsAndConditions.S}`);
+    if (selectedBusiness && selectedBusiness.TermsAndConditions && selectedBusiness.TermsAndConditions.S) { setTerms(`https://docs.google.com/viewer?url=${selectedBusiness && selectedBusiness.TermsAndConditions && selectedBusiness.TermsAndConditions.S}`) };
   }, [selectedBusiness]);
 
 
@@ -173,9 +173,13 @@ const MerchantHome = props => {
           </div>
           {state && state.fromUser ? (
             <div className="user-action">
-              <a className="user-terms" target="blank" href={terms}>
+              {terms ? <a className="user-terms" target="blank" href={terms}>
                 Terms and Conditions
-              </a>
+              </a> :
+                <span className="user-terms" >
+                  Terms and Conditions
+            </span>
+              }
               {IsMerchantFollowed === 'true' ? <button onClick={unfollow} className="unfollow">Unfollow</button> : <button onClick={follow} className="unfollow">Follow</button>}
             </div>
           ) : null}

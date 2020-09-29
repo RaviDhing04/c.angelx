@@ -164,7 +164,7 @@ const CheckoutConfirm = (props) => {
 
                             <div style={{"marginBottom":"2rem"}}>
                                 <p className="text">Your total payment amount is - {orderType === 'cart' ? (<span> {props.cartItems.totalDiscountedAmount ? formatter(props.activeCurrency)(props.cartItems.totalDiscountedAmount) : formatter(props.activeCurrency)(0)} </span>) :
-                                    (<span> {order && (order.total_amount || +order.unitPrice) ? (order && order.order_type === 'laybuy' ? formatter(props.activeCurrency)(((+order.total_amount) / (+order.laybuy_months))) : formatter(props.activeCurrency)(order && (order.total_amount || +order.unitPrice))) : formatter(props.activeCurrency)(0)} </span>)}
+                                    (<span> {order && (order.total_amount || +order.unitPrice) ? (order && order.order_type === 'laybuy' ? formatter(props.activeCurrency)(((order.displayPrice || +order.total_amount) / (+order.laybuy_months))) : formatter(props.activeCurrency)(order && (order.displayPrice || order.total_amount || +order.unitPrice))) : formatter(props.activeCurrency)(0)} </span>)}
                                 </p>
                                 {order && order.order_type === 'laybuy' ? <p className="text">Lay buy months - <span> {order && order.laybuy_months}</span></p> : null}
                                 {shippingCharge ? <p className="text">Your total shipping amount is - <span> {formatter(props.activeCurrency)(shippingCharge)} </span> </p> : null}

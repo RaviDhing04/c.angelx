@@ -84,18 +84,18 @@ const App = () => {
         <MobileView>
           <MobileHeader userId={userId} />
           <Switch>
-          <Route
-                exact
-                path={"/"}
-                render={() => {
-                  return <Redirect to={"/landing"} />;
-                }}
-              />
-          <Route path="/landing" component={MobileHome} />
-          <Route path="/home/search/:text/:selectedCategory" component={SearchPage} exact={true} />
+            <Route
+              exact
+              path={"/"}
+              render={() => {
+                return <Redirect to={"/landing"} />;
+              }}
+            />
+            <Route path="/landing" component={MobileHome} />
+            <Route path="/home/search/:text/:selectedCategory" component={SearchPage} exact={true} />
           </Switch>
+          <MobileFooter userId={userId} />
         </MobileView>
-        <MobileFooter userId={userId} />
       </AuthContext.Provider>
 
     </Container>

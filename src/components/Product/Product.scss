@@ -3,7 +3,7 @@
   border: 1px solid #dadadb;
   border-radius: 0px 0px0.25rem0.25rem;
   opacity: 1;
-  width: 16rem;
+  width: 19.5rem;
 
   .prod-img {
     position: relative;
@@ -90,7 +90,9 @@
 
   .product-image img {
     // width: 16rem;
-    height: 16rem;
+    height: 18rem;
+    object-fit: contain;
+    padding: 1rem;
   }
 
   .product-button {

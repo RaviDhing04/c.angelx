@@ -328,7 +328,7 @@ const AddInventory = props => {
                   <Form.Control
                     id="fileUpload"
                     type="file"
-                    accept=".jgp, .png"
+                    accept=".jgp, .png, .jpeg"
                     onChange={addFile}
                     style={{ display: "none" }}
                   />

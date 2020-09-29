@@ -16,7 +16,7 @@ const ProductListCarousel = props => {
     addToWishlist,
     loading
   } = props;
-  const itemsPerRow = 5;
+  const itemsPerRow = 4;
   const isAuthenticated = useAuth();
 
   const makeItems = () => {
@@ -57,7 +57,7 @@ const ProductListCarousel = props => {
       {!loading ? (Items && Items.length ? (
         <React.Fragment>
           <div className={isAuthenticated ? "product-row-heading" : "margin-left-4 product-row-heading"}>{name}</div>
-          <Carousel className="prod-carousel" fade={true} interval={5000}>
+          <Carousel className="prod-carousel" fade={true} interval={500000}>
             {/* <Row className="product-row">
               {Items && Items.length &&
                 Items.map((item, index) => {

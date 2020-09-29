@@ -63,11 +63,11 @@ const CartItem = props => {
         </div>
         <div className="item-pricing">
           <span className="item-price">
+            {formatter(props.activeCurrency)(discountedPrice ? discountedPrice : price)}
+          </span>
+         { discountedPrice ?  <span className="item-cutPrice">
             {formatter(props.activeCurrency)(price)}
-          </span>
-          <span className="item-cutPrice">
-            {formatter(props.activeCurrency)(discountedPrice)}
-          </span>
+          </span> : null }
         </div>
         <div className="item-quantity">
           <img onClick={() => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -6,8 +6,10 @@ import {
   getSelectedProductDetails,
   addProductToCart,
   getSavedContacts,
-  publishViralDonations
+  publishViralDonations,
+  verifyCoupon
 } from "../../store/actions";
+import { debounce } from "../../utils/commonUtils/basicUtils";
 import { Container, Accordion, Card } from "react-bootstrap";
 import { bindActionCreators } from "redux";
 import "./ProductDetails.scss";
@@ -46,6 +48,7 @@ const ProductDetails = props => {
   const [loading, setLoading] = useState(true);
   const [toggleArrow, setToggleArrow] = useState(false);
   const [coupon, setCoupon] = useState(null);
+  const [displayPrice, setDisplayPrice] = useState(0);
   const [groupBy, setGroupBy] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const [group, setGroup] = useState([{}]);
@@ -124,6 +127,48 @@ const ProductDetails = props => {
     res ? setLoading(false) : (function () { setLoading(false); }());
   };
 
+  useEffect(() => {
+    setDisplayPrice(0);
+    if (coupon) {
+      verify(MerchantId, coupon, selectedVariation);
+    }
+  }, [coupon]);
+
+  const verify = useCallback(
+    debounce(
+      async (MerchantId, coupon, selectedVariation) => {
+        // if (coupon) {
+        setLoading(true)
+        const payload = {
+          "MerchantId": MerchantId && MerchantId.S,
+          "CouponCode": coupon
+        }
+        const res = await props.verifyCoupon(payload);
+        setLoading(false)
+        if (res && res.message === 'Success') {
+          calculateDiscountedPrice(res.data.Items[0], selectedVariation);
+        } else if (res && res.message === "Invalid Coupon") {
+          alert('Coupon Enter is Invalid');
+        } else {
+          alert('Something went wrong, Please try again later');
+        }
+        // };
+        // }
+      }, 1000),
+    []
+  );
+
+  const calculateDiscountedPrice = (obj, selectedVariation) => {
+    if (obj && obj.Discount && +obj.Discount.S > 0 && obj.MaxDiscountAmount && +obj.MaxDiscountAmount.S > 0) {
+      const disc = (+(selectedVariation && selectedVariation.M && selectedVariation.M.UnitPrice && selectedVariation.M.UnitPrice.S) * +(obj.Discount && obj.Discount.S)) / 100;
+      if (disc > +obj.MaxDiscountAmount.S) {
+        setDisplayPrice((+(selectedVariation && selectedVariation.M && selectedVariation.M.UnitPrice && selectedVariation.M.UnitPrice.S)) - (+obj.MaxDiscountAmount.S));
+      } else {
+        setDisplayPrice((+(selectedVariation && selectedVariation.M && selectedVariation.M.UnitPrice && selectedVariation.M.UnitPrice.S)) - (disc));
+      }
+    }
+  }
+
 
   const Donate = async () => {
     setLoading(true)
@@ -155,7 +200,8 @@ const ProductDetails = props => {
       "SelectedColor": selectedVariation && selectedVariation.M && selectedVariation.M.AvailableColor && selectedVariation.M.AvailableColor.S,
       "billing_address_id": null,
       "shipping_address_id": null,
-      "payment_type": null
+      "payment_type": null,
+      "displayPrice": displayPrice
     }
     localStorage.setItem('orderType', JSON.stringify(orderType));
     history.push(`/checkout/shipping/${JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId}/${'Shipping'}`);
@@ -185,6 +231,7 @@ const ProductDetails = props => {
       "payment_type": null,
       "coupon_code": coupon,
       "SelectedColor": selectedVariation && selectedVariation.M && selectedVariation.M.AvailableColor && selectedVariation.M.AvailableColor.S,
+      "displayPrice": displayPrice
     }
     localStorage.setItem('orderType', JSON.stringify(orderType));
     history.push(`/checkout/shipping/${JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId}/${'Shipping'}`);
@@ -217,6 +264,7 @@ const ProductDetails = props => {
       "payment_type": null,
       "coupon_code": coupon,
       "SelectedColor": selectedVariation && selectedVariation.M && selectedVariation.M.AvailableColor && selectedVariation.M.AvailableColor.S,
+      "displayPrice": displayPrice
     }
     localStorage.setItem('orderType', JSON.stringify(orderType));
     history.push(`/checkout/shipping/${JSON.parse(localStorage.getItem('userData')) && JSON.parse(localStorage.getItem('userData')).UserId}/${'Shipping'}`);
@@ -278,9 +326,15 @@ const ProductDetails = props => {
                   {/* <span>{ProductSpecifications.M.Currency.S}</span>{" "} */}
                   {IsDonationCampaign && IsDonationCampaign.S === 'true' ? (formatter(activeCurrency)(
                     DonationCampaignDetails && DonationCampaignDetails.M && DonationCampaignDetails.M.MinDonation && DonationCampaignDetails.M.MinDonation.S
-                  ) + " (Minimum Donation Amount)") : formatter(activeCurrency)(
+                  ) + " (Minimum Donation Amount)") : coupon && displayPrice ? formatter(activeCurrency)(displayPrice) : formatter(activeCurrency)(
                     selectedVariation && selectedVariation.M && selectedVariation.M.UnitPrice && selectedVariation.M.UnitPrice.S
                   )}
+                </li>
+                <li className="price-discount">
+                  {/* <span>{ProductSpecifications.M.Currency.S}</span>{" "} */}
+                  {coupon && displayPrice ? formatter(activeCurrency)(
+                    selectedVariation && selectedVariation.M && selectedVariation.M.UnitPrice && selectedVariation.M.UnitPrice.S
+                  ) : null}
                 </li>
                 {IsDonationCampaign && IsDonationCampaign.S === 'true' && !viralDonate ? <li>
                   <div className="delivery-zip-code">
@@ -387,7 +441,7 @@ const ProductDetails = props => {
                   <div className="sub-head">Color</div>
                   <div className="color-palette">
                     {ProductVariations.L.map((variation, index) => {
-                      return <span key={index} onClick={() => setSelectedVariation(variation)} style={{ "backgroundColor": variation.M && variation.M.AvailableColor && variation.M.AvailableColor.S }} className={variation.M && variation.M.AvailableColor && variation.M.AvailableColor.S === selectedVariation.M.AvailableColor.S ? "palette-box active" : "palette-box"}></span>
+                      return <span key={index} onClick={() => { setDisplayPrice(0); setSelectedVariation(variation); }} style={{ "backgroundColor": variation.M && variation.M.AvailableColor && variation.M.AvailableColor.S }} className={variation.M && variation.M.AvailableColor && variation.M.AvailableColor.S === selectedVariation.M.AvailableColor.S ? "palette-box active" : "palette-box"}></span>
                     })
                     }
                   </div>
@@ -494,7 +548,8 @@ const mapDispatchToProps = dispatch =>
       getSelectedProductDetails,
       addProductToCart,
       getSavedContacts,
-      publishViralDonations
+      publishViralDonations,
+      verifyCoupon
     },
     dispatch
   );
