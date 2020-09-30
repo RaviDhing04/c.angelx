@@ -127,36 +127,42 @@ const ProductDetails = props => {
     res ? setLoading(false) : (function () { setLoading(false); }());
   };
 
-  useEffect(() => {
-    setDisplayPrice(0);
-    if (coupon) {
-      verify(MerchantId, coupon, selectedVariation);
-    }
-  }, [coupon]);
+  // useEffect(() => {
+  //   setDisplayPrice(0);
+  //   if (coupon) {
+  //     verify(MerchantId, coupon, selectedVariation);
+  //   }
+  // }, [coupon]);
 
-  const verify = useCallback(
-    debounce(
-      async (MerchantId, coupon, selectedVariation) => {
-        // if (coupon) {
-        setLoading(true)
-        const payload = {
-          "MerchantId": MerchantId && MerchantId.S,
-          "CouponCode": coupon
-        }
-        const res = await props.verifyCoupon(payload);
-        setLoading(false)
-        if (res && res.message === 'Success') {
-          calculateDiscountedPrice(res.data.Items[0], selectedVariation);
-        } else if (res && res.message === "Invalid Coupon") {
-          alert('Coupon Enter is Invalid');
-        } else {
-          alert('Something went wrong, Please try again later');
-        }
-        // };
-        // }
-      }, 1000),
-    []
-  );
+  // const verify = useCallback(
+  //   debounce(
+  //     async (MerchantId, coupon, selectedVariation) => {
+  //       // if (coupon) {
+
+  //       // };
+  //       // }
+  //     }, 1000),
+  //   []
+  // );
+
+  const VerifyCouponCode = async () => {
+    if (coupon) {
+      setLoading(true)
+      const payload = {
+        "MerchantId": MerchantId && MerchantId.S,
+        "CouponCode": coupon
+      }
+      const res = await props.verifyCoupon(payload);
+      setLoading(false)
+      if (res && res.message === 'Success') {
+        calculateDiscountedPrice(res.data.Items[0], selectedVariation);
+      } else if (res && res.message === "Invalid Coupon") {
+        alert('Coupon Enter is Invalid');
+      } else {
+        alert('Something went wrong, Please try again later');
+      }
+    }
+  }
 
   const calculateDiscountedPrice = (obj, selectedVariation) => {
     if (obj && obj.Discount && +obj.Discount.S > 0 && obj.MaxDiscountAmount && +obj.MaxDiscountAmount.S > 0) {
@@ -434,7 +440,10 @@ const ProductDetails = props => {
                 {!(IsDonationCampaign && IsDonationCampaign.S === 'true') ? IsInStock.S === "true" ? <li>
                   <div className="delivery-zip-code">
                     <label>Enter Coupon Code</label>
-                    <input type="text" onChange={(e) => setCoupon(e.target.value)} placeholder="Enter coupon code" />
+                    <input type="text" defaultValue={coupon} onChange={(e) => setCoupon(e.target.value)} placeholder="Enter coupon code" />
+                    <span style={{ "marginLeft": "1rem" }} onClick={() => { VerifyCouponCode() }} className="sm-btn bg-blue">
+                      Add Coupon
+                  </span>
                   </div>
                 </li> : null : null}
                 {!(IsDonationCampaign && IsDonationCampaign.S === 'true') ? <li>

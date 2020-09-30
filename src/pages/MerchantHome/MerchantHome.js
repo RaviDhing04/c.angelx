@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Switch } from "react-router-dom";
+import { Switch, Link } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import Router from "../../routes/routes";
@@ -158,7 +158,10 @@ const MerchantHome = props => {
         </React.Fragment>
         <div className="merchant-info">
           <div className="merchant-detail">
-            <span className="merchant-name">
+            <span style={{
+              "color": "#558ed4",
+              "cursor": "pointer"
+            }} onClick={() => { props.history.push(`/merchantHome/viewAllProducts/${"Latest Uploads"}/${selectedBusiness && selectedBusiness.MerchantId && selectedBusiness.MerchantId.S}`) }} className="merchant-name">
               {selectedBusiness && selectedBusiness.BusinessHandle && selectedBusiness.BusinessHandle.S}
             </span>
             <span className="merchant-contact">
