@@ -199,7 +199,7 @@ export const getNotifications = () => {
   return [1, 2, 3, 4, 5, 6, 7, 8];
 }
 
-export const registerFormFields = ["BusinessType", "BusinessContact", "Country", "DHLId", "BusinessEmail", "BusinessHandle", "OrgName", "MerchantBio", "TagsData", "OrgWebsite", "PaypalId", "PayFastId", "AddressType", "City", "Pincode", "Province", "StreetName", "StreetNumber", "Suburb"];
+export const registerFormFields = ["BusinessType", "BusinessContact", "Country", "DHLId", "BusinessEmail", "BusinessHandle", "OrgName", "MerchantBio (Max limit of characters is 150)", "TagsData", "OrgWebsite", "PaypalId", "PayFastId", "AddressType", "City", "Pincode", "Province", "StreetName", "StreetNumber", "Suburb"];
 
 export const addProductFormFields = ["ProductName", "ProductCategory", "ProductSubCategory", "ProductType", "Height", "Width", "Length", "Depth", "Weight", "ProductDescription"];
 

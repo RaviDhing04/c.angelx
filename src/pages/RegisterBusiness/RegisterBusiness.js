@@ -443,14 +443,14 @@ const RegisterBusiness = props => {
               </Col>
               <Col>
                 <Form.Group controlId="Pincode">
-                  <Form.Label>Postalcode</Form.Label>
+                  <Form.Label>Postal Code</Form.Label>
                   <Form.Control
                     defaultValue={
                       selectedBusinessDetails &&
                       selectedBusinessDetails.BusinessAddress.M.PostalCode.S
                     }
                     type="text"
-                    placeholder="Type Postalcode"
+                    placeholder="Type Postal Code"
                     required
                   />
                 </Form.Group>

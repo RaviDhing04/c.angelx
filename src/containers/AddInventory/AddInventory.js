@@ -528,14 +528,14 @@ const AddInventory = props => {
                     </Col>
                     <Col>
                       <Form.Group controlId="Ram">
-                        <Form.Label>Product Ram</Form.Label>
+                        <Form.Label>Product RAM</Form.Label>
                         <Form.Control
                           defaultValue={
                             productDetails && productDetails.ProductSpecifications && productDetails.ProductSpecifications.M && productDetails.ProductSpecifications.M.Ram &&
                             productDetails.ProductSpecifications.M.Ram.S
                           }
                           type="text"
-                          placeholder="Product Ram"
+                          placeholder="Product RAM"
                         />
                       </Form.Group>
                     </Col>

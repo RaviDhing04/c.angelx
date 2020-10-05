@@ -55,6 +55,7 @@ const AllBusiness = props => {
                 <p> {business.BusinessHandle.S}</p>
                 <span>{business.BusinessType.S}</span>
                 {isMerchant ? <button className="edit-business">Edit</button> : null}
+                <span className="merchant-card-info-text">click on handle to manage business</span>
               </div>
             );
           }) : null}

@@ -118,7 +118,7 @@ const LandingPage = props => {
         </div>
         <div style={{ "background": "#F6F7F9 0% 0% no-repeat padding-box", "paddingBottom": "5rem", "paddingTop": "2rem", "marginTop": "4rem" }}>
           <div id="Categories" className="heading" style={{"marginTop": "2rem"}}> Explore by Categories </div>
-          {props.searchCategories && props.searchCategories.length ? <Carousel className="prod-carousel" interval={null}>
+          {props.searchCategories && props.searchCategories.length ? <Carousel className="prod-carousel" interval={500}>
             {makeItems(props.searchCategories)}
           </Carousel> : null}
         </div>

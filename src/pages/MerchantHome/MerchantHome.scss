@@ -11,6 +11,7 @@
   .cover-img img {
     width: 100%;
     height: 24rem;
+    object-fit: contain;
   }
   .cover-img .btn-center {
     position: absolute;
@@ -71,6 +72,7 @@
     .merchant-detail {
       display: flex;
       flex-direction: column;
+      width:65%;
 
       .merchant-name {
         letter-spacing: 2.66px;
